@@ -38,7 +38,7 @@
 
      <div> A bit of text without filling the height of the page</div>
   <br/>
-<textarea id="code">
+<textarea id="code1">
     (map inc [1 2 3 4 5])
 </textarea>
 </section>
@@ -61,7 +61,7 @@
   <br/>
   <div> A lot of text to fill the height of the page</div>
   <br/>
-<textarea id="code">
+<textarea id="code2">
     (map inc [1 2 3 4])
 </textarea>
 <div> A lot of text to fill the height of the page</div>
@@ -87,8 +87,13 @@
 </div>
     <!-- End slides. -->
 <script>
-  var elem = document.getElementById('code');
-  var editor = CodeMirror.fromTextArea(elem, {
+  var elem1 = document.getElementById('code1');
+  var editor = CodeMirror.fromTextArea(elem1, {
+    lineNumbers: true,
+    mode: 'clojure'
+  });
+  var elem2 = document.getElementById('code2');
+  var editor = CodeMirror.fromTextArea(elem2, {
     lineNumbers: true,
     mode: 'clojure'
   });
