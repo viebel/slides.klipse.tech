@@ -7,7 +7,6 @@
 
   <title>Clojure Tutorial</title>
 
-    <link rel="stylesheet" type="text/css" href="https://storage.googleapis.com/app.klipse.tech/css/codemirror.css">
 
   <!-- Required stylesheet -->
   <link rel="stylesheet" media="screen" href="https://viebel.github.io/deckjs-demo-klipse/includes/core/deck.core.css">
@@ -20,7 +19,8 @@
   <link rel="stylesheet" media="screen" href="https://viebel.github.io/deckjs-demo-klipse/includes/extensions/scale/deck.scale.css">
 
   <!-- Style theme. More available in /themes/style/ or create your own. -->
-  <link rel="stylesheet" media="screen" href="https://viebel.github.io/deckjs-demo-klipse/includes/themes/style/web-2.0.css">
+  <link rel="stylesheet" media="screen" href="https://viebel.github.io/deckjs-demo-klipse/includes/themes/style/swiss.css">
+  <!-- <link rel="stylesheet" media="screen" href="http://localhost:5555/includes/themes/style/web-2.0.css"> -->
 
   <!-- Transition theme. More available in /themes/transition/ or create your own. -->
   <link rel="stylesheet" media="screen" href="https://viebel.github.io/deckjs-demo-klipse/includes/themes/transition/horizontal-slide.css">
@@ -28,6 +28,7 @@
   <!-- Basic black and white print styles -->
   <link rel="stylesheet" media="print" href="https://viebel.github.io/deckjs-demo-klipse/includes/core/print.css">
 
+  <link rel="stylesheet" type="text/css" href="https://storage.googleapis.com/app.klipse.tech/css/codemirror.css">
   <!-- Required Modernizr file -->
   <script src="https://viebel.github.io/deckjs-demo-klipse/includes/modernizr.custom.js"></script>
 </head>
@@ -45,30 +46,71 @@
     <li>Immutability</li>
     <li>Code is data</li>
     <li>Macros</li>
+<img src="https://viebel.github.io/deckjs-demo-klipse/img/clojure-logo.png" alt="" width="200">
 </ul>
 </section>
 
 <section class="slide">
 <h2> Functions </h2>
-<p>There a 3 ways to define a function and one way to call a function</p>
-<p>
-    <code class="clojure">
-    (fn [a b c]
-    
-    )
-    </code>
-</p>
-<p>
-    <code class="clojure"></code>
-</p>
-<p>
-    <code class="clojure"></code>
-</p>
-      
-<code class="clojure">
-(map inc [1 2 3])
-</code>
+<p>A function is an entity that receives things and return a thing.</p>
+<img src="https://viebel.github.io/deckjs-demo-klipse/img/first-class.jpg" alt="">
+<p>The beauty of functional programming is that the things that functions receive and return can be <strong>anything</strong> - including functions</p>
+<p>In functional programming, functions are first-class citizens.</p>
 </section>
+
+<section class="slide">
+<h2> Functions </h2>
+
+<p>There are 3 ways to define a function and one way to call a function:</p>
+    <div class="slide">
+    1. With <code>fn</code>:
+        <code class="clojure">
+    (def foo (fn [a b c] a))
+    (foo 1 2 3)
+        </code>
+        <br>
+    </div>
+    
+    <div class="slide">
+        2. With the anonymous function literal: <code>#</code>:
+<code class="clojure">
+(#(+ %1 %3) 1 10 100)
+</code>
+        <br>
+    </div>
+    
+    <div class="slide">
+        3. With <code>defn</code>, you can add a documentation string to your function:
+<code class="clojure">
+    (defn bar "bar is a function with documentation"
+    [a b c] b)
+    (bar 1 2 3)</code>
+        <br>
+     </div> 
+ </section>
+
+ 
+     <section class="slide">
+         <h2>🏂  (defn bar) vs. (def bar fn)</h2>
+<div>
+         <code>defn</code> is a macro that associates metadata to the function that it defines:
+     </div>
+ <div class="slide">
+<code class="clojure">
+    (defn bar "bar is a function with documentation"
+    [a b c] b)
+    (meta #'bar)</code>        
+  </div>
+
+<div class="slide">
+    For instance, we can retrieve the documentation string of a function at run time:
+    <code class="clojure">
+    (:doc (meta #'inc))
+    </code>
+    <br>
+</div>
+</section>
+
 
 <section class="slide">
    <h2>Clojure Collections</h2>
@@ -88,6 +130,7 @@
 
 <section class="slide">
    <h2>List Creation</h2>
+    <p><code>Lists</code> are linked lists.</p>
     <div class="slide">
     You can mix element of different types inside a list:
         <code class="clojure">
@@ -104,7 +147,8 @@
  <br/>
  </div>
 
- <div class="slide">There is a syntactic sugar for list creation: the single quote <code>'</code> - and it works fine with nested lists:
+ <div class="slide">There is a syntactic sugar for list creation: the single quote <code>'</code>.
+     <div> And it works fine with nested lists:
  <code class="clojure">'(1 2 ("a" "b" (1 2 4)))</code>
  </div>
  <br/>
@@ -134,13 +178,52 @@
     <br>
 </div>
 </section>
-    
 
-    <!-- deck.navigation snippet -->
-    <div aria-role="navigation">
-      <a href="#" class="deck-prev-link" title="Previous">&#8592;</a>
-      <a href="#" class="deck-next-link" title="Next">&#8594;</a>
+<section class="slide">
+    <h2>Vectors</h2>
+<div><code>Vectors</code> are like <code>Lists</code> but with fast random access. </div>
+<img src="https://viebel.github.io/deckjs-demo-klipse/img/clojure-vectors.png" alt="">
+</section>
+
+<section class="slide">
+    <h2> Vector Creation </h2>
+
+<div class="slide">
+        Vectors are created using <code>vector</code>
+        <code class="clojure">
+        (vector 1 2 3 4 5)
+</code>
+        <br>
     </div>
+    
+    <div class="slide">
+        Vectors can also be created using the literal <code>[]</code>
+        <code class="clojure">
+        [1 2 3 4 "aa" [1 2] [1 2 3]]
+</code>
+        <br>
+    </div>
+    <div class="slide">
+        Like with <code>Lists</code>, you can access the first element with <code>first</code>:
+        <code class="clojure">
+        (first [1 2 3 4 5])
+</code>
+        <br>
+    </div>
+    <div class="slide">
+        And you can also access any element in the vector and it is efficient:
+        <code class="clojure">
+        (get [0 1 2 3 4 5 6 7 8 9 10] 7)
+</code>
+        <br>
+    </div>
+    <div class="slide">
+        You can convert a <code>list</code> into a <code>vector</code> with <code>vec</code>:
+        <code class="clojure">(vec '(1 2 3 4 5))</code>
+        <br>
+    </div>
+</section>
+    
 
     <!-- deck.status snippet -->
     <p class="deck-status" aria-role="status">
@@ -148,14 +231,6 @@
       /
       <span class="deck-status-total"></span>
     </p>
-
-    <!-- deck.goto snippet -->
-    <form action="." method="get" class="goto-form">
-      <label for="goto-slide">Go to slide:</label>
-      <input type="text" name="slidenum" id="goto-slide" list="goto-datalist">
-      <datalist id="goto-datalist"></datalist>
-      <input type="submit" value="Go">
-    </form>
 
     <!-- End extension snippets. -->
   </div>
@@ -166,15 +241,14 @@
 
 <!-- Extension JS files. Add or remove as needed. -->
 <script src="https://viebel.github.io/deckjs-demo-klipse/includes/extensions/menu/deck.menu.js"></script>
-<script src="https://viebel.github.io/deckjs-demo-klipse/includes/extensions/goto/deck.goto.js"></script>
 <script src="https://viebel.github.io/deckjs-demo-klipse/includes/extensions/status/deck.status.js"></script>
 <script src="https://viebel.github.io/deckjs-demo-klipse/includes/extensions/navigation/deck.navigation.js"></script>
-<script src="https://viebel.github.io/deckjs-demo-klipse/includes/extensions/scale/deck.scale.js"></script>
 
 <script>
   $(function() {
     $.deck('.slide', {
-    countNested: false});
+    countNested: false
+    });
   });
 </script>
 
