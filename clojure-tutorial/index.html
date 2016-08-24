@@ -46,7 +46,7 @@
     <tr>
 <td style="width:60%">
 <ul>
-<li><a href="http://app.klipse.tech/?eval_only=1">Klipse: Clojure REPL online"</a></li>
+<li><a href="http://app.klipse.tech/?eval_only=1">Klipse: Clojure REPL online</a></li>
         <li><a href="https://clojuredocs.org/">ClojureDocs: Documentation with Examples</a></li>
         <li><a href="http://clojurescriptkoans.com/">Clojurescript koans</a></li>
         <li><a href="http://clojurians.net/">Clojurians: Slack Channel</a></li>
@@ -235,7 +235,28 @@
     <br>
 </div>
 </section>
+<section class="slide">
+    <h2> Functions - Practice</h2>
+    <div class="slide">
+        Write a function that receives a list and returns its fifth element. You'll need to use the <a href="https://clojuredocs.org/clojure.core/rest">rest</a> function a couple of times.
 
+        <code class="clojure">
+            (defn fifth [lst])
+            (fifth '(1 2 3 4 5 6 7 8))
+        </code>
+        <br>
+    </div>
+    <div class="slide">
+🏂  Write a function that receives a number <code>n</code> and a list and returns its <code>n</code>th element. You'll need to use recursion.
+
+        <code class="clojure">
+            (defn nth [n lst])
+            (nth 10 '(1 2 3 4 5 6 7 8 9 10 11))
+        </code>
+        <br>
+    </div>
+
+</section>
 <section class="slide">
     <h2>Vectors</h2>
 <div><code>Vectors</code> are like <code>Lists</code> but with fast random access. </div>
