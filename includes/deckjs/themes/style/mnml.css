@@ -1,11 +1,10 @@
 /* mnml.css
  *
- * This is a customized version of the Swiss default theme. It is dual-licenced under the
+ * This is a customized version of the mnml default theme. It is dual-licenced under the
  * GPL2 and MIT licenses and adapted from its original by Laurens Duijvesteijn. The original
- * swiss.css, as created by Caleb Troughton, is found on Github:
+ * mnm.css, is found on Github:
  *
- * https://github.com/imakewebthings/deck.js
- *
+ * https://github.com/duijf/mnml
  */
 
 .deck-container {
@@ -93,14 +92,7 @@ h4 {
 .slide a:hover,
 .slide a:focus,
 .slide a:active,
-.slide a:visited {
-  color: #c00;
-  text-decoration: none;
-}
 .slide a:hover,
-.slide a:focus {
-  text-decoration: underline;
-}
 .slide .deck-before,
 .slide .deck-previous {
   opacity: 0.4;
