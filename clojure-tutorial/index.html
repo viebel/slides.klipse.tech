@@ -205,7 +205,7 @@
  </div>
 
  <div class="slide">There is a syntactic sugar for list creation: the single quote <code>'</code>.
-     <div> And it works fine with nested lists:
+     <div> And it works fine with nested lists:</div>
  <code class="clojure">'(1 2 ("a" "b" (1 2 4)))</code>
  </div>
  <br/>
@@ -261,7 +261,7 @@
 
 </p>
 
-You might use eithe your <code>nth-element</code> or the clojure <a href="https://clojuredocs.org/clojure.core/nth">nth</a>.
+You might use either your <code>nth-element</code> or the clojure <a href="https://clojuredocs.org/clojure.core/nth">nth</a>.
 <code class="clojure">
 (defn select-1-5-7 [list])
 </code>
@@ -314,7 +314,29 @@ You might use eithe your <code>nth-element</code> or the clojure <a href="https:
         <br>
     </div>
 </section>
+<section class="slide">
+    <h2> Vectors - Practice</h2>
+    <div class="slide">
+        Write a function that receives a vector and converts it to a list:
 
+        <code class="clojure">
+            (defn ->list [vec])
+        </code>
+        <br>
+    </div>
+    <div class="slide">
+Write a function that receives a "thing" and a vector and returns true or false according to the presence of the "thing" in the vector:
+
+        <code class="clojure">
+            (defn present? [vec thing])
+        </code>
+        <br>
+    </div>
+</section>
+<section class="slide">
+    <h2>Congratulations</h2>
+    <img src="" alt="">
+</section>
     <!-- deck.status snippet -->
     <p class="deck-status" aria-role="status">
       <span class="deck-status-current"></span>
