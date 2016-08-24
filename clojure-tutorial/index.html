@@ -36,9 +36,25 @@
   <div class="deck-container">
 
 <section class="slide">
-  <h1>Introduction to Clojure </h1>
+  <h2>Introduction to Clojure </h2>
+  <img src="./qr_code_clojure_tutorial.jpg" alt="">
 </section>
 
+<section class="slide">
+    <h2>Tools</h2>
+    <table>
+    <tr>
+<td style="width:60%">
+<ul>
+<li><a href="http://app.klipse.tech/?eval_only=1">Klipse: Clojure REPL online"</a></li>
+        <li><a href="https://clojuredocs.org/">ClojureDocs: Documentation with Examples</a></li>
+        <li><a href="http://clojurescriptkoans.com/">Clojurescript koans</a></li>
+        <li><a href="http://clojurians.net/">Clojurians: Slack Channel</a></li>
+        <li><a href="https://groups.google.com/forum/#!forum/clojure">Clojure Google group</a></li>
+    </ul>
+ </td>
+<td style="width:40%"><img src="http://slides.klipse.tech/img/tools.jpg" alt=""></td>
+</tr></table></section>
 <section class="slide">
     <h2>Clojure Principles</h2>
     <ul>
@@ -61,9 +77,9 @@
 </section>
 <section class="slide">
 <h2> Functions </h2>
-<p>A function is an entity that receives things and return a thing.</p>
+<p>A function is an entity that receives "things" and return a "thing".</p>
 <img src="http://slides.klipse.tech/img/first-class.jpg" alt="">
-<p>The beauty of functional programming is that the things that functions receive and return can be <strong>anything</strong> - including functions</p>
+<p>The beauty of functional programming is that the "things" that functions receive and return can be <strong>anything</strong> - including functions</p>
 <p>In functional programming, functions are first-class citizens.</p>
 </section>
 
@@ -100,7 +116,7 @@
 
  
      <section class="slide">
-         <h2>🏂  (defn bar) vs. (def bar fn)</h2>
+         <h2>🏂  Functions - (defn bar) vs. (def bar fn)</h2>
 <div>
          <code>defn</code> is a macro that associates metadata to the function that it defines:
      </div>
@@ -119,6 +135,32 @@
     <br>
 </div>
 </section>
+<section class="slide">
+    <h2> Functions - Practice</h2>
+    <div class="slide">
+        Write a function that receives a name and returns a string with the concatanation of "Hello" and the name. You'll need to use the <a href="https://clojuredocs.org/clojure.core/str">str</a> function.
+
+        <code class="clojure">
+            (defn hello [name])
+        </code>
+        <br>
+    </div>
+    <div class="slide">
+        Write a function that receives a number and returns "zero" if the number is zero and "non-zero" otherwise. Take a look at <a href="https://clojuredocs.org/clojure.core/if">if</a>.
+
+        <code class="clojure">
+            (defn zero-check [n])
+        </code>
+        <br>
+    </div>
+    <div class="slide">
+🏂  Write a function called <code>applicator</code> that receives two arguments: a function and a "thing" and returns the application of the function on the argument.
+<code class="clojure"></code>
+(defn applicator [func number])
+(= (applicator inc 19) 20)
+        <br>
+    </div>
+</section>
 
 
 <section class="slide">
@@ -134,12 +176,12 @@
 
 <section class="slide">
 <h2>Lists</h2>
+<p>In clojure, <code>Lists</code> are simply linked lists.</p>
 <img src="http://slides.klipse.tech/img/hello-list.jpg" alt="">
 </section>
 
 <section class="slide">
    <h2>List Creation</h2>
-    <p><code>Lists</code> are linked lists.</p>
     <div class="slide">
     You can mix element of different types inside a list:
         <code class="clojure">
