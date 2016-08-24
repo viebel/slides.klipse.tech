@@ -167,11 +167,11 @@ button {
 }
 
 select, input, textarea {
-  color: #444444;
+  color: #90b4fe;
 }
 
 a {
-  color: #607890;
+  color: #90b4fe;
 }
 a:hover, a:focus {
   color: #036;
@@ -293,7 +293,7 @@ li > ol, li > ul {
 }
 
 h1 {
-  color: #000;
+  color: #63b132;
 }
 
 h2 {
@@ -319,7 +319,7 @@ blockquote {
   font-size: 2em;
   font-style: italic;
   padding: 1em 2em;
-  color: #000;
+  color: #90b4fe;
   border-left: 5px solid #ccc;
 }
 blockquote p {
