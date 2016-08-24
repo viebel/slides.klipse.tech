@@ -333,12 +333,12 @@ blockquote cite {
 }
 
 ::-moz-selection {
-  background: #c00;
+  background: #90b4fe;
   color: #fff;
 }
 
 ::selection {
-  background: #c00;
+  background: #90b4fe;
   color: #fff;
 }
 
