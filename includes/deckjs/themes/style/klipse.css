@@ -310,10 +310,9 @@ pre {
 }
 
 code {
-  color: #888;
-  border: 1px solid #90b4fe;
-  border-radius: 3px;
-  background-color: #90b4fe;
+  border: 1px solid #dfe6f5;
+  border-radius: 8px;
+  background-color: #dfe6f5;
 }
 
 blockquote {
