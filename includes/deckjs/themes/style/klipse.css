@@ -283,7 +283,7 @@ li > ol, li > ul {
 .deck-container {
   font-size: 16px;
   line-height: 1.25;
-  color: #444;
+  color: #90b4fe;
 }
 
 .slide {
@@ -297,16 +297,16 @@ h1 {
 }
 
 h2 {
-  color: #c00;
-  border-bottom-color: #ccc;
+  color: #63b132;
+  border-bottom-color: #90b4fe;
 }
 
 h3 {
-  color: #888;
+  color: #63b132;
 }
 
 pre {
-  border-color: #ccc;
+  border-color: #90b4fe;
 }
 
 code {
