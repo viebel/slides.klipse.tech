@@ -269,6 +269,8 @@ pre {
   word-wrap: break-word;
   padding: 4px 5px;
   overflow-x: auto;
+  font-size: 1.95em;
+  font-weight: bold;
 }
 
 code {
