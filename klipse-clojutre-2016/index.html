@@ -52,11 +52,11 @@
  <div class="left" style="width:50%;">
 <div>
 <div>
-    <img src="./klipse.png" alt="" width="150">
+    <img class="fullscreen" src="./klipse.png" alt="" width="150">
  </div> 
  <div> ClojuTRE 2016</div>
 <div>
-    <div>Yehonathan Sharvit </div>
+    <div>Yehonathan Sharvit</div>
     <div> <a href="https://twitter.com/viebel">@viebel</a></div>
  </div>
 <div class="clear">
@@ -96,6 +96,22 @@
     $.deck('.slide', {
     countNested: false
     });
+    function launchIntoFullscreen(element) {
+  if(element.requestFullscreen) {
+    element.requestFullscreen();
+  } else if(element.mozRequestFullScreen) {
+    element.mozRequestFullScreen();
+  } else if(element.webkitRequestFullscreen) {
+    element.webkitRequestFullscreen();
+  } else if(element.msRequestFullscreen) {
+    element.msRequestFullscreen();
+  }
+}
+
+$('.fullscreen').click(function(){
+launchIntoFullscreen(document.documentElement); 
+});
+
   });
 </script>
 
