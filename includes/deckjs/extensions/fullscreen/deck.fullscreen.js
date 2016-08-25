@@ -31,7 +31,7 @@ This module adds a fullscreen handler to selected elements.
     $(selector).click(launchFullScreen);
   };
 
-  $document.bind('deck.init', function() {
+  $(document).bind('deck.init', function() {
     attachFullScreen();
   });
 })(jQuery, 'deck');
