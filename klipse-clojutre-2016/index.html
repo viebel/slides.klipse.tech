@@ -5,6 +5,8 @@
   <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
   <meta name="viewport" content="width=1024, user-scalable=no">
 
+  <link rel="shortcut icon" href="/favicon.png">
+
   <title>Klipse - ClojuTRE 2016</title>
 
 
@@ -27,18 +29,54 @@
   <script src="http://slides.klipse.tech/includes/deckjs/modernizr.custom.js"></script>
 </head>
 <body>
+<style>
+.centered {
+    width: 50%;
+    padding-left: 25%;
+    text-align: center;
+}
+.left {
+    float: left;
+}
+.clear {
+    clear: both;
+}
+.v-centered {
+    position: absolute;
+    top: 50%;
+    transform: translateY(-50%);
+}
+</style>
   <div class="deck-container">
 
 <section class="slide">
-  <h2>Interactivity everywhere with Klipse</h2>
-  <img src="./qr_code.jpg" alt="" width="100">
- <footer>
+<div class="centered">
+  <h2>Code interactivity everywhere with Klipse</h2>
+ <div class="left" style="width:50%;">
+    <img src="./qr_code.jpg" alt="" width="150"></div>
+ <div class="left" style="width:50%;">
+<div>
+<div>
+    <img src="./klipse.png" alt="" width="300">
+ </div> 
  <div> ClojuTRE 2016</div>
- <span width="100px">
-    <div class="clojure">(js/Date)</div>
- </span>
-  <div>@viebel</div>
-</footer>
+<div>
+    <div>Yehonathan Sharvit </div>
+    <div> <a href="https://twitter.com/viebel">@viebel</a></div>
+ </div>
+<div class="clear">
+<div style="margin-top:14px;">
+    <a class="github-button" href="https://github.com/viebel/klipse" data-count-href="/viebel/klipse/stargazers" data-count-api="/repos/viebel/klipse#stargazers_count" data-count-aria-label="# stargazers on GitHub" aria-label="Star viebel/klipse on GitHub">Klipse</a>
+</div>
+<script async defer id="github-bjs" src="https://buttons.github.io/buttons.js"></script>
+</div>
+</div>
+
+</div>
+
+    <div class="clear"><div class="clojure">(symbol (js/Date))</div></div>
+
+</div>
 </section>
 
     <p class="deck-status" aria-role="status">
