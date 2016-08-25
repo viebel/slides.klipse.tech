@@ -257,7 +257,7 @@ video, iframe, img {
 }
 
 p, blockquote, iframe, ul, ol, pre, video {
-  margin-bottom: 1em;
+  margin-bottom: 0.4em;
 }
 
 img {
@@ -267,8 +267,12 @@ pre {
   white-space: pre;
   white-space: pre-wrap;
   word-wrap: break-word;
-  padding: 1em;
-  border: 1px solid #888;
+  padding: 4px 5px;
+  overflow-x: auto;
+}
+
+code {
+    background-color: #eef;
 }
 
 em {
@@ -306,10 +310,6 @@ h2 {
 
 h3 {
   color: #63b132;
-}
-
-pre {
-  border-color: #90b4fe;
 }
 
 code {
