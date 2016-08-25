@@ -256,10 +256,13 @@ video, iframe, img {
   margin: 0 auto;
 }
 
-p, blockquote, iframe, img, ul, ol, pre, video {
+p, blockquote, iframe, ul, ol, pre, video {
   margin-bottom: 1em;
 }
 
+img {
+  margin-bottom: 0;
+}
 pre {
   white-space: pre;
   white-space: pre-wrap;
