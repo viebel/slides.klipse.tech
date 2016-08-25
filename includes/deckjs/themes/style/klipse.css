@@ -271,8 +271,7 @@ pre {
   overflow-x: auto;
 }
 
-pre, code {
-    font-size: 15px;
+code {
     background-color: #eef;
 }
 
