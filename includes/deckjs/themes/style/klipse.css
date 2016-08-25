@@ -216,7 +216,7 @@ h1, .vcenter {
 }
 
 h2 {
-  font-size: 2.25em;
+  font-size: 1.95em;
   font-weight: bold;
   padding-top: 0em;
   margin: 0 0 .66666em 0;
@@ -236,7 +236,7 @@ h4 {
 }
 
 h5 {
-  font-size: 1.125em;
+  font-size: 1.025em;
   font-weight: bold;
   margin-bottom: .2222em;
 }
@@ -347,7 +347,7 @@ blockquote cite {
 
 .deck-container {
   font-family: "Helvetica Neue", sans-serif;
-  font-size: 1.75em;
+  font-size: 1em;
   background: #fff;
 }
 .deck-container > .slide {
