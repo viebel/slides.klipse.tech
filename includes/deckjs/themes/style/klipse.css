@@ -218,7 +218,7 @@ h1, .vcenter {
 h2 {
   font-size: 2.25em;
   font-weight: bold;
-  padding-top: .5em;
+  padding-top: 0em;
   margin: 0 0 .66666em 0;
   border-bottom: 3px solid #888;
 }
