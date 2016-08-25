@@ -1,12 +1,11 @@
 /*!
-Deck JS - deck.status
-Copyright (c) 2011-2014 Caleb Troughton
+Deck JS - deck.fullscreen
+Copyright (c) 2016-2016 Yehonathan Sharvit
 Dual licensed under the MIT license.
-https://github.com/imakewebthings/deck.js/blob/master/MIT-license.txt
 */
 
 /*
-This module adds a (current)/(total) style status indicator to the deck.
+This module adds a fullscreen handler to selected elements.
 */
 (function($, undefined) {
   var $document = $(document);
@@ -64,45 +63,34 @@ This module adds a (current)/(total) style status indicator to the deck.
     updateCurrent(null, index, index);
   };
 
-  var setTotalSlideNumber = function() {
-    var options = $.deck('getOptions');
-    var slides = $.deck('getSlides');
 
-    if (options.countNested) {
-      $(options.selectors.statusTotal).text(slides.length);
+
+  var launchFullScreen = function() {
+    function launchIntoFullscreen(element) {
+      if(element.requestFullscreen) {
+        element.requestFullscreen();
+      } else if(element.mozRequestFullScreen) {
+        element.mozRequestFullScreen();
+      } else if(element.webkitRequestFullscreen) {
+        element.webkitRequestFullscreen();
+      } else if(element.msRequestFullscreen) {
+        element.msRequestFullscreen();
+      }
     }
-    else {
-      $(options.selectors.statusTotal).text(rootCounter);
+  
+    launchIntoFullscreen(document.documentElement);
+  };
+
+
+  var attachFullScreen = function() {
+    var options = $.deck('getOptions');
+    if (options.fullscreenSelector) {
+      $(options.fullscreenSelector).click(launchFullScreen);
     }
   };
 
-  /*
-  Extends defaults/options.
-
-  options.selectors.statusCurrent
-    The element matching this selector displays the current slide number.
-
-  options.selectors.statusTotal
-    The element matching this selector displays the total number of slides.
-
-  options.countNested
-    If false, only top level slides will be counted in the current and
-    total numbers.
-  */
-  $.extend(true, $.deck.defaults, {
-    selectors: {
-      statusCurrent: '.deck-status-current',
-      statusTotal: '.deck-status-total'
-    },
-
-    countNested: true
-  });
-
   $document.bind('deck.init', function() {
-    markRootSlides();
-    setInitialSlideNumber();
-    setTotalSlideNumber();
+    attachFullScreen();
   });
-  $document.bind('deck.change', updateCurrent);
 })(jQuery, 'deck');
 
