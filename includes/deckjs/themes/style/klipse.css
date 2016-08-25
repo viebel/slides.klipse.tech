@@ -386,3 +386,10 @@ blockquote cite {
 .deck-menu .deck-current, .no-touch .deck-menu .slide:hover {
   background: #ddf;
 }
+
+.challenge:before {
+    content: "\1F3C2 ";/🏂*/
+}
+.meditation:before {
+    content: "\2615    "; /* ☕ */
+}
