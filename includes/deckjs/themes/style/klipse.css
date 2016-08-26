@@ -263,13 +263,13 @@ p, blockquote, iframe, ul, ol, pre, video {
 img {
   margin-bottom: 0;
 }
+
 pre {
   white-space: pre;
   white-space: pre-wrap;
   word-wrap: break-word;
   padding: 4px 5px;
   overflow-x: auto;
-  font-size: 1.95em;
   font-weight: bold;
 }
 
