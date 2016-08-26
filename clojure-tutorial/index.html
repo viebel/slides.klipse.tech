@@ -369,35 +369,69 @@ Write a function that receives a "thing" and a vector and returns true or false 
    <div class="slide">
             <p class="meditation">What methods don't support nested maps creations?</p>
             <p class="meditation">How many keys are there in this map: <code>{[1 2] :aaa '(1 2) :aaa}</code>?</p>
+            <p class="meditation">How do you generate an empty map?</p>
         </div>
 </section>
 
 <section class="slide">
     <h2>Maps - functions</h2>
     <div class="slide">
-        <p>assoc</p>
-        <pre><code class="clojure"></code></pre>
+        <p>With <code>assoc</code>, you associate (create or modify) one or more <code>key-value</code>s</p>
+        <pre><code class="clojure">(assoc {} :a 1 :b 2)</code></pre>
     </div>
     <div class="slide">
-        <p>dissoc</p>
-        <pre><code class="clojure"></code></pre>
+        <p>With <code>dissoc</code> you dissociate (remove) one or more <code>key-value</code>s</p>
+        <pre><code class="clojure">(dissoc {:a 1 :b 2} :a :b)</code></pre>
     </div>
     <div class="slide">
-        <p>assoc-in</p>
-        <pre><code class="clojure"></code></pre>
+        <p>With <code>assoc-in</code>, you associate a nested <code>key-value</code></p>
+        <pre><code class="clojure">(assoc-in {} [:a :b :c] 1)</code></pre>
     </div>
-    <div class="slide">
+    <p class="slide meditation">What will happen with <code>(assoc-in {:a 1} [:a :b :c] 1)</code>?</p>
+</section>
+<section class="slide">
+    <h2> Map - functions (cont.)</h2>
+    <p>There are a couple of ways to retrieve values from a map:</p>
+    <ol>
+<li>
+<div class="slide">
         <p>get</p>
-        <pre><code class="clojure"></code></pre>
+        <pre><code class="clojure">(get {:a 1 :b 2} :a)</code></pre>
+        <p>
+        When they key is not there, <code>get</code> returns <code>nil</code>:
+        <pre><code class="clojure">(get {} :a)</code></pre>
+        </p>
+        <p class="slide meditation">Meditate about this problematic code: <code>(get {:a nil})</code></p>
+        <p class="slide meditation">What happens if you pass an additional argument to <code>get</code>?</p>
+
+
     </div>
-    <div class="slide">
+  </li>
+<li>
+<div class="slide">
+        <p>get-in</p>
+        <pre><code class="clojure">(get-in {:a {:b 1}} [:a :b])</code></pre>
+    </div>
+  </li>
+ <li>
+<div class="slide">
+        <p>find</p>
+        <pre><code class="clojure">(find {:a 1 :b 2} :a)</code></pre>
+    </div>
+  </li>
+ 
+  <li>
+<div class="slide">
         <p>the map itself is a function</p>
         <pre><code class="clojure"></code></pre>
     </div>
-    <div class="slide">
+</li>
+<li>
+<div class="slide">
         <p> keywords are functions</p>
         <pre><code class="clojure"></code></pre>
     </div>
+</li></ol>
 </section>
 
 <section class="slide">
