@@ -390,7 +390,7 @@ Write a function that receives a "thing" and a vector and returns true or false 
     <p class="slide meditation">What will happen with <code>(assoc-in {:a 1} [:a :b :c] 1)</code>?</p>
 </section>
 <section class="slide">
-    <h2> Map - functions (cont.)</h2>
+    <h2> Maps - functions (cont.)</h2>
     <p>There are a couple of ways to retrieve values from a map:</p>
     <ol>
 <li>
@@ -419,21 +419,147 @@ Write a function that receives a "thing" and a vector and returns true or false 
         <pre><code class="clojure">(find {:a 1 :b 2} :a)</code></pre>
     </div>
   </li>
- 
-  <li>
+  </ol>
+  </section>
+  <section class="slide">
+      <h2>Maps - functions (cont.)</h2>
+      <ol start="4">
+<li>
 <div class="slide">
         <p>the map itself is a function</p>
-        <pre><code class="clojure"></code></pre>
+        <pre><code class="clojure">({:a 1} :a)</code></pre>
     </div>
 </li>
 <li>
 <div class="slide">
         <p> keywords are functions</p>
-        <pre><code class="clojure"></code></pre>
+        <pre><code class="clojure">(:a {:a 1})</code></pre>
     </div>
-</li></ol>
+</li>
+</ol>
+<div class="slide">
+        <p> You can retrieve the keys of the map with <code>keys</code></p>
+        <pre><code class="clojure">(keys {:a 1 :b 2 :c {:d 1}})</code></pre>
+    </div>
+
+<div class="slide">
+        <p> And the values with <code>vals</code></p>
+        <pre><code class="clojure">(vals {:a 1 :b 2 :c {:d 1}})</code></pre>
+    </div>
+    <p class="slide meditation">Write an assertion using <code>keys</code>, <code>vals</code> and <code>zipmap</code>.</p>
+
 </section>
 
+<section class="slide">
+    <h2>Maps - Practice</h2>
+    <ol>
+    <li>
+<div>
+        <p>Write a function that returns the values for a selected collection of keys</p>
+        <pre><code class="clojure">(defn my-select-keys [m the-keys])
+        (= (my-select-keys {:a 1 :b 2}) [:a :b :c] '(1 2 nil))</code></pre>
+    </div>
+    </li>
+   <li>
+ <div class="slide">
+        <p>Write a function that receives a map <code>m</code> and a function <code>f</code> and returns a map with the same keys as <code>m</code> and with the values transformed by <code>f</code>:
+        </p>
+        <pre><code class="clojure">(defn map-object [f m])
+        (= (map-object #(* 100 %) {:a 1 :b 2 :c 3}) {:a 100 :b 200 :c 300})</code></pre>
+    </div>
+</li>
+<li>
+<div class="slide">
+        <p>  Write a function that converts a sequence into a map where the keys are the indexes of the elements in the sequence.
+        </p>
+        <pre><code class="clojure">(defn sequence->map [s])
+        (= (sequence->map [10 20 30]) {0 10 1 20 2 30})</code></pre>
+    </div>
+</li>
+<li>
+<div class="slide">
+    <p class="challenge">  Write a function that checks if a map is a submap of the other. <br>
+          Map m1 is a submap of m2 if all key/value pairs in m1 exist in m2"
+        </p>
+        <pre><code class="clojure">(defn submap [m1 m2])
+        [(true? (submap {:a 1 :b 2} {:a 1 :b 2 :c 3}))
+        (false? (submap {:a 1 :b 2 :c nil} {:a 1 :b 2}))]</code></pre>
+    </div>
+</li>
+
+
+</ol>
+
+</section>
+
+<section class="slide">
+    <h2>Sets</h2>
+    <p>Set is a fundamental concept of mathematics.<br>
+    </p>
+    <img src="./img/sql_joins.jpg" alt="">
+</section>
+
+<section class="slide">
+    <h2>Sets - creation</h2>
+        <div class="slide">
+            <p>To create a <code>set</code> from a collection, you use <code>set</code>:</p>
+            <pre><code class="clojure">(set '(1 "hello" [1 2]))</code></pre>
+        </div>
+        <div class="slide">
+            <p>In a set, there are no duplicates</p>
+            <pre><code class="clojure">(set [1 1 "hello" "hello" [1 2] '(1 2)])</code></pre>
+            <p class="meditation">Why <code>[1 2]</code> and <code>(1 2)</code> are considered as duplicates?</p>
+        </div>
+        <div class="slide">
+            <p>You can also create a set with the set literal <code>#{}</code></p>
+            <pre><code class="clojure">#{1 2 "hello" [1 2]}</code></pre>
+        </div>
+        <div class="slide">
+            <p>But then, duplicates are forbidden!</p>
+            <pre><code class="clojure">#{1 2 3 1}</code></pre>
+        </div>
+        <div class="slide">
+            <p class="meditation">What's the difference between <code>set</code> and <code>distinct</code>?</p>
+            <pre><code class="clojure">(distinct [1 1 "hello" "hello" [1 2] '(1 2)])</code></pre>
+        </div>
+        <div class="slide">
+            <p>You can also use <code>(into #{})</code> to create a set</p>
+            <pre><code class="clojure">(into #{} [1 2 3 3 4])</code></pre>
+        </div>
+</section>
+
+<section class="slide">
+    <h2>Sets - functions</h2>
+    <div class="slide">
+        <p>In order to use the functions on sets, we have to require the <code>clojure.set</code> namespace:</p>
+        <pre><code class="clojure">(require '[clojure.set :as s])</code></pre>
+        <p class="meditation">Why is there a quote in the <code>require</code> statement?</p>
+    </div>
+    <div class="slide">
+        <p>All the basic mathematical operations on sets are available: </p>
+    </div>
+    <ol>
+
+    <li>
+<div class="slide">
+        <p>Union</p>
+        <pre><code class="clojure">(s/union #{1 2} #{2 3} #{4 5 2})</code></pre>
+    </div>
+    </li>
+    <li>
+<div class="slide">
+        <p>Intersection</p>
+        <pre><code class="clojure">(s/intersection #{1 2} #{2 3})</code></pre>
+    </div>
+    </li>
+    <li>
+<div class="slide">
+        <p>Difference</p>
+        <pre><code class="clojure">(s/difference #{1 2 3 4 5} #{1 2} #{3 4})</code></pre>
+    </div>
+</li>
+</ol>
+</section>
 <section class="slide">
     <h2>Congratulations</h2>
     <img src="" alt="">
@@ -480,7 +606,8 @@ Write a function that receives a "thing" and a vector and returns true or false 
 
 
 
-<script src="https://storage.googleapis.com/app.klipse.tech/plugin/js/klipse_plugin.js"></script>
+<script src="https://storage.googleapis.com/app.klipse.tech/plugin/js/klipse_plugin.js?aa1"></script>
+<!-- <script src="http://localhost:5014/plugin/js/klipse_plugin.js"></script> -->
 
 </body>
 </html>
