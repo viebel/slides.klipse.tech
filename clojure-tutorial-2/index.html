@@ -73,7 +73,7 @@
     <ul>
         <li>Destructuring</li>
         <li>multi-arity functions</li>
-        <li></li>
+        <li>loop recur</li>
         <li></li>
         <li></li>
     </ul>
@@ -93,25 +93,87 @@
     <h2>Sequences - interface</h2>
     <p> Here are a couple of functions available on sequences and here is <a href="http://clojure.org/reference/sequences">the full interface for sequences</a><p>
     <div class="slide">
-        <p>count</p>
-        <pre><code class="clojure"></code></pre>
+        <p><code>count</code></p>
+        <pre><code class="clojure">(count (zipmap (range 100) (range 200))) </code></pre>
     </div>
     <div class="slide">
-        <p>seq</p>
-        <pre><code class="clojure"></code></pre>
+        <p><code>seq</code> is useful when we need to test whether a sequence is empty</p>
+        <pre><code class="clojure">[(seq [1 2 3])
+        (seq [])]</code></pre>
     </div>
     <div class="slide">
-        <p>take</p>
-        <pre><code class="clojure"></code></pre>
+        <p>We can take a few element - even from an infinite sequence:</p>
+        <pre><code class="clojure">(take 10 (range))</code></pre>
     </div>
     <div class="slide">
-        <p>drop</p>
-        <pre><code class="clojure"></code></pre>
+        <p>We can take elements while a predicate holds:</p>
+        <pre><code class="clojure">(take-while (partial > 10) (range))</code></pre>
     </div>
     <div class="slide">
-        <p>last</p>
-        <pre><code class="clojure"></code></pre>
+        <p>We can also take the last elements of a list - but don't try that on an infinite list!</p>
+        <pre><code class="clojure">(take-last 10 (range 100))</code></pre>
     </div>
+    <div class="slide">
+        <p>Play also with <code>drop</code> <code>drop-last</code> and <code>drop-while</code>...</p>
+    </div>
+</section>
+<section class="slide">
+    <h2>Sequences - high order functions</h2>
+    <div class="slide">
+        <p>map</p>
+        <code class="clojure">(map inc [1 2 3])</code>
+    </div>
+    <div class="slide">
+        <p>filter</p>
+        <pre><code class="clojure">(filter even? (range 10))</code></pre>    </div>
+    <div class="slide">
+        <p>remove</p>
+        <pre><code class="clojure">(remove even? (range 10))</code></pre>    </div>
+    <div class="slide">
+        <p>reduce</p>
+        <pre><code class="clojure">(reduce (fn [res x] (* res x)) 1 (range 1 11))</code></pre></div>
+    </section>
+<section class="slide">
+    <h2 class="challenge">Map, filter and reduce</h2>
+    <p>Compose a string from the letters whose ascii values are odd numbers</p>
+    <p class="slide">We are going to implement this in several ways, improving our code style at each stage:</p>
+    <ol>
+
+        <li>
+       <div class="slide">
+     <p>The worst way:</p>
+     <pre><code class="clojure">(reduce (fn [res i]
+               (if (odd? i) (str res (char i)) res))
+             "" (range 97 123))</code></pre>
+     <p class="slide meditation">Why is it bad?</p>
+        </div></li>
+        <li>
+<div class="slide">
+            <p>Giving each stage a name:</p>
+            <pre><code class="clojure">(let [lst (range 97 123)
+                  f-lst (filter odd? lst)
+                  m-lst (map char f-lst)]
+              (reduce str "" m-lst))</code></pre>
+        </div>
+
+</li>        <li>
+<div class="slide">
+    <p>Using the <a href="https://clojuredocs.org/clojure.core/as-%3E"><code>as-></code> </a> threading macro</p>
+            <pre><code class="clojure">(identity (as-> (range 97 123) $
+                  (filter odd? $)
+                  (map char $)
+                  (reduce str "" $)))</code></pre>
+        </div>
+        </li>
+        <li>
+        <div class="slide">
+            <p>Using the <a href="https://clojuredocs.org/clojure.core/-%3E%3E"><code>->></code></a>threading macro:</p>
+            <pre><code class="clojure">(->> (range 97 123)
+                 (filter odd?)
+                 (map char)
+                 (reduce str ""))</code></pre>
+        </div></li>
+    </ol>
 </section>
 <section class="slide">
     <h2>Congratulations</h2>

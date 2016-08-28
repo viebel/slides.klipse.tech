@@ -341,7 +341,7 @@ Write a function that receives a "thing" and a vector and returns true or false 
         When they key is not there, <code>get</code> returns <code>nil</code>:
         <pre><code class="clojure">(get {} :a)</code></pre>
         </p>
-        <p class="slide meditation">Meditate about this problematic code: <code>(get {:a nil})</code></p>
+        <p class="slide meditation">Meditate about this problematic code: <code>(get {:a nil} :a)</code></p>
         <p class="slide meditation">What happens if you pass an additional argument to <code>get</code>?</p>
 
 
