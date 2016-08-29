@@ -7,7 +7,7 @@
 
   <link rel="shortcut icon" href="./favicon.png">
 
-  <title>Klipse - ClojuTRE 2016</title>
+  <title>KLIPSE - ClojuTRE 2016</title>
 
 
   <!-- Required stylesheet -->
@@ -34,6 +34,7 @@
     width: 50%;
     padding-left: 25%;
     text-align: center;
+
 }
 .text-centered {
     text-align: center;
@@ -45,6 +46,30 @@
 .clear {
     clear: both;
 }
+.klipse-app {
+    border:none;
+    width:100%;
+    height: 300px;
+}
+.klipse-def-1:before {
+    content: "KLIPSE is a Simple and Elegant Clojurescript Web REPL";
+}
+
+.klipse-def-2:before {
+    content: "that shows the transpiled javascript code.";
+}
+.klipse-def-3:before {
+    content: "KLIPSE is also a javascript tag that generates live and interactive code snippets in clojure."
+}
+.klipse-def-4:before {
+    content: "in javascript"
+}
+.klipse-def-5:before {
+    content: "in ruby"
+}
+.klipse-def-6:before {
+    content: "and obviously transpiles clojure into javascript"
+}
 </style>
   <div class="deck-container">
 
@@ -54,7 +79,7 @@
 <div>
 Code interactivity everywhere
  </div>
-<div>with Klipse</div></h2>
+<div>with KLIPSE</div></h2>
 <div class="centered">
  <div class="left" style="width:50%;">
     <img src="./qr_code.png" alt="" width="300"></div>
@@ -70,7 +95,7 @@ Code interactivity everywhere
  </div>
 <div class="clear">
 <div style="margin-top:14px;">
-    <a class="github-button" href="https://github.com/viebel/klipse" data-count-href="/viebel/klipse/stargazers" data-count-api="/repos/viebel/klipse#stargazers_count" data-count-aria-label="# stargazers on GitHub" aria-label="Star viebel/klipse on GitHub">Klipse</a>
+    <a class="github-button" href="https://github.com/viebel/klipse" data-count-href="/viebel/klipse/stargazers" data-count-api="/repos/viebel/klipse#stargazers_count" data-count-aria-label="# stargazers on GitHub" aria-label="Star viebel/klipse on GitHub">KLIPSE</a>
 </div>
 <script async defer id="github-bjs" src="https://buttons.github.io/buttons.js"></script>
 </div>
@@ -84,6 +109,63 @@ Code interactivity everywhere
 
 </div>
 </section>
+<section class="slide">
+<h2>What is KLIPSE?</h2>
+    <p class="klipse-def-1"</p>
+   <iframe class="klipse-app slide" src="http://app.klipse.tech/?eval_only=1&cljs_in=%5B(time%20(map%20inc%20%5B1%202%203%5D))%0A%20(time%20(reduce%20%2B%20(range%20100000)))%5D%0A%20"></iframe>
+</section>
+<section class="slide">
+<h2>What is KLIPSE?</h2>
+    <p class="klipse-def-1"</p>
+    <p class="klipse-def-2"></p>
+   <iframe class="klipse-app slide" src="http://app.klipse.tech/?cljs_in=(defn%20foo%20%5B%5D%20%22hello%22)%0A(foo)&js_only=1"></iframe>
+</section>
+
+<section class="slide">
+    <h2>What is KLIPSE?</h2>
+    <p class="klipse-def-1"</p>
+    <p class="klipse-def-2"></p>
+    <p class="klipse-def-3"></p>
+</p>
+  <div class="slide"><pre><code class="clojure">(map inc [1 2 3])</code></pre></div>
+  </section>
+
+<section class="slide">
+    <h2>What is KLIPSE?</h2>
+    <p class="klipse-def-1"</p>
+    <p class="klipse-def-2"></p>
+    <p class="klipse-def-3"></p>
+    <p class="klipse-def-4"></p>
+</p>
+<div class="slide"><pre><code class="javascript">[1,2,3].map((x) => x + 1)</code></pre></div>
+  </section>
+
+
+<section class="slide">
+    <h2>What is KLIPSE?</h2>
+    <p class="klipse-def-1"</p>
+    <p class="klipse-def-2"></p>
+    <p class="klipse-def-3"></p>
+    <p class="klipse-def-4"></p>
+    <p class="klipse-def-5"></p>
+</p>
+<div class="slide"><pre><code class="ruby">[1,2,3]*10</code></pre></div>
+  </section>
+
+
+<section class="slide">
+    <h2>What is KLIPSE?</h2>
+    <p class="klipse-def-1"</p>
+    <p class="klipse-def-2"></p>
+    <p class="klipse-def-3"></p>
+    <p class="klipse-def-4"></p>
+    <p class="klipse-def-5"></p>
+    <p class="klipse-def-6"></p>
+</p>
+<div class="slide"><pre><code class="clj-to-js">(defn foo[] "hello")
+(foo)</code></pre></div>
+  </section>
+
 
     <p class="deck-status" aria-role="status">
       <span class="deck-status-current"></span>
@@ -115,6 +197,9 @@ Code interactivity everywhere
 <script>
     window.klipse_settings = {
        selector: '.clojure',
+       selector_js: '.clj-to-js',
+       selector_eval_js: '.javascript',
+       selector_eval_ruby: '.ruby',
        codemirror_options_in: {
         lineWrapping: true,
         autoCloseBrackets: true
@@ -127,6 +212,8 @@ Code interactivity everywhere
 
 
 
+<script src="http://cdn.opalrb.org/opal/current/opal.min.js"></script>
+<script src="http://cdn.opalrb.org/opal/current/opal-parser.min.js"></script>
 <script src="https://storage.googleapis.com/app.klipse.tech/plugin/js/klipse_plugin.js"></script>
 
 </body>
