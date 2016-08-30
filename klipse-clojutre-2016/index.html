@@ -30,6 +30,11 @@
 </head>
 <body>
 <style>
+#klipse-color {
+    width: 300px;
+    height: 50px;
+    background-color: red;
+}
 .centered {
     width: 50%;
     padding-left: 25%;
@@ -51,8 +56,14 @@
     width:100%;
     height: 300px;
 }
+.klipse-app-small {
+    border:none;
+    width:100%;
+    height: 170px;
+}
+
 .klipse-def-1:before {
-    content: "KLIPSE is a Simple and Elegant Clojurescript Web REPL";
+    content: "KLIPSE is a Simple and Elegant Clojurescript Web REPL app.klispe.tech";
 }
 
 .klipse-def-2:before {
@@ -169,7 +180,7 @@ Code interactivity everywhere
     <p class="klipse-def-3"></p>
     <p class="klipse-def-4"></p>
 </p>
-<div class="slide"><pre><code class="javascript">[1,2,3].map((x) => x + 1)</code></pre></div>
+<div class="slide"><pre><code class="eval-javascript">[1,2,3].map((x) => x + 1)</code></pre></div>
   </section>
 
 
@@ -200,7 +211,7 @@ Code interactivity everywhere
 
 
   <section class="slide">
-      <h2>Why?</h2>
+      <h2>Why KLIPSE?</h2>
       <div class="slide">
           <div class="slide always-opaque">
             <div class="triangle triangle-top">
@@ -222,6 +233,145 @@ Code interactivity everywhere
         </div>    
     </div>
   </section>
+  <section class="slide">
+      <h2>Why KLIPSE?</h2>
+      <h3>Interactivity - Liveness</h3>
+          <div class="slide">
+              <p>The code is evaluated in the browser <br>
+              The readers are confident that the code executes as the author of the code claims.
+              </p>
+              <p class="slide"/p>
+              Instead of: <pre>
+<code class="hl-code">(map inc [1 2 3])
+;; returns [2 3 4])</code></pre>
+              the reader sees: 
+              <pre><code class="clojure">(map inc [1 2 3])</code></pre>
+              </p>
+              <p> BTW, do you see the bug in the non-interactive code snippet?</p>
+          </div>
+</section>
+<section class="slide">
+      <h2>Why KLIPSE?</h2>
+      <h3>Interactivity - Code Evaluation on the go</h3>
+          <div class="slide">
+              <p>The code can be modified by the reader. <br>
+              Now, the reader can explore the code, e.g.:
+<ul>
+  <li>
+  <div class="slide">
+What happens if...
+    <ol> 
+        <li>
+            <div class="slide">
+            <div>You use <code>dec</code> instead of <code>inc</code></div>
+            <pre><code class="clojure">(map inc [1 2 3])</code></pre>
+            </div>   
+        </li>
+        <li>
+            <div class="slide">
+            <div>Increasing the number of elements in the <code>vector</code></div>
+            <pre><code class="clojure">(map inc [1 2 3])</code></pre>
+            </div>   
+        </li>
+    </ol>
+  </div>
+  </li>
+   <li>
+   <div class="slide">
+       The reader can also check edge/weird cases:
+    <ol>
+        <li>
+        <div class="slide">
+            <div>Passing an empty <code>list</code></div>
+            <pre><code class="clojure">(map inc [1 2 3])</code></pre>
+        </div>   
+        </li>
+        <li>
+            <div class="slide">
+            <div>Or maybe pass a <code>map</code> instead of a <code>vector</code> e.g. <code>{:a 1 :b 2}</code></div>
+            <pre><code class="clojure">(map inc [1 2 3])</code></pre>
+        </div>   
+        </li>
+    </ol>
+    </div>
+  </li>
+              </ul>
+              </p>
+          </div>
+  </section>
+  <section class="slide">
+      <h2>Reach - Pluggable on any web page</h2>
+      <blockquote>
+          &ldquo;Why are we doing this? Because Clojure rocks, and JavaScript reaches.&rdquo;
+          — Rich Hickey
+      </blockquote>
+      <div class="slide">
+      <p>There are a lot of tools that can host code snippets. </p>
+      <p> All of them require you (the writer and the reader) to come to them. </p>
+      <p>KLIPSE takes a different approach: it comes to you (on any web page).</p>
+      <ul>
+      <li class="slide">A technical blog: <a href="http://blog.klipse.tech">My functional programing journey - blog.klispe.tech</a></li>
+      <li class="slide">A mini course: <a href="http://kids.klipse.tech">Teach LISP to your kids with KLIPSE - kids.klipse.tech</a></li>
+          <li class="slide">A documentation website: <a href="http://clojurebridge.github.io/community-docs/docs/clojure/anonymous-function/">Clojurebridge - Community powered Clojure documentation</a></li>
+          <li class="slide">A library on gitub: <a href="https://cdn.rawgit.com/expez/superstring/master/live-documentation.html">Superstring (Clojure[script] string library) Live Documentation</a></li>
+          <li class="slide">An html/javascript deck: <a href="slides.klipse.deck">This deck - slides.klipse.tech</a></li>
+      </ul>
+  </div>
+  </section>
+  <section class="slide">
+      <h2>Simplicity - KLIPSE REPL</h2>
+          <ol>
+                <li class="slide">Always there: desktop, mobile, tablet. No installation, no OS dependencies</li>
+                <li class="slide">Flat layout (by @raphaelboukara): no buttons, no texts</li>
+                <li class="slide">Configurable via url parameters e.g. <code>cljs-in=(map inc (range 10))</code>
+   <iframe class="klipse-app-small slide" src="http://app.klipse.tech/?cljs_in=(map%20inc%20(range%2010))&eval_only=1"></iframe>
+                </li>
+
+                <li class="slide">or <code>static-fns=true</code>
+   <iframe class="klipse-app-small slide" src="http://app.klipse.tech/?static-fns=true&cljs_in=(defn%20foo%20%5B%5D%20%22hello%22)%0A(foo)&js_only=1"></iframe>
+                </li>
+          </ol>
+      </section>
+      <section class="slide">
+          <h2>Simplicity - KLIPSE plugin</h2>
+
+          <ol>
+              <li class="slide">Just a <code>javascript</code> tag:<p>
+              <pre class="hl-code"><code>&lt;link rel="stylesheet" type="text/css" href="http://app.klipse.tech/css/codemirror.css"&gt;
+&lt;script&gt;
+window.klipse_settings = {
+   selector: '.language-klipse'// css selector for the html elements you want to klipsify
+};
+&lt;/script&gt;
+&lt;script src="http://app.klipse.tech/plugin/js/klipse_plugin.js"&gt;&lt;/script&gt;</code></pre>
+
+              <p></li>
+          <li class="slide">Flat layout:  no icons, no buttons, simply the code</li>
+          <li class="slide">Comes with default options but is highly configurable: languages, editor types, evaluation delay, loop evaluation delay, load code from gist...</li>
+          </ol>
+      </section>
+      <section class="slide">
+          <h2>Plugin Configuration - Demo</h2>
+          <p> A live code snippet that loads code from a gist <br>
+          This gist <code>:require</code> code from another gist<br>
+          This code runs in a loop every 3 seconds.
+          </p>
+          <p>
+          Here is the gist:
+          </p>
+          <script src="https://gist.github.com/viebel/08a311453c9d31378b357ced54221fb4.js"></script>
+          <div class="slide">
+              <p>Here is the KLIPSE snippet:</p>
+                  <pre><code class="clojure" data-loop-msec="3000" data-gist-id="viebel/08a311453c9d31378b357ced54221fb4"></code></pre>
+          </div>
+          <div class="slide">
+              <p>
+               And here is the HTML element colorized by the code snippet
+               </p>
+           <div id="klipse-color"></div>
+           </div> 
+</section>
+
     <p class="deck-status" aria-role="status">
       <span class="deck-status-current"></span>
       /
@@ -253,7 +403,7 @@ Code interactivity everywhere
     window.klipse_settings = {
        selector: '.clojure',
        selector_js: '.clj-to-js',
-       selector_eval_js: '.javascript',
+       selector_eval_js: '.eval-javascript',
        selector_eval_ruby: '.ruby',
        codemirror_options_in: {
         lineWrapping: true,
@@ -265,6 +415,15 @@ Code interactivity everywhere
     };
 </script>
 
+<link rel="stylesheet" href="http://slides.klipse.tech/includes/highlight.js/9.6.0/default.min.css">
+<script src="http://slides.klipse.tech/includes/highlight.js/9.6.0/highlight.min.js"></script>
+<script>
+//hljs.configure({useBR: true});
+
+$('.hl-code').each(function(i, block) {
+          hljs.highlightBlock(block);
+          });
+</script>
 
 
 <script src="http://cdn.opalrb.org/opal/current/opal.min.js"></script>
