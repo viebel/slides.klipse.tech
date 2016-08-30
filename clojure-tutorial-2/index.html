@@ -212,6 +212,27 @@
         <pre><code class="clojure"></code></pre>
     </div>
 </section>
+
+<section class="slide">
+    <h2 class="challenge"> Advanced Practice</h2>
+    <div class="slide">
+        <p class="challenge">Write a <code>clojure</code> version of <code>spark</code>'s function <code>reduceByKey</code>: receives a list of <code>(K, V)</code> pairs and a function <code>f</code> and returns a list of <code>(K, V)</code> pairs where the values for each key are aggregated using the given reduce function <code>f</code> </p>
+        <pre><code class="clojure">(defn reduce-by-key [f lst])
+        (and 
+          (= (reduce-by-key '((a 1)) +) '((a 1)))
+          (= (reduce-by-key '((a 1) (a 3)) +) '((a 4)))
+          (= (reduce-by-key '((a 1) (a 3) (b 1) (a 5) (b 6)) +) '((a 9) (b 7))))</code></pre>
+    </div>
+    <div class="slide">
+        <p></p>
+        <pre><code class="clojure"></code></pre>
+    </div>
+    <div class="slide">
+        <p></p>
+        <pre><code class="clojure"></code></pre>
+    </div>
+</section>
+
 <section class="slide">
     <h2>Congratulations</h2>
     <img src="" alt="">
