@@ -361,12 +361,12 @@ window.klipse_settings = {
           </p>
           <script src="https://gist.github.com/viebel/08a311453c9d31378b357ced54221fb4.js"></script>
           <div class="slide">
-              <p>Here is the KLIPSE snippet:</p>
+              <p>Here is the KLIPSE snippet with this attributes: <code>data-loop-msec="3000" data-gist-id="viebel/08a311453c9d31378b357ced54221fb4"</code>:</p>
                   <pre><code class="clojure" data-loop-msec="3000" data-gist-id="viebel/08a311453c9d31378b357ced54221fb4"></code></pre>
           </div>
           <div class="slide">
               <p>
-               And here is the HTML element colorized by the code snippet
+               And here is the HTML element colorized by the code snippet:
                </p>
            <div id="klipse-color"></div>
            </div> 
@@ -393,10 +393,10 @@ window.klipse_settings = {
 <script>
   $(function() {
     $.deck('.slide', {
-    countNested: false
+    countNested: false,
+    fullscreenSelector: 'h2, fullscreen'
     });
 });
-
 </script>
 
 <script>
