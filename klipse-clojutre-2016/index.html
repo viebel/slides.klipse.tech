@@ -380,35 +380,64 @@ window.klipse_settings = {
                 <div id="klipse-color"></div>
             </div> 
         </section>
+        <section class="slide">
+            <h2>Challenges</h2>
+            <pre><code class="clojure" data-external-libs="https://raw.githubusercontent.com/viebel/gadjett/master/src/" data-gist-id="viebel/57784b3a49f165af0265e7dd3e79681d"></code></pre>
 
-        <p class="deck-status" aria-role="status">
-        <span class="deck-status-current"></span>
-        /
-        <span class="deck-status-total"></span>
-        </p>
+        </section>
 
-        <!-- End extension snippets. -->
-    </div>
+        <section class="slide">
+            <h2>What's next?</h2>
+            <ul>
+                <p class="slide"> Join the KLIPSE community:</p>
+                <ul>
+                    <li class="slide">Klipsify your blog</li>
+                    <li class="slide">Live document your library on github</li>
+                    <li class="slide">Share your code snippets/gists with KLIPSE using <code>cljs_in=</code> url param: demos, bug reports, questions, stackoverflow, clojurians...</li>
+                </ul>
+                <p class="slide">Dreams</p>
+                <ul>
+                    <li class="slide">KLIPSE browser extenstion</li>
+                    <li class="slide">KLIPSE plugin on <a href="https://clojuredocs.org/">clojuredocs.org</a> (Security issues - as the code examples are editable by visitors)</li>
+                    <li class="slide">KLIPSE plugin on clojure.org<br>
+                    There is an <a href="https://github.com/clojure/clojure-site/issues/55">issue about it</a> on github raised by Michael Nygard</li>
+                    <li class="slide">KLIPSE plugin on <a href="https://gist.github.com/">gist.github.com</a></li>
+                </ul>
+                <div class="slide"><iframe width="560" height="315" src="https://www.youtube.com/embed/ucb-wDjZDsE" frameborder="0" allowfullscreen></iframe></div>
+            </section>
+            <section class="slide">
+                <h2>Questions?</h2>
+            </section>
 
-    <!-- Required JS files. -->
-    <script src="http://slides.klipse.tech/includes/deckjs/jquery.min.js"></script>
-    <script src="http://slides.klipse.tech/includes/deckjs/core/deck.core.js"></script>
 
-    <!-- Extension JS files. Add or remove as needed. -->
-    <script src="http://slides.klipse.tech/includes/deckjs/extensions/menu/deck.menu.js"></script>
-    <script src="http://slides.klipse.tech/includes/deckjs/extensions/status/deck.status.js"></script>
-    <script src="http://slides.klipse.tech/includes/deckjs/extensions/fullscreen/deck.fullscreen.js"></script>
+            <p class="deck-status" aria-role="status">
+            <span class="deck-status-current"></span>
+            /
+            <span class="deck-status-total"></span>
+            </p>
 
-    <script>
+            <!-- End extension snippets. -->
+        </div>
+
+        <!-- Required JS files. -->
+        <script src="http://slides.klipse.tech/includes/deckjs/jquery.min.js"></script>
+        <script src="http://slides.klipse.tech/includes/deckjs/core/deck.core.js"></script>
+
+        <!-- Extension JS files. Add or remove as needed. -->
+        <script src="http://slides.klipse.tech/includes/deckjs/extensions/menu/deck.menu.js"></script>
+        <script src="http://slides.klipse.tech/includes/deckjs/extensions/status/deck.status.js"></script>
+        <script src="http://slides.klipse.tech/includes/deckjs/extensions/fullscreen/deck.fullscreen.js"></script>
+
+        <script>
 $(function() {
         $.deck('.slide', {
 countNested: false,
 fullscreenSelector: 'h2, fullscreen'
 });
         });
-    </script>
+        </script>
 
-    <script>
+        <script>
 window.klipse_settings = {
 selector: '.clojure',
           selector_js: '.clj-to-js',
@@ -422,22 +451,22 @@ codemirror_options_out: {
 lineWrapping: true
                         }
 };
-    </script>
+        </script>
 
-    <link rel="stylesheet" href="http://slides.klipse.tech/includes/highlight.js/9.6.0/default.min.css">
-    <script src="http://slides.klipse.tech/includes/highlight.js/9.6.0/highlight.min.js"></script>
-    <script>
+        <link rel="stylesheet" href="http://slides.klipse.tech/includes/highlight.js/9.6.0/default.min.css">
+        <script src="http://slides.klipse.tech/includes/highlight.js/9.6.0/highlight.min.js"></script>
+        <script>
 //hljs.configure({useBR: true});
 
-    $('.hl-code').each(function(i, block) {
-            hljs.highlightBlock(block);
-            });
-    </script>
+        $('.hl-code').each(function(i, block) {
+                hljs.highlightBlock(block);
+                });
+        </script>
 
 
-    <script src="http://cdn.opalrb.org/opal/current/opal.min.js"></script>
-    <script src="http://cdn.opalrb.org/opal/current/opal-parser.min.js"></script>
-    <script src="https://storage.googleapis.com/app.klipse.tech/plugin/js/klipse_plugin.js"></script>
+        <script src="http://cdn.opalrb.org/opal/current/opal.min.js"></script>
+        <script src="http://cdn.opalrb.org/opal/current/opal-parser.min.js"></script>
+        <script src="https://storage.googleapis.com/app.klipse.tech/plugin/js/klipse_plugin.js"></script>
 
-    </body>
-    </html>
+        </body>
+        </html>
