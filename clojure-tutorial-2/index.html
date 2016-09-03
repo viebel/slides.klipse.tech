@@ -282,11 +282,34 @@
     <section class="slide">
         <h2>Lazy Sequences</h2>
         <p>Elements are evaluated only when we really need them</p>
+        <br>
         <img src="./img/lazy.png" alt="">
+        <br>
+        <p> The sequences returned by a lot of <code>clojure</code> functions are lazy: <code>map</code>, <code>filter</code>, <code>concat</code>, <code>range</code>, <code>take</code>...</p>
     </section>
 
     <section class="slide">
-        <h2>Lazy Sequences</h2>
+        <h2>Lazy Sequences - Examples</h2>
+        <div class="slide">
+            <p>Infinite range of numbers:</p>
+            <pre><code class="clojure">(take 10 (range))</code></pre>
+        </div>
+
+        <div class="slide">
+            <p>Infinite repetition of an element:</p>
+            <pre><code class="clojure">(take 100 (repeat 1))</code></pre>
+        </div>
+        <div class="slide">
+            <p>Infinite repetition of a sequence:</p>
+            <pre><code class="clojure">(take 100 (cycle [1 2 3]))</code></pre>
+        </div>
+        <div class="slide">
+            <p>Infinite repetition of a function call:</p>
+            <pre><code class="clojure">(take 10 (repeatedly (partial rand-int 100)))</code></pre>
+        </div>
+    </section>
+    <section class="slide">
+        <h2>Lazy Sequences - creation</h2>
         <p>There is a handy macro <code>lazy-seq</code> that makes it easy to create lazy sequences. Let's see it in action, by writing code that receives a sequece and increment each of its elements - without using <code>map</code>:</p>
         <div class="slide">
             <p>First a non-lazy implementation - with a infinite recursion</p>
@@ -332,7 +355,15 @@
 
     <section class="slide">
         <h2>Congratulations</h2>
-        <img src="" alt="">
+        <img src="./img/congrats.jpg" alt="">
+        <br>
+        <p> Now, you are familiar with: </p>
+        <ul>
+            <li>Functions on collections</li>
+            <li>High order functions</li>
+            <li class="challenge">Lazy sequences</li>
+        </ul>
+
     </section>
     <!-- deck.status snippet -->
     <p class="deck-status" aria-role="status">
