@@ -7,7 +7,7 @@
 
 <link rel="shortcut icon" href="./favicon.png">
 
-<title>KLIPSE - ClojuTRE 2016</title>
+<title>KLIPSE - clojuTRE 2016</title>
 
 
 <!-- Required stylesheet -->
@@ -139,7 +139,7 @@
                         <div>
                             <img class="fullscreen" src="./klipse.png" alt="" width="150">
                         </div> 
-                        <div> ClojuTRE 2016</div>
+                        <div> clojuTRE 2016</div>
                         <div>
                             <div>Yehonathan Sharvit</div>
                             <div> <a href="https://twitter.com/viebel">@viebel</a></div>
@@ -284,7 +284,7 @@
             <h3>Interactivity - Code Evaluation on the go</h3>
             <div class="slide">
                 <p>The code can be modified by the reader. <br>
-                Now, the reader can explore the code, e.g.:
+                Now, the reader can explore the code:
                 <ul>
                     <li>
                     <div class="slide">
@@ -298,7 +298,7 @@
                             </li>
                             <li>
                             <div class="slide">
-                                <div>I'm Increasing the number of elements in the <code>vector</code></div>
+                                <div>I'm increasing the number of elements in the <code>vector</code></div>
                                 <pre><code class="clojure">(map inc [1 2 3])</code></pre>
                             </div>   
                             </li>
@@ -376,7 +376,9 @@ window.klipse_settings = {
 
                 <p></li>
                 <li class="slide">Flat layout:  no icons, no buttons, simply the code</li>
-                <li class="slide">Comes with default options but is highly configurable: languages, editor types, evaluation delay, loop evaluation delay, load code from gist...</li>
+                <li class="slide">Comes with default options but is highly configurable: <ul>
+                    <li>languages</li> <li>editor types: CodeMirror, raw html</li> <li>evaluation delay</li> <li>loop evaluation delay</li> <li>load code from gist</li> </ul>
+                </li>
             </ol>
         </section>
         <section class="slide">
@@ -409,7 +411,12 @@ window.klipse_settings = {
         </section>
         <section class="slide">
             <h2>Challenges</h2>
-            <pre><code class="clojure" data-external-libs="https://raw.githubusercontent.com/viebel/gadjett/master/src/" data-gist-id="viebel/57784b3a49f165af0265e7dd3e79681d"></code></pre>
+            <ul>
+                <li class="slide">Clojure is not exactly the same as clojurecript</li>
+                <li class="slide">Self-host clojurescript has a heavy footprint as it is doesn't support advnanced compilation</li>
+                <li class="slide">It's not so easy to make a library to be self-host friendly: Mike Fikes has ported <code>core.async</code>, <code>test.check</code></li>
+            </ul>
+            <!-- <pre><code class="clojure" data-external-libs="https://raw.githubusercontent.com/viebel/gadjett/master/src/" data-gist-id="viebel/57784b3a49f165af0265e7dd3e79681d"></code></pre> -->
 
         </section>
 
@@ -434,6 +441,9 @@ window.klipse_settings = {
             </section>
             <section class="slide">
                 <h2>Questions?</h2>
+            <div>
+                <img src="./questions.jpg" style="width:60%"></img>
+            </div>
             </section>
 
 
