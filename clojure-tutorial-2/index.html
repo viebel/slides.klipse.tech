@@ -61,6 +61,7 @@
                         <li>Functions on collections</li>
                         <li>High order functions</li>
                         <li class="challenge">Lazy sequences</li>
+                        <li>Loop/Recur</li>
                     </ul>
                 </td>
                 <td style="width: 80%;">
@@ -352,6 +353,65 @@
             <pre><code class="clojure"></code></pre>
         </div>
     </section>
+    <section class="slide">
+        <h2>Tail Call Recursion</h2>
+        <p>Regular recursions are dangerous as they might cause stack overflow. In clojure, there is a semantic support for <a href="https://en.wikipedia.org/wiki/Tail_call">tail call recursion</a>.</p>
+        <br>
+        <img src="./img/dog.jpg" style="width:70%;">
+        <br>
+        <p> At first, it's less intuitive...<br> But when you get used to it, it's very convenient...</p>
+    </section>
+    <section class="slide">
+    <h2>Tail Call Recursion - Basics</h2>
+            <ul>
+                <li class="slide">
+                    <p>Stack overflow with regular recursion</p>
+                    <pre><code class="clojure">(defn count-recursive [s]
+                      (if (empty? s) 0
+                        (inc (count-recursive (rest s)))))
+                    
+                    (count-recursive (range 10000))</code></pre>
+                    <p>Looks good right?<br> Increment the size of <code>s</code> up to 1000000 and see what happens.</p>
+                </li>
+                <li class="slide">
+                    <p>The solution is to use <a href="https://en.wikipedia.org/wiki/Tail_call">tail call recursion</a>. Like this: </p>
+                    <pre><code class="clojure">(defn count-tail-recursive [s]
+                      (loop [s s res 0]
+                      (if (empty? s) res
+                        (recur (rest s) (inc res)))))
+                    
+                    (count-tail-recursive (range 10000))</code></pre>
+                    <p>It works fine with 1000000 elements</p>
+                </li>
+                <li class="slide">
+                    <p>The hard thing when writing tail call recursion is that you are not allowed to do anything after the <code>recur</code>. Trying to do that will cause an exception at compile time.</p>
+                    <pre><code class="clojure">(loop [s (range 100)]
+                      (if (empty? s)
+                        10
+                        (inc (recur (rest s)))))</code></pre>
+                </li>
+                <li class="slide">
+                    <p>Here are <a href="http://clojure.org/about/functional_programming#_recursive_looping">more detials </a>about <code>recur</code> in clojure</p>
+                </li>
+            </ul>
+    </section>
+    <section class="slide">
+        <h2>Tail Call Recursion - Practice</h2>
+        <ul>
+            <li class="slide">
+                <p>Write a function that checks whether an element is present in a list</p>
+                <pre><code class="clojure">(defn present? [lst x])</code></pre>
+            </li>
+            <li class="slide">
+                <p>Write a function that sums up the elements of a sequence. The proper solution is to use <code>reduce</code>. But here, we want to practice <code>recur</code></p>
+                <pre><code class="clojure">(defn sum [lst])</code></pre>
+            </li>
+            <li class="slide">
+                <p class="challenge">Write a function that receives a seuence of sequences and returns their concatanation. The proper solution would be to use <code>(apply concat s)</code>; but here we want to practice <code>recur</code></p>
+                <pre><code class="clojure">(defn concat-seqs [seqs])</code></pre>
+            </li>
+        </ul>
+    </section>
 
     <section class="slide">
         <h2>Congratulations</h2>
@@ -362,6 +422,7 @@
             <li>Functions on collections</li>
             <li>High order functions</li>
             <li class="challenge">Lazy sequences</li>
+            <li>Tail call recursion</li>
         </ul>
 
     </section>
