@@ -1,0 +1,366 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+<meta name="viewport" content="width=1024, user-scalable=no">
+
+<link rel="shortcut icon" href="./favicon.png">
+
+<title>KLIPSE - clojuTRE 2016</title>
+
+
+<!-- Required stylesheet -->
+<link rel="stylesheet" media="screen" href="http://slides.klipse.tech/includes/deckjs/core/deck.core.css">
+
+<!-- Extension CSS files go here. Remove or add as needed. -->
+<link rel="stylesheet" media="screen" href="http://slides.klipse.tech/includes/deckjs/extensions/goto/deck.goto.css">
+<link rel="stylesheet" media="screen" href="http://slides.klipse.tech/includes/deckjs/extensions/menu/deck.menu.css">
+<link rel="stylesheet" media="screen" href="http://slides.klipse.tech/includes/deckjs/extensions/navigation/deck.navigation.css">
+<link rel="stylesheet" media="screen" href="http://slides.klipse.tech/includes/deckjs/extensions/status/deck.status.css">
+<link rel="stylesheet" media="screen" href="http://slides.klipse.tech/includes/deckjs/extensions/scale/deck.scale.css">
+
+<link rel="stylesheet" media="screen" href="http://slides.klipse.tech/includes/deckjs/themes/style/klipse.css">
+
+<link rel="stylesheet" media="screen" href="http://slides.klipse.tech/includes/deckjs/themes/transition/horizontal-slide.css">
+
+<link rel="stylesheet" type="text/css" href="https://storage.googleapis.com/app.klipse.tech/css/codemirror.css">
+<!-- Required Modernizr file -->
+<script src="http://slides.klipse.tech/includes/deckjs/modernizr.custom.js"></script>
+</head>
+<body>
+
+}
+.klipse-app-small {
+    border:none;
+    width:100%;
+    height: 170px;
+}
+
+.klipse-def-1:before {
+    content: "KLIPSE is a Simple and Elegant Clojurescript Web REPL";
+}
+
+.klipse-def-2:before {
+    content: "that shows the transpiled javascript code";
+}
+.klipse-def-3:before {
+    content: "KLIPSE is also a javascript tag that generates live and interactive code snippets in clojure"
+}
+.klipse-def-4:before {
+    content: "And in javascript"
+}
+.klipse-def-5:before {
+    content: "And in ruby"
+}
+.klipse-def-5-1:before {
+    content: "And in python"
+}
+.klipse-def-6:before {
+    content: "And obviously transpiles clojure into javascript"
+}
+.always-opaque {
+    opacity: 1.0 !important;
+}
+
+.triangle {
+    width: 40%;
+    height: 300px;
+    background-repeat: no-repeat;
+
+<div class="deck-container">
+
+    <section class="slide">
+        <div class="text-centered">
+            <h2>
+                <div>
+                    Interactive Game of Life
+                </div>
+                <div>with KLIPSE</div></h2>
+            <div class="centered">
+                <div class="left" style="width:50%;">
+                    <img src="./qr_code.png" alt="" width="300"></div>
+                <div class="left" style="width:50%;">
+                    <div>
+                        <div>
+                            <img class="fullscreen" src="./klipse.png" alt="" width="150">
+                        </div> 
+                        <div> clojureX 2016</div>
+                        <div>
+                            <div>Yehonathan Sharvit</div>
+                            <div> <a href="https://twitter.com/viebel">@viebel</a></div>
+                        </div>
+                        <div class="clear">
+                            <div style="margin-top:14px;">
+                                <a class="github-button" href="https://github.com/viebel/klipse" data-count-href="/viebel/klipse/stargazers" data-count-api="/repos/viebel/klipse#stargazers_count" data-count-aria-label="# stargazers on GitHub" aria-label="Star viebel/klipse on GitHub">KLIPSE</a>
+                            </div>
+                            <script async defer id="github-bjs" src="https://buttons.github.io/buttons.js"></script>
+                        </div>
+                        <div>
+                            <a href="http://slides.klipse.tech">http://slides.klipse.tech</a>
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+
+            <div class="clear centered"><pre><code class="clojure" data-loop-msec="1000">(symbol (js/Date))</code></pre>
+            </div>
+
+        </div>
+    </section>
+ 
+
+    <section class="slide">
+        <h2>What is KLIPSE?</h2>
+        <p class="klipse-def-1"</p>
+        <p class="klipse-def-2"></p>
+        <p class="klipse-def-3"></p>
+        <p class="klipse-def-4"></p>
+        <p class="klipse-def-5"></p>
+        <p class="klipse-def-5-1"></p>
+        <p class="klipse-def-6"></p>
+        </p>
+        <div class="slide"><pre><code class="clj-to-js">(defn foo[] "hello")
+(foo)</code></pre></div>
+        </section>
+
+
+        <section class="slide">
+            <h2>Why KLIPSE?</h2>
+            <div class="slide">
+                <div class="slide always-opaque">
+                    <div class="triangle triangle-top">
+                        <div>Interactivity</div>
+                    </div>
+                </div>
+                <br>
+                <div>
+                    <div class="slide always-opaque">
+                        <div class="triangle triangle-left">
+                            <div>Reach</div>
+                        </div>
+                    </div>
+                    <div class="slide always-opaque">
+                        <div class="triangle triangle-right">
+                            <div>Simplicity</div> 
+                        </div>
+                    </div>
+                </div>    
+            </div>
+        </section>
+        <section class="slide">
+            <h2>Why KLIPSE?</h2>
+            <h3>Interactivity - Liveness</h3>
+            <div class="slide">
+                <p>The code is evaluated in the browser <br>
+                The readers are confident that the code executes as the author of the code claims.
+                </p>
+                <div class="slide">
+                    <p>Instead of:</p>
+                    <pre><code class="hl-code">(map inc [1 2 3])
+;; returns [2 3 4]</code></pre>
+                </div>
+                <div class="slide">
+                    <p>The readers see: </p>
+                    <pre><code class="clojure">(map inc [1 2 3])</code></pre>
+                    <p> BTW, do you see the bug in the non-interactive code snippet?</p>
+                </div>
+            </div>
+        </section>
+        <section class="slide">
+            <h2>Why KLIPSE?</h2>
+            <h3>Interactivity - Code Evaluation on the go</h3>
+            <div class="slide">
+                <p>The code can be modified by the reader. <br>
+                Now, the reader can explore the code:
+                <ul>
+                    <li>
+                    <div class="slide">
+                        What happens if...
+                        <ol> 
+                            <li>
+                            <div class="slide">
+                                <div>I'm using <code>dec</code> instead of <code>inc</code></div>
+                                <pre><code class="clojure">(map inc [1 2 3])</code></pre>
+                            </div>   
+                            </li>
+                            <li>
+                            <div class="slide">
+                                <div>I'm increasing the number of elements in the <code>vector</code></div>
+                                <pre><code class="clojure">(map inc [1 2 3])</code></pre>
+                            </div>   
+                            </li>
+                        </ol>
+                    </div>
+                    </li>
+                    <li>
+                    <div class="slide">
+                        The reader can also check edge/weird cases:
+                        <ol>
+                            <li>
+                            <div class="slide">
+                                <div>Passing an empty <code>list</code></div>
+                                <pre><code class="clojure">(map inc [1 2 3])</code></pre>
+                            </div>   
+                            </li>
+                            <li>
+                            <div class="slide">
+                                <div>Or maybe pass a <code>map</code> instead of a <code>vector</code> e.g. <code>{:a 1 :b 2}</code></div>
+                                <pre><code class="clojure">(map inc [1 2 3])</code></pre>
+                            </div>   
+                            </li>
+                        </ol>
+                    </div>
+                    </li>
+                </ul>
+                </p>
+            </div>
+        </section>
+        <section class="slide">
+            <h2>Reach - Pluggable on any web page</h2>
+            <blockquote>
+                &ldquo;Why are we doing this? Because Clojure rocks, and JavaScript reaches.&rdquo;
+                — Rich Hickey
+            </blockquote>
+            <div class="slide">
+                <p>There are a lot of tools that can host code snippets. </p>
+                <p> All of them require you (the writer and the reader) to come to them. </p>
+                <p>KLIPSE takes a different approach: it comes to you (on any web page).</p>
+                <ul>
+                    <li class="slide">A technical blog: <a href="http://blog.klipse.tech">My functional programing journey - blog.klispe.tech</a></li>
+                    <li class="slide">A mini course: <a href="http://kids.klipse.tech">Teach LISP to your kids with KLIPSE - kids.klipse.tech</a></li>
+                    <li class="slide">A documentation website: <a href="http://clojurebridge.github.io/community-docs/docs/clojure/anonymous-function/">Clojurebridge - Community powered Clojure documentation</a></li>
+                    <li class="slide">A library on gitub: <a href="https://cdn.rawgit.com/expez/superstring/master/live-documentation.html">Superstring (Clojure[script] string library) Live Documentation</a></li>
+                    <li class="slide">An html/javascript deck: <a href="http://slides.klipse.deck">This deck - slides.klipse.tech</a></li>
+                </ul>
+            </div>
+        </section>
+        <section class="slide">
+            <h2>Simplicity - KLIPSE REPL</h2>
+            <ol>
+                <li class="slide">Always there: desktop, mobile, tablet. No installation, no OS dependencies</li>
+                <li class="slide">Flat layout (by @raphaelboukara): no buttons, no texts</li>
+                <li class="slide">Configurable via url parameters e.g. <code>cljs_in=(map inc (range 10))</code>
+                <iframe class="klipse-app-small slide" src="http://app.klipse.tech/?cljs_in=(map%20inc%20(range%2010))&eval_only=1"></iframe>
+                </li>
+
+                <li class="slide">or <code>static-fns=true</code>
+                <iframe class="klipse-app-small slide" src="http://app.klipse.tech/?static-fns=true&cljs_in=(defn%20foo%20%5B%5D%20%22hello%22)%0A(foo)&js_only=1"></iframe>
+                </li>
+            </ol>
+        </section>
+        <section class="slide">
+            <h2>Simplicity - KLIPSE plugin</h2>
+
+            <ol>
+                <li class="slide">Just a <code>javascript</code> tag:<p>
+                <pre class="hl-code"><code>&lt;link rel="stylesheet" type="text/css" href="http://app.klipse.tech/css/codemirror.css"&gt;
+&lt;script&gt;
+window.klipse_settings = {
+   selector: '.language-klipse'// css selector for the html elements you want to klipsify
+};
+&lt;/script&gt;
+&lt;script src="http://app.klipse.tech/plugin/js/klipse_plugin.js"&gt;&lt;/script&gt;</code></pre>
+
+                <p></li>
+                <li class="slide">Flat layout:  no icons, no buttons, simply the code</li>
+                <li class="slide">Comes with default options but is highly configurable: <ul>
+                    <li>languages</li> <li>editor types: CodeMirror, raw html</li> <li>evaluation delay</li> <li>loop evaluation delay</li> <li>load code from gist</li> </ul>
+                </li>
+            </ol>
+        </section>
+        <section class="slide">
+            <h2>Plugin Configuration - Demo</h2>
+            <p> A live code snippet that loads code from a gist <br>
+            This gist <code>:require</code> code from another gist<br>
+            This code runs in a loop every 3 seconds.
+            </p>
+            <div class="slide">
+                <p>
+                Here is the gist:
+                </p>
+                <script src="https://gist.github.com/viebel/08a311453c9d31378b357ced54221fb4.js"></script>
+            </div>
+            <div class="slide">
+                <p>Here is the KLIPSE snippet with this attributes: <code>data-loop-msec="3000" data-gist-id="viebel/08a311453c9d31378b357ced54221fb4"</code>:</p>
+                <pre><code class="clojure" data-loop-msec="3000" data-gist-id="viebel/08a311453c9d31378b357ced54221fb4"></code></pre>
+            </div>
+            <div class="slide">
+                <p>
+                And here is the HTML element colorized by the code snippet:
+                </p>
+                <div id="klipse-color"></div>
+            </div> 
+        </section>
+        <section class="slide">
+            <h2>Live Documentation - Demo</h2>
+            <iframe class="livedoc" src="http://viebel.github.io/gadjett/gadjett.collections.html"></iframe>
+
+        </section>
+
+
+
+            <p class="deck-status" aria-role="status">
+            <span class="deck-status-current"></span>
+            /
+            <span class="deck-status-total"></span>
+            </p>
+
+            <!-- End extension snippets. -->
+        </div>
+
+        <!-- Required JS files. -->
+        <script src="http://slides.klipse.tech/includes/deckjs/jquery.min.js"></script>
+        <script src="http://slides.klipse.tech/includes/deckjs/core/deck.core.js"></script>
+
+        <!-- Extension JS files. Add or remove as needed. -->
+        <script src="http://slides.klipse.tech/includes/deckjs/extensions/menu/deck.menu.js"></script>
+        <script src="http://slides.klipse.tech/includes/deckjs/extensions/status/deck.status.js"></script>
+        <script src="http://slides.klipse.tech/includes/deckjs/extensions/fullscreen/deck.fullscreen.js"></script>
+
+        <script>
+$(function() {
+        $.deck('.slide', {
+countNested: false,
+fullscreenSelector: 'h2, fullscreen'
+});
+        });
+        </script>
+
+        <script>
+window.klipse_settings = {
+          selector: '.clojure',
+          selector_js: '.clj-to-js',
+          selector_eval_js: '.eval-javascript',
+          selector_eval_python_client: '.python',
+          selector_eval_ruby: '.ruby',
+          codemirror_options_in: {
+              lineWrapping: true,
+              autoCloseBrackets: true
+          },
+          codemirror_options_out: {
+               lineWrapping: true
+          }
+};
+        </script>
+
+        <link rel="stylesheet" href="http://slides.klipse.tech/includes/highlight.js/9.6.0/default.min.css">
+        <script src="http://slides.klipse.tech/includes/highlight.js/9.6.0/highlight.min.js"></script>
+        <script>
+//hljs.configure({useBR: true});
+
+        $('.hl-code').each(function(i, block) {
+                hljs.highlightBlock(block);
+                });
+        </script>
+
+
+        <script src="http://www.skulpt.org/static/skulpt.min.js" type="text/javascript"></script>
+        <script src="http://www.skulpt.org/static/skulpt-stdlib.js" type="text/javascript"></script>
+        <script src="http://cdn.opalrb.org/opal/current/opal.min.js"></script>
+        <script src="http://cdn.opalrb.org/opal/current/opal-parser.min.js"></script>
+        <script src="https://storage.googleapis.com/app.klipse.tech/plugin/js/klipse_plugin.js"></script>
+
+        </body>
+        </html>
