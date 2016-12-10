@@ -1,0 +1,122 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8"/>
+<title></title>
+<meta name="author" content="(Yehonathan Sharvit)"/>
+<style type="text/css">
+.underline { text-decoration: underline; }
+</style>
+<link rel="stylesheet" href="http://cdn.jsdelivr.net/reveal.js/3.0.0/css/reveal.css"/>
+
+<link rel="stylesheet" href="http://cdn.jsdelivr.net/reveal.js/3.0.0/css/theme/moon.css" id="theme"/>
+
+
+<!-- If the query includes 'print-pdf', include the PDF print sheet -->
+<script>
+    if( window.location.search.match( /print-pdf/gi ) ) {
+        var link = document.createElement( 'link' );
+        link.rel = 'stylesheet';
+        link.type = 'text/css';
+        link.href = 'http://cdn.jsdelivr.net/reveal.js/3.0.0/css/print/pdf.css';
+        document.getElementsByTagName( 'head' )[0].appendChild( link );
+    }
+</script>
+</head>
+<body>
+<div class="reveal">
+<div class="slides">
+<section id="sec-title-slide"><h2 class="author">Yehonathan Sharvit</h2><p class="date">Created: 2016-12-10 Sat 18:39</p>
+</section>
+<section id="table-of-contents">
+<div id="table-of-contents">
+<h2>Table of Contents</h2>
+<div id="text-table-of-contents">
+<ul>
+<li><a href="#/slide-org946ed39">1. javascript</a>
+<ul>
+<li><a href="#/slide-orga1cf817">1.1. javascript 1</a></li>
+<li><a href="#/slide-org5ac2372">1.2. javascript 2</a></li>
+</ul>
+</li>
+<li><a href="#/slide-org70091c4">2. clojure</a>
+<ul>
+<li><a href="#/slide-org2c535c0">2.1. clojure 1</a></li>
+<li><a href="#/slide-orgf4d5f0b">2.2. clojure 2</a></li>
+</ul>
+</li>
+<li><a href="#/slide-org43c939e">3. ruby</a></li>
+</ul>
+</div>
+</div>
+</section>
+
+
+<section>
+<section id="slide-org946ed39">
+<h2 id="org946ed39"><span class="section-number-2">1</span> javascript</h2>
+<div class="outline-text-2" id="text-1">
+</div></section>
+<section id="slide-orga1cf817">
+<h3 id="orga1cf817"><span class="section-number-3">1.1</span> javascript 1</h3>
+</section>
+<section id="slide-org5ac2372">
+<h3 id="org5ac2372"><span class="section-number-3">1.2</span> javascript 2</h3>
+</section>
+</section>
+<section>
+<section id="slide-org70091c4">
+<h2 id="org70091c4"><span class="section-number-2">2</span> clojure</h2>
+<div class="outline-text-2" id="text-2">
+</div></section>
+<section id="slide-org2c535c0">
+<h3 id="org2c535c0"><span class="section-number-3">2.1</span> clojure 1</h3>
+</section>
+<section id="slide-orgf4d5f0b">
+<h3 id="orgf4d5f0b"><span class="section-number-3">2.2</span> clojure 2</h3>
+</section>
+</section>
+<section>
+<section id="slide-org43c939e">
+<h2 id="org43c939e"><span class="section-number-2">3</span> ruby</h2>
+</section>
+</section>
+</div>
+</div>
+<script src="http://cdn.jsdelivr.net/reveal.js/3.0.0/lib/js/head.min.js"></script>
+<script src="http://cdn.jsdelivr.net/reveal.js/3.0.0/js/reveal.js"></script>
+
+<script>
+// Full list of configuration options available here:
+// https://github.com/hakimel/reveal.js#configuration
+Reveal.initialize({
+
+controls: true,
+progress: true,
+history: false,
+center: true,
+slideNumber: 'c',
+rollingLinks: false,
+keyboard: true,
+overview: true,
+
+theme: Reveal.getQueryHash().theme, // available themes are in /css/theme
+transition: Reveal.getQueryHash().transition || 'default', // default/cube/page/concave/zoom/linear/fade/none
+transitionSpeed: 'default',
+multiplex: {
+    secret: '', // null if client
+    id: '', // id, obtained from socket.io server
+    url: '' // Location of socket.io server
+},
+
+// Optional libraries used to extend on reveal.js
+dependencies: [
+ { src: 'http://cdn.jsdelivr.net/reveal.js/3.0.0/lib/js/classList.js', condition: function() { return !document.body.classList; } },
+ { src: 'http://cdn.jsdelivr.net/reveal.js/3.0.0/plugin/markdown/marked.js', condition: function() { return !!document.querySelector( '[data-markdown]' ); } },
+ { src: 'http://cdn.jsdelivr.net/reveal.js/3.0.0/plugin/markdown/markdown.js', condition: function() { return !!document.querySelector( '[data-markdown]' ); } },
+ { src: 'http://cdn.jsdelivr.net/reveal.js/3.0.0/plugin/zoom-js/zoom.js', async: true, condition: function() { return !!document.body.classList; } },
+ { src: 'http://cdn.jsdelivr.net/reveal.js/3.0.0/plugin/notes/notes.js', async: true, condition: function() { return !!document.body.classList; } }]
+});
+</script>
+</body>
+</html>
