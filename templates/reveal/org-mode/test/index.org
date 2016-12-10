@@ -1,5 +1,4 @@
-#+REVEAL_ROO
-T: http://cdn.jsdelivr.net/reveal.js/3.0.0/
+#+REVEAL_ROOT: http://cdn.jsdelivr.net/reveal.js/3.0.0/
 
 
 * javascript
@@ -7,5 +6,15 @@ T: http://cdn.jsdelivr.net/reveal.js/3.0.0/
 ** javascript 2
 * clojure
 ** clojure 1
+
+#+REVEAL_HTML: <klipse-snippet data-language="clojure"> (map inc [1 2 3]) </klipse-snippet>
 ** clojure 2
 * ruby
+
+
+
+
+#+html: <script src="https://viebel.github.io/klipse/examples/klipse_reveal.js"></script>
+#+html: <link rel="stylesheet" type="text/css" href="https://storage.googleapis.com/app.klipse.tech/css/codemirror.css" />
+#+html: <script type="text/javascript">window.klipse_settings = {selector: '.src-clojure'};</script>
+#+html: <script src="https://storage.googleapis.com/app.klipse.tech/plugin/js/klipse_plugin.js"></script>
