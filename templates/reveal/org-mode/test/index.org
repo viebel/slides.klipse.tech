@@ -1,20 +1,40 @@
 #+REVEAL_ROOT: http://cdn.jsdelivr.net/reveal.js/3.0.0/
-
+#+Title: Code Interactivity Everywhere
+#+Date: December 13
 
 * javascript
 ** javascript 1
+
+#+BEGIN_SRC klipse-javascript
+a = 1
+#+END_SRC
+
+#+BEGIN_SRC klipse-javascript
+a + 2
+#+END_SRC
+
+
 ** javascript 2
 * clojure
 ** clojure 1
 
-#+REVEAL_HTML: <klipse-snippet data-language="clojure"> (map inc [1 2 3]) </klipse-snippet>
+We can edit the code and it is immediatly evaluated in the browser.
+
+#+ATTR_HTML: data-loop-msec="1000"
+#+BEGIN_SRC klipse-clojure 
+(def a 1)
+#+END_SRC
+
+
+#+BEGIN_SRC klipse-clojure 
+(reduce + [a 2 3])
+#+END_SRC
+
 ** clojure 2
 * ruby
 
 
+#+REVEAL_EXTRA_JS: {src: "./klipse_reveal.js"}
+#+html: <ssscript src="./klipse_reveal.js"></script>
+#+html: <ssscript src="https://viebel.github.io/klipse/examples/klipse_reveal.js"></script>
 
-
-#+html: <script src="https://viebel.github.io/klipse/examples/klipse_reveal.js"></script>
-#+html: <link rel="stylesheet" type="text/css" href="https://storage.googleapis.com/app.klipse.tech/css/codemirror.css" />
-#+html: <script type="text/javascript">window.klipse_settings = {selector: '.src-clojure'};</script>
-#+html: <script src="https://storage.googleapis.com/app.klipse.tech/plugin/js/klipse_plugin.js"></script>

@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
 <meta charset="utf-8"/>
-<title></title>
+<title>Code Interactivity Everywhere</title>
 <meta name="author" content="(Yehonathan Sharvit)"/>
 <style type="text/css">
 .underline { text-decoration: underline; }
@@ -26,78 +26,90 @@
 <body>
 <div class="reveal">
 <div class="slides">
-<section id="sec-title-slide"><h2 class="author">Yehonathan Sharvit</h2><p class="date">Created: 2016-12-10 Sat 18:59</p>
+<section id="sec-title-slide"><h1 class="title">Code Interactivity Everywhere</h1><h2 class="author">Yehonathan Sharvit</h2><h2 class="date">December 13</h2><p class="date">Created: 2016-12-11 Sun 10:26</p>
 </section>
 <section id="table-of-contents">
 <div id="table-of-contents">
 <h2>Table of Contents</h2>
 <div id="text-table-of-contents">
 <ul>
-<li><a href="#/slide-org7b3160e">1. javascript</a>
+<li><a href="#/slide-orgd5a6b9f">1. javascript</a>
 <ul>
-<li><a href="#/slide-orgaa45e35">1.1. javascript 1</a></li>
-<li><a href="#/slide-org243ebce">1.2. javascript 2</a></li>
+<li><a href="#/slide-org5b62bb9">1.1. javascript 1</a></li>
+<li><a href="#/slide-org52aede2">1.2. javascript 2</a></li>
 </ul>
 </li>
-<li><a href="#/slide-org871f79e">2. clojure</a>
+<li><a href="#/slide-org9e180da">2. clojure</a>
 <ul>
-<li><a href="#/slide-orga56b1dc">2.1. clojure 1</a></li>
-<li><a href="#/slide-orgac5acb8">2.2. clojure 2</a></li>
+<li><a href="#/slide-orgd488132">2.1. clojure 1</a></li>
+<li><a href="#/slide-org4d6fe99">2.2. clojure 2</a></li>
 </ul>
 </li>
-<li><a href="#/slide-org0537b47">3. ruby</a></li>
+<li><a href="#/slide-orgd2f51cb">3. ruby</a></li>
 </ul>
 </div>
 </div>
 </section>
 
-
 <section>
-<section id="slide-org7b3160e">
-<h2 id="org7b3160e"><span class="section-number-2">1</span> javascript</h2>
+<section id="slide-orgd5a6b9f">
+<h2 id="orgd5a6b9f"><span class="section-number-2">1</span> javascript</h2>
 <div class="outline-text-2" id="text-1">
 </div></section>
-<section id="slide-orgaa45e35">
-<h3 id="orgaa45e35"><span class="section-number-3">1.1</span> javascript 1</h3>
+<section id="slide-org5b62bb9">
+<h3 id="org5b62bb9"><span class="section-number-3">1.1</span> javascript 1</h3>
+<div class="org-src-container">
+
+<pre  class="src src-klipse-javascript">a = 1
+</pre>
+</div>
+
+<div class="org-src-container">
+
+<pre  class="src src-klipse-javascript">a + 2
+</pre>
+</div>
+
+
 </section>
-<section id="slide-org243ebce">
-<h3 id="org243ebce"><span class="section-number-3">1.2</span> javascript 2</h3>
+<section id="slide-org52aede2">
+<h3 id="org52aede2"><span class="section-number-3">1.2</span> javascript 2</h3>
 </section>
 </section>
 <section>
-<section id="slide-org871f79e">
-<h2 id="org871f79e"><span class="section-number-2">2</span> clojure</h2>
+<section id="slide-org9e180da">
+<h2 id="org9e180da"><span class="section-number-2">2</span> clojure</h2>
 <div class="outline-text-2" id="text-2">
 </div></section>
-<section id="slide-orga56b1dc">
-<h3 id="orga56b1dc"><span class="section-number-3">2.1</span> clojure 1</h3>
-<klipse-snippet data-language="clojure"> (map inc [1 2 3]) </klipse-snippet>
-</section>
-<section id="slide-orgac5acb8">
-<h3 id="orgac5acb8"><span class="section-number-3">2.2</span> clojure 2</h3>
-</section>
-</section>
-<section>
-<section id="slide-org0537b47">
-<h2 id="org0537b47"><span class="section-number-2">3</span> ruby</h2>
+<section id="slide-orgd488132">
+<h3 id="orgd488132"><span class="section-number-3">2.1</span> clojure 1</h3>
 <p>
-Some Clojure code:
+We can edit the code and it is immediatly evaluated in the browser.
 </p>
 
 <div class="org-src-container">
 
-<pre  class="src src-clojure">(map inc '(1 2 3))
+<pre  class="src src-klipse-clojure">(def a 1)
 </pre>
 </div>
 
-<p>
-That's it.
-</p>
 
-<script src="https://viebel.github.io/klipse/examples/klipse_reveal.js"></script>
-<link rel="stylesheet" type="text/css" href="https://storage.googleapis.com/app.klipse.tech/css/codemirror.css" />
-<script type="text/javascript">window.klipse_settings = {selector: '.src-clojure'};</script>
-<script src="https://storage.googleapis.com/app.klipse.tech/plugin/js/klipse_plugin.js"></script>
+<div class="org-src-container">
+
+<pre  class="src src-klipse-clojure">(reduce + [a 2 3])
+</pre>
+</div>
+
+</section>
+<section id="slide-org4d6fe99">
+<h3 id="org4d6fe99"><span class="section-number-3">2.2</span> clojure 2</h3>
+</section>
+</section>
+<section>
+<section id="slide-orgd2f51cb">
+<h2 id="orgd2f51cb"><span class="section-number-2">3</span> ruby</h2>
+<ssscript src="./klipse_reveal.js"></script>
+<ssscript src="https://viebel.github.io/klipse/examples/klipse_reveal.js"></script>
 </section>
 </section>
 </div>
@@ -130,6 +142,7 @@ multiplex: {
 
 // Optional libraries used to extend on reveal.js
 dependencies: [
+{src: "./klipse_reveal.js"},
  { src: 'http://cdn.jsdelivr.net/reveal.js/3.0.0/lib/js/classList.js', condition: function() { return !document.body.classList; } },
  { src: 'http://cdn.jsdelivr.net/reveal.js/3.0.0/plugin/markdown/marked.js', condition: function() { return !!document.querySelector( '[data-markdown]' ); } },
  { src: 'http://cdn.jsdelivr.net/reveal.js/3.0.0/plugin/markdown/markdown.js', condition: function() { return !!document.querySelector( '[data-markdown]' ); } },

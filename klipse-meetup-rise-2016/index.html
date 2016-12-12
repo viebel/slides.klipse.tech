@@ -56,6 +56,9 @@
     width: 100%;
     height: 600px;
 }
+p {
+    font-size: 1.7em;
+}
 </style>
 <style>
 body {
@@ -121,7 +124,7 @@ ol, ul {
                 <div>with KLIPSE</div></h2>
             <div class="centered">
                 <div class="left" style="width:50%;">
-                    <img src="./qr_code.png" alt="" width="300"></div>
+                    <img src="./qrcode.png" alt="" width="300"></div>
                 <div class="left" style="width:50%;">
                     <div>
                         <div>
@@ -151,12 +154,12 @@ ol, ul {
 
         </div>
     </section>
-     <section class="slide">
+    <section class="slide">
         <h2>Functional Programming paradigms</h2>
         <h3>Immutability</h3>
         <div class="slide">
             <p>In non-functional programming, the default API mutates our objects</p>
-            <div class="slide">
+            <div>
                 <pre><code class="eval-js">
                 const a = {size: 42};
                 b = a
@@ -166,8 +169,8 @@ ol, ul {
             </div>
         </div>
         <div class="slide">
-            <p>In functional programming, the default API doesn't mutate our objects</p>
-            <div class="slide">
+            <p>In functional programming e.g. clojure, the default API doesn't mutate our objects</p>
+            <div>
                 <pre><code class="clojure">
                 (def a {:size 42})
                 (def b (assoc a :size 43))
@@ -175,27 +178,72 @@ ol, ul {
                 </code></pre>
             </div>
         </div>
+        <div class="slide">
+            <p>EcmaScript 6 gets inspired by functional programming - and propses an immutable API:</p>
+            <div>
+                <pre><code class="eval-js">
+                const a = {size: 42};
+                b = Object.assign({}, a, {size: 43})
+                b.size = 43
+                a
+                </code></pre>
+            </div>
+        </div>
     </section>
+    <section class="slide">
+        <h2>Functional Programming paradigms</h2>
+        <h3>Pure functions</h3>
+        <div class="slide">
+            <p>In non-functional programming, the usual functions have side effect </p>
+            <div>
+                <pre><code class="eval-js">
+                const x = [1,2,3].map((x) => console.log(x));
+                x[0]
+                </code></pre>
+            </div>
+        </div>
+        <div class="slide">
+            <p>In functional programming e.g. clojure, the usual functions have no side effects - therefore we can deal with lazyness</p>
+            <p> Sometimes it can be confusing </p>
+            <div>
+                <pre><code class="clojure">
+                (def a (map println [1 2 3] ))
+                (second a)
+                </code></pre>
+            </div>
+        </div>
+        </section>
     <section class="slide">
         <h2>React.js: the functional frontend framework</h2>
 
+        <div style="float:left;">
         <p> The principles </p>
         <ol>
-            <li>Virtual DOM</li>
-            <li>Immutability</li>
-            <li>Pure functions</li>
+            <li><p>Virtual DOM</p></li>
+            <li><p>Immutability</p></li>
+            <li><p>Pure functions</p></li>
         </ol>
+        </div>
+        <div><img style="width:15%;float:left;margin-left: 100px;" src="./react.png"></img></div>
+        <div style="clear:both;"></div>
+        <div><img style="width:50%;" src="./virtualdom.png"></img></div>
         <p class=slide> Despite the fact that <code>React.js</code> is functional, it is popular!
+    </section>
+    <section class="slide">
+    <h2>Live Coding - in the browser</h2>
+    <h3>Tic Tac Toe</h3>
+    <br>
+    <br>
+    <div><img style="width:50%;" src="./tictactoe.jpg"></img></div>
     </section>
     <section class="slide">
         <h2>React - The basics</h2>
 
-        <p> Square is a <b> pure component </b> </p>
+        <p> Let's load react javascript files from  <a href="https://cdnjs.com">cdnjs.com</a>:</p>
         <pre><code class="eval-js" data-external-libs="https://cdnjs.cloudflare.com/ajax/libs/react/15.4.1/react-with-addons.js, https://cdnjs.cloudflare.com/ajax/libs/react/15.4.1/react-dom.js">
 !!React
         </code></pre>
     </section>
-
 
     <section class="slide">
         <h2>Tic Tac Toe - The square</h2>
@@ -213,8 +261,22 @@ ol, ul {
     <section class="slide">
         <h2>Interlude - JSX </h2>
 
-        <p> Square is a <b> pure component </b> </p>
-        <pre><code class="transpile-jsx">
+        <p> <a href="JSX://facebook.github.io/react/docs/introducing-jsx.html">JSX </a>is ... </p>
+       <div class="slide">
+           <p>Instead of abstract definitions, let's take a look at live - and interactive - examples</p>
+ <pre><code class="transpile-jsx">
+        const element = &lt;h1&gt;Hello, world!&lt;/h1&gt;;
+        </code></pre>
+       </div>
+       <div class="slide">
+<pre><code class="jsx" data-preamble="container=document.getElementById('container-hello');">
+       const element = &lt;h3 style= {{color:"r" +"ed"} }&gt;Hello, world -- 14*3={14*3}!&lt;/h3&gt;;
+       ReactDOM.render(element, container);
+       </code></pre>
+       <div id="container-hello"></div>
+       </div>
+       <div class="slide">
+ <pre><code class="transpile-jsx">
         function Square(props) {
               return (
                   &lt;button className="square" onClick={() =&gt; props.onClick()}&gt;
@@ -223,12 +285,13 @@ ol, ul {
                               );
         }
         </code></pre>
-    </section>
+        </div>
+</section>
 
     <section class="slide">
         <h2>Tic Tac Toe - The board</h2>
 
-        <p> Board is a <b> component </b> </p>
+        <p> <code>Board</code> is a <b> full react component </b> with <code>constructor</code>,  <code>render</code> and a couple of helper functions</p>
         <pre><code data-gist-id="viebel/b93514b4919799b1f4a287f216048916" class="jsx"></code></pre>
     </section>
     <section class="slide">
@@ -240,8 +303,6 @@ ol, ul {
 
 <section class="slide">
         <h2>Tic Tac Toe - with players</h2>
-
-        <p> Board is a <b> component </b> </p>
         <pre><code data-gist-id="viebel/887a5db4b9f96e31da8372cc3885c284" class="jsx"></code></pre>
     </section>
     <!-- <section class="slide">
@@ -276,17 +337,11 @@ ol, ul {
 <pre><code class="clojure">
 (ns my.game)
 (defn calculate-winner [squares]
-  (let [lines  [[0 1 2]
-                [3 4 5]
-                [6 7 8]
-                [0 3 6]
-                [1 4 7]
-                [2 5 8]
-                [0 4 8]
-                [2 4 6]]]
+  (let [lines [[0 1 2] [3 4 5] [6 7 8] [0 3 6] [1 4 7] [2 5 8] [0 4 8] [2 4 6]]]
     (->> (map (fn [[a b c]] (and (some? (get squares a))
                             (= (get squares a) (get squares b) (get squares c))
-                            (get squares a))) lines)
+                            (get squares a)))
+            lines)
         (filter identity)
          first)))
   </code></pre>
@@ -323,6 +378,17 @@ ol, ul {
         </code></pre>
         <div id="container-board-with-players-clj"></div>
  
+    </section>
+
+    <section class="slide">
+    <h2>Summary</h2>
+        <ul>
+            <li><p>Functional programming has a lot of influence</p></li>
+            <li><p> EcmaScript6 </p> </li>
+            <li><p> React.js </p> </li>
+            <li><p> ClojureScript </p></li>
+            <li><p>Live coding in the browser with  <a href="github.com/viebel/klipse">klipse</a></p></li>
+        </ul>
     </section>
 
 
