@@ -225,7 +225,7 @@ ol, ul {
         </ol>
         </div>
         <div><img style="width:15%;float:left;margin-left: 100px;" src="./react.png"></img></div>
-        <div style="clear:both;"></div>
+        <div class="clear;"></div>
         <div><img style="width:50%;" src="./virtualdom.png"></img></div>
         <p class=slide> Despite the fact that <code>React.js</code> is functional, it is popular!
     </section>
@@ -251,11 +251,13 @@ ol, ul {
         <p> Square is a <b> pure component </b> </p>
         <pre><code class="jsx" data-gist-id="viebel/527582f3d3fa2ea28ada99fc63fe2383">
         </code></pre>
+        <div class="left">
         <pre><code class="jsx" data-preamble="container=document.getElementById('container-square');">
         ReactDOM.render(React.createElement(Square, {value: 42,
                                                     onClick: () => alert("clicked")}), container);
         </code></pre>
-        <div id="container-square"></div>
+        </div>
+        <div class="left" id="container-square"></div>
     </section>
 
     <section class="slide">
@@ -267,14 +269,18 @@ ol, ul {
  <pre><code class="transpile-jsx">
         const element = &lt;h1&gt;Hello, world!&lt;/h1&gt;;
         </code></pre>
+        <div class="clear"></div>
        </div>
        <div class="slide">
-<pre><code class="jsx" data-preamble="container=document.getElementById('container-hello');">
-       const element = &lt;h3 style= {{color:"r" +"ed"} }&gt;Hello, world -- 14*3={14*3}!&lt;/h3&gt;;
-       ReactDOM.render(element, container);
-       </code></pre>
-       <div id="container-hello"></div>
+    <div class="left">
+    <pre><code class="jsx" data-preamble="container=document.getElementById('container-hello');">
+           const element = &lt;h3 style= {{color:"r" +"ed"} }&gt;Hello, world -- 14*3={14*3}!&lt;/h3&gt;;
+           ReactDOM.render(element, container);
+     </code></pre>
+     </div>
+     <div id="container-hello" class="left"></div>
        </div>
+       <div class="clear"></div>
        <div class="slide">
  <pre><code class="transpile-jsx">
         function Square(props) {
@@ -293,47 +299,18 @@ ol, ul {
 
         <p> <code>Board</code> is a <b> full react component </b> with <code>constructor</code>,  <code>render</code> and a couple of helper functions</p>
         <pre><code data-gist-id="viebel/b93514b4919799b1f4a287f216048916" class="jsx"></code></pre>
-    </section>
-    <section class="slide">
-   <pre><code class="jsx" data-preamble="container=document.getElementById('container-board');">
+   <div class="left">
+<pre><code class="jsx" data-preamble="container=document.getElementById('container-board');">
         ReactDOM.render(React.createElement(Board, {}), container);
         </code></pre>
-        <div id="container-board"></div>
+    </div>
+    <div id="container-board" class="left"></div>
+    <div class="clear"></div>
     </section>
-
 <section class="slide">
-        <h2>Tic Tac Toe - with players</h2>
-        <pre><code data-gist-id="viebel/887a5db4b9f96e31da8372cc3885c284" class="jsx"></code></pre>
-    </section>
-    <!-- <section class="slide">
-       <pre><code class="eval-js">function calculateWinner(squares) {
-  const lines = [
-    [0, 1, 2],
-    [3, 4, 5],
-    [6, 7, 8],
-    [0, 3, 6],
-    [1, 4, 7],
-    [2, 5, 8],
-    [0, 4, 8],
-    [2, 4, 6],
-  ];
-  for (let i = 0; i < lines.length; i++) {
-    const [a, b, c] = lines[i];
-    if (squares[a] && squares[a] === squares[b] && squares[a] === squares[c]) {
-      return squares[a];
-    }
-  }
-  return null;
-}
-</code></pre>
-
-       <pre><code class="jsx" data-preamble="container=document.getElementById('container-board-with-players');">
-        ReactDOM.render(React.createElement(BoardWithPlayers, {}), container);
-        </code></pre>
-        <div id="container-board-with-players"></div>
-    </section> -->
-    <section class="slide">
         <h2>Interlude - Clojurescript</h2>
+        <p> How do we decide who is the winner of the game?</p>
+        <p> There are only 8 possibilities to fill a row in the board </p>
 <pre><code class="clojure">
 (ns my.game)
 (defn calculate-winner [squares]
@@ -372,15 +349,47 @@ ol, ul {
 (run-tests)
   </code></pre>
 </section>
+
 <section class="slide">
-       <pre><code class="jsx" data-preamble="container=document.getElementById('container-board-with-players-clj');">
+        <h2>Tic Tac Toe - with players</h2>
+            <pre><code data-gist-id="viebel/887a5db4b9f96e31da8372cc3885c284" class="jsx"></code></pre>
+        <div class="left">
+         <pre><code class="jsx" data-preamble="container=document.getElementById('container-board-with-players-clj');">
         ReactDOM.render(React.createElement(BoardWithPlayers, {}), container);
         </code></pre>
-        <div id="container-board-with-players-clj"></div>
- 
+         </div>
+        <div class="left">
+            <div id="container-board-with-players-clj"></div>
+        </div>
     </section>
+    <!-- <section class="slide">
+       <pre><code class="eval-js">function calculateWinner(squares) {
+  const lines = [
+    [0, 1, 2],
+    [3, 4, 5],
+    [6, 7, 8],
+    [0, 3, 6],
+    [1, 4, 7],
+    [2, 5, 8],
+    [0, 4, 8],
+    [2, 4, 6],
+  ];
+  for (let i = 0; i < lines.length; i++) {
+    const [a, b, c] = lines[i];
+    if (squares[a] && squares[a] === squares[b] && squares[a] === squares[c]) {
+      return squares[a];
+    }
+  }
+  return null;
+}
+</code></pre>
 
-    <section class="slide">
+       <pre><code class="jsx" data-preamble="container=document.getElementById('container-board-with-players');">
+        ReactDOM.render(React.createElement(BoardWithPlayers, {}), container);
+        </code></pre>
+        <div id="container-board-with-players"></div>
+    </section> -->
+        <section class="slide">
     <h2>Summary</h2>
         <ul>
             <li><p>Functional programming has a lot of influence</p></li>
