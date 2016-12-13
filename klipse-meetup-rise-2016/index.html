@@ -7,7 +7,7 @@
 
 <link rel="shortcut icon" href="./favicon.png">
 
-<title>KLIPSE - clojuTRE 2016</title>
+<title>Rise meetup 2016 - Functional Programming: from rich to reach</title>
 
 
 <!-- Required stylesheet -->
@@ -30,6 +30,9 @@
 </head>
 <body>
 <style>
+.hidden {
+    visibility: hidden;
+}
 #klipse-color {
     width: 300px;
     height: 50px;
@@ -119,9 +122,9 @@ ol, ul {
         <div class="text-centered">
             <h2>
                 <div>
-                    Code interactivity everywhere
+                    Functional Programming <br> from rich to reach
                 </div>
-                <div>with KLIPSE</div></h2>
+            </h2>
             <div class="centered">
                 <div class="left" style="width:50%;">
                     <img src="./qrcode.png" alt="" width="300"></div>
@@ -149,21 +152,23 @@ ol, ul {
                 </div>
             </div>
 
-            <div class="clear centered"><pre><code class="clojure" data-loop-msec="1000">(symbol (js/Date))</code></pre>
+
+            <br>
+            <div class="clear centered"><pre><code class="eval-js" data-loop-msec="1000">
+            (new Date()).toString()
+                </code></pre>
             </div>
 
         </div>
     </section>
     <section class="slide">
-        <h2>Functional Programming paradigms</h2>
-        <h3>Immutability</h3>
+        <h2>Functional Programming paradigms - Immutability</h2>
         <div class="slide">
             <p>In non-functional programming, the default API mutates our objects</p>
             <div>
                 <pre><code class="eval-js">
                 const a = {size: 42};
-                b = a
-                b.size = 43
+                b = a;b.size = 43
                 a
                 </code></pre>
             </div>
@@ -179,40 +184,43 @@ ol, ul {
             </div>
         </div>
         <div class="slide">
-            <p>EcmaScript 6 gets inspired by functional programming - and propses an immutable API:</p>
+            <p>EcmaScript 6 got inspired by functional programming - and propses an immutable API:</p>
             <div>
                 <pre><code class="eval-js">
                 const a = {size: 42};
-                b = Object.assign({}, a, {size: 43})
-                b.size = 43
+                b = Object.assign({}, a); b.size = 43
                 a
                 </code></pre>
             </div>
         </div>
+        <div class="slide">
+            <p>Does it work as expected? </p>
+            <pre><code class="eval-js">
+            const a = {size: {shoes: 42}};
+            b = Object.assign({}, a)
+            b.size.shoes = 43
+            a
+            </code></pre>
+        </div>
     </section>
     <section class="slide">
-        <h2>Functional Programming paradigms</h2>
-        <h3>Pure functions</h3>
+        <h2>Functional Programming paradigms - Immutable.js </h2>
+
         <div class="slide">
-            <p>In non-functional programming, the usual functions have side effect </p>
-            <div>
-                <pre><code class="eval-js">
-                const x = [1,2,3].map((x) => console.log(x));
-                x[0]
-                </code></pre>
-            </div>
+        <div><img style="width:80%; border: solid 5px;" src="./immutable-2.png"></img></div>
+        <br>
         </div>
         <div class="slide">
-            <p>In functional programming e.g. clojure, the usual functions have no side effects - therefore we can deal with lazyness</p>
-            <p> Sometimes it can be confusing </p>
-            <div>
-                <pre><code class="clojure">
-                (def a (map println [1 2 3] ))
-                (second a)
-                </code></pre>
-            </div>
+            <pre><code class="eval-js" data-external-libs="https://raw.githubusercontent.com/facebook/immutable-js/master/dist/immutable.min.js">
+            !!Immutable
+            </code></pre>
+            <pre><code class="eval-js">
+            a = Immutable.fromJS({size: {shoes: 42 }});
+            b = a.setIn(["size", "shoes"], 43)
+            a
+            </code></pre>
         </div>
-        </section>
+    </section>
     <section class="slide">
         <h2>React.js: the functional frontend framework</h2>
 
@@ -225,7 +233,7 @@ ol, ul {
         </ol>
         </div>
         <div><img style="width:15%;float:left;margin-left: 100px;" src="./react.png"></img></div>
-        <div class="clear;"></div>
+        <div class="clear"></div>
         <div><img style="width:50%;" src="./virtualdom.png"></img></div>
         <p class=slide> Despite the fact that <code>React.js</code> is functional, it is popular!
     </section>
@@ -244,6 +252,36 @@ ol, ul {
 !!React
         </code></pre>
     </section>
+<section class="slide">
+        <h2>Interlude - JSX </h2>
+
+        <p> <a href="JSX://facebook.github.io/react/docs/introducing-jsx.html">JSX </a>is ... </p>
+       <div class="slide">
+           <p>kind of a macro system.</p>
+ <pre><code class="transpile-jsx">
+        const element = &lt;h1&gt;Hello, world!&lt;/h1&gt;;
+        </code></pre>
+        <div class="clear"></div>
+       </div>
+       <div class="slide">
+    <div class="left">
+    <pre><code class="jsx" data-preamble="container=document.getElementById('container-hello');">
+           const element = &lt;h3 style= {{color:"red"} }&gt;Hello, world -- 14*3={14*3}!&lt;/h3&gt;;
+           ReactDOM.render(element, container);
+     </code></pre>
+     </div>
+     <div id="container-hello" class="left"></div>
+       </div>
+       <div class="clear"></div>
+       <div class="slide">
+           <p>
+           The JSX transpiler runs before the code is deployed.<br>
+           It's a compile time syntactic sugar.<br>
+           Compare vs. angular.js
+           </p>
+       </div>
+</section>
+
 
     <section class="slide">
         <h2>Tic Tac Toe - The square</h2>
@@ -260,41 +298,7 @@ ol, ul {
         <div class="left" id="container-square"></div>
     </section>
 
-    <section class="slide">
-        <h2>Interlude - JSX </h2>
-
-        <p> <a href="JSX://facebook.github.io/react/docs/introducing-jsx.html">JSX </a>is ... </p>
-       <div class="slide">
-           <p>Instead of abstract definitions, let's take a look at live - and interactive - examples</p>
- <pre><code class="transpile-jsx">
-        const element = &lt;h1&gt;Hello, world!&lt;/h1&gt;;
-        </code></pre>
-        <div class="clear"></div>
-       </div>
-       <div class="slide">
-    <div class="left">
-    <pre><code class="jsx" data-preamble="container=document.getElementById('container-hello');">
-           const element = &lt;h3 style= {{color:"r" +"ed"} }&gt;Hello, world -- 14*3={14*3}!&lt;/h3&gt;;
-           ReactDOM.render(element, container);
-     </code></pre>
-     </div>
-     <div id="container-hello" class="left"></div>
-       </div>
-       <div class="clear"></div>
-       <div class="slide">
- <pre><code class="transpile-jsx">
-        function Square(props) {
-              return (
-                  &lt;button className="square" onClick={() =&gt; props.onClick()}&gt;
-                        {props.value}
-                            &lt;/button&gt;
-                              );
-        }
-        </code></pre>
-        </div>
-</section>
-
-    <section class="slide">
+        <section class="slide">
         <h2>Tic Tac Toe - The board</h2>
 
         <p> <code>Board</code> is a <b> full react component </b> with <code>constructor</code>,  <code>render</code> and a couple of helper functions</p>
@@ -322,11 +326,9 @@ ol, ul {
         (filter identity)
          first)))
   </code></pre>
-  <pre><code class="clojure" data-external-libs="https://raw.githubusercontent.com/clojure/clojurescript/master/src/main/cljs/,https://raw.githubusercontent.com/viebel/clojure/master/src/clj/">
-(ns my.game-test
-  (:require 
-    [my.game :refer [calculate-winner]]
-    [cljs.test :refer [run-tests] :refer-macros [deftest testing is are]]))
+ <div class="slide">
+ <pre><code class="clojure" data-external-libs="https://raw.githubusercontent.com/clojure/clojurescript/master/src/main/cljs/,https://raw.githubusercontent.com/viebel/clojure/master/src/clj/">
+  (require '[cljs.test :refer [run-tests] :refer-macros [deftest testing is are]])
   </code></pre>
   <pre><code class="clojure">
 (deftest calc-winner
@@ -337,7 +339,9 @@ ol, ul {
 
 (run-tests)
   </code></pre>
-  <pre><code class="clojure">
+ </div>
+<div class="slide">
+ <pre><code class="clojure">
   (deftest calc-winner
   (testing "advanced"
     (are [in out] (= (calculate-winner in) out)
@@ -348,6 +352,7 @@ ol, ul {
 
 (run-tests)
   </code></pre>
+</div>
 </section>
 
 <section class="slide">
@@ -392,8 +397,9 @@ ol, ul {
         <section class="slide">
     <h2>Summary</h2>
         <ul>
-            <li><p>Functional programming has a lot of influence</p></li>
+            <li><p>Functional programming influence on main stream technologies</p></li>
             <li><p> EcmaScript6 </p> </li>
+            <li><p> Immutable.js </p> </li>
             <li><p> React.js </p> </li>
             <li><p> ClojureScript </p></li>
             <li><p>Live coding in the browser with  <a href="github.com/viebel/klipse">klipse</a></p></li>
