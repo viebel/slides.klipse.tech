@@ -138,17 +138,60 @@
           <br>
         </div>
         <div class="slide">
-	     Let's load <code> Immutable.js </code> from <a href="https://raw.githubusercontent.com/facebook/immutable-js/master/dist/immutable.min.js">https://raw.githubusercontent.com/facebook/immutable-js/master/dist/immutable.min.js</a> by setting  <code>data-external-libs="https://raw.githubusercontent.com/facebook/immutable-js/master/dist/immutable.min.js"</code> to the DOM element of the klipse snippet: 
+	  Let's load <code> Immutable.js </code> from <a href="https://raw.githubusercontent.com/facebook/immutable-js/master/dist/immutable.min.js">https://raw.githubusercontent.com/facebook/immutable-js/master/dist/immutable.min.js</a> <br> by setting  <code>data-external-libs="https://raw.githubusercontent.com/facebook/immutable-js/master/dist/immutable.min.js"</code> to the DOM element of the klipse snippet:
              <pre><code class="eval-js" data-external-libs="https://raw.githubusercontent.com/facebook/immutable-js/master/dist/immutable.min.js">
 		 !!Immutable
              </code></pre>
-             <pre><code class="eval-js">
+	     
+             <div class="slide">
+	       Now, we can play with immutability:
+	       <pre><code class="eval-js">
 		 a = Immutable.fromJS({size: {shoes: 42 }});
 		 b = a.setIn(["size", "shoes"], 43)
 		 a
-             </code></pre>
+               </code></pre>
+	     </div>
     </div>
-    </section>
+      </section>
+      <section class="slide">
+	<h2>Functional Programming - High order Functions </h2>
+	High order functions are functions that:
+	<ul>
+	  <li> receive functions like map or filter </li>
+	  <li> return functions like partial or comp</li>
+	</ul>
+      </section>
+      <section class="slide">
+        <h2>Functional Programming - Ramda.js </h2>
+        <div class="slide">
+	  Let's load <code> Ramda.js </code> from <a href="https://cdnjs.cloudflare.com/ajax/libs/ramda/0.23.0/ramda.min.js">https://cdnjs.cloudflare.com/ajax/libs/ramda/0.23.0/ramda.min.js</a> <br> by setting  <code>data-external-libs="https://cdnjs.cloudflare.com/ajax/libs/ramda/0.23.0/ramda.min.js"</code> to the DOM element of the klipse snippet:
+             <pre><code class="eval-js" data-external-libs="https://cdnjs.cloudflare.com/ajax/libs/ramda/0.23.0/ramda.min.js">
+		 !!R
+             </code></pre>
+
+	     
+             <div class="slide">
+	        <code> partial </code>takes a function <code> f </code>
+		and a list of arguments, and returns a function <code>g</code>. <br>When applied, <code>g</code> returns the result of applying <code>f</code> to the arguments provided initially followed by the arguments provided to <code>g</code>.
+		<div class="slide">
+	       <pre><code class="eval-js">
+		   var greet = (salutation, title, firstName, lastName) =>
+		   salutation + ', ' + title + ' ' + firstName + ' ' + lastName + '!';
+
+		   var sayHello = R.partial(greet, ['Hello']);
+		   sayHello('Mr', 'John', 'Smith')
+               </code></pre>
+	       <div class="slide">
+		 We can compose partial functions:
+		 <pre><code class="eval-js">
+		     var sayHelloToMs = R.partial(sayHello, ['Ms.']);
+		     sayHelloToMs('Jane', 'Jones')
+		 </code></pre>
+	       </div> 
+	       </div>
+	     </div>
+    </div>
+      </section>
     <section class="slide">
       <h2>React.js: the functional frontend framework</h2>
 
@@ -163,7 +206,6 @@
       <div><img style="width:15%;float:left;margin-left: 100px;" src="./react.png"></img></div>
       <div class="clear"></div>
       <div><img style="width:50%;" src="./virtualdom.png"></img></div>
-      <p class="slide" style="    font-weight: bold; font-size: 3em;"> Despite the fact that <code>React.js</code> is functional, it is popular!
     </section>
     <section class="slide">
       <h2>Live Coding - in the browser</h2>
@@ -181,50 +223,24 @@
       </code></pre>
     </section>
     <section class="slide">
-      <h2>Interlude - JSX </h2>
-
-      <p> <a href="JSX://facebook.github.io/react/docs/introducing-jsx.html">JSX </a>is ... </p>
-      <div class="slide">
-        <p>kind of a macro system.</p>
-	<pre><code class="transpile-jsx">
-            const element = &lt;h1&gt;Hello, world!&lt;/h1&gt;;
-        </code></pre>
-        <div class="clear"></div>
-      </div>
-      <div class="slide">
-	<div class="left">
-	  <pre><code class="jsx" data-preamble="container=document.getElementById('container-hello');">
-              const element = &lt;h3 style= {{color:"red"} }&gt;Hello, world -- 14*3={14*3}!&lt;/h3&gt;;
-              ReactDOM.render(element, container);
-	  </code></pre>
-	</div>
-	<div id="container-hello" class="left"></div>
-      </div>
-      <div class="clear"></div>
-      <div class="slide">
-        <p>
-          The JSX transpiler runs before the code is deployed.<br>
-          It's a compile time syntactic sugar.<br>
-          Compare vs. angular.js
-        </p>
-      </div>
-    </section>
-
-
-    <section class="slide">
-      <h2>Tic Tac Toe - The square</h2>
-
-      <p> Square is a <b> pure component </b> </p>
+      <h2>Tic Tac Toe - The square: a pure component</h2>
       <pre><code class="jsx" data-gist-id="viebel/527582f3d3fa2ea28ada99fc63fe2383">
       </code></pre>
       <div class="left">
         <pre><code class="jsx" data-preamble="container=document.getElementById('container-square');">
             ReactDOM.render(React.createElement(Square, {value: 42,
             onClick: () => alert("clicked")}), container);
-</code></pre>
-</div>
-<div class="left" id="container-square"></div>
-</section>
+	</code></pre>
+      </div>
+      <div class="left" id="container-square"></div>
+    </section>
+    <section class="slide">
+      <div>
+	<h2>KLIPSE and JSX - Under the hood</h2>
+	<p> The page source </p>
+	<img src="./klipse-snippet.png">
+      </img></div>
+    </section>
 
 <section class="slide">
   <h2>Tic Tac Toe - The board</h2>
