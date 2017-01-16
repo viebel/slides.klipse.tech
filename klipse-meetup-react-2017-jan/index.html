@@ -7,7 +7,7 @@
 
     <link rel="shortcut icon" href="./favicon.png">
 
-    <title>Rise meetup 2016 - Functional Programming: from rich to reach</title>
+    <title>ReactJS Israel January 2017 - React on Steroids: Tips and Tricks from a Functional Programming Expert </title>
 
 
     <!-- Required stylesheet -->
@@ -32,12 +32,11 @@
   </head>
   <body>
     <div class="deck-container">
-
       <section class="slide">
         <div class="text-centered">
           <h2>
             <div>
-              Functional Programming <br> from rich to reach
+	      React on Steroids <br> Tips and Tricks from a Functional Programming Expert
             </div>
           </h2>
           <div class="centered">
@@ -48,7 +47,7 @@
                 <div>
                   <img class="fullscreen" src="./klipse.png" alt="" width="150">
                 </div> 
-                <div> Functional Programming in Israel </div>
+                <div> ReactJS Israel - January 2017</div>
                 <div>
                   <div>Yehonathan Sharvit</div>
                   <div> <a href="https://twitter.com/viebel">@viebel</a></div>
@@ -81,9 +80,8 @@
             <li> <p>A coder</p> </li>
             <li><p>A freak of interactivity</p>
             <li><p> Barclays - head of functional programming</p>
-            <li><p> (We're hiring...)</p>
             <li><p> Founded a Audiology Startup with 30K LOCs in Clojurescript</p>
-            <li><p> Author of KLIPSE</p>
+            <li><p> Author of <a href="https://github.com/viebel/klipse">KLIPSE</a></p>
           </ul>
         </div>
         <div class="left" style="width:25%;margin-left:10%;"><img src="https://pbs.twimg.com/profile_images/713278171353911296/1a2useM2.jpg"></img></div>
@@ -92,17 +90,13 @@
         <h2>Agenda</h2>
         <div class="left">
           <ul>
-            <li> <p>Functional programming - immutability</p></li>
-            <li> <p>React.js - a functional frontend framework</p> </li>
-            <li><p>Interludes</p>
-              <ul><li><p>JSX - a "macro" system</p></li>
-                <li> <p>ClojureScript - LISP on top of javascript</p> </li>
-              </ul>
             <li><p> Code interactivity everywhere with KLIPSE</p></li>
-            </li>
+            <li> <p>Functional programming - Paradigms and examples</p></li>
+            <li> <p>React.js - a functional frontend framework</p> </li>
+            <li> <p>React.js - Functional tips and tricks</p> </li>
           </ul>
         </div>
-        <div class="left" style="width:35%;margin-left:10%;"><img src="./sicp-3.jpg"></img></div>
+        <div class="left" style="width:35%;margin-left:5%%;"><img src="./sicp-3.jpg"></img></div>
       </section>
       <section class="slide">
         <h2>Functional Programming - Immutability</h2>
@@ -112,16 +106,6 @@
             <pre><code class="eval-js">
                 const a = {size: 42};
                 b = a;b.size = 43
-                a
-            </code></pre>
-          </div>
-        </div>
-        <div class="slide">
-          <p>In functional programming e.g. clojure, the default API doesn't mutate our objects</p>
-          <div>
-            <pre><code class="clojure">
-                (def a {:size 42})
-                (def b (assoc a :size 43))
                 a
             </code></pre>
           </div>
@@ -153,7 +137,8 @@
           <div><img style="width:80%; border: solid 5px;" src="./immutable-2.png"></img></div>
           <br>
         </div>
-        <div class="slide"
+        <div class="slide">
+	     Let's load <code> Immutable.js </code> from <a href="https://raw.githubusercontent.com/facebook/immutable-js/master/dist/immutable.min.js">https://raw.githubusercontent.com/facebook/immutable-js/master/dist/immutable.min.js</a> by setting  <code>data-external-libs="https://raw.githubusercontent.com/facebook/immutable-js/master/dist/immutable.min.js"</code> to the DOM element of the klipse snippet: 
              <pre><code class="eval-js" data-external-libs="https://raw.githubusercontent.com/facebook/immutable-js/master/dist/immutable.min.js">
 		 !!Immutable
              </code></pre>
