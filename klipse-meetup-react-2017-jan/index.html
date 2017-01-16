@@ -1,0 +1,515 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+<meta name="viewport" content="width=1024, user-scalable=no">
+
+<link rel="shortcut icon" href="./favicon.png">
+
+<title>Rise meetup 2016 - Functional Programming: from rich to reach</title>
+
+
+<!-- Required stylesheet -->
+<link rel="stylesheet" media="screen" href="http://slides.klipse.tech/includes/deckjs/core/deck.core.css">
+
+<!-- Extension CSS files go here. Remove or add as needed. -->
+<link rel="stylesheet" media="screen" href="http://slides.klipse.tech/includes/deckjs/extensions/goto/deck.goto.css">
+<link rel="stylesheet" media="screen" href="http://slides.klipse.tech/includes/deckjs/extensions/menu/deck.menu.css">
+<link rel="stylesheet" media="screen" href="http://slides.klipse.tech/includes/deckjs/extensions/navigation/deck.navigation.css">
+<link rel="stylesheet" media="screen" href="http://slides.klipse.tech/includes/deckjs/extensions/status/deck.status.css">
+<link rel="stylesheet" media="screen" href="http://slides.klipse.tech/includes/deckjs/extensions/scale/deck.scale.css">
+
+<link rel="stylesheet" media="screen" href="http://slides.klipse.tech/includes/deckjs/themes/style/klipse.css">
+
+<link rel="stylesheet" media="screen" href="http://slides.klipse.tech/includes/deckjs/themes/transition/horizontal-slide.css">
+
+<link rel="stylesheet" type="text/css" href="https://storage.googleapis.com/app.klipse.tech/css/codemirror.css">
+<!-- Required Modernizr file -->
+<script src="http://slides.klipse.tech/includes/deckjs/modernizr.custom.js"></script>
+</head>
+<body>
+<style>
+.hidden {
+    visibility: hidden;
+}
+#klipse-color {
+    width: 300px;
+    height: 50px;
+    background-color: red;
+}
+.centered {
+    width: 50%;
+    padding-left: 25%;
+    text-align: center;
+
+}
+.text-centered {
+    text-align: center;
+}
+
+.left {
+    float: left;
+}
+.clear {
+    clear: both;
+}
+.livedoc {
+    border: none;
+    width: 100%;
+    height: 600px;
+}
+p {
+    font-size: 1.7em;
+}
+</style>
+<style>
+body {
+  font: 14px "Century Gothic", Futura, sans-serif;
+  margin: 20px;
+}
+
+ol, ul {
+  padding-left: 30px;
+}
+
+.board-row:after {
+  clear: both;
+  content: "";
+  display: table;
+}
+
+.status {
+  margin-bottom: 10px;
+}
+
+.square {
+  background: black;
+  color: white;
+  border: 1px solid #999;
+  float: left;
+  font-size: 24px;
+  font-weight: bold;
+  line-height: 34px;
+  height: 34px;
+  margin-right: -1px;
+  margin-top: -1px;
+  padding: 0;
+  text-align: center;
+  width: 34px;
+}
+
+.square:focus {
+  outline: none;
+}
+
+.kbd-navigation .square:focus {
+  background: #ddd;
+}
+
+.game {
+  display: flex;
+  flex-direction: row;
+}
+
+.game-info {
+  margin-left: 20px;
+}
+</style>
+<div class="deck-container">
+
+    <section class="slide">
+        <div class="text-centered">
+            <h2>
+                <div>
+                    Functional Programming <br> from rich to reach
+                </div>
+            </h2>
+            <div class="centered">
+                <div class="left" style="width:50%;">
+                    <img src="./qrcode.png" alt="" width="300"></div>
+                <div class="left" style="width:50%;">
+                    <div>
+                        <div>
+                            <img class="fullscreen" src="./klipse.png" alt="" width="150">
+                        </div> 
+                        <div> Functional Programming in Israel </div>
+                        <div>
+                            <div>Yehonathan Sharvit</div>
+                            <div> <a href="https://twitter.com/viebel">@viebel</a></div>
+                        </div>
+                        <div class="clear">
+                            <div style="margin-top:14px;">
+                                <a class="github-button" href="https://github.com/viebel/klipse" data-count-href="/viebel/klipse/stargazers" data-count-api="/repos/viebel/klipse#stargazers_count" data-count-aria-label="# stargazers on GitHub" aria-label="Star viebel/klipse on GitHub">KLIPSE</a>
+                            </div>
+                            <script async defer id="github-bjs" src="https://buttons.github.io/buttons.js"></script>
+                        </div>
+                        <div>
+                            <a href="http://slides.klipse.tech">http://slides.klipse.tech</a>
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+
+
+            <br>
+            <div class="clear centered"><pre><code class="eval-js" data-loop-msec="1000">
+            (new Date()).toString()
+                </code></pre>
+            </div>
+
+        </div>
+    </section>
+<section class="slide">
+        <h2>Who am I?</h2>
+        <div class="left">
+        <ul>
+            <li> <p>A mathematician </p></li>
+            <li> <p>A pragmatic theorist</p> </li>
+            <li> <p>A coder</p> </li>
+            <li><p>A freak of interactivity</p>
+            <li><p> Barclays - head of functional programming</p>
+            <li><p> (We're hiring...)</p>
+            <li><p> Founded a Audiology Startup with 30K LOCs in Clojurescript</p>
+            <li><p> Author of KLIPSE</p>
+        </ul>
+        </div>
+        <div class="left" style="width:25%;margin-left:10%;"><img src="https://pbs.twimg.com/profile_images/713278171353911296/1a2useM2.jpg"></img></div>
+    </section>
+    <section class="slide">
+        <h2>Agenda</h2>
+        <div class="left">
+        <ul>
+            <li> <p>Functional programming - immutability</p></li>
+            <li> <p>React.js - a functional frontend framework</p> </li>
+            <li><p>Interludes</p>
+            <ul><li><p>JSX - a "macro" system</p></li>
+                <li> <p>ClojureScript - LISP on top of javascript</p> </li>
+            </ul>
+            <li><p> Code interactivity everywhere with KLIPSE</p></li>
+            </li>
+        </ul>
+        </div>
+        <div class="left" style="width:35%;margin-left:10%;"><img src="./sicp-3.jpg"></img></div>
+    </section>
+    <section class="slide">
+        <h2>Functional Programming - Immutability</h2>
+        <div class="slide">
+            <p>In non-functional programming, the default API mutates our objects</p>
+            <div>
+                <pre><code class="eval-js">
+                const a = {size: 42};
+                b = a;b.size = 43
+                a
+                </code></pre>
+            </div>
+        </div>
+        <div class="slide">
+            <p>In functional programming e.g. clojure, the default API doesn't mutate our objects</p>
+            <div>
+                <pre><code class="clojure">
+                (def a {:size 42})
+                (def b (assoc a :size 43))
+                a
+                </code></pre>
+            </div>
+        </div>
+        <div class="slide">
+            <p>EcmaScript 6 got inspired by functional programming - and propses an immutable API:</p>
+            <div>
+                <pre><code class="eval-js">
+                const a = {size: 42};
+                b = Object.assign({}, a); b.size = 43
+                a
+                </code></pre>
+            </div>
+        </div>
+        <div class="slide">
+            <p>Does it work as expected? </p>
+            <pre><code class="eval-js">
+            const a = {size: {shoes: 42}};
+            b = Object.assign({}, a)
+            b.size.shoes = 43
+            a
+            </code></pre>
+        </div>
+    </section>
+    <section class="slide">
+        <h2>Functional Programming - Immutable.js </h2>
+
+        <div class="slide">
+        <div><img style="width:80%; border: solid 5px;" src="./immutable-2.png"></img></div>
+        <br>
+        </div>
+        <div class="slide"
+            <pre><code class="eval-js" data-external-libs="https://raw.githubusercontent.com/facebook/immutable-js/master/dist/immutable.min.js">
+            !!Immutable
+            </code></pre>
+            <pre><code class="eval-js">
+            a = Immutable.fromJS({size: {shoes: 42 }});
+            b = a.setIn(["size", "shoes"], 43)
+            a
+            </code></pre>
+        </div>
+    </section>
+    <section class="slide">
+        <h2>React.js: the functional frontend framework</h2>
+
+        <div style="float:left;">
+        <p> The principles </p>
+        <ol>
+            <li><p>Virtual DOM</p></li>
+            <li><p>Immutability</p></li>
+            <li><p>Pure functions</p></li>
+        </ol>
+        </div>
+        <div><img style="width:15%;float:left;margin-left: 100px;" src="./react.png"></img></div>
+        <div class="clear"></div>
+        <div><img style="width:50%;" src="./virtualdom.png"></img></div>
+        <p class="slide" style="    font-weight: bold; font-size: 3em;"> Despite the fact that <code>React.js</code> is functional, it is popular!
+    </section>
+    <section class="slide">
+    <h2>Live Coding - in the browser</h2>
+    <h3>Tic Tac Toe</h3>
+    <br>
+    <br>
+    <div><img style="width:50%;" src="./tictactoe.jpg"></img></div>
+    </section>
+    <section class="slide">
+        <h2>React - The basics</h2>
+
+        <p> Let's load react javascript files from  <a href="https://cdnjs.com">cdnjs.com</a>:</p>
+        <pre><code class="eval-js" data-external-libs="https://cdnjs.cloudflare.com/ajax/libs/react/15.4.1/react-with-addons.js, https://cdnjs.cloudflare.com/ajax/libs/react/15.4.1/react-dom.js">
+!!React
+        </code></pre>
+    </section>
+<section class="slide">
+        <h2>Interlude - JSX </h2>
+
+        <p> <a href="JSX://facebook.github.io/react/docs/introducing-jsx.html">JSX </a>is ... </p>
+       <div class="slide">
+           <p>kind of a macro system.</p>
+ <pre><code class="transpile-jsx">
+        const element = &lt;h1&gt;Hello, world!&lt;/h1&gt;;
+        </code></pre>
+        <div class="clear"></div>
+       </div>
+       <div class="slide">
+    <div class="left">
+    <pre><code class="jsx" data-preamble="container=document.getElementById('container-hello');">
+           const element = &lt;h3 style= {{color:"red"} }&gt;Hello, world -- 14*3={14*3}!&lt;/h3&gt;;
+           ReactDOM.render(element, container);
+     </code></pre>
+     </div>
+     <div id="container-hello" class="left"></div>
+       </div>
+       <div class="clear"></div>
+       <div class="slide">
+           <p>
+           The JSX transpiler runs before the code is deployed.<br>
+           It's a compile time syntactic sugar.<br>
+           Compare vs. angular.js
+           </p>
+       </div>
+</section>
+
+
+    <section class="slide">
+        <h2>Tic Tac Toe - The square</h2>
+
+        <p> Square is a <b> pure component </b> </p>
+        <pre><code class="jsx" data-gist-id="viebel/527582f3d3fa2ea28ada99fc63fe2383">
+        </code></pre>
+        <div class="left">
+        <pre><code class="jsx" data-preamble="container=document.getElementById('container-square');">
+        ReactDOM.render(React.createElement(Square, {value: 42,
+                                                    onClick: () => alert("clicked")}), container);
+        </code></pre>
+        </div>
+        <div class="left" id="container-square"></div>
+    </section>
+
+        <section class="slide">
+        <h2>Tic Tac Toe - The board</h2>
+
+        <p> <code>Board</code> is a <b> full react component </b> with <code>constructor</code>,  <code>render</code> and a couple of helper functions</p>
+        <pre><code data-gist-id="viebel/b93514b4919799b1f4a287f216048916" class="jsx"></code></pre>
+   <div class="left">
+<pre><code class="jsx" data-preamble="container=document.getElementById('container-board');">
+        ReactDOM.render(React.createElement(Board, {}), container);
+        </code></pre>
+    </div>
+    <div id="container-board" class="left"></div>
+    <div class="clear"></div>
+    </section>
+<section class="slide">
+        <h2>Interlude - Clojurescript</h2>
+        <p> How do we decide who is the winner of the game?</p>
+        <p> There are only 8 possibilities to fill a row in the board </p>
+<pre><code class="clojure">
+(ns my.game)
+(defn calculate-winner [squares]
+  (let [lines [[0 1 2] [3 4 5] [6 7 8] [0 3 6] [1 4 7] [2 5 8] [0 4 8] [2 4 6]]]
+    (->> (map (fn [[a b c]] (and (some? (get squares a))
+                            (= (get squares a) (get squares b) (get squares c))
+                            (get squares a)))
+            lines)
+        (filter identity)
+         first)))
+  </code></pre>
+ <div class="slide">
+ <pre><code class="clojure" data-external-libs="https://raw.githubusercontent.com/clojure/clojurescript/master/src/main/cljs/,https://raw.githubusercontent.com/viebel/clojure/master/src/clj/">
+  (require '[cljs.test :refer [run-tests] :refer-macros [deftest testing is are]])
+  </code></pre>
+  <pre><code class="clojure">
+(deftest calc-winner
+  (testing "basic"
+    (is (= (calculate-winner ["X" "X" "X"]) "X"))
+    (is (= (calculate-winner ["X" "X" "O"]) nil))
+    (is (= (calculate-winner ["O" "O" "O"]) "O"))))
+
+(run-tests)
+  </code></pre>
+ </div>
+<div class="slide">
+ <pre><code class="clojure">
+  (deftest calc-winner
+  (testing "advanced"
+    (are [in out] (= (calculate-winner in) out)
+         ["X" "X" "X"] "X"
+         ["X" "O" nil
+          "X" "O" nil
+          "X" nil nil] "X")))
+
+(run-tests)
+  </code></pre>
+</div>
+</section>
+
+<section class="slide">
+        <h2>Tic Tac Toe - with players</h2>
+            <pre><code data-gist-id="viebel/887a5db4b9f96e31da8372cc3885c284" class="jsx"></code></pre>
+        <div class="left">
+         <pre><code class="jsx" data-preamble="container=document.getElementById('container-board-with-players-clj');">
+        ReactDOM.render(React.createElement(BoardWithPlayers, {}), container);
+        </code></pre>
+         </div>
+        <div class="left">
+            <div id="container-board-with-players-clj"></div>
+        </div>
+</section>
+
+    <!-- <section class="slide">
+       <pre><code class="eval-js">function calculateWinner(squares) {
+  const lines = [
+    [0, 1, 2],
+    [3, 4, 5],
+    [6, 7, 8],
+    [0, 3, 6],
+    [1, 4, 7],
+    [2, 5, 8],
+    [0, 4, 8],
+    [2, 4, 6],
+  ];
+  for (let i = 0; i < lines.length; i++) {
+    const [a, b, c] = lines[i];
+    if (squares[a] && squares[a] === squares[b] && squares[a] === squares[c]) {
+      return squares[a];
+    }
+  }
+  return null;
+}
+</code></pre>
+
+       <pre><code class="jsx" data-preamble="container=document.getElementById('container-board-with-players');">
+        ReactDOM.render(React.createElement(BoardWithPlayers, {}), container);
+        </code></pre>
+        <div id="container-board-with-players"></div>
+    </section> -->
+
+
+<section class="slide">
+        <h2>Tic Tac Toe - with history</h2>
+            <pre><code data-gist-id="viebel/870d29eea08c4f4a33ab3c5d59aba425" class="jsx"></code></pre>
+        <div class="left">
+         <pre><code class="jsx" data-preamble="container=document.getElementById('container-board-with-history');">
+        ReactDOM.render(React.createElement(BoardWithPlayers, {}), container);
+        </code></pre>
+         </div>
+        <div class="left">
+            <div id="container-board-with-history"></div>
+        </div>
+</section>
+
+        <section class="slide">
+    <h2>Summary</h2>
+        <ul>
+            <li><p>Functional programming influence on main stream technologies</p></li>
+            <li><p> EcmaScript6 </p> </li>
+            <li><p> Immutable.js </p> </li>
+            <li><p> React.js </p> </li>
+            <li><p> ClojureScript </p></li>
+            <li><p>Live coding in the browser with  <a href="github.com/viebel/klipse">klipse</a></p></li>
+        </ul>
+    </section>
+
+
+
+   <section class="slide">
+                <h2>Questions?</h2>
+            <div>
+                <img src="./questions.jpg" style="width:60%"></img>
+            </div>
+    </section>
+
+
+            <p class="deck-status" aria-role="status">
+            <span class="deck-status-current"></span>
+            /
+            <span class="deck-status-total"></span>
+            </p>
+
+            <!-- End extension snippets. -->
+</div>
+
+        <!-- Required JS files. -->
+        <script src="http://slides.klipse.tech/includes/deckjs/jquery.min.js"></script>
+        <script src="http://slides.klipse.tech/includes/deckjs/core/deck.core.js"></script>
+
+        <!-- Extension JS files. Add or remove as needed. -->
+        <script src="http://slides.klipse.tech/includes/deckjs/extensions/menu/deck.menu.js"></script>
+        <script src="http://slides.klipse.tech/includes/deckjs/extensions/status/deck.status.js"></script>
+        <script src="http://slides.klipse.tech/includes/deckjs/extensions/fullscreen/deck.fullscreen.js"></script>
+
+        <script>
+$(function() {
+        $.deck('.slide', {
+countNested: false,
+fullscreenSelector: 'h2, fullscreen'
+});
+        });
+        </script>
+
+        <script>
+window.klipse_settings = {
+          selector: '.clojure',
+          selector_js: '.clj-to-js',
+          selector_eval_js: '.eval-js',
+          selector_jsx: '.jsx',
+          selector_transpile_jsx: '.transpile-jsx',
+          selector_eval_python_client: '.python',
+          selector_eval_ruby: '.ruby',
+          codemirror_options_in: {
+              lineWrapping: true,
+              autoCloseBrackets: true
+          },
+          codemirror_options_out: {
+               lineWrapping: true
+          }
+};
+        </script>
+
+        <script src="https://storage.googleapis.com/app.klipse.tech/plugin/js/klipse_plugin.js"></script>
+        </body>
+        </html>
