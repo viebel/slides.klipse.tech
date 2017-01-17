@@ -28,6 +28,6 @@
     width: 100%;
     height: 600px;
 }
-p {
+p,ul {
     font-size: 1.7em;
 }

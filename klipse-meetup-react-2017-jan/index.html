@@ -75,28 +75,99 @@
         <h2>Who am I?</h2>
         <div class="left">
           <ul>
-            <li> <p>A mathematician </p></li>
-            <li> <p>A pragmatic theorist</p> </li>
-            <li> <p>A coder</p> </li>
-            <li><p>A freak of interactivity</p>
-            <li><p> Barclays - head of functional programming</p>
-            <li><p> Founded a Audiology Startup with 30K LOCs in Clojurescript</p>
-            <li><p> Author of <a href="https://github.com/viebel/klipse">KLIPSE</a></p>
+            <li> A mathematician </li>
+            <li> A pragmatic theorist </li>
+            <li> A coder </li>
+            <li> A freak of interactivity
+            <li> Barclays - head of functional programming
+            <li> Founded a Audiology Startup with 30K LOCs in Clojurescript
+            <li> Author of <a href="https://github.com/viebel/klipse">KLIPSE</a>
           </ul>
         </div>
-        <div class="left" style="width:25%;margin-left:10%;"><img src="https://pbs.twimg.com/profile_images/713278171353911296/1a2useM2.jpg"></img></div>
+        <div class="left" style="width:25%;margin-left:5%;"><img src="https://pbs.twimg.com/profile_images/713278171353911296/1a2useM2.jpg"></img></div>
       </section>
       <section class="slide">
         <h2>Agenda</h2>
         <div class="left">
           <ul>
-            <li><p> Code interactivity everywhere with KLIPSE</p></li>
-            <li> <p>Functional programming - Paradigms and examples</p></li>
-            <li> <p>React.js - a functional frontend framework</p> </li>
-            <li> <p>React.js - Functional tips and tricks</p> </li>
+            <li> KLIPSE - Code interactivity everywhere </li>
+            <li> Functional programming - Paradigms and examples</li>
+            <li> React.js - a functional frontend framework </li>
+            <li> React.js - Functional tips and tricks </li>
           </ul>
         </div>
-        <div class="left" style="width:35%;margin-left:5%%;"><img src="./sicp-3.jpg"></img></div>
+        <div class="left" style="width:35%;margin-left:5%;"><img src="./sicp-3.jpg"></img></div>
+      </section>
+      <section class="slide">
+        <h2>KLIPSE - Code interactivity</h2>
+        <div class="slide">
+          <p>KLIPSE is a javascript tag that transforms pieces of static code into interactive code snippets</p>
+	</div>
+	<div class="slide">
+	  <p> Data Manipulation </p>
+	<pre><code class="eval-js">
+	      [1,2,3].map(x => x + 1)
+        </code></pre>
+	</div>
+	<div class="slide">
+	  <p> console.log </p>
+          <pre><code class="eval-js" data-async-code="true">
+	      console.log("Hello World!")
+          </code></pre>
+	</div>
+	<div class="slide">
+	  <p> Asynchronous code </p>
+          <pre><code class="eval-js" data-async-code="true">
+	      setTimeout(() => console.log("Hello World!"), 1000)
+          </code></pre>
+	</div>
+      </section>
+      <section class="slide">
+        <h2>KLIPSE - Dealing with the DOM</h2>
+	<div class="slide">
+          <p>Hello World</p>
+          <pre><code class="eval-js">
+	      klipse_container.innerHTML = `&lt;div&gt;Hello &lt;em&gt;World&lt;/em&gt;!&lt;/div&gt;`
+	      &quot;trivial&quot;
+	  </code></pre>
+	</div>
+	<div class="slide">
+          <p>Hello World - with <em>style</em></p>
+          <pre><code class="eval-js">
+	      klipse_container.innerHTML = `&lt;div&gt;Hello &lt;em style=&quot;color:red;&quot;&gt;World&lt;/em&gt;!&lt;/div&gt;`
+	      &quot;nice&quot;
+	  </code></pre>
+	</div>
+	<div class="slide">
+          <p>More interesting - SVG </p>
+          <pre><code class="eval-js">
+	      klipse_container.innerHTML = `&lt;svg width=&quot;100%&quot; height=&quot;400&quot; viewBox=&quot;0 0 300 200&quot;&gt;
+	      &lt;path d=&quot;M3.9,74.8c0,0,0-106.4,75.5-42.6S271.8,184,252.9,106.9s-47.4-130.9-58.2-92s59.8,111.2-32.9,126.1 S5.9,138.6,3.9,90z&quot;
+	      fill=&quot;none&quot; id=&quot;theMotionPath&quot; stroke=&quot;brown&quot;/&gt;
+	      &lt;g stroke-width=&quot;2&quot; stroke=&quot;black&quot; fill=&quot;white&quot;&gt;
+	      &lt;circle r=&quot;20&quot;/&gt;
+	      &lt;circle r=&quot;2&quot; cx=&quot;-7&quot; cy=&quot;-5&quot;/&gt;
+	      &lt;circle r=&quot;2&quot; cx=&quot;7&quot; cy=&quot;-5&quot;/&gt;
+	      &lt;path d=&quot;M -10 5 Q 0 15 10 5&quot;/&gt;
+	      &lt;animateMotion dur=&quot;4s&quot; repeatCount=&quot;indefinite&quot;  rotate=&quot;auto&quot;&gt;
+	      &lt;mpath xlink:href=&quot;#theMotionPath&quot;/&gt;
+	      &lt;/animateMotion&gt;
+	      &lt;/g&gt;
+	      &lt;/svg&gt;`
+	  "cool"
+          </code></pre>
+        </div>
+      </section>
+      <section class="slide">
+        <h2>KLIPSE - how to integrate on your blog</h2>
+
+	<p>Super Simple!<br>
+          You include the klipse javascript tag on your page.<br>
+	  You specify the CSS selector of the DOM elements that you want to klipsify.</br>
+	</p>
+	<img src="./klipse-integration.png"></img>
+
+	<p> More details on <a href="https://github.com/viebel/klipse">github.</a></p>
       </section>
       <section class="slide">
         <h2>Functional Programming - Immutability</h2>
@@ -138,7 +209,7 @@
           <br>
         </div>
         <div class="slide">
-	  Let's load <code> Immutable.js </code> from <a href="https://raw.githubusercontent.com/facebook/immutable-js/master/dist/immutable.min.js">https://raw.githubusercontent.com/facebook/immutable-js/master/dist/immutable.min.js</a> <br> by setting  <code>data-external-libs="https://raw.githubusercontent.com/facebook/immutable-js/master/dist/immutable.min.js"</code> to the DOM element of the klipse snippet:
+	  <p>Let's load <code>Immutable.js</code> from a CDN <br> By setting  <strong>data-external-libs="https://raw.githubusercontent.com/facebook/immutable-js/master/dist/immutable.min.js"</strong> to the DOM element of the klipse snippet:</p>
              <pre><code class="eval-js" data-external-libs="https://raw.githubusercontent.com/facebook/immutable-js/master/dist/immutable.min.js">
 		 !!Immutable
              </code></pre>
@@ -151,51 +222,73 @@
 		 a
                </code></pre>
 	     </div>
-    </div>
+	</div>
+      </section>
+      <section class="slide">
+        <h2>Functional Programming - Immutable.js </h2>
+	  <p> It is fast! <br>
+	    It relies on <a href="https://en.wikipedia.org/wiki/Hash_array_mapped_trie">mapped tries</a> that were first implemented in <code> Clojure </code>.<br>
+	    Going deeper:</p>
+	    <div class="left" style="width:60%;">
+	    <ul>
+	      <li> <a href="http://hypirion.com/musings/understanding-persistent-vector-pt-1"> Persistent Data Structures explained</a></li>
+	      <li><a href="http://blog.klipse.tech/javascript/2016/06/23/immutable-perf.html">immutable.js is much faster than native javascript</a></li>
+	      <li><a href="http://untangled.io/immutable-js-an-introduction-with-examples-written-for-humans/">Immutable.js: An Introduction with examples written for humans</a>
+	      </li>
+	    </ul>
+	</div>
+	<div class="left" style="margin-left: 5%; width:35%;">
+	  <img src="./persistent-ds.png"></img>
+	</div>
       </section>
       <section class="slide">
 	<h2>Functional Programming - High order Functions </h2>
-	High order functions are functions that:
+	<p>High order functions are functions that:
 	<ul>
-	  <li> receive functions like map or filter </li>
-	  <li> return functions like partial or comp</li>
+	  <li> receive functions (e.g. map, filter) </li>
+	  <li> return functions (e.g partial, comp)</li>
 	</ul>
       </section>
+      </p>
       <section class="slide">
         <h2>Functional Programming - Ramda.js </h2>
         <div class="slide">
-	  Let's load <code> Ramda.js </code> from <a href="https://cdnjs.cloudflare.com/ajax/libs/ramda/0.23.0/ramda.min.js">https://cdnjs.cloudflare.com/ajax/libs/ramda/0.23.0/ramda.min.js</a> <br> by setting  <code>data-external-libs="https://cdnjs.cloudflare.com/ajax/libs/ramda/0.23.0/ramda.min.js"</code> to the DOM element of the klipse snippet:
+	  <h3> Ramda - A practical functional library for JavaScript programmers.</h3>
+
+	    
+	  <p>
+	  Let's load <a href="http://ramdajs.com/">Ramda.js</a> from a CDN  <br> By setting  <strong>data-external-libs="https://cdnjs.cloudflare.com/ajax/libs/ramda/0.23.0/ramda.min.js"</strong> to the DOM element of the klipse snippet:</p>
              <pre><code class="eval-js" data-external-libs="https://cdnjs.cloudflare.com/ajax/libs/ramda/0.23.0/ramda.min.js">
 		 !!R
              </code></pre>
+      </section>
+      <section class="slide">
+        <h2>Functional Programming - Ramda.js </h2>      
+	<p>
+	  <code>partial</code> takes a function <code> f </code>
+	  and a list of arguments, and returns a function <code>g</code>. <br>When applied, <code>g</code> returns the result of applying <code>f</code> to the arguments provided initially followed by the arguments provided to <code>g</code>.
+	</p>
+	<div class="slide">
+	  <pre><code class="eval-js">
+	      var greet = (salutation, title, firstName, lastName) =>
+	      salutation + ', ' + title + ' ' + firstName + ' ' + lastName + '!';
 
-	     
-             <div class="slide">
-	        <code> partial </code>takes a function <code> f </code>
-		and a list of arguments, and returns a function <code>g</code>. <br>When applied, <code>g</code> returns the result of applying <code>f</code> to the arguments provided initially followed by the arguments provided to <code>g</code>.
-		<div class="slide">
-	       <pre><code class="eval-js">
-		   var greet = (salutation, title, firstName, lastName) =>
-		   salutation + ', ' + title + ' ' + firstName + ' ' + lastName + '!';
-
-		   var sayHello = R.partial(greet, ['Hello']);
-		   sayHello('Mr', 'John', 'Smith')
-               </code></pre>
-	       <div class="slide">
-		 We can compose partial functions:
-		 <pre><code class="eval-js">
-		     var sayHelloToMs = R.partial(sayHello, ['Ms.']);
-		     sayHelloToMs('Jane', 'Jones')
-		 </code></pre>
-	       </div> 
-	       </div>
-	     </div>
-    </div>
+	      var sayHello = R.partial(greet, ['Hello']);
+	      sayHello('Mr', 'John', 'Smith')
+          </code></pre>
+	</div>
+	<div class="slide">
+	  <p>We can compose partial functions:</p>
+	  <pre><code class="eval-js">
+	      var sayHelloToMs = R.partial(sayHello, ['Ms.']);
+	      sayHelloToMs('Jane', 'Jones')
+	  </code></pre>
+	</div> 
       </section>
     <section class="slide">
       <h2>React.js: the functional frontend framework</h2>
 
-      <div style="float:left;">
+      <div class="left">
         <p> The principles </p>
         <ol>
           <li><p>Virtual DOM</p></li>
@@ -208,11 +301,12 @@
       <div><img style="width:50%;" src="./virtualdom.png"></img></div>
     </section>
     <section class="slide">
-      <h2>Live Coding - in the browser</h2>
-      <h3>Tic Tac Toe</h3>
+      <h2>React - Tic Tac Toe</h2>
       <br>
       <br>
       <div><img style="width:50%;" src="./tictactoe.jpg"></img></div>
+      <br>
+      <p>Based on <a href="https://facebook.github.io/react/tutorial/tutorial.html">Tutorial: Intro To React</a>.</p>
     </section>
     <section class="slide">
       <h2>React - The basics</h2>
@@ -223,13 +317,13 @@
       </code></pre>
     </section>
     <section class="slide">
-      <h2>Tic Tac Toe - The square: a pure component</h2>
+      <h2>Tic Tac Toe - Square: a pure component</h2>
       <pre><code class="jsx" data-gist-id="viebel/527582f3d3fa2ea28ada99fc63fe2383">
       </code></pre>
       <div class="left">
         <pre><code class="jsx" data-preamble="container=document.getElementById('container-square');">
             ReactDOM.render(React.createElement(Square, {value: 42,
-            onClick: () => alert("clicked")}), container);
+            onClick: () => alert("clicked")}), container)
 	</code></pre>
       </div>
       <div class="left" id="container-square"></div>
@@ -242,69 +336,31 @@
       </img></div>
     </section>
 
-<section class="slide">
-  <h2>Tic Tac Toe - The board</h2>
 
-  <p> <code>Board</code> is a <b> full react component </b> with <code>constructor</code>,  <code>render</code> and a couple of helper functions</p>
-  <pre><code data-gist-id="viebel/b93514b4919799b1f4a287f216048916" class="jsx"></code></pre>
-  <div class="left">
-    <pre><code class="jsx" data-preamble="container=document.getElementById('container-board');">
-        ReactDOM.render(React.createElement(Board, {}), container);
-    </code></pre>
-  </div>
-  <div id="container-board" class="left"></div>
-  <div class="clear"></div>
-</section>
-<section class="slide">
-  <h2>Interlude - Clojurescript</h2>
-  <p> How do we decide who is the winner of the game?</p>
-  <p> There are only 8 possibilities to fill a row in the board </p>
-  <pre><code class="clojure">
-      (ns my.game)
-      (defn calculate-winner [squares]
-      (let [lines [[0 1 2] [3 4 5] [6 7 8] [0 3 6] [1 4 7] [2 5 8] [0 4 8] [2 4 6]]]
-      (->> (map (fn [[a b c]] (and (some? (get squares a))
-      (= (get squares a) (get squares b) (get squares c))
-      (get squares a)))
-      lines)
-      (filter identity)
-      first)))
-  </code></pre>
-  <div class="slide">
-    <pre><code class="clojure" data-external-libs="https://raw.githubusercontent.com/clojure/clojurescript/master/src/main/cljs/,https://raw.githubusercontent.com/viebel/clojure/master/src/clj/">
-	(require '[cljs.test :refer [run-tests] :refer-macros [deftest testing is are]])
-    </code></pre>
-    <pre><code class="clojure">
-	(deftest calc-winner
-	(testing "basic"
-	(is (= (calculate-winner ["X" "X" "X"]) "X"))
-	(is (= (calculate-winner ["X" "X" "O"]) nil))
-	(is (= (calculate-winner ["O" "O" "O"]) "O"))))
+    <section class="slide">
+      <h2>Tic Tac Toe - winner </h2>
+      <p> How do we decide who is the winner of the game?</p>
+      <p> There are only 8 possibilities to fill a row in the board </p>
+      <pre><code class="eval-js">function calculateWinner(squares) {
+	  const lines = [[0, 1, 2], [3, 4, 5], [6, 7, 8], [0, 3, 6], [1, 4, 7], [2, 5, 8], [0, 4, 8], [2, 4, 6],];
+	  for (let i = 0; i < lines.length; i++) {
+			      const [a, b, c] = lines[i];
+			      if (squares[a] && squares[a] === squares[b] && squares[a] === squares[c]) {
+			      return squares[a];
+			      }
+			      }
+			      return null;
+			      }
+			      </code></pre>
 
-	(run-tests)
-    </code></pre>
-  </div>
-  <div class="slide">
-    <pre><code class="clojure">
-	(deftest calc-winner
-	(testing "advanced"
-	(are [in out] (= (calculate-winner in) out)
-        ["X" "X" "X"] "X"
-        ["X" "O" nil
-        "X" "O" nil
-        "X" nil nil] "X")))
-
-	(run-tests)
-    </code></pre>
-  </div>
-</section>
+    </section>
 
 <section class="slide">
   <h2>Tic Tac Toe - with players</h2>
-  <pre><code data-gist-id="viebel/887a5db4b9f96e31da8372cc3885c284" class="jsx"></code></pre>
+  <pre><code data-gist-id="viebel/312d45efb63a2366fbc82f2120787317" class="jsx"></code></pre>
   <div class="left">
     <pre><code class="jsx" data-preamble="container=document.getElementById('container-board-with-players-clj');">
-        ReactDOM.render(React.createElement(BoardWithPlayers, {}), container);
+        ReactDOM.render(React.createElement(BoardWithPlayers, {}), container)
     </code></pre>
   </div>
   <div class="left">
@@ -312,41 +368,13 @@
   </div>
 </section>
 
-<!-- <section class="slide">
-     <pre><code class="eval-js">function calculateWinner(squares) {
-	 const lines = [
-	 [0, 1, 2],
-	 [3, 4, 5],
-	 [6, 7, 8],
-	 [0, 3, 6],
-	 [1, 4, 7],
-	 [2, 5, 8],
-	 [0, 4, 8],
-	 [2, 4, 6],
-	 ];
-	 for (let i = 0; i < lines.length; i++) {
-			     const [a, b, c] = lines[i];
-			     if (squares[a] && squares[a] === squares[b] && squares[a] === squares[c]) {
-			     return squares[a];
-			     }
-			     }
-			     return null;
-			     }
-			     </code></pre>
-
-     <pre><code class="jsx" data-preamble="container=document.getElementById('container-board-with-players');">
-         ReactDOM.render(React.createElement(BoardWithPlayers, {}), container);
-     </code></pre>
-     <div id="container-board-with-players"></div>
-</section> -->
-
 
 <section class="slide">
   <h2>Tic Tac Toe - with history</h2>
   <pre><code data-gist-id="viebel/870d29eea08c4f4a33ab3c5d59aba425" class="jsx"></code></pre>
   <div class="left">
     <pre><code class="jsx" data-preamble="container=document.getElementById('container-board-with-history');">
-        ReactDOM.render(React.createElement(BoardWithPlayers, {}), container);
+        ReactDOM.render(React.createElement(BoardWithPlayers, {}), container)
     </code></pre>
   </div>
   <div class="left">
