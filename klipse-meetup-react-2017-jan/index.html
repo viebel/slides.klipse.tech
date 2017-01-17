@@ -123,54 +123,62 @@
 	</div>
       </section>
       <section class="slide">
-        <h2>KLIPSE - Dealing with the DOM</h2>
-	<div class="slide">
-          <p>Hello World</p>
-          <pre><code class="eval-js">
-	      klipse_container.innerHTML = `&lt;div&gt;Hello &lt;em&gt;World&lt;/em&gt;!&lt;/div&gt;`
-	      &quot;trivial&quot;
-	  </code></pre>
-	</div>
-	<div class="slide">
-          <p>Hello World - with <em>style</em></p>
-          <pre><code class="eval-js">
-	      klipse_container.innerHTML = `&lt;div&gt;Hello &lt;em style=&quot;color:red;&quot;&gt;World&lt;/em&gt;!&lt;/div&gt;`
-	      &quot;nice&quot;
-	  </code></pre>
-	</div>
-	<div class="slide">
-          <p>More interesting - SVG </p>
-          <pre><code class="eval-js">
-	      klipse_container.innerHTML = `&lt;svg width=&quot;100%&quot; height=&quot;400&quot; viewBox=&quot;0 0 300 200&quot;&gt;
-	      &lt;path d=&quot;M3.9,74.8c0,0,0-106.4,75.5-42.6S271.8,184,252.9,106.9s-47.4-130.9-58.2-92s59.8,111.2-32.9,126.1 S5.9,138.6,3.9,90z&quot;
-	      fill=&quot;none&quot; id=&quot;theMotionPath&quot; stroke=&quot;brown&quot;/&gt;
-	      &lt;g stroke-width=&quot;2&quot; stroke=&quot;black&quot; fill=&quot;white&quot;&gt;
-	      &lt;circle r=&quot;20&quot;/&gt;
-	      &lt;circle r=&quot;2&quot; cx=&quot;-7&quot; cy=&quot;-5&quot;/&gt;
-	      &lt;circle r=&quot;2&quot; cx=&quot;7&quot; cy=&quot;-5&quot;/&gt;
-	      &lt;path d=&quot;M -10 5 Q 0 15 10 5&quot;/&gt;
-	      &lt;animateMotion dur=&quot;4s&quot; repeatCount=&quot;indefinite&quot;  rotate=&quot;auto&quot;&gt;
-	      &lt;mpath xlink:href=&quot;#theMotionPath&quot;/&gt;
-	      &lt;/animateMotion&gt;
-	      &lt;/g&gt;
-	      &lt;/svg&gt;`
-	  "cool"
-          </code></pre>
-        </div>
-      </section>
-      <section class="slide">
-        <h2>KLIPSE - how to integrate on your blog</h2>
-
-	<p>Super Simple!<br>
-          You include the klipse javascript tag on your page.<br>
-	  You specify the CSS selector of the DOM elements that you want to klipsify.</br>
+	<h2>KLIPSE - Code interactivity</h2>
+	<p style="font-size:4em"> Open up your Laptop for a collaborative live coding session: 
+	<a href="http://slides.klipse.tech/">slides.klipse.tech</a>
 	</p>
-	<img src="./klipse-integration.png"></img>
+	<p> (Might work also on mobile) </p>
+        <img src="./qrcode.png" alt="" width="300"></img>
+    </section>
+    <section class="slide">
+      <h2>KLIPSE - Dealing with the DOM</h2>
+      <div class="slide">
+        <p>Hello World</p>
+        <pre><code class="eval-js">
+	    klipse_container.innerHTML = `&lt;div&gt;Hello &lt;em&gt;World&lt;/em&gt;!&lt;/div&gt;`
+	    &quot;trivial&quot;
+	</code></pre>
+      </div>
+      <div class="slide">
+        <p>Hello World - with <em>style</em></p>
+        <pre><code class="eval-js">
+	    klipse_container.innerHTML = `&lt;div&gt;Hello &lt;em style=&quot;color:red;&quot;&gt;World&lt;/em&gt;!&lt;/div&gt;`
+	    &quot;nice&quot;
+	</code></pre>
+      </div>
+      <div class="slide">
+        <p>More interesting - SVG </p>
+        <pre><code class="eval-js">
+	    klipse_container.innerHTML = `&lt;svg width=&quot;100%&quot; height=&quot;400&quot; viewBox=&quot;0 0 300 200&quot;&gt;
+	    &lt;path d=&quot;M3.9,74.8c0,0,0-106.4,75.5-42.6S271.8,184,252.9,106.9s-47.4-130.9-58.2-92s59.8,111.2-32.9,126.1 S5.9,138.6,3.9,90z&quot;
+	    fill=&quot;none&quot; id=&quot;theMotionPath&quot; stroke=&quot;brown&quot;/&gt;
+	    &lt;g stroke-width=&quot;2&quot; stroke=&quot;black&quot; fill=&quot;white&quot;&gt;
+	    &lt;circle r=&quot;20&quot;/&gt;
+	    &lt;circle r=&quot;2&quot; cx=&quot;-7&quot; cy=&quot;-5&quot;/&gt;
+	    &lt;circle r=&quot;2&quot; cx=&quot;7&quot; cy=&quot;-5&quot;/&gt;
+	    &lt;path d=&quot;M -10 5 Q 0 15 10 5&quot;/&gt;
+	    &lt;animateMotion dur=&quot;4s&quot; repeatCount=&quot;indefinite&quot;  rotate=&quot;auto&quot;&gt;
+	    &lt;mpath xlink:href=&quot;#theMotionPath&quot;/&gt;
+	    &lt;/animateMotion&gt;
+	    &lt;/g&gt;
+	    &lt;/svg&gt;`
+	    "cool"
+        </code></pre>
+      </div>
+    </section>
+    <section class="slide">
+      <h2>KLIPSE - how to integrate on your blog</h2>
 
-	<p> More details on <a href="https://github.com/viebel/klipse">github.</a></p>
-      </section>
-      <section class="slide">
-        <h2>Functional Programming - Immutability</h2>
+      <p>Super Simple!<br>
+        You include the klipse javascript tag on your page.<br>
+	You specify the CSS selector of the DOM elements that you want to klipsify.</br>
+      </p>
+      <img src="./klipse-integration.png"></img>
+
+      <p> More details on <a href="https://github.com/viebel/klipse">github.</a></p>
+    </section>
+    <section class="slide">
+      <h2>Functional Programming - Immutability</h2>
         <div class="slide">
           <p>In non-functional programming, the default API mutates our objects</p>
           <div>
