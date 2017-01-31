@@ -147,17 +147,27 @@
 	      (< (count x) 5))))
 		 </code></pre>
 	</div>
-	<div class="slide">
-	  <p>
-	    Pay attention to the <code>::</code>! <br>
-	    Spec definitions must used namespace keywords
-	  </p>
-	  <pre><code class="clojure">
-	      (s/def :a-big-integer (fn [x] (and (integer? x)
-	      (> x 1000000))))
-	  </code></pre>	 
-	</div>
+      </section>
+      <section class="slide">
+	<h2>Namespaced Keywords</h2>
+	<p>
+	  Pay attention to the <code>::</code>! <br>
+	  Spec definitions must used namespace keywords
+	</p>
+	<pre><code class="clojure">
+	    (s/def :a-big-integer (fn [x] (and (integer? x)
+	    (> x 1000000))))
+	  </code></pre>
+	  
+	  <div class="slide">
+	    <p> Namespaced keywords are like keywords but they are namespaced</p>
+	    <p> The double colon is a syntactic sugar for the current namespace:</p>
+	<pre><code class="clojure">
+::hello
+	</code></pre>
 	
+	<p> Mandatory in <code>clojure.spec</code> because specs are registered in a global registry!</p>
+	  </div>
       </section>
       <section class="slide">
 	<h2>Data structure validation</h2>
@@ -195,6 +205,7 @@
         (s/def ::big-integer (s/and integer?
                             #(> % 1000000)))
 	</code></pre>
+	<div class="slide">
 	<p>When it's not an integer:</p>
 	<pre><code class="clojure">
 	    (s/explain-str ::big-integer "abc")
@@ -204,6 +215,7 @@
 	    (s/explain-str ::big-integer 42)
 	</code></pre>
 	<p> Much better 😄  </p>
+	</div>
 	<div class="slide">
 	  <p> Short String - the real way </p>
 	  <pre><code class="clojure">
@@ -250,7 +262,7 @@
               (s/conform ::big-integer-or-short-string :hello-world!)
 	  </code></pre>
 
-	  <p> It works as expected for nested <code>s/or</code></p>
+	  <p> It works as expected with nested <code>s/or</code></p>
 	  <pre><code class="clojure">
 	      (s/def ::my-special-spec (s/or :keyword keyword?
 	      :bioss ::big-integer-or-short-string))
@@ -259,25 +271,171 @@
 	</div>
       </section>
       <section class="slide">	
+	<h2>Entity maps</h2>
 	<div class="slide">
-	  <h2>One last thing...</h2>
-	  <p> You can describe a spec </p>
-	  <pre><code class="clojure">
-	      (s/describe ::big-integer-spec)
+	<p> You describe the structure of your maps by combining the specs of its keys <br> and specifying what keys are required and what keys are optional </p>
+	<pre><code class="clojure">
+	    (s/def ::my-map (s/keys :req [::big-integer]
+            :opt [::short-string]))
+	</code></pre>
+	</div>
+	<div class="slide">
+	<p>This one is valid: </p>
+	<pre><code class="clojure">
+	    (s/explain-str ::my-map {::big-integer 90000000
+            ::short-string "Hell"})
+	</code></pre>
+	<p>This one is invalid for 2 reasons: </p>
+	<pre><code class="clojure">
+	    (s/explain-str ::my-map {::big-integer 90
+            ::short-string "Hello World!"})
+	</code></pre>
+	</div>
+	<div class="slide">
+	  <p> What about this one? </p>
+  	  <pre><code class="clojure">
+(s/valid? (s/keys) {::big-integer-or-short-string 90})
 	  </code></pre>
 	</div>
+	  <p class="slide meditation"><strong>All</strong> the namespace-qualified keys are validated by any registered specs!</p>
+	  <p class="slide meditation">Why do we need <code>opt</code>?</p>
+      </section>
+      <section class="slide">	
+	<h2>Entity maps - unnamespaced keys</h2>
+	<div class="slide">
+	<p> You can also have unspaced keywords </p>
+	<pre><code class="clojure">
+	    (s/def ::my-map-un (s/keys :req-un [::big-integer]
+            :opt-un [::short-string]))
+	</code></pre>
+	<p>This one is valid: </p>
+	<pre><code class="clojure">
+	    (s/explain-str ::my-map-un {:big-integer 90000000
+            :short-string "Hell"})
+	</code></pre>
+	<p>This one is invalid for 2 reasons: </p>
+	<pre><code class="clojure">
+	    (s/explain-str ::my-map-un {:big-integer 90
+            :short-string "Hello World!"})
+	</code></pre>
+	</div>
+	<div class="slide">
+	  <p> What about this one? </p>
+  	  <pre><code class="clojure">
+(s/valid? (s/keys) {:big-integer-or-short-string 90})
+	  </code></pre>
+	</div>
+	  <p class="slide meditation"><strong>Only</strong> the namespace-qualified keys are validated by any registered specs!</p>
+      </section>
+      <section class="slide">	
+	<h2>Sequences - Regular Expressions on steroids!</h2>
+	<div class="slide">
+	  <p> You can desribe the shape of a data sequence using Regular Expressions operators:</p>
+	   <ul>
+	    <li>
+	      <a href="https://clojure.github.io/clojure/branch-master/clojure.spec-api.html#clojure.spec/cat"><code>cat</code></a> - concatenation of predicates/patterns
+	    </li>
+	    <li>
+	      <a href="https://clojure.github.io/clojure/branch-master/clojure.spec-api.html#clojure.spec/alt"><code>alt</code></a> - choice among alternative predicates/patterns
+	    </li>
+	    <li>
+	      <a href="https://clojure.github.io/clojure/branch-master/clojure.spec-api.html#clojure.spec/*"><code>*</code></a> - 0 or more of a predicate/pattern
+	    </li>
+	    <li>
+	      <a href="https://clojure.github.io/clojure/branch-master/clojure.spec-api.html#clojure.spec/%2B"><code>+</code></a> - 1 or more of a predicate/pattern
+	    </li>
+	    <li>
+	      <a href="https://clojure.github.io/clojure/branch-master/clojure.spec-api.html#clojure.spec/%3F"><code>?</code></a> - 0 or 1 of a predicate/pattern
+	    </li>
+	   </ul>
+	</div>
+	<div class="slide">
+	  <p> An example: </p>
+	<pre><code class="clojure">
+(s/def ::employee (s/cat :name (s/alt :full string?
+                                    :first-and-last (s/tuple string? string?))
+                       :salary ::big-integer))
+	</code></pre>
+	</div>
+	<div class="slide">
+	<pre><code class="clojure">
+	    (s/explain-str ::employee '"John Woo" 999))
+	</code></pre>
+	<pre><code class="clojure">
+	    (s/conform ::employee '(["John" "Woo"] 9999999))
+	</code></pre>
+	</div>
+      </section>
+      <section class="slide">	
+	<h2>Sequences - Regular Expressions on steroids! (cont.)</h2>
+	<div class="slide">
+	  <p> You can describe the shape of a data sequence using Regular Expressions operators:</p>
+	   <ul>
+	    <li>
+	      <a href="https://clojure.github.io/clojure/branch-master/clojure.spec-api.html#clojure.spec/cat"><code>cat</code></a> - concatenation of predicates/patterns
+	    </li>
+	    <li>
+	      <a href="https://clojure.github.io/clojure/branch-master/clojure.spec-api.html#clojure.spec/alt"><code>alt</code></a> - choice among alternative predicates/patterns
+	    </li>
+	    <li>
+	      <a href="https://clojure.github.io/clojure/branch-master/clojure.spec-api.html#clojure.spec/*"><code>*</code></a> - 0 or more of a predicate/pattern
+	    </li>
+	    <li>
+	      <a href="https://clojure.github.io/clojure/branch-master/clojure.spec-api.html#clojure.spec/%2B"><code>+</code></a> - 1 or more of a predicate/pattern
+	    </li>
+	    <li>
+	      <a href="https://clojure.github.io/clojure/branch-master/clojure.spec-api.html#clojure.spec/%3F"><code>?</code></a> - 0 or 1 of a predicate/pattern
+	    </li>
+	   </ul>
+	</div>
+	<div class="slide">
+	  <p> A simplified version of the args of <code>defn</code>: </p>
+	<pre><code class="clojure">
+(s/def ::defn-args (s/cat :name symbol?
+                          :docstring (s/? string?)
+                          :args (s/coll-of symbol?)))
+	</code></pre>
+	<pre><code class="clojure">
+	    (s/conform ::defn-args ['aa "aa" '[aa bb]])
+	    </code></pre>
+	</div>
+	<div class="slide">
+	  <p> A simplified version of the args of <code>fn</code>: </p>
+	  <p> (It's not exactly a collection of symbols) </p>
+	<pre><code class="clojure">
+(s/def ::good-symbol #(and (symbol? %) (not= % '&)))
+(s/def ::fn-args (s/cat :args (s/* ::good-symbol)
+                        :rest (s/? (s/cat :& '#{&}
+                                          :rest ::good-symbol))))
+	</code></pre>
+	<pre><code class="clojure">
+(s/conform ::fn-args '(a b & c))
+	    </code></pre>
+	</div>
+	<div class="slide">
+	  <p class="challenge">What's the difference between <code>s/alt</code> and <code>s/or</code>?</p>
+	  </div>
+      </section>
+      <section class="slide">	
+	<h2>One last thing...</h2>
+	<p> You can describe a spec </p>
+	<pre><code class="clojure">
+	    (s/describe ::fn-args)
+	</code></pre>
       </section>
       <section class="slide">
-	<h2>Summary</h2>
+	<h2>Interlude</h2>
+	<p> What have we learned? </p>
 	<ul>
-	  <li>Functional programming - Immutability and Composition</p></li>
+	  <li>Functional programming - Immutability and Composition
+	  </li>
 	  <li> Immutable.js and Ramda.js </li>
 	  <li> React.js  </li>
 	  <li>Live coding in the browser with  <a href="github.com/viebel/klipse">klipse</a></li>
 	</ul>
       </section>
       <section class="slide">
-	<h2>Questions?</h2>
+	<h2>Questions so far?</h2>
 	<div>
 	  <img src="./questions.jpg" style="width:60%"></img>
 	</div>
