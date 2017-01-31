@@ -67,7 +67,7 @@
           <br>
           <div class="clear centered">
 	    <pre><code class="clojure" data-loop-msec="1000" data-beautify-strings="true">
-		(js/Date.)
+		(str (js/Date.))
             </code></pre>
           </div>
         </div>
@@ -139,11 +139,11 @@
 	  <p> (A predicate is a function that returns a boolean)</p>
 	  
 	  <pre><code class="clojure">
-	      (s/def ::big-integer (fn [x] (and (integer? x)
+	      (s/def ::my-big-integer (fn [x] (and (integer? x)
 	      (> x 1000000))))
 	  </code></pre>
 	  <pre><code class="clojure">
-	      (s/def ::short-string (fn [x] (and (string? x)
+	      (s/def ::my-short-string (fn [x] (and (string? x)
 	      (< (count x) 5))))
 		 </code></pre>
 	</div>
@@ -172,10 +172,10 @@
 	  <div class="slide">
 	    <p> And with one of our custom predicates:</p>
 	    <pre><code class="clojure">
-		(s/valid? ::big-integer "abc")
+		(s/valid? ::my-big-integer "abc")
 	    </code></pre>
 	    <pre><code class="clojure">
-		(s/valid? ::big-integer 17)
+		(s/valid? ::my-big-integer 17)
 	    </code></pre>
 	    <p>Wouldn't it be great if we could get an explanation about what parts of the spec were not satisfied?</p>
 	  </div> 
@@ -184,28 +184,83 @@
 	<h2>Data structure validation with explanations</h2>
 	<p> Explain validation </p>
 	<pre><code class="clojure">
-	    (s/explain-str ::big-integer "abc")
+	    (s/explain-str ::my-big-integer "abc")
 	</code></pre>
         <p> Not so useful 😕</p>
       </section>
       <section class="slide">
-	<h2>Custom predicates</h2>
-	<p>  </p>
+	<h2>Custom predicates - s/and</h2>
+	<p> Big Integer - the real way </p>
 	<pre><code class="clojure">
-(s/def ::big-integer-spec (s/and integer?
+        (s/def ::big-integer (s/and integer?
                             #(> % 1000000)))
 	</code></pre>
 	<p>When it's not an integer:</p>
 	<pre><code class="clojure">
-	    (s/explain-str ::big-integer-spec "abc")
+	    (s/explain-str ::big-integer "abc")
 	</code></pre>
 	<p>When it's a small integer:</p>
 	<pre><code class="clojure">
-	    (s/explain-str ::big-integer-spec 42)
+	    (s/explain-str ::big-integer 42)
 	</code></pre>
-	<p> Much better 😄 </p>
+	<p> Much better 😄  </p>
 	<div class="slide">
-	  <p>One last thing...</p>
+	  <p> Short String - the real way </p>
+	  <pre><code class="clojure">
+              (s/def ::short-string (s/and string?
+              #(< (count %) 5)))
+	  </code></pre>
+	  <p>When it's not a string:</p>
+	  <pre><code class="clojure">
+	      (s/explain-str ::short-string 42)
+	  </code></pre>
+	  <p>When it's a long string:</p>
+	  <pre><code class="clojure">
+	      (s/explain-str ::short-string "Hello World!")
+	  </code></pre>
+	</div>
+
+      </section>
+      <section class="slide">
+	<h2>Custom predicates - s/or</h2>
+	<p>  We must annotate each branch with a tag</p>
+	<pre><code class="clojure">
+	    (s/def ::big-integer-or-short-string (s/or :int ::big-integer
+	    :str ::short-string))
+	</code></pre>
+	<p> That makes the explanations about the failure really clear: </p>
+	<pre><code class="clojure">
+            (s/explain-str ::big-integer-or-short-string :hello-world!)
+	</code></pre>
+      </section>
+      <section class="slide">
+	<h2> Data parsing with s/conform</h2>
+	<div>
+	  <p>It's really powerful to parse our data with <code>s/conform</code></p>
+	  <p>When it's a big integer:</p>
+	  <pre><code class="clojure">
+              (s/conform ::big-integer-or-short-string 4200000)
+	  </code></pre>
+	  <p>When it's a small string:</p>
+	  <pre><code class="clojure">
+              (s/conform ::big-integer-or-short-string "abc")
+	  </code></pre>
+	  <p>When it's neither this nor that:</p>
+	  <pre><code class="clojure">
+              (s/conform ::big-integer-or-short-string :hello-world!)
+	  </code></pre>
+
+	  <p> It works as expected for nested <code>s/or</code></p>
+	  <pre><code class="clojure">
+	      (s/def ::my-special-spec (s/or :keyword keyword?
+	      :bioss ::big-integer-or-short-string))
+              (s/conform ::my-special-spec "aa")
+	  </code></pre>
+	</div>
+      </section>
+      <section class="slide">	
+	<div class="slide">
+	  <h2>One last thing...</h2>
 	  <p> You can describe a spec </p>
 	  <pre><code class="clojure">
 	      (s/describe ::big-integer-spec)
