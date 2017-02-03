@@ -449,138 +449,109 @@
 	</div>
       </section>
       <section class="slide">	
-	<h2>Functions</h2>
+	<h2>Data Generation</h2>
 	<p>For the upcoming parts, we need to require two additional namespaces</p>
 	<pre><code class="clojure">
 	    (require '[clojure.spec.test :as stest]
             '[clojure.spec.impl.gen :as gen])
-(set! cljs.spec.test$macros/eval (fn [x] x))
+	    (set! cljs.spec.test$macros/eval (fn [x] x))
 	</code></pre>
-	<div class="slide">
-	  <p> You can describe the shape of the args and return value of your functions </p>
-	  <p> Let's imagine we have a muliplication function where the result is bounded: </p>
-	  <pre><code class="clojure">
-(defn bounded-addition [a b {:keys [upper lower]}]
-  (-> (+ a b)
-      #_(max lower)
-      #_(min upper)))
-	  </code></pre>
-	</div>
-	<div class="slide">
-	  <p> Here is the specifications of our function: </p>
-	  <pre><code class="clojure">
-(s/def ::upper number?)
-(s/def ::lower number?)
-(s/fdef bounded-addition
-        :args (s/and (s/cat :a number? :b number? :boundaries (s/keys :req-un [::upper ::lower]))
-                     #(>= (-> % :boundaries :upper) (-> % :boundaries :lower)))
-        :ret number?
-        :fn #(<= (-> % :args :boundaries :lower) (:ret %) (-> % :args :boundaries :upper)))
-	  </code></pre>
-	</div>
-	<div class="slide">
-	  <p> What happens when the specs are not satisfied? </p>
-	  <pre><code class="clojure">
-	      (stest/check `bounded-addition)
-	  </code></pre>
-	</div>
-	<div class="slide">
-	  <p class="meditation">What do you think about this amazing stuff?</p>
-	</div>
-      </section>
-      <section class="slide">	
-	<h2>Functions - Going further</h2>
-	<p> We can also specify the relationships between: different parts of the  input <br>
-	  and between the input and the output <p>
-	  <p> Let's imagine we have a muliplication function where the result is bounded: </p>
-	  <pre><code class="clojure">
-	      (defn bounded-addition [a b {:keys [upper lower]}]
-	      (-> (+ a b)
-	      (max lower)
-	      (min upper)))
-	  </code></pre>
-	<div class="slide">
-	  <p> Here is the specifications of our function: </p>
-	  <pre><code class="clojure">
-(s/def ::upper number?)
-(s/def ::lower number?)
-(s/fdef bounded-multiplication
-        :args (s/and (s/cat :a number? :b number? :boundaries (s/keys :req-un [::upper ::lower]))
-                     #(>= (:upper %) (:lower %)))
-        :ret number?
-        :fn #(<= (-> % :args :lower) (:ret %) (-> % :args :upper)))
-	  </code></pre>
-	</div>
-	<div class="slide">
-	  <p> What happens when the specs are not satisfied? </p>
-	  <pre><code class="clojure">
-	      (stest/instrument `bounded-multiplication)
-	      (bounded-multiplication 1)
-	  </code></pre>
-	</div>
-	<div class="slide">
-	  <p> You can <code>instrument</code> and <code>unstrument</code>:</p>
-	  <pre><code class="clojure">
-	      (stest/unstrument `bounded-multiplication)
-	      (bounded-multiplication 1)
-	  </code></pre>
-	</div>
-	<div class="slide">
-	  <p class="meditation">What's is the default - <code>instrument</code> or <code>unstrument</code>?<br>
-	</div>
-      </section>      
-      <section class="slide">	
-	<h2>Data Generation</h2>
 	<p>We can generate samples data out of our specs:</p>
 	<pre><code class="clojure">
 	    (gen/sample (s/gen ::big-integer))
 	    (s/exercise ::big-integer-or-short-string)
 	</code></pre>
 	<pre><code class="clojure">
-(gen/sample (s/gen ::big-integer))
+	    (gen/sample (s/gen (s/keys :req [::big-integer] :opt [::short-string])) 5)
 	</code></pre>
-	
+	<p class="meditation">
+	  Now you understand the meaning of <code>:opt</code> in <code>s/keys</code>.
+	</p>
+      </section>
+      <section class="slide">	
+	<h2>Functions - Spec'ing the arguments</h2>
 	<div class="slide">
 	  <p> You can describe the shape of the args and return value of your functions </p>
-	  <p> Let's imagine we have a muliplication function where the result is bounded: </p>
+	  <p> Let's imagine we have an addition function where the result is bounded: </p>
 	  <pre><code class="clojure">
-(defn bounded-multiplication [a b {:keys [upper lower]}]
-  (-> (* a b)
-      (max lower)
-      (min upper)))
+	      (defn bounded-addition [a b {:keys [upper lower]}]
+	      (-> (+ a b)
+		(max lower)
+		(min upper)))
 	  </code></pre>
 	</div>
 	<div class="slide">
 	  <p> Here is the specifications of our function: </p>
 	  <pre><code class="clojure">
-(s/def ::upper number?)
-(s/def ::lower number?)
-(s/fdef bounded-addition
-        :args (s/and (s/cat :a number? :b number? :boundaries (s/keys :req-un [::upper ::lower]))
-                     #(>= (:upper %) (:lower %)))
-        :ret number?
-        :fn #(<= (-> % :args :lower) (:ret %) (-> % :args :upper)))
+	      (s/def ::upper number?)
+	      (s/def ::lower number?)
+	      (s/fdef bounded-addition
+              :args (s/cat :a number? :b number? :boundaries (s/keys :req-un [::upper ::lower])))
 	  </code></pre>
 	</div>
 	<div class="slide">
-	  <p> What happens when the specs are not satisfied? </p>
+	  <p> What happens when one passes the wrong arguments? </p>
 	  <pre><code class="clojure">
-	      (stest/instrument `bounded-multiplication)
-	      (bounded-multiplication 1)
+	      (stest/instrument `bounded-addition)
+	      (bounded-addition 1)
 	  </code></pre>
 	</div>
 	<div class="slide">
 	  <p> You can <code>instrument</code> and <code>unstrument</code>:</p>
 	  <pre><code class="clojure">
-	      (stest/unstrument `bounded-multiplication)
-	      (bounded-multiplication 1)
+	      (stest/unstrument `bounded-addition)
+	      (bounded-addition 1)
 	  </code></pre>
 	</div>
 	<div class="slide">
-	  <p class="meditation">What's is the default - <code>instrument</code> or <code>unstrument</code>?<br>
-	</div>
+	  <p class="meditation">What is the default - <code>instrument</code> or <code>unstrument</code>?<br>
+	</div>	
+      </section>
+      <section class="slide">
+	<h2>Functions - exercise-fn</h2>
+	<p>We can see how our function behaves with valid random arguments</p>
+	  <pre><code class="clojure">
+(s/exercise-fn bounded-addition)
+	  </code></pre>
       </section>
       
+      <section class="slide">	
+	<h2>Functions - Going further</h2>
+	<p> We can also specify:</p>
+	<ol>
+	  <li> The returned value </li>
+	  <li> The relationships between: different parts of the input </li>
+	  <li> The relationships between the input and the output </li>
+	</ol>	
+	<p> Let's imagine we have a muliplication function where the result is bounded: </p>
+	<pre><code class="clojure">
+	    (defn bounded-multiplication [a b {:keys [upper lower]}]
+	    (-> (* a b)
+	    #_(max lower)
+	    #_(min upper)))
+	</code></pre>
+	<div class="slide">
+	  <p> Here is the specifications of our function: </p>
+	  <pre><code class="clojure">
+	      (s/def ::upper number?)
+	      (s/def ::lower number?)
+	      (s/fdef bounded-multiplication
+              :args (s/and (s/cat :a number? :b number? :boundaries (s/keys :req-un [::upper ::lower]))
+              #(>= (:upper %) (:lower %)))
+              :ret number?
+              :fn #(<= (-> % :args :lower) (:ret %) (-> % :args :upper)))
+	  </code></pre>
+	</div>
+	<div class="slide">
+	  <p> Let's test our function (Test generation for free!): </p>
+	  <pre><code class="clojure">
+	      (stest/check `bounded-addition)
+	  </code></pre>
+	</div>
+	<div class="slide">
+	  <p class="meditation">What do you think about this amazing stuff?</p>
+	</div>	
+      </section>      
       <p class="deck-status" aria-role="status">
 	<span> powered by <a href="https://github.com/viebel/klipse">KLIPSE</a> </span>
 	<span class="deck-status-current"></span>
