@@ -36,7 +36,7 @@
         <div class="text-centered">
           <h2>
             <div>
-	      Clojure.Spec Workshop <br> The Foundations
+	      Clojure.Spec Workshop <br> Part 1 - The Foundations
             </div>
           </h2>
           <div class="centered">
@@ -47,7 +47,7 @@
                 <div>
                   <img class="fullscreen" src="./klipse.png" alt="" width="150">
                 </div> 
-                <div> ClojureRemote 2016 - February 2017</div>
+                <div> ClojureRemote 2017 - February 2017</div>
                 <div>
                   <div>Yehonathan Sharvit</div>
                   <div> <a href="https://twitter.com/viebel">@viebel</a></div>
@@ -97,7 +97,7 @@
             <li> Amazing stuff: unit test generation </li>
           </ul>
         </div>
-        <div class="left" style="width:33%;margin-left:5%;"><img src="./sicp-3.jpg"></img></div>
+        <div class="left" style="width:33%;margin-left:5%;"><img src="./specs.png"></img></div>
       </section>
       
       <section class="slide">
@@ -113,18 +113,18 @@
 	<div class="slide">
           <p>Most significant part of Clojure <code>1.9</code>.</p>
 	  <p> <code>clojure.spec</code> features: </p>
-	    <ul>
-	      <li>specification of the structure (the shape) of data </li>
-	      <li>validation of data </li>
-	      <li>destructuring data </li>
-	      <li>data generation based on the specs </li>
-	      <li>tests generation based on the specs </li>
-	    </ul>
+	  <ul>
+	    <li>specification of the structure (the shape) of data </li>
+	    <li>validation of data </li>
+	    <li>destructuring data </li>
+	    <li>data generation based on the specs </li>
+	    <li>tests generation based on the specs </li>
+	  </ul>
 	  <p> All you have to do is to require <code>clojure.spec</code> like this:</p>
-	    <pre><code class="clojure">
-		(ns foo.core
-		(:require [clojure.spec :as s]))
-	    </code></pre> 
+	  <pre><code class="clojure">
+	      (ns foo.core
+	      (:require [clojure.spec :as s]))
+	  </code></pre> 
 	</div> 
       </section>
       <section class="slide">
@@ -162,11 +162,11 @@
 	  <div class="slide">
 	    <p> Namespaced keywords are like keywords but they are namespaced</p>
 	    <p> The double colon is a syntactic sugar for the current namespace:</p>
-	<pre><code class="clojure">
-::hello
-	</code></pre>
-	
-	<p> Mandatory in <code>clojure.spec</code> because specs are registered in a global registry!</p>
+	    <pre><code class="clojure">
+		::hello
+	    </code></pre>
+	    
+	    <p> Mandatory in <code>clojure.spec</code> because specs are registered in a global registry!</p>
 	  </div>
       </section>
       <section class="slide">
@@ -175,20 +175,20 @@
 	<pre><code class="clojure">
 	    (s/valid? ::id 19)
 	</code></pre>
+	<pre><code class="clojure">
+	    (s/valid? ::id "my-id")
+	</code></pre>
+	
+	<div class="slide">
+	  <p> And with one of our custom predicates:</p>
 	  <pre><code class="clojure">
-	      (s/valid? ::id "my-id")
+	      (s/valid? ::my-big-integer "abc")
 	  </code></pre>
-	  
-	  <div class="slide">
-	    <p> And with one of our custom predicates:</p>
-	    <pre><code class="clojure">
-		(s/valid? ::my-big-integer "abc")
-	    </code></pre>
-	    <pre><code class="clojure">
-		(s/valid? ::my-big-integer 17)
-	    </code></pre>
-	    <p>Wouldn't it be great if we could get an explanation about what parts of the spec were not satisfied?</p>
-	  </div> 
+	  <pre><code class="clojure">
+	      (s/valid? ::my-big-integer 17)
+	  </code></pre>
+	  <p>Wouldn't it be great if we could get an explanation about what parts of the spec were not satisfied?</p>
+	</div> 
       </section>
       <section class="slide">
 	<h2>Data structure validation with explanations</h2>
@@ -202,26 +202,26 @@
 	<h2>Custom predicates - s/and</h2>
 	<p> Big Integer - the real way </p>
 	<pre><code class="clojure">
-        (s/def ::big-integer (s/and integer?
-                            #(> % 1000000)))
+            (s/def ::big-integer (s/and integer?
+            #(> % 1000000)))
 	</code></pre>
 	<div class="slide">
-	<p>When it's not an integer:</p>
-	<pre><code class="clojure">
-	    (s/explain-str ::big-integer "abc")
-	</code></pre>
-	<p>When it's a small integer:</p>
-	<pre><code class="clojure">
-	    (s/explain-str ::big-integer 42)
-	</code></pre>
-	<p> Much better 😄  </p>
+	  <p>When it's not an integer:</p>
+	  <pre><code class="clojure">
+	      (s/explain-str ::big-integer "abc")
+	  </code></pre>
+	  <p>When it's a small integer:</p>
+	  <pre><code class="clojure">
+	      (s/explain-str ::big-integer 42)
+	  </code></pre>
+	  <p> Much better 😄  </p>
 	</div>
 	<div class="slide">
 	  <p> Short String - the real way </p>
 	  <pre><code class="clojure">
               (s/def ::short-string (s/and string?
               #(< (count %) 5)))
-	  </code></pre>
+		  </code></pre>
 	  <p>When it's not a string:</p>
 	  <pre><code class="clojure">
 	      (s/explain-str ::short-string 42)
@@ -273,65 +273,65 @@
       <section class="slide">	
 	<h2>Entity maps</h2>
 	<div class="slide">
-	<p> You describe the structure of your maps by combining the specs of its keys <br> and specifying what keys are required and what keys are optional </p>
-	<pre><code class="clojure">
-	    (s/def ::my-map (s/keys :req [::big-integer]
-            :opt [::short-string]))
-	</code></pre>
+	  <p> You describe the structure of your maps by combining the specs of its keys <br> and specifying what keys are required and what keys are optional </p>
+	  <pre><code class="clojure">
+	      (s/def ::my-map (s/keys :req [::big-integer]
+              :opt [::short-string]))
+	  </code></pre>
 	</div>
 	<div class="slide">
-	<p>This one is valid: </p>
-	<pre><code class="clojure">
-	    (s/explain-str ::my-map {::big-integer 90000000
-            ::short-string "Hell"})
-	</code></pre>
-	<p>This one is invalid for 2 reasons: </p>
-	<pre><code class="clojure">
-	    (s/explain-str ::my-map {::big-integer 90
-            ::short-string "Hello World!"})
-	</code></pre>
+	  <p>This one is valid: </p>
+	  <pre><code class="clojure">
+	      (s/explain-str ::my-map {::big-integer 90000000
+              ::short-string "Hell"})
+	  </code></pre>
+	  <p>This one is invalid for 2 reasons: </p>
+	  <pre><code class="clojure">
+	      (s/explain-str ::my-map {::big-integer 90
+              ::short-string "Hello World!"})
+	  </code></pre>
 	</div>
 	<div class="slide">
 	  <p> What about this one? </p>
   	  <pre><code class="clojure">
-(s/valid? (s/keys) {::big-integer-or-short-string 90})
+	      (s/valid? (s/keys) {::big-integer-or-short-string 90})
 	  </code></pre>
 	</div>
-	  <p class="slide meditation"><strong>All</strong> the namespace-qualified keys are validated by any registered specs!</p>
-	  <p class="slide meditation">Why do we need <code>opt</code>?</p>
+	<p class="slide meditation"><strong>All</strong> the namespace-qualified keys are validated by any registered specs!</p>
+	<p class="slide meditation">Why do we need <code>opt</code>?</p>
       </section>
       <section class="slide">	
 	<h2>Entity maps - unnamespaced keys</h2>
 	<div class="slide">
-	<p> You can also have unspaced keywords </p>
-	<pre><code class="clojure">
-	    (s/def ::my-map-un (s/keys :req-un [::big-integer]
-            :opt-un [::short-string]))
-	</code></pre>
-	<p>This one is valid: </p>
-	<pre><code class="clojure">
-	    (s/explain-str ::my-map-un {:big-integer 90000000
-            :short-string "Hell"})
-	</code></pre>
-	<p>This one is invalid for 2 reasons: </p>
-	<pre><code class="clojure">
-	    (s/explain-str ::my-map-un {:big-integer 90
-            :short-string "Hello World!"})
-	</code></pre>
+	  <p> You can also have unspaced keywords </p>
+	  <pre><code class="clojure">
+	      (s/def ::my-map-un (s/keys :req-un [::big-integer]
+              :opt-un [::short-string]))
+	  </code></pre>
+	  <p>This one is valid: </p>
+	  <pre><code class="clojure">
+	      (s/explain-str ::my-map-un {:big-integer 90000000
+              :short-string "Hell"})
+	  </code></pre>
+	  <p>This one is invalid for 2 reasons: </p>
+	  <pre><code class="clojure">
+	      (s/explain-str ::my-map-un {:big-integer 90
+              :short-string "Hello World!"})
+	  </code></pre>
 	</div>
 	<div class="slide">
 	  <p> What about this one? </p>
   	  <pre><code class="clojure">
-(s/valid? (s/keys) {:big-integer-or-short-string 90})
+	      (s/valid? (s/keys) {:big-integer-or-short-string 90})
 	  </code></pre>
 	</div>
-	  <p class="slide meditation"><strong>Only</strong> the namespace-qualified keys are validated by any registered specs!</p>
+	<p class="slide meditation"><strong>Only</strong> the namespace-qualified keys are validated by any registered specs!</p>
       </section>
       <section class="slide">	
 	<h2>Sequences - Regular Expressions on steroids!</h2>
 	<div class="slide">
 	  <p> You can desribe the shape of a data sequence using Regular Expressions operators:</p>
-	   <ul>
+	  <ul>
 	    <li>
 	      <a href="https://clojure.github.io/clojure/branch-master/clojure.spec-api.html#clojure.spec/cat"><code>cat</code></a> - concatenation of predicates/patterns
 	    </li>
@@ -347,30 +347,30 @@
 	    <li>
 	      <a href="https://clojure.github.io/clojure/branch-master/clojure.spec-api.html#clojure.spec/%3F"><code>?</code></a> - 0 or 1 of a predicate/pattern
 	    </li>
-	   </ul>
+	  </ul>
 	</div>
 	<div class="slide">
 	  <p> An example: </p>
-	<pre><code class="clojure">
-(s/def ::employee (s/cat :name (s/alt :full string?
-                                    :first-and-last (s/tuple string? string?))
-                       :salary ::big-integer))
-	</code></pre>
+	  <pre><code class="clojure">
+	      (s/def ::employee (s/cat :name (s/alt :full string?
+              :first-and-last (s/tuple string? string?))
+              :salary ::big-integer))
+	  </code></pre>
 	</div>
 	<div class="slide">
-	<pre><code class="clojure">
-	    (s/explain-str ::employee '"John Woo" 999))
-	</code></pre>
-	<pre><code class="clojure">
-	    (s/conform ::employee '(["John" "Woo"] 9999999))
-	</code></pre>
+	  <pre><code class="clojure">
+	      (s/explain-str ::employee '("John Woo" 999))
+	  </code></pre>
+	  <pre><code class="clojure">
+	      (s/conform ::employee '(["John" "Woo"] 9999999))
+	  </code></pre>
 	</div>
       </section>
       <section class="slide">	
 	<h2>Sequences - Regular Expressions on steroids! (cont.)</h2>
 	<div class="slide">
 	  <p> You can describe the shape of a data sequence using Regular Expressions operators:</p>
-	   <ul>
+	  <ul>
 	    <li>
 	      <a href="https://clojure.github.io/clojure/branch-master/clojure.spec-api.html#clojure.spec/cat"><code>cat</code></a> - concatenation of predicates/patterns
 	    </li>
@@ -386,35 +386,45 @@
 	    <li>
 	      <a href="https://clojure.github.io/clojure/branch-master/clojure.spec-api.html#clojure.spec/%3F"><code>?</code></a> - 0 or 1 of a predicate/pattern
 	    </li>
-	   </ul>
+	  </ul>
 	</div>
 	<div class="slide">
 	  <p> A simplified version of the args of <code>defn</code>: </p>
-	<pre><code class="clojure">
-(s/def ::defn-args (s/cat :name symbol?
-                          :docstring (s/? string?)
-                          :args (s/coll-of symbol?)))
-	</code></pre>
-	<pre><code class="clojure">
-	    (s/conform ::defn-args ['aa "aa" '[aa bb]])
+	  <pre><code class="clojure">
+	      (s/def ::defn-args (s/cat :name symbol?
+              :docstring (s/? string?)
+              :args (s/coll-of symbol? :kind vector?)))
+	  </code></pre>
+	  <div class="slide">
+	    <p> With a doc string : <code>(defn foo "foo receives two arguments" [a b])</code></p>
+	    <pre><code class="clojure">
+		(s/conform ::defn-args ['foo "foo receives two arguments" '[a b]])
 	    </code></pre>
-	</div>
-	<div class="slide">
-	  <p> A simplified version of the args of <code>fn</code>: </p>
-	  <p> (It's not exactly a collection of symbols) </p>
-	<pre><code class="clojure">
-(s/def ::good-symbol #(and (symbol? %) (not= % '&)))
-(s/def ::fn-args (s/cat :args (s/* ::good-symbol)
-                        :rest (s/? (s/cat :& '#{&}
-                                          :rest ::good-symbol))))
-	</code></pre>
-	<pre><code class="clojure">
-(s/conform ::fn-args '(a b & c))
+	    <p> Without a doc string : <code>(defn foo [a b c d])</code></p>
+	    <pre><code class="clojure">
+		(s/conform ::defn-args ['foo '[a b c d]])
 	    </code></pre>
-	</div>
-	<div class="slide">
-	  <p class="challenge">What's the difference between <code>s/alt</code> and <code>s/or</code>?</p>
 	  </div>
+	</div>
+	<div class="slide">
+	  <p class="challenge"> A simplified version of the args of <code>fn</code>: </p>
+	  <p> (It's not exactly a collection of symbols) </p>
+	  <pre><code class="clojure">
+	      (s/def ::good-symbol #(and (symbol? %) (not= % '&)))
+	      (s/def ::fn-args (s/and vector?
+              (s/cat :args (s/* ::good-symbol)
+              :rest (s/? (s/cat :& '#{&}
+              :other ::good-symbol)))))
+	  </code></pre>
+	</div>
+	<div class="slide">
+	  <pre><code class="clojure">
+	      (s/conform ::fn-args '[a b & c])
+	  </code></pre>
+	</div>
+	<div class="slide">
+	  <p class="meditation">What's the difference between <code>s/alt</code> and <code>s/or</code>?</p>
+	</div>
       </section>
       <section class="slide">	
 	<h2>One last thing...</h2>
@@ -427,11 +437,9 @@
 	<h2>Interlude</h2>
 	<p> What have we learned? </p>
 	<ul>
-	  <li>Functional programming - Immutability and Composition
-	  </li>
-	  <li> Immutable.js and Ramda.js </li>
-	  <li> React.js  </li>
-	  <li>Live coding in the browser with  <a href="github.com/viebel/klipse">klipse</a></li>
+	  <li>The language of specs definition </li>
+	  <li> How to validate, conform and explain a spec</li>
+	  <li> The expression power of specs </li>
 	</ul>
       </section>
       <section class="slide">
@@ -440,6 +448,139 @@
 	  <img src="./questions.jpg" style="width:60%"></img>
 	</div>
       </section>
+      <section class="slide">	
+	<h2>Functions</h2>
+	<p>For the upcoming parts, we need to require two additional namespaces</p>
+	<pre><code class="clojure">
+	    (require '[clojure.spec.test :as stest]
+            '[clojure.spec.impl.gen :as gen])
+(set! cljs.spec.test$macros/eval (fn [x] x))
+	</code></pre>
+	<div class="slide">
+	  <p> You can describe the shape of the args and return value of your functions </p>
+	  <p> Let's imagine we have a muliplication function where the result is bounded: </p>
+	  <pre><code class="clojure">
+(defn bounded-addition [a b {:keys [upper lower]}]
+  (-> (+ a b)
+      #_(max lower)
+      #_(min upper)))
+	  </code></pre>
+	</div>
+	<div class="slide">
+	  <p> Here is the specifications of our function: </p>
+	  <pre><code class="clojure">
+(s/def ::upper number?)
+(s/def ::lower number?)
+(s/fdef bounded-addition
+        :args (s/and (s/cat :a number? :b number? :boundaries (s/keys :req-un [::upper ::lower]))
+                     #(>= (-> % :boundaries :upper) (-> % :boundaries :lower)))
+        :ret number?
+        :fn #(<= (-> % :args :boundaries :lower) (:ret %) (-> % :args :boundaries :upper)))
+	  </code></pre>
+	</div>
+	<div class="slide">
+	  <p> What happens when the specs are not satisfied? </p>
+	  <pre><code class="clojure">
+	      (stest/check `bounded-addition)
+	  </code></pre>
+	</div>
+	<div class="slide">
+	  <p class="meditation">What do you think about this amazing stuff?</p>
+	</div>
+      </section>
+      <section class="slide">	
+	<h2>Functions - Going further</h2>
+	<p> We can also specify the relationships between: different parts of the  input <br>
+	  and between the input and the output <p>
+	  <p> Let's imagine we have a muliplication function where the result is bounded: </p>
+	  <pre><code class="clojure">
+	      (defn bounded-addition [a b {:keys [upper lower]}]
+	      (-> (+ a b)
+	      (max lower)
+	      (min upper)))
+	  </code></pre>
+	<div class="slide">
+	  <p> Here is the specifications of our function: </p>
+	  <pre><code class="clojure">
+(s/def ::upper number?)
+(s/def ::lower number?)
+(s/fdef bounded-multiplication
+        :args (s/and (s/cat :a number? :b number? :boundaries (s/keys :req-un [::upper ::lower]))
+                     #(>= (:upper %) (:lower %)))
+        :ret number?
+        :fn #(<= (-> % :args :lower) (:ret %) (-> % :args :upper)))
+	  </code></pre>
+	</div>
+	<div class="slide">
+	  <p> What happens when the specs are not satisfied? </p>
+	  <pre><code class="clojure">
+	      (stest/instrument `bounded-multiplication)
+	      (bounded-multiplication 1)
+	  </code></pre>
+	</div>
+	<div class="slide">
+	  <p> You can <code>instrument</code> and <code>unstrument</code>:</p>
+	  <pre><code class="clojure">
+	      (stest/unstrument `bounded-multiplication)
+	      (bounded-multiplication 1)
+	  </code></pre>
+	</div>
+	<div class="slide">
+	  <p class="meditation">What's is the default - <code>instrument</code> or <code>unstrument</code>?<br>
+	</div>
+      </section>      
+      <section class="slide">	
+	<h2>Data Generation</h2>
+	<p>We can generate samples data out of our specs:</p>
+	<pre><code class="clojure">
+	    (gen/sample (s/gen ::big-integer))
+	    (s/exercise ::big-integer-or-short-string)
+	</code></pre>
+	<pre><code class="clojure">
+(gen/sample (s/gen ::big-integer))
+	</code></pre>
+	
+	<div class="slide">
+	  <p> You can describe the shape of the args and return value of your functions </p>
+	  <p> Let's imagine we have a muliplication function where the result is bounded: </p>
+	  <pre><code class="clojure">
+(defn bounded-multiplication [a b {:keys [upper lower]}]
+  (-> (* a b)
+      (max lower)
+      (min upper)))
+	  </code></pre>
+	</div>
+	<div class="slide">
+	  <p> Here is the specifications of our function: </p>
+	  <pre><code class="clojure">
+(s/def ::upper number?)
+(s/def ::lower number?)
+(s/fdef bounded-addition
+        :args (s/and (s/cat :a number? :b number? :boundaries (s/keys :req-un [::upper ::lower]))
+                     #(>= (:upper %) (:lower %)))
+        :ret number?
+        :fn #(<= (-> % :args :lower) (:ret %) (-> % :args :upper)))
+	  </code></pre>
+	</div>
+	<div class="slide">
+	  <p> What happens when the specs are not satisfied? </p>
+	  <pre><code class="clojure">
+	      (stest/instrument `bounded-multiplication)
+	      (bounded-multiplication 1)
+	  </code></pre>
+	</div>
+	<div class="slide">
+	  <p> You can <code>instrument</code> and <code>unstrument</code>:</p>
+	  <pre><code class="clojure">
+	      (stest/unstrument `bounded-multiplication)
+	      (bounded-multiplication 1)
+	  </code></pre>
+	</div>
+	<div class="slide">
+	  <p class="meditation">What's is the default - <code>instrument</code> or <code>unstrument</code>?<br>
+	</div>
+      </section>
+      
       <p class="deck-status" aria-role="status">
 	<span> powered by <a href="https://github.com/viebel/klipse">KLIPSE</a> </span>
 	<span class="deck-status-current"></span>
@@ -451,47 +592,47 @@
 	<a href="#" class="deck-next-link" title="Next">&#8594;</a>
       </div>
 
-    </div>
+      </div>
 
-    <!-- Required JS files. -->
-    <script src="http://slides.klipse.tech/includes/deckjs/jquery.min.js"></script>
-    <script src="http://slides.klipse.tech/includes/deckjs/core/deck.core.js"></script>
+      <!-- Required JS files. -->
+      <script src="http://slides.klipse.tech/includes/deckjs/jquery.min.js"></script>
+      <script src="http://slides.klipse.tech/includes/deckjs/core/deck.core.js"></script>
 
-    <!-- Extension JS files. Add or remove as needed. -->
-    <script src="http://slides.klipse.tech/includes/deckjs/extensions/menu/deck.menu.js"></script>
-    <script src="http://slides.klipse.tech/includes/deckjs/extensions/status/deck.status.js"></script>
-    <script src="http://slides.klipse.tech/includes/deckjs/extensions/navigation/deck.navigation.js"></script>
-    <script src="http://slides.klipse.tech/includes/deckjs/extensions/fullscreen/deck.fullscreen.js"></script>
+      <!-- Extension JS files. Add or remove as needed. -->
+      <script src="http://slides.klipse.tech/includes/deckjs/extensions/menu/deck.menu.js"></script>
+      <script src="http://slides.klipse.tech/includes/deckjs/extensions/status/deck.status.js"></script>
+      <script src="http://slides.klipse.tech/includes/deckjs/extensions/navigation/deck.navigation.js"></script>
+      <script src="http://slides.klipse.tech/includes/deckjs/extensions/fullscreen/deck.fullscreen.js"></script>
 
-    <script>
-      $(function() {
-      $.deck('.slide', {
-      countNested: false,
-      fullscreenSelector: 'h2, fullscreen'
-      });
-      });
-    </script>
+      <script>
+	$(function() {
+	$.deck('.slide', {
+	countNested: false,
+	fullscreenSelector: 'h2, fullscreen'
+	});
+	});
+      </script>
 
-    <script>
-      window.klipse_settings = {
-      beautify_strings: true,
-      selector: '.clojure',
-      selector_js: '.clj-to-js',
-      selector_eval_js: '.eval-js',
-      selector_jsx: '.jsx',
-      selector_transpile_jsx: '.transpile-jsx',
-      selector_eval_python_client: '.python',
-      selector_eval_ruby: '.ruby',
-      codemirror_options_in: {
-      lineWrapping: true,
-      autoCloseBrackets: true
-      },
-      codemirror_options_out: {
-      lineWrapping: true
-      },
-      };
-    </script>
+      <script>
+	window.klipse_settings = {
+	beautify_strings: true,
+	selector: '.clojure',
+	selector_js: '.clj-to-js',
+	selector_eval_js: '.eval-js',
+	selector_jsx: '.jsx',
+	selector_transpile_jsx: '.transpile-jsx',
+	selector_eval_python_client: '.python',
+	selector_eval_ruby: '.ruby',
+	codemirror_options_in: {
+	lineWrapping: true,
+	autoCloseBrackets: true
+	},
+	codemirror_options_out: {
+	lineWrapping: true
+	},
+	};
+      </script>
 
-    <script src="https://storage.googleapis.com/app.klipse.tech/plugin/js/klipse_plugin.js"></script>
+      <script src="http://localhost:5014/plugin/js/klipse_plugin.js"></script>
   </body>
 </html>
