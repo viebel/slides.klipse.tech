@@ -39,15 +39,16 @@
 	      Clojure.Spec Workshop <br> Part 1 - The Foundations
             </div>
           </h2>
-          <div class="centered">
+          <div class="centered" style="font-size:1.9em;">
             <div class="left" style="width:50%;">
-              <img src="./qrcode.png" alt="" width="300"></div>
+	      <img src='https://chart.googleapis.com/chart?cht=qr&chl=http%3A%2F%2Fslides.klipse.tech%2Fclojure-spec-cr17%2Fpart1.html&chs=300x300' alt='qr code'></img>
+	      </div>
             <div class="left" style="width:50%;">
               <div>
                 <div>
                   <img class="fullscreen" src="./klipse.png" alt="" width="150">
                 </div> 
-                <div> ClojureRemote 2017 - February 2017</div>
+                <div> ClojureRemote - February 2017</div>
                 <div>
                   <div>Yehonathan Sharvit</div>
                   <div> <a href="https://twitter.com/viebel">@viebel</a></div>
@@ -64,11 +65,12 @@
               </div>
             </div>
           </div>
-          <br>
           <div class="clear centered">
-	    <pre><code class="clojure" data-loop-msec="1000" data-beautify-strings="true">
-		(str (js/Date.))
-            </code></pre>
+	    <div style="padding-top: 20px;">
+	      <pre><code class="clojure" data-loop-msec="1000" data-beautify-strings="true">
+		  (str (js/Date.))
+              </code></pre>
+	    </div>
           </div>
         </div>
       </section>
@@ -102,11 +104,17 @@
       
       <section class="slide">
 	<h2>KLIPSE - Code interactivity</h2>
-	<p style="font-size:4em"> Open this presentation in a new tab for a collaborative live coding session: 
-	  <a href="http://slides.klipse.tech/">TODO: fix url</a>
+	<p style="font-size:4em"> Open this presentation in your computer for a collaborative live coding session: 
+	  <a href="http://slides.klipse.tech/clojure-spec-cr17/part1.html#slide-3">http://slides.klipse.tech/clojure-spec-cr17/part1.html#slide-3</a>
 	</p>
-	<p> (Might work also on mobile) </p>
-        <img src="./qrcode.png" alt="" width="300"></img>/
+	<p> (It works also on mobile) </p>
+        <img src="./qrcode.png" alt="" width="300"></img>
+	<br>
+	<br>
+	<p style="font-size:2em;"><em> The interactive code snippets are powered by <a href="https://github.com/viebel/klipse">KLIPSE</a>.</em>  🤗 </p>
+	<pre><code class="clojure">
+	    (map inc [1 2 3])
+	</code></pre> 
       </section>
       <section class="slide">
 	<h2>Clojure.spec - The foundations</h2>
@@ -447,110 +455,6 @@
 	<div>
 	  <img src="./questions.jpg" style="width:60%"></img>
 	</div>
-      </section>
-      <section class="slide">	
-	<h2>Data Generation</h2>
-	<p>For the upcoming parts, we need to require two additional namespaces</p>
-	<pre><code class="clojure">
-	    (require '[clojure.spec.test :as stest]
-            '[clojure.spec.impl.gen :as gen])
-	    (set! cljs.spec.test$macros/eval (fn [x] x))
-	</code></pre>
-	<p>We can generate samples data out of our specs:</p>
-	<pre><code class="clojure">
-	    (gen/sample (s/gen ::big-integer))
-	    (s/exercise ::big-integer-or-short-string)
-	</code></pre>
-	<pre><code class="clojure">
-	    (gen/sample (s/gen (s/keys :req [::big-integer] :opt [::short-string])) 5)
-	</code></pre>
-	<p class="meditation">
-	  Now you understand the meaning of <code>:opt</code> in <code>s/keys</code>.
-	</p>
-      </section>
-      <section class="slide">	
-	<h2>Functions - Spec'ing the arguments</h2>
-	<div class="slide">
-	  <p> You can describe the shape of the args and return value of your functions </p>
-	  <p> Let's imagine we have an addition function where the result is bounded: </p>
-	  <pre><code class="clojure">
-	      (defn bounded-addition [a b {:keys [upper lower]}]
-	      (-> (+ a b)
-		(max lower)
-		(min upper)))
-	  </code></pre>
-	</div>
-	<div class="slide">
-	  <p> Here is the specifications of our function: </p>
-	  <pre><code class="clojure">
-	      (s/def ::upper number?)
-	      (s/def ::lower number?)
-	      (s/fdef bounded-addition
-              :args (s/cat :a number? :b number? :boundaries (s/keys :req-un [::upper ::lower])))
-	  </code></pre>
-	</div>
-	<div class="slide">
-	  <p> What happens when one passes the wrong arguments? </p>
-	  <pre><code class="clojure">
-	      (stest/instrument `bounded-addition)
-	      (bounded-addition 1)
-	  </code></pre>
-	</div>
-	<div class="slide">
-	  <p> You can <code>instrument</code> and <code>unstrument</code>:</p>
-	  <pre><code class="clojure">
-	      (stest/unstrument `bounded-addition)
-	      (bounded-addition 1)
-	  </code></pre>
-	</div>
-	<div class="slide">
-	  <p class="meditation">What is the default - <code>instrument</code> or <code>unstrument</code>?<br>
-	</div>	
-      </section>
-      <section class="slide">
-	<h2>Functions - exercise-fn</h2>
-	<p>We can see how our function behaves with valid random arguments</p>
-	  <pre><code class="clojure">
-(s/exercise-fn bounded-addition)
-	  </code></pre>
-      </section>
-      
-      <section class="slide">	
-	<h2>Functions - Going further</h2>
-	<p> We can also specify:</p>
-	<ol>
-	  <li> The returned value </li>
-	  <li> The relationships between: different parts of the input </li>
-	  <li> The relationships between the input and the output </li>
-	</ol>	
-	<p> Let's imagine we have a muliplication function where the result is bounded: </p>
-	<pre><code class="clojure">
-	    (defn bounded-multiplication [a b {:keys [upper lower]}]
-	    (-> (* a b)
-	    #_(max lower)
-	    #_(min upper)))
-	</code></pre>
-	<div class="slide">
-	  <p> Here is the specifications of our function: </p>
-	  <pre><code class="clojure">
-	      (s/def ::upper number?)
-	      (s/def ::lower number?)
-	      (s/fdef bounded-multiplication
-              :args (s/and (s/cat :a number? :b number? :boundaries (s/keys :req-un [::upper ::lower]))
-              #(>= (:upper %) (:lower %)))
-              :ret number?
-              :fn #(<= (-> % :args :lower) (:ret %) (-> % :args :upper)))
-	  </code></pre>
-	</div>
-	<div class="slide">
-	  <p> Let's test our function (Test generation for free!): </p>
-	  <pre><code class="clojure">
-	      (stest/check `bounded-addition)
-	  </code></pre>
-	</div>
-	<div class="slide">
-	  <p class="meditation">What do you think about this amazing stuff?</p>
-	</div>	
       </section>      
       <p class="deck-status" aria-role="status">
 	<span> powered by <a href="https://github.com/viebel/klipse">KLIPSE</a> </span>
@@ -604,6 +508,6 @@
 	};
       </script>
 
-      <script src="http://localhost:5014/plugin/js/klipse_plugin.js"></script>
+      <script src="https://storage.googleapis.com/app.klipse.tech/plugin/js/klipse_plugin.js?aa1"></script>
   </body>
 </html>

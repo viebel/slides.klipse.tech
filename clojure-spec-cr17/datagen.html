@@ -1,0 +1,309 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+    <meta name="viewport" content="width=1024, user-scalable=no">
+
+    <link rel="shortcut icon" href="./favicon.png">
+
+    <title>CR17 - Clojure.spec workshop: The basics</title>
+
+
+    <!-- Required stylesheet -->
+    <link rel="stylesheet" media="screen" href="http://slides.klipse.tech/includes/deckjs/core/deck.core.css">
+
+    <!-- Extension CSS files go here. Remove or add as needed. -->
+    <link rel="stylesheet" media="screen" href="http://slides.klipse.tech/includes/deckjs/extensions/goto/deck.goto.css">
+    <link rel="stylesheet" media="screen" href="http://slides.klipse.tech/includes/deckjs/extensions/menu/deck.menu.css">
+    <link rel="stylesheet" media="screen" href="http://slides.klipse.tech/includes/deckjs/extensions/navigation/deck.navigation.css">
+    <link rel="stylesheet" media="screen" href="http://slides.klipse.tech/includes/deckjs/extensions/status/deck.status.css">
+    <link rel="stylesheet" media="screen" href="http://slides.klipse.tech/includes/deckjs/extensions/scale/deck.scale.css">
+
+    <link rel="stylesheet" media="screen" href="http://slides.klipse.tech/includes/deckjs/themes/style/klipse.css">
+
+    <link rel="stylesheet" media="screen" href="http://slides.klipse.tech/includes/deckjs/themes/transition/horizontal-slide.css">
+
+    <link rel="stylesheet" type="text/css" href="https://storage.googleapis.com/app.klipse.tech/css/codemirror.css">
+    <link rel="stylesheet" media="screen" href="./main.css">
+    <link rel="stylesheet" media="screen" href="./game.css">
+    <!-- Required Modernizr file -->
+    <script src="http://slides.klipse.tech/includes/deckjs/modernizr.custom.js"></script>
+  </head>
+  <body>
+    <div class="deck-container">
+      <section class="slide">
+        <div class="text-centered">
+          <h2>
+            <div>
+	      Clojure.Spec Workshop <br> Part 2 - Data generation
+            </div>
+          </h2>
+          <div class="centered" style="font-size:1.9em;">
+            <div class="left" style="width:50%;">
+	      <img src='https://chart.googleapis.com/chart?cht=qr&chl=http%3A%2F%2Fslides.klipse.tech%2Fclojure-spec-cr17%2Fpart1.html&chs=300x300' alt='qr code'></img>
+	    </div>
+            <div class="left" style="width:50%;">
+              <div>
+                <div>
+                  <img class="fullscreen" src="./klipse.png" alt="" width="150">
+                </div> 
+                <div> ClojureRemote - February 2017</div>
+                <div>
+                  <div>Yehonathan Sharvit</div>
+                  <div> <a href="https://twitter.com/viebel">@viebel</a></div>
+                </div>
+                <div class="clear">
+                  <div style="margin-top:14px;">
+                    <a class="github-button" href="https://github.com/viebel/klipse" data-count-href="/viebel/klipse/stargazers" data-count-api="/repos/viebel/klipse#stargazers_count" data-count-aria-label="# stargazers on GitHub" aria-label="Star viebel/klipse on GitHub">KLIPSE</a>
+                  </div>
+                  <script async defer id="github-bjs" src="https://buttons.github.io/buttons.js"></script>
+                </div>
+                <div>
+                  <a href="http://slides.klipse.tech">http://slides.klipse.tech</a>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="clear centered">
+	    <div style="padding-top: 20px;">
+	      <pre><code class="clojure" data-loop-msec="1000" data-beautify-strings="true">
+		  (str (js/Date.))
+              </code></pre>
+	    </div>
+          </div>
+        </div>
+      </section>
+      <section class="slide">
+        <h2>Who am I?</h2>
+        <div class="left">
+          <ul>
+            <li> A mathematician </li>
+            <li> A pragmatic theorist </li>
+            <li> A coder </li>
+            <li> A freak of interactivity </li>
+            <li> Founded Audyx - an Audiology Startup with 30K LOCs in Clojurescript </li>
+            <li> Author of <a href="https://github.com/viebel/klipse">KLIPSE</a></li>
+	    <li> A Clojure consultant </li>
+          </ul>
+        </div>
+        <div class="left" style="width:25%;margin-left:5%;"><img src="https://pbs.twimg.com/profile_images/713278171353911296/1a2useM2.jpg"></img></div>
+      </section>
+      <section class="slide">
+        <h2>Agenda</h2>
+        <div class="left">
+          <ul>
+            <li> Data generation based on specs </li>
+            <li> Specing functions </li>
+            <li> Testing functions</li>
+          </ul>
+        </div>
+        <div class="left" style="width:33%;margin-left:5%;"><img src="./specs.png"></img></div>
+      </section>
+      
+      <section class="slide">
+	<h2>KLIPSE - Code interactivity</h2>
+	<p style="font-size:4em"> Open this presentation in your computer for a collaborative live coding session: 
+	  <a href="http://slides.klipse.tech/clojure-spec-cr17/part1.html#slide-3">http://slides.klipse.tech/clojure-spec-cr17/part1.html#slide-3</a>
+	</p>
+	<p> (It works also on mobile) </p>
+        <img src="./qrcode.png" alt="" width="300"></img>
+	<br>
+	<br>
+	<p style="font-size:2em;"><em> The interactive code snippets are powered by <a href="https://github.com/viebel/klipse">KLIPSE</a>.</em>  🤗 </p>
+	<pre><code class="clojure">
+	    (map inc [1 2 3])
+	</code></pre> 
+      </section>
+      <section class="slide">	
+	<h2>Data Generation</h2>
+	<p>For the upcoming parts, we need to require two additional namespaces</p>
+	<pre><code class="clojure">
+	    (ns my.playground
+	    (:require [clojure.spec :as s]
+	    [clojure.spec.test :as stest]
+            [clojure.spec.impl.gen :as gen]))
+	    (set! cljs.spec.test$macros/eval (fn [x] x))
+	</code></pre>
+	<p>We can generate data samples out of our specs:</p>
+	<pre><code class="clojure">
+	    (s/def ::big-integer (s/and integer?
+            #(> % 1000000)))
+	    (s/def ::short-string (s/and string?
+            #(< (count %) 5)))
+		(s/def ::big-integer-or-short-string (s/or :int ::big-integer
+		:str ::short-string))
+		</code></pre>
+	<div class="slide">
+	  <p>Either with <code>gen/sample</code>:</p>
+	  <pre><code class="clojure">
+	      (gen/sample (s/gen ::big-integer) 5)
+	  </code></pre>
+	</div>
+	<div class="slide">
+	  <p>Or with <code>s/exercise</code>:</p>
+	  <pre><code class="clojure">
+	      (s/exercise ::big-integer-or-short-string 5)
+	  </code></pre>
+	</div>
+      </section>
+      <section class="slide">
+	<h2>Data generation - maps</h2>
+	<p class="meditation">
+	  Why do we need to specify optional keys in a map?
+	</p>
+	<div class="slide">
+	  <pre><code class="clojure">
+	      (gen/sample (s/gen (s/keys :req [::big-integer])) 5)
+	  </code></pre>
+	</div>
+	<div class="slide">
+	  <pre><code class="clojure">
+	      (gen/sample (s/gen (s/keys :req [::big-integer] :opt [::short-string])) 5)
+	  </code></pre>
+	</div>
+      </section>
+      <section class="slide">	
+	<h2>Functions - Spec'ing the arguments</h2>
+	<div class="slide">
+	  <p> You can describe the shape of the args and return value of your functions </p>
+	  <p> Let's imagine we have an addition function where the result is bounded: </p>
+	  <pre><code class="clojure">
+	      (defn bounded-addition [a b {:keys [upper lower]}]
+	      (-> (+ a b)
+	      (max lower)
+	      (min upper)))
+	</code></pre>
+    </div>
+    <div class="slide">
+      <p> Here are the initial specifications of our function: </p>
+      <pre><code class="clojure">
+	  (s/def ::upper number?)
+	  (s/def ::lower number?)
+	  (s/fdef bounded-addition
+          :args (s/cat :a number? :b number? :boundaries (s/keys :req-un [::upper ::lower])))
+      </code></pre>
+    </div>
+    <div class="slide">
+      <p> What happens when one passes the wrong arguments? </p>
+      <pre><code class="clojure">
+	  (stest/instrument `bounded-addition)
+	  (bounded-addition 1)
+      </code></pre>
+    </div>
+    <div class="slide">
+      <p> You can <code>instrument</code> and <code>unstrument</code>:</p>
+      <pre><code class="clojure">
+	  (stest/unstrument `bounded-addition)
+	  (bounded-addition 1)
+      </code></pre>
+    </div>
+    <div class="slide">
+      <p class="meditation">What is the default - <code>instrument</code> or <code>unstrument</code>?<br>
+    </div>	
+    </section>
+    <section class="slide">
+      <h2>Functions - exercise-fn</h2>
+      <p>Let's check how our function behaves with valid random arguments</p>
+      <pre><code class="clojure">
+	  (s/exercise-fn bounded-addition)
+      </code></pre>
+    </section>
+    
+    <section class="slide">	
+      <h2>Functions - Going further</h2>
+      <p> We can also specify:</p>
+      <ol>
+	<li>The returned value - <strong><em>a number</em></strong></li>
+	<li> The relationships between different parts of the input - <strong><em>upper bound not smaller than lowe bound</em></strong></li>
+	<li> The relationships between the input and the returned value -  <strong><em>returned value between lower and upper bounds</em></strong></li>
+      </ol>
+      <div class="slide">
+	<p> Let's imagine we have a multiplication function where the result is bounded: </p>
+	<pre><code class="clojure">
+	    (defn bounded-multiplication [a b {:keys [upper lower]}]
+	    (-> (* a b)
+	    #_(max lower)
+	    #_(min upper)))
+	</code></pre>
+      </div>
+      <div class="slide">
+	<p> Here are the full specifications of our function: </p>
+	<pre><code class="clojure">
+	    (s/def ::upper number?)
+	    (s/def ::lower number?)
+	    (s/fdef bounded-multiplication
+            :args (s/and (s/cat :a number? :b number? :boundaries (s/keys :req-un [::upper ::lower]))
+            #(>= (-> % :boundaries :upper) (-> % :boundaries :lower)))
+            :ret number?
+            :fn #(<= (-> % :args :boundaries :lower) (:ret %) (-> % :args :boundaries :upper)))
+	</code></pre>
+      </div>
+      <div class="slide">
+	<p> Let's test our function (Test generation for free!): </p>
+	<pre><code class="clojure">
+	    (-> (stest/check `bounded-multiplication)
+	    first
+	    stest/abbrev-result
+	    :failure)
+	</code></pre>
+      </div>
+      <div class="slide">
+	<p class="meditation">What do you think about this amazing stuff?</p>
+      </div>	
+    </section>      
+    <p class="deck-status" aria-role="status">
+      <span> powered by <a href="https://github.com/viebel/klipse">KLIPSE</a> </span>
+      <span class="deck-status-current"></span>
+      /
+      <span class="deck-status-total"></span>
+    </p>
+    <div aria-role="navigation">
+      <a href="#" class="deck-prev-link" title="Previous">&#8592;</a>
+      <a href="#" class="deck-next-link" title="Next">&#8594;</a>
+    </div>
+
+</div>
+
+<!-- Required JS files. -->
+<script src="http://slides.klipse.tech/includes/deckjs/jquery.min.js"></script>
+<script src="http://slides.klipse.tech/includes/deckjs/core/deck.core.js"></script>
+
+<!-- Extension JS files. Add or remove as needed. -->
+<script src="http://slides.klipse.tech/includes/deckjs/extensions/menu/deck.menu.js"></script>
+<script src="http://slides.klipse.tech/includes/deckjs/extensions/status/deck.status.js"></script>
+<script src="http://slides.klipse.tech/includes/deckjs/extensions/navigation/deck.navigation.js"></script>
+<script src="http://slides.klipse.tech/includes/deckjs/extensions/fullscreen/deck.fullscreen.js"></script>
+
+<script>
+  $(function() {
+  $.deck('.slide', {
+  countNested: false,
+  fullscreenSelector: 'h2, fullscreen'
+  });
+  });
+</script>
+
+<script>
+  window.klipse_settings = {
+  beautify_strings: true,
+  selector: '.clojure',
+  selector_js: '.clj-to-js',
+  selector_eval_js: '.eval-js',
+  selector_jsx: '.jsx',
+  selector_transpile_jsx: '.transpile-jsx',
+  selector_eval_python_client: '.python',
+  selector_eval_ruby: '.ruby',
+  codemirror_options_in: {
+  lineWrapping: true,
+  autoCloseBrackets: true
+  },
+  codemirror_options_out: {
+  lineWrapping: true
+  },
+  };
+</script>
+
+<script src="https://storage.googleapis.com/app.klipse.tech/plugin/js/klipse_plugin.js?aa1"></script>
+</body>
+</html>
