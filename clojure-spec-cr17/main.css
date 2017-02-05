@@ -1,6 +1,7 @@
 
 .hidden {
     visibility: hidden;
+    height:0px;
 }
 #klipse-color {
     width: 300px;
