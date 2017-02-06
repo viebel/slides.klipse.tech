@@ -131,13 +131,13 @@
 	<div class="slide">
 	  <p>Let's code it:</p>
 	  <pre><code class="clojure">
-(s/def ::defn-args
-  (s/cat :name simple-symbol?
-         :docstring (s/? string?)
-         :meta (s/? map?)
-         :bs (s/alt :arity-1 ::args+body
-                    :arity-n ::multi-args+body)))
-	</code></pre>
+	      (s/def ::defn-args
+	      (s/cat :name simple-symbol?
+              :docstring (s/? string?)
+              :meta (s/? map?)
+              :bs (s/alt :arity-1 ::args+body
+              :arity-n ::multi-args+body)))
+	  </code></pre>
 	</div>
 	<div class="slide">
 	  <p>What is <code>::args+body</code>?</p>
@@ -145,15 +145,23 @@
 	    <li>A list of args - required</li>
 	    <li>A <code>pre</code> and <code>post</code> map - optional</li>
 	    <li>A body - required (might be empty)</li>
-	    </ul>
+	  </ul>
+	  <div class="slide">
+	    <pre><code class="clojure">
+		(s/def ::args+body
+		(s/cat :args ::arg-list
+		:prepost (s/? map?)
+		:body (s/* any?)))
+	    </code></pre>
+	  </div>
 	</div>
 	<div class="slide">
 	  <p>What is <code>::multi-args+body</code>?</p>
-<p> A list of bodies</p>
+	  <p> A list of bodies</p>
 	</div>
 	<div class="slide">
 	  <pre><code class="clojure">
-(s/def ::multi-args+body (s/cat :bodies (s/+ (s/spec ::args+body))))
+	      (s/def ::multi-args+body (s/cat :bodies (s/+ (s/spec ::args+body))))
 	  </code></pre>
 	</div>
       </section>
@@ -168,12 +176,12 @@
 	<div class="slide">
 	  <p>Let's code it:</p>
 	  <pre><code class="clojure">
-(s/def ::arg-list
-  (s/and
-    vector?
-    (s/cat :args (s/* ::binding-form)
-           :varargs (s/? (s/cat :amp #{'&} :form ::binding-form)))))
-	</code></pre>
+	      (s/def ::arg-list
+	      (s/and
+	      vector?
+	      (s/cat :args (s/* ::binding-form)
+              :varargs (s/? (s/cat :amp #{'&} :form ::binding-form)))))
+	  </code></pre>
 	</div>
 	<div class="slide">
 	  <p>What is <code>::binding-form</code>?</p>
@@ -182,50 +190,14 @@
 	    <li>Any symbol (except &)</li>
 	    <li>A sequential destructuring form</li>
 	    <li>A map destructuring form</li>
-	    </ul>
+	  </ul>
 	</div>
 	<div class="slide">
 	  <pre><code class="clojure">
-(s/def ::binding-form
-  (s/or :sym ::local-name
-        :seq ::seq-binding-form
-        :map ::map-binding-form))
-	  </code></pre>
-	</div>
-      </section>
-      <section class="slide">	
-	<h2>::arg-list</h2>
-	<p> What is <code>::arg-list</code>?</p>
-	<p> A vector made of:</p>
-	<ul>
-	  <li>A sequence of binding forms - required (might be empty)</li>
-	  <li>Variadic args (&) - optional </li>
-	</ul>
-	<div class="slide">
-	  <p>Let's code it:</p>
-	  <pre><code class="clojure">
-(s/def ::arg-list
-  (s/and
-    vector?
-    (s/cat :args (s/* ::binding-form)
-           :varargs (s/? (s/cat :amp #{'&} :form ::binding-form)))))
-	</code></pre>
-	</div>
-	<div class="slide">
-	  <p>What is <code>::binding-form</code>?</p>
-	  <p>It could be one of: </p>
-	  <ul>
-	    <li>Any symbol (except <code>&</code>)</li>
-	    <li>A sequential destructuring form</li>
-	    <li>A map destructuring form</li>
-	    </ul>
-	</div>
-	<div class="slide">
-	  <pre><code class="clojure">
-(s/def ::binding-form
-  (s/or :sym ::local-name
-        :seq ::seq-binding-form
-        :map ::map-binding-form))
+	      (s/def ::binding-form
+	      (s/or :sym ::local-name
+              :seq ::seq-binding-form
+              :map ::map-binding-form))
 	  </code></pre>
 	</div>
       </section>
@@ -233,7 +205,7 @@
 	<h2>::binding-form (cont.)</h2>
 	<p><code>::local-name</code> is any symbol except <code>&</code></p>
 	<pre><code class="clojure">
-(s/def ::local-name (s/and simple-symbol? #(not= '& %)))
+	    (s/def ::local-name (s/and simple-symbol? #(not= '& %)))
 	</code></pre>
 	
 	<div class="slide">
@@ -254,46 +226,179 @@
 	<div class="slide">
 	  <p>Not so hard to code</p>
 	  <pre><code class="clojure">
-(s/def ::seq-binding-form
-  (s/and vector?
-         (s/cat :elems (s/* ::binding-form)
-                :rest (s/? (s/cat :amp #{'&} :form ::binding-form))
-                :as (s/? (s/cat :as #{:as} :sym ::local-name)))))
+	      (s/def ::seq-binding-form
+	      (s/and vector?
+              (s/cat :elems (s/* ::binding-form)
+              :rest (s/? (s/cat :amp #{'&} :form ::binding-form))
+              :as (s/? (s/cat :as #{:as} :sym ::local-name)))))
 	  </code></pre>
 	</div>
       </section>
       <section class="slide">	
 	<h2>::map-binding-form</h2>
-	<p><code>::map-binding-form</code> is any symbol except <code>&</code></p>
+	<p><code>::map-binding-form</code> is a hybrid spec. It is a map with a repetition of either:</p>
+	<ul>
+	  <li> Regular map destructuring binding - e.g <code>{abc "abc"}</code></li>
+	  <li> Special map destructuring binding - e.g <code>{:keys [a b c] :or {a 0 b 1 c 2}</code></li>
+	  <li> Namespaced keywords map destructuring - e.g. <code>{:foo/keys [a b c] :as args}</code></li>
+	</ul>
+	<div class="slide">
+	  <h3>Regular map destructuring</h3>
+	  <p> It's a 2-element made of: </p>
+	  <ul>
+	    <li>a <code>::map-binding</code> (pay attention to the recursion!)</li>
+	    <li> anything</li>
+	  </ul>
+	  <p>Easy to to code</p>
+	  <pre><code class="clojure">
+	      (s/def ::map-binding (s/tuple ::binding-form any?))
+	  </code></pre>
+	</div>
+	<div class="slide">
+	  <p>Test (we have to wait until <code>:map-binding</code> is fully defined)</p>
+	  <pre><code class="clojure">
+	      (s/conform ::map-binding '[abc "abc"])
+	  </code></pre>
+	</div>
+      </section>
+      <section class="slide">
+	<h2>::map-binding-form (cont.) </h2>
+	<div>
+	  <h3>Special map destructuring</h3>
+	  <p> The optional keys are <code>keys</code>, <code>syms</code>, <code>strs</code>, <code>as</code> and <code>or</code> </p>
+	  <p>A bit hard to code</p>
+	  <pre><code class="clojure">
+	      (s/def ::keys (s/coll-of ident? :kind vector?))
+	      (s/def ::syms (s/coll-of symbol? :kind vector?))
+	      (s/def ::strs (s/coll-of simple-symbol? :kind vector?))
+	      (s/def ::or (s/map-of simple-symbol? any?))
+	      (s/def ::as ::local-name)
+
+	      (s/def ::map-special-binding
+	      (s/keys :opt-un [::as ::or ::keys ::syms ::strs]))
+	  </code></pre>
+	</div>
+	<div class="slide">
+	  <p>Test</p>
+	  <pre><code class="clojure">
+	      (s/conform ::map-special-binding {:keys '[a b c] :or '{a 1 b 2}})
+	  </code></pre>
+	</div>
+      </section>
+      <section class="slide">
+	<h2>::map-binding-form (cont.) </h2>
+	<div>
+	  <h3>Namespaced keywords map destructuring</h3>
+	  <p> It must have either <code>keys</code> or <code>syms</code> - but qualified</p>
+	  <pre><code class="clojure">
+	      (s/def ::ns-keys
+	      (s/tuple
+	      (s/and qualified-keyword? #(-> % name #{"keys" "syms"}))
+	      (s/coll-of simple-symbol? :kind vector?)))
+	  </code></pre>
+	</div>
+	<div class="slide">
+	  <p>Test</p>
+	  <pre><code class="clojure">
+	      (s/valid? ::ns-keys [:foo/keys '[a b c]])
+	  </code></pre>
+	</div>
+      </section>
+      <section class="slide">
+	<h2>::map-binding-form (last) </h2>
+	<div>
+	  <h3>Combining all the pieces together</h3>
+	  <p> We need to combine the three kinds of specs</p>
+	  <p> And prevent keys other thant the allowed ones</p>
+	  <pre><code class="clojure">
+	      (s/def ::map-bindings
+	      (s/every (s/or :mb ::map-binding
+              :nsk ::ns-keys
+              :msb (s/tuple #{:as :or :keys :syms :strs} any?)) :into {}))
+
+	      (s/def ::map-binding-form (s/merge ::map-bindings ::map-special-binding))
+	  </code></pre>
+	</div>
+	<div class="slide">
+	  <p>Test</p>
+	  <pre><code class="clojure">
+	      (s/conform ::map-bindings '{a "aa"})
+	  </code></pre>
+	  <pre><code class="clojure">
+	      (s/conform ::map-bindings '{:syms [a b c]})
+	  </code></pre>
+	  <pre><code class="clojure">
+	      (s/conform ::map-bindings '{a "aa"
+              {:xx/keys [a b x]} "x"})
+	  </code></pre>
+	  <p>Invalid keys are not allowed</p>
+	  <pre><code class="clojure">
+	      (s/conform ::map-bindings '{:kseys [a b x]})
+	  </code></pre>
+	</div>
+      </section>
+      <section class="slide">	
+	<h2>Testing defn-args </h2>
+	<p>Simple function</p>
 	<pre><code class="clojure">
-(s/def ::local-name (s/and simple-symbol? #(not= '& %)))
+	    (s/conform ::defn-args '(foo [x y _] (+ x y)))
+	</code></pre>
+	<div class="slide">
+	  <p>A bit of destructuring <p>
+	  <pre><code class="clojure">
+(s/conform ::defn-args '(bar [[x y] {:keys [a b]}] (+ x y a b)))
+	  </code></pre>
+	</div>
+	<div class="slide">
+	  <p>Multi-arity function - with a docstring and metadata<p>
+	  <pre><code class="clojure">
+(s/conform ::defn-args '(baz
+                          "bar is a multi-arity variadic function"
+                          {:private true}
+                          ([a b & c] (+ a b (first c)))
+                          ([] (foo 1 1))))
+	  </code></pre>
+	</div>
+      </section>
+      <section class="slide">
+	<img class="image-full" src="./breath.jpg"></img>
+	</section>
+      <section class="slide">	
+	<h2>Conform and unform </h2>
+	<p>With <code>conform</code> you parse your data</p>
+	<pre><code class="clojure">
+	    (s/def ::my-spec (s/cat
+            :first (s/alt :str string?
+            :kw  keyword?)
+	    :second number?))
+	</code></pre>
+
+	<pre><code class="clojure">	
+	    (s/conform ::my-spec '(:a 1))	    
 	</code></pre>
 	
 	<div class="slide">
-	  <p><code>::seq-binding-form</code> is a vector made of:</p>
-	  <ul>
-	    <li>A sequence of <code>::binding-form</code>s (recursive definition)</li>
-	    <li>A <code>&</code> followed by a <code>::binding-form</code> - optional</li>
-    	    <li>A <code>:as</code> followed by a <code>::local-name</code> - optional</li>
-	  </ul>
-	</div>
-	<div class="slide">
-	  <p>Not so hard to code</p>
+	  <p>With  <code>unform</code> you get your data back:</p>
 	  <pre><code class="clojure">
-(s/def ::seq-binding-form
-  (s/and vector?
-         (s/cat :elems (s/* ::binding-form)
-                :rest (s/? (s/cat :amp #{'&} :form ::binding-form))
-                :as (s/? (s/cat :as #{:as} :sym ::local-name)))))
+	      (s/unform ::my-spec {:first [:kw :a], :second 1})
 	  </code></pre>
 	</div>
+	<div class="slide">
+	  <p>Usually, you can close the loop </p>
+	  <pre><code class="clojure">
+	      (->> (s/conform ::my-spec '(:a 1))
+	      (s/unform ::my-spec))
+	  </code></pre>
+	</div>
+	
       </section>
       <section class="slide">	
 	<h2>Conform and unform - bugs and tricks</h2>
 	<p>Sometimes <code>conform</code> and <code>unform</code> are not aligned:</p>
 	<pre><code class="clojure">
-	    (->> (s/conform ::my-spec [:a 1])
-	      (s/unform ::my-spec))
+	    (s/def ::a-tuple (s/and vector? (s/* any?)))
+	    (->> (s/conform ::a-tuple [:a 1])
+	    (s/unform ::a-tuple))
 	</code></pre>
 	
 	<div class="slide">
@@ -372,27 +477,27 @@
 	  <p>Let's write our own <code>defndoc</code> macro.</p>
 	  <p> <code>defndoc</code> is like <code>defn</code> but it prepends to the docstring a sentence that contains the name of the function<p>
 	    <pre><code class="clojure">
-(defmacro defndoc [& args]
-  (let [conf (s/conform ::defn-args args)
-        name (:name conf)
-        new-conf (update conf :docstring #(str name " is a cool function. " %))
-        new-args (s/unform ::defn-args new-conf)]
-    (cons `defn new-args)))
-	  </code></pre>
+		(defmacro defndoc [& args]
+		(let [conf (s/conform ::defn-args args)
+		name (:name conf)
+		new-conf (update conf :docstring #(str name " is a cool function. " %))
+		new-args (s/unform ::defn-args new-conf)]
+		(cons `defn new-args)))
+	    </code></pre>
 	</div>
 	<div class="slide">
 	  <p>Let's see it in action.</p>
 	  <p> When no docstring is provided</p>
 	  <pre><code class="clojure">
-(my.m/defndoc fooz [a b] (+ a b))
-(:doc (meta #'foo))
+	      (my.m/defndoc fooz [a b] (+ a b))
+	      (:doc (meta #'foo))
 	  </code></pre>
 	</div>
 	<div class="slide">
 	  <p>When a docstring is provided</p>
 	  <pre><code class="clojure">
-(my.m/defndoc baz "sum of a and b." [a b] (+ a b))
-(:doc (meta #'baz))
+	      (my.m/defndoc baz "sum of a and b." [a b] (+ a b))
+	      (:doc (meta #'baz))
 	  </code></pre>
 	</div>
 	<div class="slide">
@@ -403,78 +508,78 @@
       <section class="slide">
 	<h2>defnlog</h2>
 
-	  <p> <code>defnlog</code> is like <code>defn</code> but it prints a log each time it is called</p>
-	  <p> Now we have to modify the body of the original function <p>
+	<p> <code>defnlog</code> is like <code>defn</code> but it prints a log each time it is called</p>
+	<p> Now we have to modify the body of the original function <p>
 	<p> No worries! In clojured code is data...</p>
 	<div class="slide">
 	  <p>First piece: a function <code>prepend-log</code> that receives a body and a function name and prepend to it a call to <code>(println func-name "has been called")</code>:</p>
 	  <pre><code class="clojure">
-(defn prepend-log [name body]
-  (cons `(println ~name "has been called.") body))
+	      (defn prepend-log [name body]
+	      (cons `(println ~name "has been called.") body))
 	  </code></pre>
 	</div>
 	<div class="slide">
 	  <p>Second piece: a function <code>update-conf</code> that updates the body of a conformed <code>::defn-args</code>.</p>
 	  <p>This is a bit tricky because the shape of the confomed object is different if the function has single-arity or multi-arity.</p>
-	  </div>
-	  <div class="slide">
+	</div>
+	<div class="slide">
 	  <pre><code class="clojure">
-(s/conform ::defn-args '(foo [a b] (* a b)))
+	      (s/conform ::defn-args '(foo [a b] (* a b)))
 	  </code></pre>
 	  <pre><code class="clojure">
-(s/conform ::defn-args '(bar 
-                          ([] (* 10 12))
-                          ([a b] (* a b))))
+	      (s/conform ::defn-args '(bar 
+              ([] (* 10 12))
+              ([a b] (* a b))))
 	  </code></pre>
 	</div>
 	<div class="slide">
 	  <p>But we can do it 💪 </p>
 	  <pre><code class="clojure">
-(defn update-conf [{[arity] :bs :as conf} body-update-fn]
-  (case arity
-    :arity-1 (update-in conf [:bs 1 :body] body-update-fn)
-    :arity-n (update-in conf [:bs 1 :bodies] (fn [bodies]
-                                               (map (fn [body] (update body :body body-update-fn)) bodies)))))
+	      (defn update-conf [{[arity] :bs :as conf} body-update-fn]
+	      (case arity
+	      :arity-1 (update-in conf [:bs 1 :body] body-update-fn)
+	      :arity-n (update-in conf [:bs 1 :bodies] (fn [bodies]
+              (map (fn [body] (update body :body body-update-fn)) bodies)))))
 	  </code></pre>
 	</div>
       </section>
       <section class="slide">
 	<h2>The Grand Finale</h2>
-	  <p>And now, for the grand finale, please welcome <code>defnlog</code>!!!!</p>
-	  <pre><code class="clojure">
-(defmacro defnlog [& args]
-  (let [{:keys [name] :as conf} (s/conform ::defn-args args)
-        new-conf (update-conf conf (partial prepend-log  (str name)))
-        new-args (s/unform ::defn-args new-conf)]
-(cons `defn new-args)))
-	  </code></pre>
+	<p>And now, for the grand finale, please welcome <code>defnlog</code>!!!!</p>
+	<pre><code class="clojure">
+	    (defmacro defnlog [& args]
+	    (let [{:keys [name] :as conf} (s/conform ::defn-args args)
+            new-conf (update-conf conf (partial prepend-log  (str name)))
+            new-args (s/unform ::defn-args new-conf)]
+	    (cons `defn new-args)))
+	</code></pre>
 	<div class="slide">
 	  <p>Let's see it in action</p>
 	  <p> First, with a single arity function </p>
 	  <pre><code class="clojure">
-(my.m/defnlog trivial-multiplication "Multiplies `a` and `b`" [a b] (* a b))
+	      (my.m/defnlog trivial-multiplication "Multiplies `a` and `b`" [a b] (* a b))
 	  </code></pre>
 	  <p> Are you ready?</p>
 	</div>
-		<div class="slide">
+	<div class="slide">
 	  <pre><code class="clojure">
-(trivial-multiplication 13 4)
-	  </code></pre>
-		</div>
-			<div class="slide">
-	  <p> And now, with a multi-arity function </p>
-	  <pre><code class="clojure">
-(my.m/defnlog special-multiplication
-  "Multiplies `a` and `b` with a tweak"
-  ([] (* 12 56))
-  ([a] (* a 42))
-  ([a b] (* a b)))
-	  </code></pre>
-		<div class="slide">
-	  <pre><code class="clojure">
-(special-multiplication)
+	      (trivial-multiplication 13 4)
 	  </code></pre>
 	</div>
+	<div class="slide">
+	  <p> And now, with a multi-arity function </p>
+	  <pre><code class="clojure">
+	      (my.m/defnlog special-multiplication
+	      "Multiplies `a` and `b` with a tweak"
+	      ([] (* 12 56))
+	      ([a] (* a 42))
+	      ([a b] (* a b)))
+	  </code></pre>
+	  <div class="slide">
+	    <pre><code class="clojure">
+		(special-multiplication)
+	    </code></pre>
+	  </div>
       </section>
       <section class="slide">
 	<h2>Questions?</h2>
@@ -493,47 +598,47 @@
 	<a href="#" class="deck-next-link" title="Next">&#8594;</a>
       </div>
 
-    </div>
+      </div>
 
-    <!-- Required JS files. -->
-    <script src="http://slides.klipse.tech/includes/deckjs/jquery.min.js"></script>
-    <script src="http://slides.klipse.tech/includes/deckjs/core/deck.core.js"></script>
+      <!-- Required JS files. -->
+      <script src="http://slides.klipse.tech/includes/deckjs/jquery.min.js"></script>
+      <script src="http://slides.klipse.tech/includes/deckjs/core/deck.core.js"></script>
 
-    <!-- Extension JS files. Add or remove as needed. -->
-    <script src="http://slides.klipse.tech/includes/deckjs/extensions/menu/deck.menu.js"></script>
-    <script src="http://slides.klipse.tech/includes/deckjs/extensions/status/deck.status.js"></script>
-    <script src="http://slides.klipse.tech/includes/deckjs/extensions/navigation/deck.navigation.js"></script>
-    <script src="http://slides.klipse.tech/includes/deckjs/extensions/fullscreen/deck.fullscreen.js"></script>
+      <!-- Extension JS files. Add or remove as needed. -->
+      <script src="http://slides.klipse.tech/includes/deckjs/extensions/menu/deck.menu.js"></script>
+      <script src="http://slides.klipse.tech/includes/deckjs/extensions/status/deck.status.js"></script>
+      <script src="http://slides.klipse.tech/includes/deckjs/extensions/navigation/deck.navigation.js"></script>
+      <script src="http://slides.klipse.tech/includes/deckjs/extensions/fullscreen/deck.fullscreen.js"></script>
 
-    <script>
-      $(function() {
-      $.deck('.slide', {
-      countNested: false,
-      fullscreenSelector: 'h2, fullscreen'
-      });
-      });
-    </script>
+      <script>
+	$(function() {
+	$.deck('.slide', {
+	countNested: false,
+	fullscreenSelector: 'h2, fullscreen'
+	});
+	});
+      </script>
 
-    <script>
-      window.klipse_settings = {
-      beautify_strings: true,
-      selector: '.clojure',
-      selector_js: '.clj-to-js',
-      selector_eval_js: '.eval-js',
-      selector_jsx: '.jsx',
-      selector_transpile_jsx: '.transpile-jsx',
-      selector_eval_python_client: '.python',
-      selector_eval_ruby: '.ruby',
-      codemirror_options_in: {
-      lineWrapping: true,
-      autoCloseBrackets: true
-      },
-      codemirror_options_out: {
-      lineWrapping: true
-      },
-      };
-    </script>
+      <script>
+	window.klipse_settings = {
+	beautify_strings: true,
+	selector: '.clojure',
+	selector_js: '.clj-to-js',
+	selector_eval_js: '.eval-js',
+	selector_jsx: '.jsx',
+	selector_transpile_jsx: '.transpile-jsx',
+	selector_eval_python_client: '.python',
+	selector_eval_ruby: '.ruby',
+	codemirror_options_in: {
+	lineWrapping: true,
+	autoCloseBrackets: true
+	},
+	codemirror_options_out: {
+	lineWrapping: true
+	},
+	};
+      </script>
 
-    <script src="https://storage.googleapis.com/app.klipse.tech/plugin/js/klipse_plugin.js?aa1"></script>
+      <script src="https://storage.googleapis.com/app.klipse.tech/plugin/js/klipse_plugin.js?aa1"></script>
   </body>
 </html>
