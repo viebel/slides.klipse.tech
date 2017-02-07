@@ -4,11 +4,8 @@
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
     <meta name="viewport" content="width=1024, user-scalable=no">
-
     <link rel="shortcut icon" href="./favicon.png">
-
     <title>CR17 - Clojure.spec workshop: The basics</title>
-
 
     <!-- Required stylesheet -->
     <link rel="stylesheet" media="screen" href="http://slides.klipse.tech/includes/deckjs/core/deck.core.css">
@@ -36,7 +33,7 @@
         <div class="text-centered">
           <h2>
             <div>
-	      Clojure.Spec Workshop <br> Part 4 - How to write defn-like macros
+	      Clojure.Spec Workshop <br> Part 3 - How to write defn-like macros
             </div>
           </h2>
           <div class="centered" style="font-size:1.9em;">
@@ -170,7 +167,7 @@
 	<p> What is <code>::arg-list</code>?</p>
 	<p> A vector made of:</p>
 	<ul>
-	  <li>A sequence of <code>::binding-form</code>s - required (might be empty)</li>
+	  <li>A sequence of <code>::binding-form</code> - required (might be empty)</li>
 	  <li>Variadic args (&) - optional </li>
 	</ul>
 	<div class="slide">
@@ -211,7 +208,7 @@
 	<div class="slide">
 	  <p><code>::seq-binding-form</code> is a vector made of:</p>
 	  <ul>
-	    <li>A sequence of <code>::binding-form</code>s (recursive definition)</li>
+	    <li>A sequence of <code>::binding-form</code> (recursive definition)</li>
 	    <li>A <code>&</code> followed by a <code>::binding-form</code> - optional</li>
     	    <li>A <code>:as</code> followed by a <code>::local-name</code> - optional</li>
 	  </ul>
@@ -244,7 +241,7 @@
 	</ul>
 	<div class="slide">
 	  <h3>Regular map destructuring</h3>
-	  <p> It's a 2-element made of: </p>
+	  <p> It's a 2-element vector (a.k.a. a tuple) made of: </p>
 	  <ul>
 	    <li>a <code>::map-binding</code> (pay attention to the recursion!)</li>
 	    <li> anything</li>
@@ -345,24 +342,24 @@
 	</code></pre>
 	<div class="slide">
 	  <p>A bit of destructuring <p>
-	  <pre><code class="clojure">
-(s/conform ::defn-args '(bar [[x y] {:keys [a b]}] (+ x y a b)))
-	  </code></pre>
+	    <pre><code class="clojure">
+		(s/conform ::defn-args '(bar [[x y] {:keys [a b]}] (+ x y a b)))
+	    </code></pre>
 	</div>
 	<div class="slide">
 	  <p>Multi-arity function - with a docstring and metadata<p>
-	  <pre><code class="clojure">
-(s/conform ::defn-args '(baz
-                          "bar is a multi-arity variadic function"
-                          {:private true}
-                          ([a b & c] (+ a b (first c)))
-                          ([] (foo 1 1))))
-	  </code></pre>
+	    <pre><code class="clojure">
+		(s/conform ::defn-args '(baz
+                "bar is a multi-arity variadic function"
+                {:private true}
+                ([a b & c] (+ a b (first c)))
+                ([] (foo 1 1))))
+	    </code></pre>
 	</div>
       </section>
       <section class="slide">
 	<img class="image-full" src="./breath.jpg"></img>
-	</section>
+      </section>
       <section class="slide">	
 	<h2>Conform and unform </h2>
 	<p>With <code>conform</code> you parse your data</p>
@@ -510,18 +507,26 @@
 
 	<p> <code>defnlog</code> is like <code>defn</code> but it prints a log each time it is called</p>
 	<p> Now we have to modify the body of the original function <p>
-	<p> No worries! In clojured code is data...</p>
+	<p> No worries! In clojure, code is data 😊</p>
 	<div class="slide">
-	  <p>First piece: a function <code>prepend-log</code> that receives a body and a function name and prepend to it a call to <code>(println func-name "has been called")</code>:</p>
+	  <h3>First piece: prepend-log</h3>
+	  <p><code>prepend-log</code> receives a body and a function name and prepends to the body a call to <code>(println func-name "has been called")</code>:</p>
 	  <pre><code class="clojure">
 	      (defn prepend-log [name body]
 	      (cons `(println ~name "has been called.") body))
 	  </code></pre>
+	  <div class="slide">
+	    <p>Test</p>
+	    <pre><code class="clojure">
+		(prepend-log 'foo '((print a) (+ a b)))
+	    </code></pre>	    
+	  </div>			      
 	</div>
-	<div class="slide">
-	  <p>Second piece: a function <code>update-conf</code> that updates the body of a conformed <code>::defn-args</code>.</p>
-	  <p>This is a bit tricky because the shape of the confomed object is different if the function has single-arity or multi-arity.</p>
-	</div>
+      </section>
+      <section class="slide">
+	<h2>Second piece: update-conf</h2>
+	<p><code>update-conf</code> updates the body of a conformed <code>::defn-args</code>.</p>
+	<p>This is a bit tricky because the shape of the confomed object is different if the function has single-arity or multi-arity.</p>
 	<div class="slide">
 	  <pre><code class="clojure">
 	      (s/conform ::defn-args '(foo [a b] (* a b)))
@@ -542,6 +547,18 @@
               (map (fn [body] (update body :body body-update-fn)) bodies)))))
 	  </code></pre>
 	</div>
+	<div class="slide">
+	  <p>Test </p>
+	  <pre><code class="clojure">
+	      (update-conf (s/conform ::defn-args '(bar 
+              ([] (* 10 12))
+              ([a b] (* a b)))) (partial prepend-log 'bar))
+	  </code></pre>
+	</div>
+      </section>
+      <section class="slide">
+	<h2>The Grand Finale</h2>
+	<img class="image-full" src="./finale.jpg"></img>
       </section>
       <section class="slide">
 	<h2>The Grand Finale</h2>
@@ -582,11 +599,34 @@
 	  </div>
       </section>
       <section class="slide">
+	<h2>References</h2>
+	<div class="left">
+	  <ul>
+	    <li><a href="http://blog.klipse.tech/clojure/2016/05/30/spec.html">Clojure 1.9 introduces clojure.spec: tutorial with live coding examples </a></li>
+	    <li><a href="https://clojure.org/guides/spec">spec Guide</a></li>
+	    <li><a href="http://blog.cognitect.com/blog/2017/1/3/spec-destructuring">Creating a spec for destructuring</a></li>
+	    <li><a href="https://clojure.github.io/clojure/branch-master/clojure.spec-api.html">Clojure.spec official API documentation</a></li>
+	    <li><a href="http://blog.klipse.tech/clojure/2016/10/10/defn-args.html">Custom defn macro with clojure.spec - part 1: conform/unform</a></li>
+	    <li><a href="http://blog.klipse.tech/clojure/2016/10/10/defn-args-2.html">Custom defn macro - part 2: playing with parse trees</a></li>
+	    <li><a href="https://github.com/Engelberg/better-cond">better-cond by Mark Engleberg</a></li>
+	    <li><a href="https://github.com/viebel/klipse">KLIPSE - the interactive embeddable web repl</a></li>	  
+	  </ul>
+	</div>
+	<div class="left" style="width:33%;margin-left:5%;"><img src="./lib.jpg"></img></div>
+      </section>
+      <section class="slide">
 	<h2>Questions?</h2>
 	<div>
 	  <img src="./questions.jpg" style="width:60%"></img>
 	</div>
-      </section>          
+      </section>
+      <section class="slide">
+	<h2>Want more?</h2>
+	<div>
+	  <h1> Come back next year!</h1>
+	</div>
+      </section>
+
       <p class="deck-status" aria-role="status">
 	<span> powered by <a href="https://github.com/viebel/klipse">KLIPSE</a> </span>
 	<span class="deck-status-current"></span>
