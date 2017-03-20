@@ -1,0 +1,535 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+    <meta name="viewport" content="width=1024, user-scalable=no">
+
+    <link rel="shortcut icon" href="./favicon.png">
+
+    <title>CR17 - Clojure.spec workshop: The basics</title>
+
+
+    <!-- Required stylesheet -->
+    <link rel="stylesheet" media="screen" href="http://slides.klipse.tech/includes/deckjs/core/deck.core.css">
+
+    <!-- Extension CSS files go here. Remove or add as needed. -->
+    <link rel="stylesheet" media="screen" href="http://slides.klipse.tech/includes/deckjs/extensions/goto/deck.goto.css">
+    <link rel="stylesheet" media="screen" href="http://slides.klipse.tech/includes/deckjs/extensions/menu/deck.menu.css">
+    <link rel="stylesheet" media="screen" href="http://slides.klipse.tech/includes/deckjs/extensions/navigation/deck.navigation.css">
+    <link rel="stylesheet" media="screen" href="http://slides.klipse.tech/includes/deckjs/extensions/status/deck.status.css">
+    <link rel="stylesheet" media="screen" href="http://slides.klipse.tech/includes/deckjs/extensions/scale/deck.scale.css">
+
+    <link rel="stylesheet" media="screen" href="http://slides.klipse.tech/includes/deckjs/themes/style/klipse.css">
+
+    <link rel="stylesheet" media="screen" href="http://slides.klipse.tech/includes/deckjs/themes/transition/horizontal-slide.css">
+
+    <link rel="stylesheet" type="text/css" href="https://storage.googleapis.com/app.klipse.tech/css/codemirror.css">
+    <link rel="stylesheet" media="screen" href="./main.css">
+    <link rel="stylesheet" media="screen" href="./game.css">
+    <!-- Required Modernizr file -->
+    <script src="http://slides.klipse.tech/includes/deckjs/modernizr.custom.js"></script>
+  </head>
+  <body>
+    <div class="deck-container">
+      <section class="slide">
+        <div class="text-centered">
+          <h2>
+            <div>
+	      Clojure.Spec Workshop <br> Part 1 - The Foundations
+            </div>
+          </h2>
+          <div class="centered" style="font-size:1.9em;">
+            <div class="left" style="width:50%;">
+	      <img src='https://chart.googleapis.com/chart?cht=qr&chl=http%3A%2F%2Fslides.klipse.tech%2Fclojure-spec-cr17%2Ffoundations.html&chs=300x300' alt='qr code'></img>
+	    </div>
+            <div class="left" style="width:50%;">
+              <div>
+                <div>
+                  <img class="fullscreen" src="./klipse.png" alt="" width="150">
+                </div> 
+                <div> ClojureRemote - February 2017</div>
+                <div>
+                  <div>Yehonathan Sharvit</div>
+                  <div> <a href="https://twitter.com/viebel">@viebel</a></div>
+                </div>
+                <div class="clear">
+                  <div style="margin-top:14px;">
+                    <a class="github-button" href="https://github.com/viebel/klipse" data-count-href="/viebel/klipse/stargazers" data-count-api="/repos/viebel/klipse#stargazers_count" data-count-aria-label="# stargazers on GitHub" aria-label="Star viebel/klipse on GitHub">KLIPSE</a>
+                  </div>
+                  <script async defer id="github-bjs" src="https://buttons.github.io/buttons.js"></script>
+                </div>
+                <div>
+                  <a href="http://slides.klipse.tech">http://slides.klipse.tech</a>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="clear centered">
+	    <div style="padding-top: 20px;">
+	      <pre><code class="clojure" data-loop-msec="1000" data-beautify-strings="true">
+		  (str (js/Date.))
+              </code></pre>
+	    </div>
+          </div>
+        </div>
+      </section>
+      <section class="slide">
+        <h2>Who am I?</h2>
+        <div class="left">
+          <ul>
+            <li> A mathematician </li>
+            <li> A pragmatic theorist </li>
+            <li> A coder </li>
+            <li> A freak of interactivity </li>
+            <li> Founded Audyx - an Audiology Startup with 30K LOCs in Clojurescript </li>
+            <li> Author of <a href="https://github.com/viebel/klipse">KLIPSE</a></li>
+	    <li> A Clojure consultant </li>
+          </ul>
+        </div>
+        <div class="left" style="width:25%;margin-left:5%;"><img src="https://pbs.twimg.com/profile_images/713278171353911296/1a2useM2.jpg"></img></div>
+      </section>
+      <section class="slide">
+        <h2>Agenda</h2>
+        <div class="left">
+          <ul>
+            <li> Clojure.Spec: What's the big deal? </li>
+            <li> Basic concepts: conform/validate/explain </li>
+            <li> Deeper concepts: sample generation</li>
+            <li> Amazing stuff: unit test generation </li>
+          </ul>
+        </div>
+        <div class="left" style="width:33%;margin-left:5%;"><img src="./specs.png"></img></div>
+      </section>
+      
+      <section class="slide">
+	<h2>KLIPSE - Code interactivity</h2>
+	<p style="font-size:4em"> Open this presentation in your computer for a collaborative live coding session: 
+	  <a href="http://slides.klipse.tech/clojure-spec-cr17/foundations.html#slide-3">http://slides.klipse.tech/clojure-spec-cr17/part1.html#slide-3</a>
+	</p>
+	<p> (It works also on mobile) </p>
+	<img src='https://chart.googleapis.com/chart?cht=qr&chl=http%3A%2F%2Fslides.klipse.tech%2Fclojure-spec-cr17%2Ffoundations.html%23slide-3&chs=300x300' alt='qr code'></img>
+	<br>
+	<br>
+	<p style="font-size:2em;"><em> The interactive code snippets are powered by <a href="https://github.com/viebel/klipse">KLIPSE</a>.</em>  🤗 </p>
+	<pre><code class="clojure">
+	    (map inc [1 2 3])
+	</code></pre> 
+      </section>
+      <section class="slide">
+	<h2>Clojure.spec - The foundations</h2>
+	<div class="slide">
+          <p>Most significant part of Clojure <code>1.9</code>.</p>
+	  <p> <code>clojure.spec</code> features: </p>
+	  <ul>
+	    <li>specification of the structure (the shape) of data </li>
+	    <li>validation of data </li>
+	    <li>destructuring data </li>
+	    <li>data generation based on the specs </li>
+	    <li>tests generation based on the specs </li>
+	  </ul>
+	  <p> All you have to do is to require <code>clojure.spec</code> like this:</p>
+	  <pre><code class="clojure">
+	      (ns foo.core
+	      (:require [clojure.spec :as s]))
+	  </code></pre> 
+	</div> 
+      </section>
+      <section class="slide">
+	<h2>Data structure specification</h2>
+	<pre><code class="clojure">
+	    (s/def ::id integer?)
+	    (s/def ::name string?)
+	</code></pre>
+
+	<div class="slide">
+	  <p>Any predicate can be passed to the spec definition:</p>
+	  <p> (A predicate is a function that returns a boolean)</p>
+	  
+	  <pre><code class="clojure">
+	      (s/def ::my-big-integer (fn [x] (and (integer? x)
+	      (> x 1000000))))
+	  </code></pre>
+	  <pre><code class="clojure">
+	      (s/def ::my-short-string (fn [x] (and (string? x)
+	      (< (count x) 5))))
+		 </code></pre>
+	</div>
+      </section>
+      <section class="slide">
+	<h2>Interlude - Namespaced Keywords</h2>
+	<p>
+	  Pay attention to the <code>::</code>! <br>
+	  Spec definitions must used namespace keywords
+	</p>
+	<pre><code class="clojure">
+	    (s/def :a-big-integer (fn [x] (and (integer? x)
+	    (> x 1000000))))
+	  </code></pre>
+	  
+	  <div class="slide">
+	    <p> Namespaced keywords are like keywords but they are namespaced</p>
+	    <p> The double colon is a syntactic sugar for the current namespace:</p>
+	    <pre><code class="clojure">
+		::hello
+	    </code></pre>
+	    
+	    <p> Mandatory in <code>clojure.spec</code> because specs are registered in a global registry!</p>
+	  </div>
+      </section>
+      <section class="slide">
+	<h2>Data structure validation</h2>
+	<p> Validate data with spec</p>
+	<pre><code class="clojure">
+	    (s/valid? ::id 19)
+	</code></pre>
+	<pre><code class="clojure">
+	    (s/valid? ::id "my-id")
+	</code></pre>
+	
+	<div class="slide">
+	  <p> And with one of our custom predicates:</p>
+	  <pre><code class="clojure">
+	      (s/valid? ::my-big-integer "abc")
+	  </code></pre>
+	  <pre><code class="clojure">
+	      (s/valid? ::my-big-integer 17)
+	  </code></pre>
+	  <p>Wouldn't it be great if we could get an explanation about what parts of the spec were not satisfied?</p>
+	</div> 
+      </section>
+      <section class="slide">
+	<h2>Data structure validation with explanations</h2>
+	<p> Explain validation </p>
+	<pre><code class="clojure">
+	    (s/explain-str ::my-big-integer "abc")
+	</code></pre>
+        <p> Not so useful 😕</p>
+      </section>
+      <section class="slide">
+	<h2>Custom predicates - s/and</h2>
+	<p> Big Integer - the real way </p>
+	<pre><code class="clojure">
+            (s/def ::big-integer (s/and integer?
+            #(> % 1000000)))
+	</code></pre>
+	<div class="slide">
+	  <p>When it's not an integer:</p>
+	  <pre><code class="clojure">
+	      (s/explain-str ::big-integer "abc")
+	  </code></pre>
+	  <p>When it's a small integer:</p>
+	  <pre><code class="clojure">
+	      (s/explain-str ::big-integer 42)
+	  </code></pre>
+	  <p> Much better 😄  </p>
+	</div>
+	<div class="slide">
+	  <p> Short String - the real way </p>
+	  <pre><code class="clojure">
+              (s/def ::short-string (s/and string?
+              #(< (count %) 5)))
+		  </code></pre>
+	  <p>When it's not a string:</p>
+	  <pre><code class="clojure">
+	      (s/explain-str ::short-string 42)
+	  </code></pre>
+	  <p>When it's a long string:</p>
+	  <pre><code class="clojure">
+	      (s/explain-str ::short-string "Hello World!")
+	  </code></pre>
+	</div>
+
+      </section>
+      <section class="slide">
+	<h2>Custom predicates - s/or</h2>
+	<p>  We must annotate each branch with a tag</p>
+	<pre><code class="clojure">
+	    (s/def ::big-integer-or-short-string (s/or :int ::big-integer
+	    :str ::short-string))
+	</code></pre>
+	<p> That makes the explanations about the failure really clear: </p>
+	<pre><code class="clojure">
+            (s/explain-str ::big-integer-or-short-string :hello-world!)
+	</code></pre>
+      </section>
+      <section class="slide">
+	<h2> Data parsing with s/conform</h2>
+	<div>
+	  <p>It's really powerful to parse our data with <code>s/conform</code></p>
+	  <p>When it's a big integer:</p>
+	  <pre><code class="clojure">
+              (s/conform ::big-integer-or-short-string 4200000)
+	  </code></pre>
+	  <p>When it's a small string:</p>
+	  <pre><code class="clojure">
+              (s/conform ::big-integer-or-short-string "abc")
+	  </code></pre>
+	  <p>When it's neither this nor that:</p>
+	  <pre><code class="clojure">
+              (s/conform ::big-integer-or-short-string :hello-world!)
+	  </code></pre>
+
+	  <p> It works as expected with nested <code>s/or</code></p>
+	  <pre><code class="clojure">
+	      (s/def ::my-special-spec (s/or :keyword keyword?
+	      :bioss ::big-integer-or-short-string))
+              (s/conform ::my-special-spec "aa")
+	  </code></pre>
+	</div>
+      </section>
+      <section class="slide">	
+	<h2>Entity maps</h2>
+	<div class="slide">
+	  <p> You describe the structure of your maps by combining the specs of its keys <br> and specifying what keys are required and what keys are optional </p>
+	  <pre><code class="clojure">
+	      (s/def ::my-map (s/keys :req [::big-integer]
+              :opt [::short-string]))
+	  </code></pre>
+	</div>
+	<div class="slide">
+	  <p>This one is valid: </p>
+	  <pre><code class="clojure">
+	      (s/explain-str ::my-map {::big-integer 90000000
+              ::short-string "Hell"})
+	  </code></pre>
+	  <p>This one is invalid for 2 reasons: </p>
+	  <pre><code class="clojure">
+	      (s/explain-str ::my-map {::big-integer 90
+              ::short-string "Hello World!"})
+	  </code></pre>
+	</div>
+	<div class="slide">
+	  <p> What about this one? </p>
+  	  <pre><code class="clojure">
+	      (s/valid? (s/keys) {::big-integer-or-short-string 90})
+	  </code></pre>
+	</div>
+	<p class="slide meditation"><strong>All</strong> the namespace-qualified keys are validated by any registered specs!</p>
+	<p class="slide meditation">Why do we need <code>opt</code>?</p>
+      </section>
+      <section class="slide">	
+	<h2>Entity maps - unnamespaced keys</h2>
+	<div class="slide">
+	  <p> You can also have unspaced keywords </p>
+	  <pre><code class="clojure">
+	      (s/def ::my-map-un (s/keys :req-un [::big-integer]
+              :opt-un [::short-string]))
+	  </code></pre>
+	  <p>This one is valid: </p>
+	  <pre><code class="clojure">
+	      (s/explain-str ::my-map-un {:big-integer 90000000
+              :short-string "Hell"})
+	  </code></pre>
+	  <p>This one is invalid for 2 reasons: </p>
+	  <pre><code class="clojure">
+	      (s/explain-str ::my-map-un {:big-integer 90
+              :short-string "Hello World!"})
+	  </code></pre>
+	</div>
+	<div class="slide">
+	  <p> What about this one? </p>
+  	  <pre><code class="clojure">
+	      (s/valid? (s/keys) {:big-integer-or-short-string 90})
+	  </code></pre>
+	</div>
+	<p class="slide meditation"><strong>Only</strong> the namespace-qualified keys are validated by any registered specs!</p>
+      </section>
+      <section class="slide">	
+	<h2>Sequences - Regular Expressions on steroids!</h2>
+	<div class="slide">
+	  <p> You can desribe the shape of a data sequence using Regular Expressions operators:</p>
+	  <ul>
+	    <li>
+	      <a href="https://clojure.github.io/clojure/branch-master/clojure.spec-api.html#clojure.spec/cat"><code>cat</code></a> - concatenation of predicates/patterns
+	    </li>
+	    <li>
+	      <a href="https://clojure.github.io/clojure/branch-master/clojure.spec-api.html#clojure.spec/alt"><code>alt</code></a> - choice among alternative predicates/patterns
+	    </li>
+	    <li>
+	      <a href="https://clojure.github.io/clojure/branch-master/clojure.spec-api.html#clojure.spec/*"><code>*</code></a> - 0 or more of a predicate/pattern
+	    </li>
+	    <li>
+	      <a href="https://clojure.github.io/clojure/branch-master/clojure.spec-api.html#clojure.spec/%2B"><code>+</code></a> - 1 or more of a predicate/pattern
+	    </li>
+	    <li>
+	      <a href="https://clojure.github.io/clojure/branch-master/clojure.spec-api.html#clojure.spec/%3F"><code>?</code></a> - 0 or 1 of a predicate/pattern
+	    </li>
+	  </ul>
+	</div>
+	<div class="slide">
+	  <p> An example: </p>
+	  <pre><code class="clojure">
+	      (s/def ::employee (s/cat :name (s/alt :full string?
+              :first-and-last (s/tuple string? string?))
+              :salary ::big-integer))
+	  </code></pre>
+	</div>
+	<div class="slide">
+	  <pre><code class="clojure">
+	      (s/explain-str ::employee '("John Woo" 999))
+	  </code></pre>
+	  <pre><code class="clojure">
+	      (s/conform ::employee '(["John" "Woo"] 9999999))
+	  </code></pre>
+	</div>
+      </section>
+      <section class="slide">	
+	<h2>Sequences - Regular Expressions on steroids! (cont.)</h2>
+	<div class="slide">
+	  <p> You can describe the shape of a data sequence using Regular Expressions operators:</p>
+	  <ul>
+	    <li>
+	      <a href="https://clojure.github.io/clojure/branch-master/clojure.spec-api.html#clojure.spec/cat"><code>cat</code></a> - concatenation of predicates/patterns
+	    </li>
+	    <li>
+	      <a href="https://clojure.github.io/clojure/branch-master/clojure.spec-api.html#clojure.spec/alt"><code>alt</code></a> - choice among alternative predicates/patterns
+	    </li>
+	    <li>
+	      <a href="https://clojure.github.io/clojure/branch-master/clojure.spec-api.html#clojure.spec/*"><code>*</code></a> - 0 or more of a predicate/pattern
+	    </li>
+	    <li>
+	      <a href="https://clojure.github.io/clojure/branch-master/clojure.spec-api.html#clojure.spec/%2B"><code>+</code></a> - 1 or more of a predicate/pattern
+	    </li>
+	    <li>
+	      <a href="https://clojure.github.io/clojure/branch-master/clojure.spec-api.html#clojure.spec/%3F"><code>?</code></a> - 0 or 1 of a predicate/pattern
+	    </li>
+	  </ul>
+	</div>
+	<div class="slide">
+	  <p> A simplified version of the args of <code>defn</code>: </p>
+	  <pre><code class="clojure">
+	      (s/def ::defn-args (s/cat :name symbol?
+              :docstring (s/? string?)
+              :args (s/coll-of symbol? :kind vector?)))
+	  </code></pre>
+	  <div class="slide">
+	    <p> With a doc string : <code>(defn foo "foo receives two arguments" [a b])</code></p>
+	    <pre><code class="clojure">
+		(s/conform ::defn-args ['foo "foo receives two arguments" '[a b]])
+	    </code></pre>
+	    <p> Without a doc string : <code>(defn foo [a b c d])</code></p>
+	    <pre><code class="clojure">
+		(s/conform ::defn-args ['foo '[a b c d]])
+	    </code></pre>
+	  </div>
+	</div>
+	<div class="slide">
+	  <p class="challenge"> A simplified version of the args of <code>fn</code>: </p>
+	  <p> (It's not exactly a collection of symbols) </p>
+	  <pre><code class="clojure">
+	      (s/def ::good-symbol #(and (symbol? %) (not= % '&)))
+	      (s/def ::fn-args (s/and vector?
+              (s/cat :args (s/* ::good-symbol)
+              :rest (s/? (s/cat :& '#{&}
+              :other ::good-symbol)))))
+	  </code></pre>
+	</div>
+	<div class="slide">
+	  <pre><code class="clojure">
+	      (s/conform ::fn-args '[a b & c])
+	  </code></pre>
+	</div>
+	<div class="slide">
+	  <p class="meditation">What's the difference between <code>s/alt</code> and <code>s/or</code>?</p>
+	</div>
+      </section>
+      <section class="slide">	
+	<h2>One last thing...</h2>
+	<p> You can describe a spec </p>
+	<pre><code class="clojure">
+	    (s/describe ::fn-args)
+	</code></pre>
+      </section>
+      <section class="slide">
+	<h2>Interlude</h2>
+	<p> What have we learned? </p>
+	<ul>
+	  <li>The language of specs definition </li>
+	  <li> How to validate, conform and explain a spec</li>
+	  <li> The expression power of specs </li>
+	</ul>
+      </section>
+      <section class="slide">
+	<h2>References</h2>
+	<div class="left">
+	  <ul>
+	    <li><a href="http://blog.klipse.tech/clojure/2016/05/30/spec.html">Clojure 1.9 introduces clojure.spec: tutorial with live coding examples </a></li>
+	    <li><a href="https://clojure.org/guides/spec">spec Guide</a></li>
+	    <li><a href="http://blog.cognitect.com/blog/2017/1/3/spec-destructuring">Creating a spec for destructuring</a></li>
+	    <li><a href="https://clojure.github.io/clojure/branch-master/clojure.spec-api.html">Clojure.spec official API documentation</a></li>
+	    <li><a href="http://blog.klipse.tech/clojure/2016/10/10/defn-args.html">Custom defn macro with clojure.spec - part 1: conform/unform</a></li>
+	    <li><a href="http://blog.klipse.tech/clojure/2016/10/10/defn-args-2.html">Custom defn macro - part 2: playing with parse trees</a></li>
+	    <li><a href="https://github.com/Engelberg/better-cond">better-cond by Mark Engleberg</a></li>
+	    <li><a href="https://github.com/viebel/klipse">KLIPSE - the interactive embeddable web repl</a></li>	  
+	  </ul>
+	</div>
+	<div class="left" style="width:33%;margin-left:5%;"><img src="./lib.jpg"></img></div>
+      </section>
+      <section class="slide">
+	<h2>Questions so far?</h2>
+	<div>
+	  <img src="./questions.jpg" style="width:60%"></img>
+	</div>
+      </section>
+      <section class="slide">
+	<h2>Want more?</h2>
+	<div>
+	  <h1> <a href="./datagen.html">Data Generation with Clojure.spec</a></h1>
+	</div>
+      </section>
+      <p class="deck-status" aria-role="status">
+	<span> powered by <a href="https://github.com/viebel/klipse">KLIPSE</a> </span>
+	<span class="deck-status-current"></span>
+	/
+	<span class="deck-status-total"></span>
+      </p>
+      <div aria-role="navigation">
+	<a href="#" class="deck-prev-link" title="Previous">&#8592;</a>
+	<a href="#" class="deck-next-link" title="Next">&#8594;</a>
+      </div>
+
+      </div>
+
+      <!-- Required JS files. -->
+      <script src="http://slides.klipse.tech/includes/deckjs/jquery.min.js"></script>
+      <script src="http://slides.klipse.tech/includes/deckjs/core/deck.core.js"></script>
+
+      <!-- Extension JS files. Add or remove as needed. -->
+      <script src="http://slides.klipse.tech/includes/deckjs/extensions/menu/deck.menu.js"></script>
+      <script src="http://slides.klipse.tech/includes/deckjs/extensions/status/deck.status.js"></script>
+      <script src="http://slides.klipse.tech/includes/deckjs/extensions/navigation/deck.navigation.js"></script>
+      <script src="http://slides.klipse.tech/includes/deckjs/extensions/fullscreen/deck.fullscreen.js"></script>
+
+      <script>
+	$(function() {
+	$.deck('.slide', {
+	countNested: false,
+	fullscreenSelector: 'h2, fullscreen'
+	});
+	});
+      </script>
+
+      <script>
+	window.klipse_settings = {
+	beautify_strings: true,
+	selector: '.clojure',
+	selector_js: '.clj-to-js',
+	selector_eval_js: '.eval-js',
+	selector_jsx: '.jsx',
+	selector_transpile_jsx: '.transpile-jsx',
+	selector_eval_python_client: '.python',
+	selector_eval_ruby: '.ruby',
+	codemirror_options_in: {
+	lineWrapping: true,
+	autoCloseBrackets: true
+	},
+	codemirror_options_out: {
+	lineWrapping: true
+	},
+	};
+      </script>
+
+      <script src="https://storage.googleapis.com/app.klipse.tech/plugin/js/klipse_plugin.js?aa1"></script>
+  </body>
+</html>
