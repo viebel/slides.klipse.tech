@@ -32,12 +32,60 @@
     <style>
     </style>
     <div class="deck-container">
-
+<section class="slide">
+        <div class="text-centered">
+          <h2>
+	<h2>Introduction to Clojure </h2>	    
+          <div class="centered" style="font-size:1.9em;">
+            <div class="left" style="width:50%;">
+	      <img src='https://chart.googleapis.com/chart?cht=qr&chl=http%3A%2F%2Fslides.klipse.tech%2Famobee%2Fclojure-tutorial%2F&chs=300x300' alt='qr code'></img>
+	    </div>
+            <div class="left" style="width:50%;">
+              <div>
+                <div>
+                  <img class="fullscreen" src="./klipse.png" alt="" width="150">
+                </div> 
+                <div> <b>Amobee </b></div>
+                <div>
+                  <div>Yehonathan Sharvit</div>
+                  <div> <a href="https://twitter.com/viebel">@viebel</a></div>
+                </div>
+                <div class="clear">
+                  <div style="margin-top:14px;">
+                    <a class="github-button" href="https://github.com/viebel/klipse" data-count-href="/viebel/klipse/stargazers" data-count-api="/repos/viebel/klipse#stargazers_count" data-count-aria-label="# stargazers on GitHub" aria-label="Star viebel/klipse on GitHub">KLIPSE</a>
+                  </div>
+                  <script async defer id="github-bjs" src="https://buttons.github.io/buttons.js"></script>
+                </div>
+                <div>
+                  <a href="http://slides.klipse.tech/amobee/clojure-tutorial/">http://slides.klipse.tech/amobee/clojure-tutorial/</a>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="clear centered">
+	    <div style="padding-top: 20px;">
+	      <pre><code class="clojure" data-loop-msec="1000" data-beautify-strings="true">
+		  (str (js/Date.))
+              </code></pre>
+	    </div>
+          </div>
+        </div>
+</section>
       <section class="slide">
-	<h2>Introduction to Clojure </h2>
-	<img class="fullscreen" src="./qr_code_clojure_tutorial.jpg" alt="">
+        <h2>Who am I?</h2>
+        <div class="left">
+          <ul>
+            <li> A mathematician </li>
+            <li> A pragmatic theorist </li>
+            <li> A coder </li>
+            <li> A freak of interactivity </li>
+            <li> Founded Audyx - an Audiology Startup with 30K LOCs in Clojurescript </li>
+            <li> Author of <a href="https://github.com/viebel/klipse">KLIPSE</a></li>
+	    <li> A Clojure consultant </li>
+          </ul>
+        </div>
+        <div class="left" style="width:25%;margin-left:5%;"><img src="https://pbs.twimg.com/profile_images/713278171353911296/1a2useM2.jpg"></img></div>
       </section>
-
       <section class="slide">
 	<h2>Tools</h2>
 	<table>
@@ -125,22 +173,22 @@
             Write a function that receives a name and returns a string with the concatanation of "Hello" and the name. You'll need to use the <a href="https://clojuredocs.org/clojure.core/str">str</a> function.</p>
 
           <pre><code class="clojure"> (defn hello [name]) </code></pre>
-	  <pre><code class="clojure" data-loop-msec="1000"> (assert (= (hello "Amobee!") "Hello Amobee!")) </code></pre>	  
+	  <pre><code class="clojure"> (assert (= (hello "Amobee!") "Hello Amobee!")) </code></pre>	  
 	</div>
 	<div class="slide">
           <p>
 	    Write a function that receives a number and returns "zero" if the number is zero and "non-zero" otherwise. Take a look at <a href="https://clojuredocs.org/clojure.core/if">if</a>.</p>
 
           <pre><code class="clojure"> (defn zero-check [n]) </code></pre>
-	  <pre><code class="clojure" data-loop-msec="1000">
+	  <pre><code class="clojure">
 	      (assert (= (zero-check 0) "zero"))
 	      (assert (= (zero-check 1) "non-zero"))
 	  </code></pre>	  
 	</div>
 	<div class="slide">
 	  <p class="challenge">Write a function called <code>applicator</code> that receives two arguments: a function and a "thing" and returns the application of the function on the argument.</p><pre><code class="clojure"> (defn applicator [func number])
-	       </code></pre>
-	  <pre><code class="clojure" data-loop-msec="1000"> (assert (= (applicator inc 19) 20)) </code></pre>	  
+	  </code></pre>
+	  <pre><code class="clojure"> (assert (= (applicator inc 19) 20)) </code></pre>	  
 	</div>
 	
       </section>
@@ -206,13 +254,13 @@
             Write a function that receives a list and returns its fifth element. You'll need to use the <a href="https://clojuredocs.org/clojure.core/rest">rest</a> function a couple of times.</p>
 
           <pre><code class="clojure"> (defn fifth [lst]) </code></pre>
-	  <pre><code class="clojure" data-loop-msec="1000"> (assert (= (fifth '(1 2 3 4 5 6 7 8)) 5)) </code></pre>
+	  <pre><code class="clojure"> (assert (= (fifth '(1 2 3 4 5 6 7 8)) 5)) </code></pre>
 	</div>
 	<div class="slide">
 	  <p class="challenge">
 	    Write a function that receives a number <code>n</code> and a list and returns its <code>n</code>th element. You'll need to use recursion. </p>
 	  <pre><code class="clojure"> (defn nth-element [lst n]) </code></pre>
-	  <pre><code class="clojure" data-loop-msec="1000"> (assert (= (nth-element '(1 2 3 4 5 6 7 8 9 10 11) 10) 10)) </code></pre>	  
+	  <pre><code class="clojure"> (assert (= (nth-element '(1 2 3 4 5 6 7 8 9 10 11) 10) 10)) </code></pre>	  
 	</div>
 	<div class="slide">
 	  <p class="challenge">
@@ -221,13 +269,13 @@
 	    <br>
 	    You might use either your <code>nth-element</code> or the clojure <a href="https://clojuredocs.org/clojure.core/nth">nth</a>.</p>
 	  <pre><code class="clojure"> (defn select-1-5-7 [lst]) </code></pre>
-	  <pre><code class="clojure" data-loop-msec="1000"> (assert (= (select-1-5-7 (range 10)) '(0 4 6)))</code></pre>	  
+	  <pre><code class="clojure"> (assert (= (select-1-5-7 (range 10)) '(0 4 6)))</code></pre>	  
 	</div>
 
       </section>
       <section class="slide">
 	<h2>Vectors</h2>
-	<div><code>Vectors</code> are like <code>Lists</code> but with fast random access. </div>
+	<p><code>Vectors</code> are like <code>Lists</code> but with fast random access. </p>
 	<img src="http://slides.klipse.tech/img/clojure-vectors.png" alt="">
       </section>
 
@@ -263,17 +311,23 @@
       </section>
       <section class="slide">
 	<h2> Lists vs. Vectors: Performances</h2>
-	<p class="slide">Let's create a long list</p>
-	<pre><code class="clojure"> (def long-list (reverse (reverse (range 1e6)))) </code></pre>	  
-	<p class="slide">And a long vector</p>
-	<pre><code class="clojure"> (def long-vec (vec long-list)) </code></pre>
-	<p class="slide"> Let's compare the perfs</p>
-	<pre><code class="clojure"> (time (nth long-list (dec 1e6))) </code></pre>
-	<pre><code class="clojure"> (time (nth long-vec (dec 1e6))) </code></pre>	
-	<p class="meditation">
-	  Why is <code> last </code> so slow on a vector?
+	<div class="slide">
+	  <p>Let's create a long list</p>
+	  <pre><code class="clojure"> (def long-list (reverse (reverse (range 1e6)))) </code></pre>
+	</div>
+	<div class="slide">
+	  <p>And a long vector</p>
+	  <pre><code class="clojure"> (def long-vec (vec long-list)) </code></pre>
+	</div>
+	<div class="slide">
+	  <p> Let's compare the perfs</p>
+	  <pre><code class="clojure"> (time (nth long-list (dec 1e6))) </code></pre>
+	  <pre><code class="clojure"> (time (nth long-vec (dec 1e6))) </code></pre>
+	</div>
+	<div class="slide">
+	  <p class="meditation"> Why is <code>last</code> so slow on a vector?</p>
 	  <pre><code class="clojure"> (time (last long-vec)) </code></pre>
-	</p>
+	</div>
       </section>
       <section class="slide">
 	<h2> Vectors - Practice</h2>
@@ -555,10 +609,15 @@
       </section>
       <!-- deck.status snippet -->
       <p class="deck-status" aria-role="status">
+	<span> powered by <a href="https://github.com/viebel/klipse">KLIPSE</a> </span>
 	<span class="deck-status-current"></span>
 	/
 	<span class="deck-status-total"></span>
       </p>
+      <div aria-role="navigation">
+	<a href="#" class="deck-prev-link" title="Previous">&#8592;</a>
+	<a href="#" class="deck-next-link" title="Next">&#8594;</a>
+      </div>
 
       <!-- End extension snippets. -->
       </div>
@@ -570,6 +629,7 @@
       <!-- Extension JS files. Add or remove as needed. -->
       <script src="http://slides.klipse.tech/includes/deckjs/extensions/menu/deck.menu.js"></script>
       <script src="http://slides.klipse.tech/includes/deckjs/extensions/status/deck.status.js"></script>
+      <script src="http://slides.klipse.tech/includes/deckjs/extensions/navigation/deck.navigation.js"></script>
       <script src="http://slides.klipse.tech/includes/deckjs/extensions/fullscreen/deck.fullscreen.js"></script>
 
       <script>
