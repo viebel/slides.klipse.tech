@@ -1,0 +1,602 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+    <meta name="viewport" content="width=1024, user-scalable=no">
+
+    <link rel="shortcut icon" href="./favicon.png">
+    <title>Clojure Tutorial</title>
+
+
+    <!-- Required stylesheet -->
+    <link rel="stylesheet" media="screen" href="http://slides.klipse.tech/includes/deckjs/core/deck.core.css">
+
+    <!-- Extension CSS files go here. Remove or add as needed. -->
+    <link rel="stylesheet" media="screen" href="http://slides.klipse.tech/includes/deckjs/extensions/goto/deck.goto.css">
+    <link rel="stylesheet" media="screen" href="http://slides.klipse.tech/includes/deckjs/extensions/menu/deck.menu.css">
+    <link rel="stylesheet" media="screen" href="http://slides.klipse.tech/includes/deckjs/extensions/navigation/deck.navigation.css">
+    <link rel="stylesheet" media="screen" href="http://slides.klipse.tech/includes/deckjs/extensions/status/deck.status.css">
+    <link rel="stylesheet" media="screen" href="http://slides.klipse.tech/includes/deckjs/extensions/scale/deck.scale.css">
+
+    <link rel="stylesheet" media="screen" href="http://slides.klipse.tech/includes/deckjs/themes/style/klipse.css">
+    <link rel="stylesheet" media="screen" href="./main.css">  
+
+    <link rel="stylesheet" media="screen" href="http://slides.klipse.tech/includes/deckjs/themes/transition/horizontal-slide.css">
+
+    <link rel="stylesheet" type="text/css" href="https://storage.googleapis.com/app.klipse.tech/css/codemirror.css">
+    <!-- Required Modernizr file -->
+    <script src="http://slides.klipse.tech/includes/deckjs/modernizr.custom.js"></script>
+  </head>
+  <body>
+    <style>
+    </style>
+    <div class="deck-container">
+
+      <section class="slide">
+	<h2>Introduction to Clojure </h2>
+	<img class="fullscreen" src="./qr_code_clojure_tutorial.jpg" alt="">
+      </section>
+
+      <section class="slide">
+	<h2>Tools</h2>
+	<table>
+	  <tr>
+	    <td style="width:60%">
+	      <ul>
+		<li><a href="http://app.klipse.tech/?eval_only=1">Klipse: Clojure REPL online</a></li>
+		<li><a href="https://clojuredocs.org/">ClojureDocs: Documentation with Examples</a></li>
+		<li><a href="http://clojurescriptkoans.com/">Clojurescript koans</a></li>
+		<li><a href="http://clojurians.net/">Clojurians: Slack Channel</a></li>
+		<li><a href="https://groups.google.com/forum/#!forum/clojure">Clojure Google group</a></li>
+	      </ul>
+	    </td>
+	    <td style="width:40%"><img src="http://slides.klipse.tech/img/tools.jpg" alt=""></td>
+      </tr></table></section>
+      <section class="slide">
+	<h2>Topics</h2>
+	<table>
+	  <tr>
+	    <td style="width: 80%;">
+	      <ul>
+		<li>Functions </li>
+		<li>Lists </li>
+		<li>Vectors</li>
+		<li>Maps</li>
+		<li>Sets</li>
+	      </ul>
+	    </td>
+	    <td style="width: 80%;">
+	      <img src="http://slides.klipse.tech/img/clojure-logo.png" alt="">
+	    </td>
+      </tr></table></section>
+
+      <section class="slide">
+	<h2> Functions </h2>
+	<p>A function is an entity that receives "things" and return a "thing".</p>
+	<img src="http://slides.klipse.tech/img/first-class.jpg" alt="">
+	<p>The beauty of functional programming is that the "things" that functions receive and return can be <strong>anything</strong> - including functions</p>
+	<p>In functional programming, functions are first-class citizens.</p>
+      </section>
+
+      <section class="slide">
+	<h2> Functions </h2>
+
+	<p>There are 3 ways to define a function and one way to call a function:</p>
+	<div class="slide">
+	  <p>1. With <code>fn</code>:</p>
+	  <pre><code class="clojure">(def foo (fn [a b c] a))
+	      (foo 1 2 3)</code></pre>
+	</div>
+	
+	<div class="slide">
+	  <p>
+	    2. With the anonymous function literal: <code>#</code>:</p>
+	  <pre><code class="clojure">(#(+ %1 %3) 1 10 100)</code></pre>       
+	  <div class="slide">
+	    <p>
+              3. With <code>defn</code>, you can add a documentation string to your function:</p>
+            <pre><code class="clojure"> (defn bar "bar is a function with documentation"
+		[a b c] b)
+		(bar 1 2 3)</code></pre>
+	  </div> 
+      </section>
+      <section class="slide">
+        <h2 class="challenge"> Functions - (defn bar) vs. (def bar fn)</h2>
+	<p>
+          <code>defn</code> is a macro that associates metadata to the function that it defines:
+	</p>
+	<div class="slide">
+	  <pre><code class="clojure"> (defn bar "bar is a function with documentation"
+	      [a b c] b)
+	      (meta #'bar)</code></pre>        
+	</div>
+
+	<div class="slide">
+	  <p>
+	    For instance, we can retrieve the documentation string of a function at run time:</p>
+	  <pre><code class="clojure"> (:doc (meta #'inc)) </code></pre>
+	</div>
+      </section>
+      <section class="slide">
+	<h2> Functions - Practice</h2>
+	<div class="slide">
+	  <p>
+            Write a function that receives a name and returns a string with the concatanation of "Hello" and the name. You'll need to use the <a href="https://clojuredocs.org/clojure.core/str">str</a> function.</p>
+
+          <pre><code class="clojure"> (defn hello [name]) </code></pre>
+	  <pre><code class="clojure" data-loop-msec="1000"> (assert (= (hello "Amobee!") "Hello Amobee!")) </code></pre>	  
+	</div>
+	<div class="slide">
+          <p>
+	    Write a function that receives a number and returns "zero" if the number is zero and "non-zero" otherwise. Take a look at <a href="https://clojuredocs.org/clojure.core/if">if</a>.</p>
+
+          <pre><code class="clojure"> (defn zero-check [n]) </code></pre>
+	  <pre><code class="clojure" data-loop-msec="1000">
+	      (assert (= (zero-check 0) "zero"))
+	      (assert (= (zero-check 1) "non-zero"))
+	  </code></pre>	  
+	</div>
+	<div class="slide">
+	  <p class="challenge">Write a function called <code>applicator</code> that receives two arguments: a function and a "thing" and returns the application of the function on the argument.</p><pre><code class="clojure"> (defn applicator [func number])
+	       </code></pre>
+	  <pre><code class="clojure" data-loop-msec="1000"> (assert (= (applicator inc 19) 20)) </code></pre>	  
+	</div>
+	
+      </section>
+
+      <section class="slide">
+	<h2>Lists</h2>
+	<p>In clojure, <code>Lists</code> are simply linked lists.</p>
+	<img src="http://slides.klipse.tech/img/hello-list.jpg" alt="">
+      </section>
+
+      <section class="slide">
+	<h2>List Creation</h2>
+	<div class="slide">
+	  <p>
+	    You can mix element of different types inside a list:</p>
+	  <pre><code class="clojure"> (list 1 2 "hello") </code></pre>
+	</div>
+
+
+	<div class="slide">
+	  <p>
+	    You can nest lists inside lists inside lists inside lists...</p>
+	  <pre><code class="clojure"> (list 1 2 (list "a" "b") (list 1.2 (list 3.43243 2.5))) </code></pre>
+	</div>
+
+	<div class="slide">
+	  <p>
+	    There is kind of a syntactic sugar for list creation: the single quote <code>'</code>.
+	    <br>
+	    And it works fine with nested lists:</p>
+	  <pre><code class="clojure">'(1 2 ("a" "b" (1 2 4)))</code></pre>
+	</div>
+      </section>
+
+      <section class="slide">
+	<h2>Functions on lists (List API)</h2>
+
+	<div class="slide">
+	  <p>
+	    The most natural manipulation on a list is to take the list without its first element:</p>
+	  <pre><code class="clojure">(rest '(1 2 3 4 5))</code></pre>
+	</div>
+	<div class="slide">
+	  <p>
+	    In order to get the first element of a list, use <code>first</code>:</p>
+	  <pre><code class="clojure">(first '(1 2 3 4 5))</code></pre>
+	</div>
+	<div class="slide">
+	  <p>
+	    Lists are linked lists, therefore elements are prepended to the head of the list:</p>
+	  <pre><code class="clojure">(cons 1 '(2 3))</code></pre>
+	</div>
+	<div class="slide">
+	  <p>
+	    Like with all the clojure collections, you can <code>count</code> the elements of a list:</p>
+	  <pre><code class="clojure">(count '(1 2 3 4 5))</code></pre>
+	</div>
+      </section>
+      <section class="slide">
+	<h2> Lists - Practice</h2>
+	<div class="slide">
+	  <p>
+            Write a function that receives a list and returns its fifth element. You'll need to use the <a href="https://clojuredocs.org/clojure.core/rest">rest</a> function a couple of times.</p>
+
+          <pre><code class="clojure"> (defn fifth [lst]) </code></pre>
+	  <pre><code class="clojure" data-loop-msec="1000"> (assert (= (fifth '(1 2 3 4 5 6 7 8)) 5)) </code></pre>
+	</div>
+	<div class="slide">
+	  <p class="challenge">
+	    Write a function that receives a number <code>n</code> and a list and returns its <code>n</code>th element. You'll need to use recursion. </p>
+	  <pre><code class="clojure"> (defn nth-element [lst n]) </code></pre>
+	  <pre><code class="clojure" data-loop-msec="1000"> (assert (= (nth-element '(1 2 3 4 5 6 7 8 9 10 11) 10) 10)) </code></pre>	  
+	</div>
+	<div class="slide">
+	  <p class="challenge">
+	    Write a function called <code>select-1-5-7</code> that receives a list and returns a list with the elements of the original list at position 1 5 and 7.
+
+	    <br>
+	    You might use either your <code>nth-element</code> or the clojure <a href="https://clojuredocs.org/clojure.core/nth">nth</a>.</p>
+	  <pre><code class="clojure"> (defn select-1-5-7 [lst]) </code></pre>
+	  <pre><code class="clojure" data-loop-msec="1000"> (assert (= (select-1-5-7 (range 10)) '(0 4 6)))</code></pre>	  
+	</div>
+
+      </section>
+      <section class="slide">
+	<h2>Vectors</h2>
+	<div><code>Vectors</code> are like <code>Lists</code> but with fast random access. </div>
+	<img src="http://slides.klipse.tech/img/clojure-vectors.png" alt="">
+      </section>
+
+      <section class="slide">
+	<h2> Vector Creation </h2>
+
+	<div class="slide">
+	  <p>
+            Vectors are created using <code>vector</code></p>
+          <pre><code class="clojure"> (vector 1 2 3 4 5) </code></pre>
+	</div>
+	
+	<div class="slide">
+	  <p>
+            Vectors can also be created using the literal <code>[]</code>.</p>
+          <pre><code class="clojure"> [1 2 3 4 "aa" [1 2] [1 2 3]] </code></pre>
+	</div>
+	<div class="slide">
+	  <p>
+            Like with <code>Lists</code>, you can access the first element with <code>first</code>:</p>
+          <pre><code class="clojure"> (first [1 2 3 4 5]) </code></pre>
+	</div>
+	<div class="slide">
+	  <p>
+            And you can also access any element in the vector and it is efficient:</p>
+          <pre><code class="clojure"> (get [0 1 2 3 4 5 6 7 8 9 10] 7) </code></pre>
+	</div>
+	<div class="slide">
+	  <p>
+            You can convert a <code>list</code> into a <code>vector</code> with <code>vec</code>:</p>
+          <pre><code class="clojure">(vec '(1 2 3 4 5))</code></pre>
+	</div>
+      </section>
+      <section class="slide">
+	<h2> Lists vs. Vectors: Performances</h2>
+	<p class="slide">Let's create a long list</p>
+	<pre><code class="clojure"> (def long-list (reverse (reverse (range 1e6)))) </code></pre>	  
+	<p class="slide">And a long vector</p>
+	<pre><code class="clojure"> (def long-vec (vec long-list)) </code></pre>
+	<p class="slide"> Let's compare the perfs</p>
+	<pre><code class="clojure"> (time (nth long-list (dec 1e6))) </code></pre>
+	<pre><code class="clojure"> (time (nth long-vec (dec 1e6))) </code></pre>	
+	<p class="meditation">
+	  Why is <code> last </code> so slow on a vector?
+	  <pre><code class="clojure"> (time (last long-vec)) </code></pre>
+	</p>
+      </section>
+      <section class="slide">
+	<h2> Vectors - Practice</h2>
+	<div class="slide">
+          Write a function that receives a vector and converts it to a list:
+
+          <pre><code class="clojure"> (defn ->list [vec]) </code></pre>
+	</div>
+	<div class="slide">
+	  Write a function that receives a "thing" and a vector and returns true or false according to the presence of the "thing" in the vector:
+
+	  <pre><code class="clojure"> (defn present? [vec thing]) </code></pre>
+	</div>
+      </section>
+
+      <section class="slide">
+	<h2>Maps</h2>
+	<p>Maps are associative arrays (sometimes called dictionaries).<br> Basically maps are key-value based collections.</p>
+	<img src="http://slides.klipse.tech/img/clojure_map_example.png" alt="" style="width:50%;">
+      </section>
+      <section class="slide">
+	<h2>
+          Maps - creation</h2>
+	<p> There are a couple of ways to create a map:</p>
+	<ol>
+	  <li>
+	    <div class="slide">
+              <p>With <code>hash-map</code>:</p>
+              <pre><code class="clojure">(hash-map :a 2 :b 3 :c 4 :d 5 :e 6)</code></pre>
+            </div>
+	  </li>       
+	  <li>
+	    <div class="slide">
+              <p>With the map brackets literals <code>{}</code>:</p>
+              <pre><code class="clojure">{:a 1 :b "aa" :c 'a}</code></pre>
+              <p class="slide">Pay attention that there is no meaning to the order of the elements inside a map.</p>
+              <p class="slide">Also, if you set a key twice, one will override the other.</p>
+            </div>
+            <div class="slide">
+              <p>
+		Maps can be nested:
+	      </p>
+	      <pre><code class="clojure">{:x {:a 1 :b "aa" :c 'a} :y [1 2 {:a 3}]}</code></pre>
+            </div>
+	    <div class="slide">
+              <p>
+		Keys and values can be of any types: lists, vectors, keywords, regexps and even maps and functions!
+	      </p>
+	      <pre><code class="clojure">'{:email #"^([a-zA-Z0-9_\-\.]+)@([a-zA-Z0-9_\-\.]+)\.([a-zA-Z]{2,5})$"
+		  (1 2 3 4) list
+		  [1 2 3] vector
+		  {:d 1} map}</code></pre>
+            </div>
+	  </li>
+	</ol>
+      </section>
+      <section class="slide">
+	<h2> Maps - creation (cont.)</h2>
+	<ol start="3">
+	  <li>
+	    <div class="slide">
+              <p>With <code>zipmap</code>, you set the keys and the values separately:</p>
+              <pre><code class="clojure">(zipmap (range 10) (range 100))</code></pre>
+            </div>
+	  </li>
+	  <li>
+	    <div class="slide">
+              <p>With <code>(into {})</code>, you can convert a <code>2d</code> array into a map:</p>
+              <pre><code class="clojure">(into {} [[:a 2] [:b 3] [:c 4] [:d 5] [:e 6]])</code></pre>
+            </div>
+	  </li>
+	</ol> 
+	<div class="slide">
+          <p class="meditation">What methods don't support nested maps creations?</p>
+          <p class="meditation">How many keys are there in this map: <code>{[1 2] :aaa '(1 2) :aaa}</code>?</p>
+          <p class="meditation">How do you generate an empty map?</p>
+        </div>
+      </section>
+
+      <section class="slide">
+	<h2>Maps - functions</h2>
+	<div class="slide">
+          <p>With <code>assoc</code>, you associate (create or modify) one or more <code>key-value</code>s</p>
+          <pre><code class="clojure">(assoc {} :a 1 :b 2)</code></pre>
+	</div>
+	<div class="slide">
+          <p>With <code>dissoc</code> you dissociate (remove) one or more <code>key-value</code>s</p>
+          <pre><code class="clojure">(dissoc {:a 1 :b 2} :a :b)</code></pre>
+	</div>
+	<div class="slide">
+          <p>With <code>assoc-in</code>, you associate a nested <code>key-value</code></p>
+          <pre><code class="clojure">(assoc-in {} [:a :b :c] 1)</code></pre>
+	</div>
+	<p class="slide meditation">What will happen with <code>(assoc-in {:a 1} [:a :b :c] 1)</code>?</p>
+      </section>
+      <section class="slide">
+	<h2> Maps - functions (cont.)</h2>
+	<p>There are a couple of ways to retrieve values from a map:</p>
+	<ol>
+	  <li>
+	    <div class="slide">
+              <p>get</p>
+              <pre><code class="clojure">(get {:a 1 :b 2} :a)</code></pre>
+              <p>
+		When they key is not there, <code>get</code> returns <code>nil</code>:
+		<pre><code class="clojure">(get {} :a)</code></pre>
+              </p>
+              <p class="slide meditation">Meditate about this problematic code: <code>(get {:a nil} :a)</code></p>
+              <p class="slide meditation">What happens if you pass an additional argument to <code>get</code>?</p>
+
+
+	    </div>
+	  </li>
+	  <li>
+	    <div class="slide">
+              <p>get-in</p>
+              <pre><code class="clojure">(get-in {:a {:b 1}} [:a :b])</code></pre>
+	    </div>
+	  </li>
+	  <li>
+	    <div class="slide">
+              <p>find</p>
+              <pre><code class="clojure">(find {:a 1 :b 2} :a)</code></pre>
+	    </div>
+	  </li>
+	</ol>
+      </section>
+      <section class="slide">
+	<h2>Maps - functions (cont.)</h2>
+	<ol start="4">
+	  <li>
+	    <div class="slide">
+              <p>the map itself is a function</p>
+              <pre><code class="clojure">({:a 1} :a)</code></pre>
+	    </div>
+	  </li>
+	  <li>
+	    <div class="slide">
+              <p> keywords are functions</p>
+              <pre><code class="clojure">(:a {:a 1})</code></pre>
+	    </div>
+	  </li>
+	</ol>
+	<div class="slide">
+          <p> You can retrieve the keys of the map with <code>keys</code></p>
+          <pre><code class="clojure">(keys {:a 1 :b 2 :c {:d 1}})</code></pre>
+	</div>
+
+	<div class="slide">
+          <p> And the values with <code>vals</code></p>
+          <pre><code class="clojure">(vals {:a 1 :b 2 :c {:d 1}})</code></pre>
+	</div>
+	<p class="slide meditation">Write an assertion using <code>keys</code>, <code>vals</code> and <code>zipmap</code>.</p>
+
+      </section>
+
+      <section class="slide">
+	<h2>Maps - Practice</h2>
+	<ol>
+	  <li>
+	    <div>
+              <p>Write a function that returns the values for a selected collection of keys</p>
+              <pre><code class="clojure">(defn my-select-keys [m the-keys])
+		  (= (my-select-keys {:a 1 :b 2}) [:a :b :c] '(1 2 nil))</code></pre>
+	    </div>
+	  </li>
+	  <li>
+	    <div class="slide">
+              <p>Write a function that receives a map <code>m</code> and a function <code>f</code> and returns a map with the same keys as <code>m</code> and with the values transformed by <code>f</code>:
+              </p>
+              <pre><code class="clojure">(defn map-object [f m])
+		  (= (map-object #(* 100 %) {:a 1 :b 2 :c 3}) {:a 100 :b 200 :c 300})</code></pre>
+	    </div>
+	  </li>
+	  <li>
+	    <div class="slide">
+              <p>  Write a function that converts a sequence into a map where the keys are the indexes of the elements in the sequence.
+              </p>
+              <pre><code class="clojure">(defn sequence->map [s])
+		  (= (sequence->map [10 20 30]) {0 10 1 20 2 30})</code></pre>
+	    </div>
+	  </li>
+	  <li>
+	    <div class="slide">
+	      <p class="challenge">  Write a function that checks if a map is a submap of the other. <br>
+		Map m1 is a submap of m2 if all key/value pairs in m1 exist in m2"
+              </p>
+              <pre><code class="clojure">(defn submap [m1 m2])
+		  [(true? (submap {:a 1 :b 2} {:a 1 :b 2 :c 3}))
+		  (false? (submap {:a 1 :b 2 :c nil} {:a 1 :b 2}))]</code></pre>
+	    </div>
+	  </li>
+
+
+	</ol>
+
+      </section>
+
+      <section class="slide">
+	<h2>Sets</h2>
+	<p>Set is a fundamental concept of mathematics.<br>
+	</p>
+	<img src="./img/sql_joins.jpg" alt="">
+      </section>
+
+      <section class="slide">
+	<h2>Sets - creation</h2>
+        <div class="slide">
+          <p>To create a <code>set</code> from a collection, you use <code>set</code>:</p>
+          <pre><code class="clojure">(set '(1 "hello" [1 2]))</code></pre>
+        </div>
+        <div class="slide">
+          <p>In a set, there are no duplicates</p>
+          <pre><code class="clojure">(set [1 1 "hello" "hello" [1 2] '(1 2)])</code></pre>
+          <p class="meditation">Why <code>[1 2]</code> and <code>(1 2)</code> are considered as duplicates?</p>
+        </div>
+        <div class="slide">
+          <p>You can also create a set with the set literal <code>#{}</code></p>
+          <pre><code class="clojure">#{1 2 "hello" [1 2]}</code></pre>
+        </div>
+        <div class="slide">
+          <p>But then, duplicates are forbidden!</p>
+          <pre><code class="clojure">#{1 2 3 1}</code></pre>
+        </div>
+        <div class="slide">
+          <p class="meditation">What's the difference between <code>set</code> and <code>distinct</code>?</p>
+          <pre><code class="clojure">(distinct [1 1 "hello" "hello" [1 2] '(1 2)])</code></pre>
+        </div>
+        <div class="slide">
+          <p>You can also use <code>(into #{})</code> to create a set</p>
+          <pre><code class="clojure">(into #{} [1 2 3 3 4])</code></pre>
+        </div>
+      </section>
+
+      <section class="slide">
+	<h2>Sets - functions</h2>
+	<div class="slide">
+          <p>In order to use the functions on sets, we have to require the <code>clojure.set</code> namespace:</p>
+          <pre><code class="clojure">(require '[clojure.set :as s])</code></pre>
+          <p class="meditation">Why is there a quote in the <code>require</code> statement?</p>
+	</div>
+	<div class="slide">
+          <p>All the basic mathematical operations on sets are available: </p>
+	</div>
+	<ol>
+
+	  <li>
+	    <div class="slide">
+              <p>Union</p>
+              <pre><code class="clojure">(s/union #{1 2} #{2 3} #{4 5 2})</code></pre>
+	    </div>
+	  </li>
+	  <li>
+	    <div class="slide">
+              <p>Intersection</p>
+              <pre><code class="clojure">(s/intersection #{1 2} #{2 3})</code></pre>
+	    </div>
+	  </li>
+	  <li>
+	    <div class="slide">
+              <p>Difference</p>
+              <pre><code class="clojure">(s/difference #{1 2 3 4 5} #{1 2} #{3 4})</code></pre>
+	    </div>
+	  </li>
+	</ol>
+      </section>
+      <section class="slide">
+	<img src="./img/congrats.jpg" alt="">
+	<p>You are on your way to become a <code>clojure</code> expert:<br>
+	  You already know about:
+	  <ul>
+	    <li>Functions </li>
+	    <li>Lists </li>
+	    <li>Vectors</li>
+	    <li>Maps</li>
+	    <li>Sets</li>
+	  </ul>
+	</p>
+      </section>
+      <!-- deck.status snippet -->
+      <p class="deck-status" aria-role="status">
+	<span class="deck-status-current"></span>
+	/
+	<span class="deck-status-total"></span>
+      </p>
+
+      <!-- End extension snippets. -->
+      </div>
+
+      <!-- Required JS files. -->
+      <script src="http://slides.klipse.tech/includes/deckjs/jquery.min.js"></script>
+      <script src="http://slides.klipse.tech/includes/deckjs/core/deck.core.js"></script>
+
+      <!-- Extension JS files. Add or remove as needed. -->
+      <script src="http://slides.klipse.tech/includes/deckjs/extensions/menu/deck.menu.js"></script>
+      <script src="http://slides.klipse.tech/includes/deckjs/extensions/status/deck.status.js"></script>
+      <script src="http://slides.klipse.tech/includes/deckjs/extensions/fullscreen/deck.fullscreen.js"></script>
+
+      <script>
+	$(function() {
+	$.deck('.slide', {
+	countNested: false
+	});
+	});
+      </script>
+
+      <script>
+	window.klipse_settings = {
+	selector: '.clojure',
+	codemirror_options_in: {
+        lineWrapping: true,
+        autoCloseBrackets: true
+	},
+	codemirror_options_out: {
+        lineWrapping: true
+	}
+	};
+      </script>
+
+
+
+      <script src="https://storage.googleapis.com/app.klipse.tech/plugin/js/klipse_plugin.js?aa1"></script>
+      <!-- <script src="http://localhost:5014/plugin/js/klipse_plugin.js"></script> -->
+
+  </body>
+</html>
