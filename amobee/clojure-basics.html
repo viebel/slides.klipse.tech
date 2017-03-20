@@ -32,45 +32,45 @@
     <style>
     </style>
     <div class="deck-container">
-<section class="slide">
+      <section class="slide">
         <div class="text-centered">
           <h2>
-	<h2>Introduction to Clojure </h2>	    
-          <div class="centered" style="font-size:1.9em;">
-            <div class="left" style="width:50%;">
-	      <img src='https://chart.googleapis.com/chart?cht=qr&chl=http%3A%2F%2Fslides.klipse.tech%2Famobee%2Fclojure-basics.html&chs=300x300' alt='qr code'></img>
-	    </div>
-            <div class="left" style="width:50%;">
-              <div>
-                <div>
-                  <img class="fullscreen" src="./klipse.png" alt="" width="150">
-                </div> 
-                <div> <b>Amobee </b></div>
-                <div>
-                  <div>Yehonathan Sharvit</div>
-                  <div> <a href="https://twitter.com/viebel">@viebel</a></div>
-                </div>
-                <div class="clear">
-                  <div style="margin-top:14px;">
-                    <a class="github-button" href="https://github.com/viebel/klipse" data-count-href="/viebel/klipse/stargazers" data-count-api="/repos/viebel/klipse#stargazers_count" data-count-aria-label="# stargazers on GitHub" aria-label="Star viebel/klipse on GitHub">KLIPSE</a>
+	    <h2>Clojure Basics</h2>	    
+            <div class="centered" style="font-size:1.9em;">
+              <div class="left" style="width:50%;">
+		<img src='https://chart.googleapis.com/chart?cht=qr&chl=http%3A%2F%2Fslides.klipse.tech%2Famobee%2Fclojure-basics.html&chs=300x300' alt='qr code'></img>
+	      </div>
+              <div class="left" style="width:50%;">
+		<div>
+                  <div>
+                    <img class="fullscreen" src="./klipse.png" alt="" width="150">
+                  </div> 
+                  <div> <b>Amobee</b></div>
+                  <div>
+                    <div>Yehonathan Sharvit</div>
+                    <div> <a href="https://twitter.com/viebel">@viebel</a></div>
                   </div>
-                  <script async defer id="github-bjs" src="https://buttons.github.io/buttons.js"></script>
-                </div>
-                <div>
-                  <a href="http://slides.klipse.tech/amobee/clojure-tutorial/">http://slides.klipse.tech/amobee/clojure-tutorial/</a>
-                </div>
+                  <div class="clear">
+                    <div style="margin-top:14px;">
+                      <a class="github-button" href="https://github.com/viebel/klipse" data-count-href="/viebel/klipse/stargazers" data-count-api="/repos/viebel/klipse#stargazers_count" data-count-aria-label="# stargazers on GitHub" aria-label="Star viebel/klipse on GitHub">KLIPSE</a>
+                    </div>
+                    <script async defer id="github-bjs" src="https://buttons.github.io/buttons.js"></script>
+                  </div>
+                  <div>
+                    <a href="http://slides.klipse.tech/amobee/clojure-basics.html">http://slides.klipse.tech/amobee/clojure-basics.html</a>
+                  </div>
+		</div>
               </div>
             </div>
-          </div>
-          <div class="clear centered">
-	    <div style="padding-top: 20px;">
-	      <pre><code class="clojure" data-loop-msec="1000" data-beautify-strings="true">
-		  (str (js/Date.))
-              </code></pre>
-	    </div>
-          </div>
+            <div class="clear centered">
+	      <div style="padding-top: 20px;">
+		<pre><code class="clojure" data-loop-msec="1000" data-beautify-strings="true">
+		    (str (js/Date.))
+		</code></pre>
+	      </div>
+            </div>
         </div>
-</section>
+      </section>
       <section class="slide">
         <h2>Who am I?</h2>
         <div class="left">
@@ -79,6 +79,7 @@
             <li> A pragmatic theorist </li>
             <li> A coder </li>
             <li> A freak of interactivity </li>
+	    <li> Discover the joy of web programming in 2009 - at Kontera </li>
             <li> Founded Audyx - an Audiology Startup with 30K LOCs in Clojurescript </li>
             <li> Author of <a href="https://github.com/viebel/klipse">KLIPSE</a></li>
 	    <li> A Clojure consultant </li>
@@ -332,12 +333,12 @@
       <section class="slide">
 	<h2> Vectors - Practice</h2>
 	<div class="slide">
-          Write a function that receives a vector and converts it to a list:
-
+	  <p>          Write a function that receives a vector and converts it to a list:</p>
           <pre><code class="clojure"> (defn ->list [vec]) </code></pre>
+          <pre><code class="clojure"> (assert (= (->list [1 2]) '(1 2))) </code></pre>	  
 	</div>
 	<div class="slide">
-	  Write a function that receives a "thing" and a vector and returns true or false according to the presence of the "thing" in the vector:
+	  <p>	  Write a function that receives a "thing" and a vector and returns true or false according to the presence of the "thing" in the vector:</p>
 
 	  <pre><code class="clojure"> (defn present? [vec thing]) </code></pre>
 	</div>
@@ -400,10 +401,10 @@
             </div>
 	  </li>
 	</ol> 
-	<div class="slide">
-          <p class="meditation">What methods don't support nested maps creations?</p>
-          <p class="meditation">How many keys are there in this map: <code>{[1 2] :aaa '(1 2) :aaa}</code>?</p>
-          <p class="meditation">How do you generate an empty map?</p>
+	<div>
+          <p class="slide meditation">What methods don't support nested maps creations?</p>
+          <p class="slide meditation">How many keys are there in this map: <code>{[1 2] :aaa '(1 2) :aaa}</code>?</p>
+          <p class="slide meditation">How do you generate an empty map?</p>
         </div>
       </section>
 
@@ -422,6 +423,8 @@
           <pre><code class="clojure">(assoc-in {} [:a :b :c] 1)</code></pre>
 	</div>
 	<p class="slide meditation">What will happen with <code>(assoc-in {:a 1} [:a :b :c] 1)</code>?</p>
+	<p class="slide meditation">Why there is no <code>dissoc-in</code>?</p>
+	<p class="slide meditation">Could we consolidate <code>assoc-in</code> and <code>assoc</code> in the same function?</p>
       </section>
       <section class="slide">
 	<h2> Maps - functions (cont.)</h2>
@@ -486,44 +489,33 @@
 
       <section class="slide">
 	<h2>Maps - Practice</h2>
-	<ol>
-	  <li>
-	    <div>
-              <p>Write a function that returns the values for a selected collection of keys</p>
-              <pre><code class="clojure">(defn my-select-keys [m the-keys])
-		  (= (my-select-keys {:a 1 :b 2}) [:a :b :c] '(1 2 nil))</code></pre>
-	    </div>
-	  </li>
-	  <li>
-	    <div class="slide">
-              <p>Write a function that receives a map <code>m</code> and a function <code>f</code> and returns a map with the same keys as <code>m</code> and with the values transformed by <code>f</code>:
-              </p>
-              <pre><code class="clojure">(defn map-object [f m])
-		  (= (map-object #(* 100 %) {:a 1 :b 2 :c 3}) {:a 100 :b 200 :c 300})</code></pre>
-	    </div>
-	  </li>
-	  <li>
-	    <div class="slide">
-              <p>  Write a function that converts a sequence into a map where the keys are the indexes of the elements in the sequence.
-              </p>
-              <pre><code class="clojure">(defn sequence->map [s])
-		  (= (sequence->map [10 20 30]) {0 10 1 20 2 30})</code></pre>
-	    </div>
-	  </li>
-	  <li>
-	    <div class="slide">
-	      <p class="challenge">  Write a function that checks if a map is a submap of the other. <br>
-		Map m1 is a submap of m2 if all key/value pairs in m1 exist in m2"
-              </p>
-              <pre><code class="clojure">(defn submap [m1 m2])
-		  [(true? (submap {:a 1 :b 2} {:a 1 :b 2 :c 3}))
-		  (false? (submap {:a 1 :b 2 :c nil} {:a 1 :b 2}))]</code></pre>
-	    </div>
-	  </li>
-
-
-	</ol>
-
+	<div>
+          <p>Write a function that returns the values for a selected collection of keys</p>
+          <pre><code class="clojure">(defn my-select-keys [m the-keys]) </code></pre>
+          <pre><code class="clojure">(assert (= (my-select-keys {:a 1 :b 2}) [:a :b :c] '(1 2 nil)))</code></pre>
+	</div>	      
+	<div class="slide">
+          <p>Write a function that receives a map <code>m</code> and a function <code>f</code> and returns a map with the same keys as <code>m</code> and with the values transformed by <code>f</code>:
+          </p>
+          <pre><code class="clojure">(defn map-object [f m])</code></pre>
+	  <pre><code class="clojure">
+	      (assert (= (map-object #(* 100 %) {:a 1 :b 2 :c 3}) {:a 100 :b 200 :c 300}))</code></pre>
+	</div>
+	<div class="slide">
+          <p>  Write a function that converts a sequence into a map where the keys are the indexes of the elements in the sequence.
+          </p>
+          <pre><code class="clojure">(defn sequence->map [s])</code></pre>
+	  
+	  <pre><code class="clojure">(assert (= (sequence->map [10 20 30]) {0 10 1 20 2 30}))</code></pre>
+	</div>
+	<div class="slide">
+	  <p class="challenge">  Write a function that checks if a map is a submap of the other. <br>
+	    Map m1 is a submap of m2 if all key/value pairs in m1 exist in m2
+          </p>
+          <pre><code class="clojure">(defn submap [m1 m2])</code></pre>
+	  <pre><code class="clojure">(assert (true? (submap {:a 1 :b 2} {:a 1 :b 2 :c 3})))
+	      (assert (false? (submap {:a 1 :b 2 :c nil} {:a 1 :b 2})))</code></pre>
+	</div>
       </section>
 
       <section class="slide">
@@ -542,8 +534,8 @@
         <div class="slide">
           <p>In a set, there are no duplicates</p>
           <pre><code class="clojure">(set [1 1 "hello" "hello" [1 2] '(1 2)])</code></pre>
-          <p class="meditation">Why <code>[1 2]</code> and <code>(1 2)</code> are considered as duplicates?</p>
         </div>
+	<p class="slide meditation">Why <code>[1 2]</code> and <code>(1 2)</code> are considered as duplicates?</p>
         <div class="slide">
           <p>You can also create a set with the set literal <code>#{}</code></p>
           <pre><code class="clojure">#{1 2 "hello" [1 2]}</code></pre>
@@ -596,6 +588,8 @@
       </section>
       <section class="slide">
 	<img src="./img/congrats.jpg" alt="">
+      </section>
+      <section class="slide">
 	<p>You are on your way to become a <code>clojure</code> expert:<br>
 	  You already know about:
 	  <ul>
@@ -644,11 +638,11 @@
 	window.klipse_settings = {
 	selector: '.clojure',
 	codemirror_options_in: {
-        lineWrapping: true,
-        autoCloseBrackets: true
+	lineWrapping: true,
+	autoCloseBrackets: true
 	},
 	codemirror_options_out: {
-        lineWrapping: true
+	lineWrapping: true
 	}
 	};
       </script>
