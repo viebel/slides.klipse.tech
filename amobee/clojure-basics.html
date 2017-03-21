@@ -494,7 +494,7 @@
 	<div>
           <p>Write a function that returns the values for a selected collection of keys</p>
           <pre><code class="clojure">(defn my-select-keys [m the-keys]) </code></pre>
-          <pre><code class="clojure">(assert (= (my-select-keys {:a 1 :b 2}) [:a :b :c] '(1 2 nil)))</code></pre>
+          <pre><code class="clojure">(assert (= (my-select-keys {:a 1 :b 2} [:a :b :c] '(1 2 nil))))</code></pre>
 	</div>	      
 	<div class="slide">
           <p>Write a function that receives a map <code>m</code> and a function <code>f</code> and returns a map with the same keys as <code>m</code> and with the values transformed by <code>f</code>:
