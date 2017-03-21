@@ -1,0 +1,10 @@
+{asciidoctor-deck.js {product "asciidoctor-deck.js"
+                      novelty (not (mach.core/file-exists? product))
+                      update! #$ ["git clone https://github.com/asciidoctor/asciidoctor-deck.js"]}
+ deck.js {product "deck.js"
+          novelty (not (mach.core/file-exists? product))
+          update! #$ ["git clone https://github.com/imakewebthings/deck.js"]}
+ presentation.html {product "deck.html"
+                    depends [asciidoctor-deck.js deck.js]
+                    novelty (mach.core/modified-since product "presentation.adoc")
+                    update! #$ ["bundle install && bundle exec asciidoctor -T asciidoctor-deck.js/templates/haml presentation.adoc"]}}

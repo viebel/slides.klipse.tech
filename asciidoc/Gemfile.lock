@@ -1,0 +1,20 @@
+GEM
+  remote: https://rubygems.org/
+  specs:
+    asciidoctor (1.5.5)
+    haml (4.0.7)
+      tilt
+    thread_safe (0.3.6)
+    tilt (2.0.7)
+
+PLATFORMS
+  ruby
+
+DEPENDENCIES
+  asciidoctor
+  haml
+  thread_safe
+  tilt
+
+BUNDLED WITH
+   1.14.3

@@ -1,0 +1,50 @@
+= The history of Clojure
+:encoding: utf-8
+:navigation:
+:deckjs_transition: horizontal-slide
+
+== Timeline
+
+* 1930 - Alonzo Church discovers the  https://en.wikipedia.org/wiki/Lambda_calculus[λ-calculus]
+* 1958 - John McCarthy invents https://en.wikipedia.org/wiki/Lisp_(programming_language)[LISP]
+* 1994 - First public release of https://en.wikipedia.org/wiki/Java_(software_platform)#History[Java]
+* 2009 - https://en.wikipedia.org/wiki/Clojure[Clojure] 1.0.0 released by Rich Hickey
+* 2011 - Clojurescript
+* 2015 - Reader conditionals in Clojure 1.7
+* 2015 - Self Hosted Clojurescript
+* 2016 - Klipse
+
+== LISP: λ-calculus applied to computer science
+
+* Homoiconicity - Code is data
+* Functional - functions are 1st class citizens
+
+== Clojure: Combining purity and pragmatism
+
+
+[source,role="clj"]
+----
+(map inc [1 2 3])
+----
+
+== Clojurescript: Clojure rocks, Javascript reaches!
+
+=== Clojure transpiled into javascript
+
+[source, role="transpile-cljs"]
+----
+(defn hello [name]
+ (str "Hello " name "!"))
+----
+
+=== The elegance of Clojure on top of React
+
+[source, role="reagent"]
+----
+(require '[reagent.core :as r])
+[:div
+[:strong "Hello World!"]]
+----
+
+include::klipse.adoc[]
+
