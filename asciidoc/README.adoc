@@ -1,5 +1,5 @@
 
-Install http://entrproject.org/[entr]
+Install http://entrproject.org/[entr] and run the following two commands to generate the html on each file change and reload chrome.
 
 [source, bash]
 ----
