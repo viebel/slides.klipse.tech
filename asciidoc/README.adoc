@@ -1,5 +1,9 @@
 
-Install http://entrproject.org/[entr] and run the following two commands to generate the html on each file change and reload chrome.
+
+Run the following two commands to:
+
+- generate the html on each file change with https://github.com/juxt/mach[mach]
+- reload chrome current tab with http://entrproject.org/[entr]
 
 [source, bash]
 ----
