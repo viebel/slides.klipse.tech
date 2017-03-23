@@ -2,7 +2,7 @@
 Install http://entrproject.org/[entr]
 
 [source, bash]
----
+----
 ls *.html | entr reload-browser "Google Chrome" &
 ls -d presentation.adoc| entr mach presentation.html
----
+----
