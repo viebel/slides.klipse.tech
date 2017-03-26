@@ -393,3 +393,8 @@ blockquote cite {
 .meditation:before {
     content: "\2615    "; /* ☕ */
 }
+
+.hidden {
+    visibility: hidden;
+    height: 0px;
+}
