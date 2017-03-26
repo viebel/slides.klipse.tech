@@ -1,0 +1,355 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+    <meta name="viewport" content="width=1024, user-scalable=no">
+
+    <link rel="shortcut icon" href="./favicon.png">
+    <title>Clojure Macros</title>
+
+
+    <!-- Required stylesheet -->
+    <link rel="stylesheet" media="screen" href="http://slides.klipse.tech/includes/deckjs/core/deck.core.css">
+
+    <!-- Extension CSS files go here. Remove or add as needed. -->
+    <link rel="stylesheet" media="screen" href="http://slides.klipse.tech/includes/deckjs/extensions/goto/deck.goto.css">
+    <link rel="stylesheet" media="screen" href="http://slides.klipse.tech/includes/deckjs/extensions/menu/deck.menu.css">
+    <link rel="stylesheet" media="screen" href="http://slides.klipse.tech/includes/deckjs/extensions/navigation/deck.navigation.css">
+    <link rel="stylesheet" media="screen" href="http://slides.klipse.tech/includes/deckjs/extensions/status/deck.status.css">
+    <link rel="stylesheet" media="screen" href="http://slides.klipse.tech/includes/deckjs/extensions/scale/deck.scale.css">
+
+    <link rel="stylesheet" media="screen" href="http://slides.klipse.tech/includes/deckjs/themes/style/klipse.css">
+    <link rel="stylesheet" media="screen" href="./main.css">  
+
+    <link rel="stylesheet" media="screen" href="http://slides.klipse.tech/includes/deckjs/themes/transition/horizontal-slide.css">
+
+    <link rel="stylesheet" type="text/css" href="https://storage.googleapis.com/app.klipse.tech/css/codemirror.css">
+    <!-- Required Modernizr file -->
+    <script src="http://slides.klipse.tech/includes/deckjs/modernizr.custom.js"></script>
+  </head>
+  <body>
+    <style>
+    </style>
+    <div class="deck-container">
+      <section class="slide">
+        <div class="text-centered">
+          <h2>
+	    <h2>Clojure Macros - Amobee</h2>	    
+            <div class="centered" style="font-size:1.9em;">
+              <div class="left" style="width:50%;">
+		<img src='https://chart.googleapis.com/chart?cht=qr&chl=http%3A%2F%2Fslides.klipse.tech%2Famobee%2Fclojure-macros.html&chs=300x300' alt='qr code'></img>
+	      </div>
+              <div class="left" style="width:50%;">
+		<div>
+                  <div>
+                    <img class="fullscreen" src="./klipse.png" alt="" width="150">
+                  </div> 
+                  <div>
+                    <div>Yehonathan Sharvit</div>
+                    <div> <a href="https://twitter.com/viebel">@viebel</a></div>
+                  </div>
+                  <div class="clear">
+                    <div style="margin-top:14px;">
+                      <a class="github-button" href="https://github.com/viebel/klipse" data-count-href="/viebel/klipse/stargazers" data-count-api="/repos/viebel/klipse#stargazers_count" data-count-aria-label="# stargazers on GitHub" aria-label="Star viebel/klipse on GitHub">KLIPSE</a>
+                    </div>
+                    <script async defer id="github-bjs" src="https://buttons.github.io/buttons.js"></script>
+                  </div>
+                  <div>
+                    <a href="http://slides.klipse.tech/amobee">http://slides.klipse.tech/amobee</a>
+                  </div>
+		</div>
+              </div>
+            </div>
+            <div class="clear centered">
+	      <div style="padding-top: 20px;">
+		<img src="./img/amobee.jpg"></img>
+	      </div>
+	      <div style="padding-top: 20px;">
+		<pre><code class="clojure" data-loop-msec="1000" data-beautify-strings="true">
+		    (str (js/Date.))
+		</code></pre>
+	      </div>
+            </div>
+        </div>
+      </section>
+      <section class="slide">
+        <h2>Who am I?</h2>
+        <div class="left">
+          <ul>
+            <li> A mathematician </li>
+            <li> A pragmatic theorist </li>
+            <li> A coder </li>
+            <li> A freak of interactivity </li>
+	    <li> Discover the joy of web programming in 2009 - at Kontera </li>
+            <li> Founded Audyx - an Audiology Startup with 30K LOCs in Clojurescript </li>
+            <li> Author of <a href="https://github.com/viebel/klipse">KLIPSE</a></li>
+	    <li> A Clojure consultant </li>
+          </ul>
+        </div>
+        <div class="left" style="width:25%;margin-left:5%;"><img src="https://pbs.twimg.com/profile_images/713278171353911296/1a2useM2.jpg"></img></div>
+      </section>
+      <section class="slide">
+	<h2>Topics</h2>
+	<table>
+	  <tr>
+	    <td style="width: 60%;">
+	      <ul>
+		<li>Homoiconicity </li>
+		<li>Functions vs. Macros</li>		
+		<li>Macros without syntax quote </li>
+		<li>Syntax Quote</li>
+		<li>Examples of cool macros</li>
+	      </ul>
+	    </td>
+	    <td style="width: 40%;">
+	      <img src="./img/topics.jpg" alt="">
+	    </td>
+      </tr></table></section>
+
+      <section class="slide">
+	<h2> Homoiconicity </h2>
+	<p>In Clojure, the syntax of the language is similar to the syntax of the data: EDN</p>
+	<pre class="hidden"><code class="clojure">
+	    (require '[cljs.tools.reader :as r])
+	    (require '[cljs.tools.reader.reader-types :as rt])
+
+	    (defn read-string [s]
+	    (let [reader (rt/string-push-back-reader s)]
+	    (r/read reader false nil)))
+	</code></pre>
+	<div class="slide">
+	  <p> You can read a piece of code into a clojure data structure</p>
+	  <pre><code class="clojure">
+	      (def my-code (read-string "(defn foo [a b] (+ a b))"))
+	  </code></pre>
+	</div>
+	<div class="slide">
+	  <p> You get a regular list </p>
+	  <pre><code class="clojure">
+              (type my-code)
+	  </code></pre>
+	</div>
+	<div class="slide">
+	  <p> A list of...</p>
+	  <pre><code class="clojure">
+              (map type my-code)
+	  </code></pre>
+	</div>
+      </section>
+      <section class="slide">
+	<h2> Homoiconicity - Macro characters</h2>	
+	<div class="slide">
+	  <p class="meditation"> <a href="https://clojure.org/reference/reader#macrochars">Macro characers</a> are transformed by the reader into EDN syntax</p>
+	  <p>Remark: We are going to print the results in order to cancel Klipse pretty printing </p>
+	</div>
+	<div class="slide">
+	  <p> Comments </p>
+	  <pre><code class="clojure">
+	      (println (read-string "[1 2 #_(1 2)]"))
+	  </code></pre>
+	</div>
+	<div class="slide">
+	  <p> Anonymous Function Literals</p>
+	  <pre><code class="clojure">
+	      (println (read-string "#(+ %1 2)"))
+	  </code></pre>
+	</div>
+	<div class="slide">
+	  <p> Deref </p>
+	  <pre><code class="clojure">
+	      (println (read-string "@an-atom"))
+	  </code></pre>	  
+	</div>
+	<div class="slide">
+	  <p> Quote </p>
+	  <pre><code class="clojure">
+	      (println (read-string "'something"))
+	  </code></pre>	  
+	</div>
+	<div class="slide">
+	  <p> Syntax Quote </p>
+	  <pre><code class="clojure">
+              (println (read-string "`(a ~something ~@(1 2 3))"))
+	  </code></pre>	  
+	</div>		
+      </section>
+      <section class="slide">
+	<h2> Functions vs. macros </h2>
+
+	<p> What's the difference between a function and a macro?</p>
+	<div class="slide">	
+	  <p>One common explanation of the difference between functions and macros is:</p>
+
+	  <ul>
+	    <li>a function transforms values into other values.</li>
+	    <li>a macro transforms code into other code.</li>
+	  </ul>
+	</div>
+
+	<div class="slide">
+	  <p>We want to give a more precise answer, analysing two aspects of functions and macros:</p>
+
+	  <ul>
+	    <li>when the arguments are evaluated?</li>
+	    <li>is the return value evaluated?</li>
+	  </ul>
+	</div>
+      </section>
+      <section class="slide">
+	<h2>Functions vs. macros - a graphical illustration</h2>
+	<div class="slide">
+	  <p> A few helpers to manipulate the DOM</p>
+	  <pre><code class="clojure">
+	      (ns my.m$macros)
+	      (defn set-color! [elem c]
+	      (set! (.. elem -style -color) c))
+
+	      (defn set-border [elem border]
+	      (set! (.. elem -style -border) border))
+
+	      (defn reset-elem! [elem]
+	      (set! (.-innerHTML elem) "This is a sentence")
+	      (set! (.-style elem) nil))
+	  </code></pre>
+	</div>
+	<div class="slide left" style="width:50%; opacity:1;">
+	  <h3> Calling a function </h3>
+	  <p> The argument is evaluated before the body of the function is executed. </p>
+	  <p> The returned value is not evaluated.</p>
+	  <pre><code class="clojure">
+
+	      (defn color-me-fn [arg]
+	      (list 'set-border 'js/klipse-container "solid 3px red"))
+
+	      (reset-elem! js/klipse-container)
+	      (color-me-fn (set-color! js/klipse-container "red"))
+	  </code></pre>
+	</div>
+	<div class="slide left" style="width:50%">
+	  <h3> Calling a macro </h3>
+	  <p> The argument is not evaluated before the body of the function is executed. </p>
+	  <p> The returned value is evaluated.</p>	  
+	  <pre><code class="clojure">
+	      (defmacro color-me-macro [arg]
+	      (list 'set-border 'js/klipse-container "solid 3px red"))
+
+	      (reset-elem! js/klipse-container)
+	      (my.m/color-me-macro (set-color! js/klipse-container "red"))
+	  </code></pre>
+	</div>
+      </section>
+      <section class="slide">
+	<h2> Macros - Practice</h2>
+	<div class="slide">
+	  <h3> Part 1 </h3>
+	  <p> Write a macro that receives an expression and returns the expression as is.</p>
+	  <p>You are not allowed to use the syntax quote <code>`</code> only the quote <code>'</code>. </p>
+
+          <pre><code class="clojure"> (defmacro as-is [name]) </code></pre>
+	  <pre><code class="clojure"> (assert (= (my.m/as-is (map inc [1 2 3])) '(map inc [1 2 3])))  </code></pre>
+	  
+	</div>
+	<div class="slide">
+	  <h3> Part 2 </h3>
+	  <p> Write a macro that receives two arguments and returns a string with the concatanation of their evaluations, separated by a whitespace.</p>
+	  <p>You are not allowed to use the syntax quote <code>`</code> only the quote <code>'</code>. </p>
+
+          <pre><code class="clojure"> (defmacro concat-evaluations [name]) </code></pre>
+	  <pre><code class="clojure">
+(assert (= (my.m/concat-evaluations "hello" "world") "hello world"))
+(assert (= (my.m/concat-evaluations "hello" (+ 1 2) "hello 3")))	   
+	  </code></pre>
+	</div>
+      </section>
+      <section class="slide">
+	<h2> Macros - Practice </h2>
+	<div>
+	  <h3> Part 3 </h3>
+	  <p>
+            Write a macro that receives an expression and returns a string with the concatanation of:</p>
+	  <ol>
+	    <li> the expression</li>
+	    <li> an arrow <code>=></code></li>
+	    <li> the evaluation of the expression</li>
+	  </ol>
+	  <p>
+	    You are not allowed to use the syntax quote <code>`</code> only the quote <code>'</code>.
+	  </p>
+
+          <pre><code class="clojure"> (defmacro dbg [name]) </code></pre>
+	  <pre><code class="clojure"> (assert (= (my.m/dbg (map inc [1 2 3])) "(map inc [1 2 3]) => (2 3 4)"))  </code></pre>
+	</div>
+	<div class="slide">
+	  <p> The solutions are at in the <a href="http://blog.klipse.tech/clojure/2016/05/04/macro-tutorial-2.html">Klipse blog</a>.
+	</div>
+	
+      </section>
+      <section class="slide">
+	<img src="./img/congrats.jpg" alt="">
+      </section>
+      <section class="slide">
+	<p>You are on your way to become a <code>clojure</code> expert:<br>
+	  You already know about:
+	  <ul>
+	    <li>Functions </li>
+	    <li>Lists </li>
+	    <li>Vectors</li>
+	    <li>Maps</li>
+	    <li>Sets</li>
+	  </ul>
+	</p>
+      </section>
+      <!-- deck.status snippet -->
+      <p class="deck-status" aria-role="status">
+	<span> powered by <a href="https://github.com/viebel/klipse">KLIPSE</a> </span>
+	<span class="deck-status-current"></span>
+	/
+	<span class="deck-status-total"></span>
+      </p>
+      <div aria-role="navigation">
+	<a href="#" class="deck-prev-link" title="Previous">&#8592;</a>
+	<a href="#" class="deck-next-link" title="Next">&#8594;</a>
+      </div>
+
+      <!-- End extension snippets. -->
+    </div>
+
+    <!-- Required JS files. -->
+    <script src="http://slides.klipse.tech/includes/deckjs/jquery.min.js"></script>
+    <script src="http://slides.klipse.tech/includes/deckjs/core/deck.core.js"></script>
+
+    <!-- Extension JS files. Add or remove as needed. -->
+    <script src="http://slides.klipse.tech/includes/deckjs/extensions/menu/deck.menu.js"></script>
+    <script src="http://slides.klipse.tech/includes/deckjs/extensions/status/deck.status.js"></script>
+    <script src="http://slides.klipse.tech/includes/deckjs/extensions/navigation/deck.navigation.js"></script>
+    <script src="http://slides.klipse.tech/includes/deckjs/extensions/fullscreen/deck.fullscreen.js"></script>
+
+    <script>
+      $(function() {
+      $.deck('.slide', {
+      countNested: false
+      });
+      });
+    </script>
+
+    <script>
+      window.klipse_settings = {
+      selector: '.clojure',
+      codemirror_options_in: {
+      lineWrapping: true,
+      autoCloseBrackets: true
+      },
+      codemirror_options_out: {
+      lineWrapping: true
+      }
+      };
+    </script>
+
+
+
+    <script src="https://storage.googleapis.com/app.klipse.tech/plugin/js/klipse_plugin.js?aa1"></script>
+    <!-- <script src="http://localhost:5014/plugin/js/klipse_plugin.js"></script> -->
+
+  </body>
+</html>
