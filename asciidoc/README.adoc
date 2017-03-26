@@ -1,8 +1,12 @@
 
-Install http://entrproject.org/[entr]
+
+Run the following two commands to:
+
+- generate the html on each file change with https://github.com/juxt/mach[mach]
+- reload chrome current tab with http://entrproject.org/[entr]
 
 [source, bash]
----
+----
 ls *.html | entr reload-browser "Google Chrome" &
 ls -d presentation.adoc| entr mach presentation.html
----
+----
