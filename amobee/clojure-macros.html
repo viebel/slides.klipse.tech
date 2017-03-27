@@ -6,7 +6,7 @@
     <meta name="viewport" content="width=1024, user-scalable=no">
 
     <link rel="shortcut icon" href="./favicon.png">
-    <title>Clojure Macros</title>
+    <title>Deep dive into Clojure Macros</title>
 
 
     <!-- Required stylesheet -->
@@ -35,7 +35,7 @@
       <section class="slide">
         <div class="text-centered">
           <h2>
-	    <h2>Clojure Macros - Amobee</h2>	    
+	    <h2>Deep dive into Clojure Macros - Amobee</h2>	    
             <div class="centered" style="font-size:1.9em;">
               <div class="left" style="width:50%;">
 		<img src='https://chart.googleapis.com/chart?cht=qr&chl=http%3A%2F%2Fslides.klipse.tech%2Famobee%2Fclojure-macros.html&chs=300x300' alt='qr code'></img>
@@ -174,6 +174,30 @@
 	  </code></pre>	  
 	</div>		
       </section>
+      <section class="slide">
+	<h2> Homoiconicity - Practice</h2>
+	<div class="slide">
+	  <h3> Part 1 </h3>
+	  <p> Write a function that receives a list of expressions and returns this list of expressions wrapped into a <code>do</code>.</p>
+          <pre><code class="clojure">
+(defn wrap-do [& exps])
+	  </code></pre>
+	  <pre><code class="clojure">
+(assert (= (wrap-do '(println "homoiconicity") '(+ 4 5)) '(do (println "homoiconicity") (+ 4 5))))
+	  </code></pre>
+	</div>
+	<div class="slide">
+	  <h3> Part 2 </h3>
+	  <p> Write a macro that receives two arguments and returns a string with the concatanation of their evaluations, separated by a whitespace.</p>
+	  <p>You are not allowed to use the syntax quote <code>`</code> only the quote <code>'</code>. </p>
+	  <p>Hint: the macro has to return an expression (a list) that when it is evaluated, it becomes <code>(str "hello" " " 3)</code>.</p>
+          <pre><code class="clojure"> (defmacro concat-evaluations [name]) </code></pre>
+	  <pre><code class="clojure">
+	      (assert (= (my.m/concat-evaluations "hello" "world") "hello world"))
+	      (assert (= (my.m/concat-evaluations "hello" (+ 1 2) "hello 3")))	   
+	  </code></pre>
+	</div>
+      </section>      
       <section class="slide">
 	<h2> Functions vs. macros </h2>
 
@@ -356,7 +380,7 @@
       </section>
       <section class="slide">
 	<h2>Macros with <code>quote</code> - Namespacing</h2>
-	<p class="meditation"> How the functions that you call inside your macro are namespaced resolved?</p>
+	<p class="meditation"> How the functions that you call inside your macro are namespace resolved?</p>
 	<div class="slide">
 	  <p> In the namespace of the caller!!!!</p>
 	  <p> Remember: the essence of macros is just list manipulation </p>
@@ -397,37 +421,6 @@
 	</div>
       </section>
       <section class="slide">
-	<h2>Macros with <code>quote</code> - Namespacing</h2>
-	<p class="meditation"> How the functions that you call inside your macro are namespaced resolved?</p>
-	<div class="slide">
-	  <p> In the namespace of the caller!!!!</p>
-	  <p> Remember: the essence of macros is just list manipulation </p>
-	</div>
-	<div class="slide">
-	  <pre><code class="clojure">
-	      (ns my.foo$macros)
-	      (defmacro dbg [form]
-	      (list 'str (list 'quote form) " => " form))
-	  </code></pre>
-	  <p> Let's override foo in a new namespace </p>
-	  <pre><code class="clojure">
-	      (ns my.bar)
-	      (defn str [x] "A bug occured")
-	  </code></pre>	  
-	  <p> Oops...</p>
-	  <pre><code class="clojure">
-	      (println (my.foo/dbg (map inc [1 2 3]))) 
-	  </code></pre>
-	</div>
-	<div class="slide">
-	  <p> Let's go back to a clean namespace </p>
-	  <pre><code class="clojure">
-	      (ns my.clean)
-	      (println (my.foo/dbg (map inc [1 2 3])))  
-	  </code></pre>
-	</div>
-      </section>
-      <section class="slide">
 	<h2> Macros the real way - Syntax quote </h2>
 	<p> Syntax quote has 4 powerful features: </p>
 	<ol>
@@ -440,7 +433,6 @@
       </section>
       <section class="slide">
 	<h2> Syntax quote <code>`</code>- fully-qualified symbols </h2>
-	<p> Remark: Syntax quote can also be used outside macros</p>
 	<div class="slide">
           <p> With the regular <code>quote</code>, symbols are kept as-is: they are not resolved.</p>
 	  <pre><code class="clojure">
@@ -571,7 +563,27 @@
 	      `(if ~test (do ~@body))) 
 	  </code></pre>
 	</div>	
-      </section>      
+</section>
+<section class="slide">
+	<h2> Macros the real way - Practice </h2>
+	<div>
+	  <h3> Part 3 </h3>
+	  <p>
+            Write a macro that does the same as <code>as-></code> without looking at the code of <code>dotimes</code>.
+	  <p> You are allowed to use the syntax quote <code>~</code> </p>
+          <pre><code class="clojure"> (ns my.macros$macros) </code></pre>	  
+          <pre><code class="clojure">
+	      (defmacro my-as-> [binding & body])
+	  </code></pre>
+	  <pre><code class="clojure">
+	     (my.macros/my-as-> {} $
+      (assoc $ :a 2)
+      (map identity $)
+      (flatten $))
+	     
+	  </code></pre>
+	</div>
+      </section>
       <section class="slide">
 	<h2> Macros  - Limitations and Pitfalls </h2>
 	<p> Macros are very powerful </p>
@@ -629,14 +641,13 @@
 	<img src="./img/congrats.jpg" alt="">
       </section>
       <section class="slide">
-	<p>You are on your way to become a <code>clojure</code> expert:<br>
-	  You already know about:
+	<p>You are on your way to become a Macro Ninja</p>
+	<p>  You already know about:</p>
 	  <ul>
-	    <li>Functions </li>
-	    <li>Lists </li>
-	    <li>Vectors</li>
-	    <li>Maps</li>
-	    <li>Sets</li>
+	    <li>The exact differences between functions and macros </li>
+	    <li>The differences between quote and syntax quote </li>
+	    <li>The implementatin of some clojure macros</li>	    
+	    <li>The dangers of macros</li>
 	  </ul>
 	</p>
       </section>
