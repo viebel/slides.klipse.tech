@@ -74,7 +74,6 @@
         <ul>
           <li>Destructuring</li>
           <li>multi-arity functions</li>
-          <li>loop recur</li>
           <li>Walk/Prewalk</li>
           <li>Macros</li>
         </ul>
@@ -176,32 +175,37 @@
         <p>Write by yourself the following funtions of <code>clojure.core</code></p>
         <div class="slide">
           <p><a href="https://clojuredocs.org/clojure.core/frequencies">frequencies</a></p>
-          <pre><code class="clojure"></code></pre>
+          <pre><code class="clojure">
+	      (defn my-frequencies [coll])
+	  </code></pre>
+	  <pre><code class="clojure">
+	      (assert (= (my-frequencies ['a 'b 'a 'a]) '{a 3, b 1}))
+	  </code></pre>
         </div>
         <div class="slide">
           <p><a href="https://clojuredocs.org/clojure.core/group-by">group-by</a></p>
-          <pre><code class="clojure"></code></pre>
+          <pre><code class="clojure">
+	      (defn my-group-by [f coll])	      
+	  </code></pre>
+	  <pre><code class="clojure">
+	      (assert (= (my-group-by count ["a" "as" "asd" "aa" "asdf" "qwer"]) {1 ["a"], 2 ["as" "aa"], 3 ["asd"], 4 ["asdf" "qwer"]}))	      
+	  </code></pre>
         </div>
       </section>
 
       <section class="slide">
         <h2 class="challenge"> Advanced Practice</h2>
-        <div class="slide">
+        <div>
           <p class="challenge">Write a <code>clojure</code> version of <code>spark</code>'s function <code>reduceByKey</code>: receives a list of <code>(K, V)</code> pairs and a function <code>f</code> and returns a list of <code>(K, V)</code> pairs where the values for each key are aggregated using the given reduce function <code>f</code> </p>
-          <pre><code class="clojure">(defn reduce-by-key [f lst])
-              (and 
-              (= (reduce-by-key '((a 1)) +) '((a 1)))
-              (= (reduce-by-key '((a 1) (a 3)) +) '((a 4)))
-              (= (reduce-by-key '((a 1) (a 3) (b 1) (a 5) (b 6)) +) '((a 9) (b 7))))</code></pre>
-        </div>
-        <div class="slide">
-          <p></p>
-          <pre><code class="clojure"></code></pre>
-        </div>
-        <div class="slide">
-          <p></p>
-          <pre><code class="clojure"></code></pre>
-        </div>
+          <pre><code class="clojure">
+	      (defn reduce-by-key [f lst])
+	  </code></pre>
+	  <pre><code class="clojure">
+	      (assert (= (reduce-by-key '((a 1)) +) '((a 1))))
+	      (assert  (= (reduce-by-key '((a 1) (a 3)) +) '((a 4))))
+	      (assert  (= (reduce-by-key '((a 1) (a 3) (b 1) (a 5) (b 6)) +) '((a 9) (b 7))))
+	  </code></pre>
+	</div>
       </section>
 
       <section class="slide">
@@ -238,14 +242,14 @@
           <p>First, a non-memoized function that print its arguments</p>
           <p> When called twice with the same argument, it prints twice</p>
           <pre><code class="clojure">(defn foo[x] (println "foo called with: " x))
-              (symbol (with-out-str
+	      
               (foo 1)
-              (foo 1)))</code></pre>
+              (foo 1)
+	  </code></pre>
           <p> With memoization, the function is called only once, the other calls are cached:</p>
           <pre><code class="clojure">(def foo-memo (memoize foo))
-              (with-out-str 
               (foo-memo 1)
-              (foo-memo 1))</code></pre>
+              (foo-memo 1)</code></pre>
         </div>
         <div class="slide">
           <p>juxt</p>
@@ -254,22 +258,46 @@
       </section>
       <section class="slide">
         <h2>High Order Functions - Practice</h2>
-        <p>Write by yourslef the following funtions of <code>clojure.core</code></p>
+        <p>Write by yourself the following funtions of <code>clojure.core</code></p>
         <div class="slide">
           <p><a href="https://clojuredocs.org/clojure.core/comp">comp</a> (only with 2 functions)</p>
-          <pre><code class="clojure"></code></pre>
+          <pre><code class="clojure">
+	      (defn comp-2 [f g] identity)
+	  </code></pre>	  
+          <pre><code class="clojure">
+	      (assert (= ((comp-2 first rest) (range 10)) 1))
+	  </code></pre>
         </div>
         <div class="slide">
           <p><a href="https://clojuredocs.org/clojure.core/partial">partial</a> (only supporting functions with 2 arguments)</p>
-          <pre><code class="clojure"></code></pre>
+          <pre><code class="clojure">
+	      (defn partial-2 [f a] identity) 
+	  </code></pre>
+	  <pre><code class="clojure">
+	      (assert (= ((partial-2 + 2) 3) 5)) 
+	  </code></pre>
         </div>
-        <div class="slide challenge">
+      </section>
+      <section class="slide">
+	<h2 class="challenge"> High Order Functions - Practice </h2>
+        <div>
           <p><a href="https://clojuredocs.org/clojure.core/comp">comp</a> with no limit on the number of functions</p>
-          <pre><code class="clojure"></code></pre>
+          <pre><code class="clojure">
+	      (defn comp-all [& fns] (first fns))    
+	  </code></pre>
+	  <pre><code class="clojure">
+	      (assert (= ((comp-all inc inc inc) 5) 8)) 	      
+	  </code></pre>
         </div>
-        <div class="slide challenge">
-          <p><a href="https://clojuredocs.org/clojure.core/partial">partial</a> supporting functions any number of arguments</p>
-          <pre><code class="clojure"></code></pre>
+        <div class="slide">
+          <p><a href="https://clojuredocs.org/clojure.core/partial">partial</a> supporting functions of any number of arguments</p>
+          <pre><code class="clojure">
+	      (defn partial-all [f & args] identity)	      
+	  </code></pre>
+
+	  <pre><code class="clojure">
+	      (assert (= ((partial-all assoc {} :a) 1) {:a 1})) 	      
+	  </code></pre>
         </div>
 
       </section>
@@ -308,7 +336,7 @@
         <h2>Lazy Sequences - creation</h2>
         <p>There is a handy macro <code>lazy-seq</code> that makes it easy to create lazy sequences. <br>Let's see it in action, by writing code that receives a sequece and increment each of its elements - without using <code>map</code>:</p>
         <div class="slide">
-          <p>First a non-lazy implementation - with a infinite recursion</p>
+          <h3>First a non-lazy implementation - with an infinite recursion</h3>
           <pre><code class="clojure">(defn inc-seq [s]
               (cons (inc (first s))
               (inc-seq (rest s))))
@@ -323,7 +351,8 @@
               (take 10 (inc-seq (range 100)))</code></pre>
         </div>
         <div class="slide">
-          <p>And now the lazy implementation:</p>
+          <h3>And now the lazy implementation:</h3>
+	  <p><code>lazy-seq</code> is a macro that wraps a <code>cons</code> statement where instead of the <code>rest</code> you pass a function that returns the rest of the lazy sequence</p>
           <pre><code class="clojure">(defn inc-seq-lazy [s]
               (lazy-seq
               (cons (inc (first s))
@@ -336,16 +365,26 @@
         </div>
       </section>
       <section class="slide">
-        <h2>Lazy sequences - Practice</h2>
+        <h2 class="challenge">Lazy sequences - Practice</h2>
         <div class="slide">
-          <p>Write a function that creates a infinite lazy sequence of the positive integers</p>
+          <p>Write a function that creates an infinite lazy sequence of the positive integers</p>
+	  <h3> Part 1</h3>
           <p> First write a function <code>numbers-starting-at</code> that receives a number <code>n</code> and returns all the numbers starting at <code>n</code></p>
           <pre><code class="clojure">(defn numbers-starting-at [n] )
-              (= (take 3 (numbers-starting-at 5)) '(5 6 7))</code></pre>
+	  </code></pre>
+	  <pre><code class="clojure">
+	      (assert (= (take 3 (numbers-starting-at 5)) '(5 6 7)))
+	  </code></pre>
         </div>
         <div class="slide">
+	  <h3> Part 2</h3>
           <p>Now write a function <code>numbers</code> that receive no arguments and return all the positive integers. Try to use <code>partial</code></p>
-          <pre><code class="clojure"></code></pre>
+          <pre><code class="clojure">
+	      (defn numbers [])
+	  </code></pre>
+	  <pre><code class="clojure">
+	      (assert (= (take 3 (numbers)) '(1 2 3)))
+	  </code></pre>
         </div>
       </section>
       <section class="slide">
@@ -368,6 +407,7 @@
           <p>Looks good right?<br> Increment the size of <code>s</code> up to 1000000 and see what happens.</p>
 	</div>
         <div class="slide">
+	  <h3>Preventing the stack overflow</h3>
           <p>The solution is to use <a href="https://en.wikipedia.org/wiki/Tail_call">tail call recursion</a>. Like this: </p>
           <pre><code class="clojure">(defn count-tail-recursive [s]
               (loop [s s res 0]
@@ -390,18 +430,28 @@
       </section>
       <section class="slide">
         <h2>Tail Call Recursion - Practice</h2>
-          <div class="slide">
-            <p>Write a function that checks whether an element is present in a list</p>
-            <pre><code class="clojure">(defn present? [lst x])</code></pre>
-          </div>
-          <div class="slide">
-            <p>Write a function that sums up the elements of a sequence. The proper solution is to use <code>reduce</code>. But here, we want to practice <code>recur</code></p>
-            <pre><code class="clojure">(defn sum [lst])</code></pre>
-          </div>
-          <div class="slide">
-            <p class="challenge">Write a function that receives a seuence of sequences and returns their concatanation. The proper solution would be to use <code>(apply concat s)</code>; but here we want to practice <code>recur</code></p>
-            <pre><code class="clojure">(defn concat-seqs [seqs])</code></pre>
-          </div>
+        <div class="slide">
+          <p>Write a function that checks whether an element is present in a list</p>
+          <pre><code class="clojure">(defn present? [lst x])</code></pre>
+        </div>
+        <div class="slide">
+          <p>Write a function that sums up the elements of a sequence. The proper solution is to use <code>reduce</code>. But here, we want to practice <code>recur</code></p>
+          <pre><code class="clojure">
+	      (defn sum [lst])
+	  </code></pre>
+	  <pre><code class="clojure">
+	      (assert (= (sum [1 2 3]) 6))
+	  </code></pre>
+        </div>
+        <div class="slide">
+          <p class="challenge">Write a function that receives a sequence of sequences and returns their concatanation. The proper solution would be to use <code>(apply concat s)</code>; but here we want to practice <code>recur</code></p>
+          <pre><code class="clojure">
+	      (defn concat-seqs [seqs])
+	  </code></pre>
+	  <pre><code class="clojure">
+	      (assert (= (concat-seqs [[1 2 3] [4 5 6] [7 8 9]]) [1 2 3 4 5 6 7 8 9]))
+	  </code></pre>
+        </div>
 
       </section>
 
@@ -419,13 +469,16 @@
 
       </section>
       <!-- deck.status snippet -->
-       <p class="deck-status" aria-role="status">
+      <p class="deck-status" aria-role="status">
 	<span> powered by <a href="https://github.com/viebel/klipse">KLIPSE</a> </span>
 	<span class="deck-status-current"></span>
 	/
 	<span class="deck-status-total"></span>
       </p>
-
+      <div aria-role="navigation">
+	<a href="#" class="deck-prev-link" title="Previous">&#8592;</a>
+	<a href="#" class="deck-next-link" title="Next">&#8594;</a>
+      </div>
       <!-- End extension snippets. -->
     </div>
 
@@ -436,6 +489,7 @@
     <!-- Extension JS files. Add or remove as needed. -->
     <script src="http://slides.klipse.tech/includes/deckjs/extensions/menu/deck.menu.js"></script>
     <script src="http://slides.klipse.tech/includes/deckjs/extensions/status/deck.status.js"></script>
+    <script src="http://slides.klipse.tech/includes/deckjs/extensions/navigation/deck.navigation.js"></script>    
     <script src="http://slides.klipse.tech/includes/deckjs/extensions/fullscreen/deck.fullscreen.js"></script>
 
     <script>
