@@ -291,7 +291,7 @@
 	  <p> You are not allowed to use the syntax quote <code>`</code> only the quote <code>'</code>. </p>
           <pre><code class="clojure"> (defmacro my-when [test & body]) </code></pre>
 	  <pre><code class="clojure">
-	      (assert (= (my.dbg/when true (+ 1 2) (+ 3 4)) 7))
+	      (assert (= (my.m/when true (+ 1 2) (+ 3 4)) 7))
 	  </code></pre>
 	</div>
 	<div class="slide">
@@ -397,13 +397,234 @@
 	</div>
       </section>
       <section class="slide">
-	<h2> Macros - Limitations </h2>
-	<h3> The arguments are not evaluated </h3>
-	<pre><code class="clojure">
-	    (def docstring "this is my function")
-	    (defn foo docstring [])	      
-	</code></pre>
+	<h2>Macros with <code>quote</code> - Namespacing</h2>
+	<p class="meditation"> How the functions that you call inside your macro are namespaced resolved?</p>
+	<div class="slide">
+	  <p> In the namespace of the caller!!!!</p>
+	  <p> Remember: the essence of macros is just list manipulation </p>
+	</div>
+	<div class="slide">
+	  <pre><code class="clojure">
+	      (ns my.foo$macros)
+	      (defmacro dbg [form]
+	      (list 'str (list 'quote form) " => " form))
+	  </code></pre>
+	  <p> Let's override foo in a new namespace </p>
+	  <pre><code class="clojure">
+	      (ns my.bar)
+	      (defn str [x] "A bug occured")
+	  </code></pre>	  
+	  <p> Oops...</p>
+	  <pre><code class="clojure">
+	      (println (my.foo/dbg (map inc [1 2 3]))) 
+	  </code></pre>
+	</div>
+	<div class="slide">
+	  <p> Let's go back to a clean namespace </p>
+	  <pre><code class="clojure">
+	      (ns my.clean)
+	      (println (my.foo/dbg (map inc [1 2 3])))  
+	  </code></pre>
+	</div>
       </section>
+      <section class="slide">
+	<h2> Macros the real way - Syntax quote </h2>
+	<p> Syntax quote has 4 powerful features: </p>
+	<ol>
+	  <li>fully-qualified symbols</li>
+	  <li>unquote with <code>~</code></li>
+	  <li>unquote splicing with <code>~@</code></li>
+	  <li>generated symbols with <code>#</code></li>
+	</ol>
+	<p> Remark: Syntax quote can also be used outside macros</p>
+      </section>
+      <section class="slide">
+	<h2> Syntax quote <code>`</code>- fully-qualified symbols </h2>
+	<p> Remark: Syntax quote can also be used outside macros</p>
+	<div class="slide">
+          <p> With the regular <code>quote</code>, symbols are kept as-is: they are not resolved.</p>
+	  <pre><code class="clojure">
+	      ['(map) (quote reduce)]
+	  </code></pre>
+	</div>
+	<div class="slide">
+          <p> With the <code>syntax quote</code>, symbols are resolved.</p>
+	</div>
+	<div class="slide">
+	  <p> If a symbol exists in a required namespace or in the core namespace, it is resolved to this namespace:</p>
+	  <pre><code class="clojure">
+	      (require '[clojure.set :as set :refer [union difference] :rename {difference diff}])
+
+	      `(map union set/intersection diff)
+	  </code></pre>
+	</div>
+	<div class="slide">
+	  <p> If a symbol exists in the current namespace or doesn't exist, it is resolved to the current namespace:</p>
+	  <pre><code class="clojure">
+              (def foo)
+	      `(foo a-non-existing-symbol)
+	  </code></pre>
+	</div>
+      </section>
+      <section class="slide">
+	<h2> Syntax quote <code>`</code>- unquote </h2>
+	<div class="slide">
+          <p> Sometimes, you want to escape the quote i.e. to evaluate the symbol or the expression</p>
+	</div>
+	<div class="slide">
+	  <p> Unquoting a symbol </p>
+	  <pre><code class="clojure">
+	      (let [a 1]
+	      `(a ~a))
+	  </code></pre>
+	</div>	
+	<div class="slide">
+	  <p> Unquoting an expression </p>
+	  <pre><code class="clojure">
+	      `(16 17 (inc 17) ~(inc 17))
+	  </code></pre>
+	</div>
+      </section>
+      <section class="slide">
+	<h2> Syntax quote <code>`</code>- unquote splicing</h2>
+	<div class="slide">
+          <p> Sometimes, you want to escape the quote for a list - but you want the interior of the list without the parentheses</p>
+	</div>
+	<div class="slide">
+	  <p> Without splicing: </p>
+	  <pre><code class="clojure">
+	      (let [numbers [10 20 30]]
+	      `(1 2 ~numbers))
+	  </code></pre>
+	</div>
+	<div class="slide">
+	  <p> With splicing: </p>
+	  <pre><code class="clojure">
+	      (let [numbers [10 20 30]]
+	      `(1 2 ~@numbers))
+	  </code></pre>
+	</div>
+	<div class="slide">
+	  <p> Splicing a map: </p>
+	  <pre><code class="clojure">
+	      `(1 2 ~@{:a 1 :b 2 :c {:d 3}})
+	  </code></pre>
+	</div>
+      </section>
+      <section class="slide">
+	<h2> Syntax quote <code>`</code>- symbol generation</h2>
+	<div class="slide">
+          <p> Inside syntax quote, you can generate unique symbol names by appending <code>#</code> to the symbol.</p>
+	</div>
+	<div class="slide">
+	  <pre><code class="clojure">
+	      `(A#)
+	  </code></pre>
+	</div>
+	<div class="slide">
+	  <p> All the references to that symbol within a syntax-quoted expression resolve to the same generated symbol</p>
+	  <pre><code class="clojure">
+	      `(a b a# b# a# b#)
+	  </code></pre>
+	</div>
+      </section>
+      <section class="slide">
+	<h2> Macros the real way - Practice </h2>
+	<div>
+	  <h3> Part 1 </h3>
+	  <p>
+            Write a macro that does the same as <code>when</code> without looking at the code of <code>when</code>.
+	  <p> You are allowed to use the syntax quote <code>~</code> </p>
+          <pre><code class="clojure"> (ns my.macros$macros) </code></pre>
+          <pre><code class="clojure"> (defmacro my-when [test & body]) </code></pre>
+	  <pre><code class="clojure">
+	      (assert (= (my.macros/when true (+ 1 2) (+ 3 4)) 7))
+	  </code></pre>
+	</div>
+	<div class="slide">
+	  <p> The solution:</p>
+	  <pre><code class="clojure">
+	      (defmacro when-solution-111 [test & body]
+	      `(if ~test (do ~@body))) 
+	  </code></pre>
+	</div>	
+      </section>
+<section class="slide">
+	<h2> Macros the real way - Practice </h2>
+	<div>
+	  <h3> Part 2 </h3>
+	  <p>
+            Write a macro that does the same as <code>dotimes</code> without looking at the code of <code>dotimes</code>.
+	  <p> You are allowed to use the syntax quote <code>~</code> </p>
+          <pre><code class="clojure"> (ns my.macros$macros) </code></pre>	  
+          <pre><code class="clojure">
+	      (defmacro my-dotimes [binding & body])
+	  </code></pre>
+	  <pre><code class="clojure">
+(my.macros/dotimes [n 5] (println "n is" n))
+	  </code></pre>
+	</div>
+	<div class="slide">
+	  <p> The solution:</p>
+	  <pre><code class="clojure">
+	      (defmacro when-solution-111 [test & body]
+	      `(if ~test (do ~@body))) 
+	  </code></pre>
+	</div>	
+      </section>      
+      <section class="slide">
+	<h2> Macros  - Limitations and Pitfalls </h2>
+	<p> Macros are very powerful </p>
+	<p> Remember: with great power comes great responsibility.</p>
+	<div class="slide">
+	  <h3> If a macro relies on the type of its arguments, the arguments must be passed literally </h3>
+	  <p> <code>defn</code> accepts a docstring - it must be a literal string.</p>
+          <pre><code class="clojure">
+	      (defn foo "foo is a great function" [])
+	  </code></pre>
+          <pre><code class="clojure">
+	      (def docstring "bar is a great function")
+	      (defn bar docstring [])
+	  </code></pre>	  
+	</div>
+	<div class="slide">
+	  <h3> You cannot <code>apply</code> a macro</h3>
+          <pre><code class="clojure">
+	      (apply and [1 2])
+	  </code></pre>
+	</div>
+      </section>
+      <section class="slide">
+	<h2> Macros  - Limitations and Pitfalls </h2>
+	<div>
+	  <h3> Recursive macros </h3>
+	  <p> You can write a recursive macro - but the stopping condition must be syntactic</p>
+	  <pre><code class="clojure">
+	      (defmacro and
+	      "Evaluates exprs one at a time, from left to right. If a form
+	      returns logical false (nil or false), and returns that value and
+	      doesn't evaluate any of the other expressions, otherwise it returns
+	      the value of the last expr. (and) returns true."
+	      {:added "1.0"}
+	      ([] true)
+	      ([x] x)
+	      ([x & next]
+	      `(let [and# ~x]
+	      (if and# (and ~@next) and#))))
+	  </code></pre>
+	  <p> The following macro will cause a stack overflow </p>
+	  <pre><code class="clojure">
+	      (defmacro my-and
+	      [& tests]
+	      `(if ~(not (seq tests))
+              true
+              (if ~(first tests)
+              (my-and ~@(rest tests))
+              nil)))
+	  </code></pre>
+	</div>
+      </section>
+      
       <section class="slide">
 	<img src="./img/congrats.jpg" alt="">
       </section>

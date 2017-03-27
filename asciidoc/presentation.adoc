@@ -2,6 +2,8 @@
 :encoding: utf-8
 :navigation:
 :deckjs_transition: horizontal-slide
+:deckjs_theme: none
+:hardbreaks:
 
 == Timeline
 
@@ -21,11 +23,31 @@
 
 == Clojure: Combining purity and pragmatism
 
+[%step]
+--
+This is the date
+
+++++
+<code data-loop-msec="1000" class="clj">
+(new js/Date)
+</code>
+++++
+--
+
+[%step]
+
+--
+++++
+<br>
+++++
+Here is another code snippet:
 
 [source,role="clj"]
 ----
 (map inc [1 2 3])
 ----
+--
+
 
 == Clojurescript: Clojure rocks, Javascript reaches!
 
