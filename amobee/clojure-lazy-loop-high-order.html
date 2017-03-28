@@ -209,11 +209,23 @@
 	      (defn reduce-by-key [f lst])
 	  </code></pre>
 	  <pre><code class="clojure">
-	      (assert (= (reduce-by-key '((a 1)) +) '((a 1))))
-	      (assert  (= (reduce-by-key '((a 1) (a 3)) +) '((a 4))))
-	      (assert  (= (reduce-by-key '((a 1) (a 3) (b 1) (a 5) (b 6)) +) '((a 9) (b 7))))
+	      (assert (= (reduce-by-key + '((a 1)) ) '((a 1))))
+	      (assert  (= (reduce-by-key + '((a 1) (a 3))) '((a 4))))
+	      (assert  (= (reduce-by-key + '((a 1) (a 3) (b 1) (a 5) (b 6))) '((a 9) (b 7))))
 	  </code></pre>
 	</div>
+	<div class="slide">
+	  <p> The solution:</p>
+	  <pre><code class="clojure">
+(defn reduce-by-key-solution [f lst]
+  (->> (reduce (fn [res [k v]]
+            (assoc res k (f v (get res k 0)))) 
+          {} lst)
+      (into ()))
+  )
+	  </code></pre>
+</div>
+
       </section>
 
       <section class="slide">
