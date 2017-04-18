@@ -68,7 +68,7 @@ What if you want to keep access to the whole sequence?
 ----
 --
 
-==Destructuring a map
+== Destructuring a map
 
 [%step]
 --
@@ -96,6 +96,10 @@ Most useful piece of destructuring: when you want to create locals with the same
 (let [{:keys [x y]} point]
   (+ x y))
 ----
+--
+
+[%step]
+--
 
 As with vectors, you can bind the entire map to a local using the :as directive.
 
@@ -104,8 +108,9 @@ As with vectors, you can bind the entire map to a local using the :as directive.
 (let [{:keys [x y] :as p} {:x 5 :y 7}]
   p)
 ----
+--
 
-==Exercise: Destructuring (part 1)
+== Exercise: Destructuring (part 1)
 
 How will you destructure a map that is inside a vector, e.g. `[{:a 1 :b 2}]`?
 

@@ -83,7 +83,9 @@
 </div>
 </div>
 </div>
-<div class="paragraph"><p>==Destructuring a map</p></div>
+</section>
+<section class="slide" id="_destructuring_a_map">
+<h2>Destructuring a map</h2>
 <div class="openblock slide">
 <div class="content">
 <div class="paragraph"><p>Choose local names and provide keys</p></div>
@@ -108,6 +110,10 @@
   (+ x y))</code></pre>
 </div>
 </div>
+</div>
+</div>
+<div class="openblock slide">
+<div class="content">
 <div class="paragraph"><p>As with vectors, you can bind the entire map to a local using the :as directive.</p></div>
 <div class="listingblock clj">
 <div class="content">
@@ -115,18 +121,22 @@
   p)</code></pre>
 </div>
 </div>
-<div class="paragraph"><p>==Exercise: Destructuring (part 1)</p></div>
+</div>
+</div>
+</section>
+<section class="slide" id="_exercise_destructuring_part_1">
+<h2>Exercise: Destructuring (part 1)</h2>
 <div class="paragraph"><p>How will you destructure a map that is inside a vector, e.g. <code>[{:a 1 :b 2}]</code>?</p></div>
-</div>
-</div>
+<div class="openblock slide">
+<div class="content">
 <div class="listingblock clj">
 <div class="content">
 <pre class="highlight"><code>(let [[{:keys [a b]}] [{:a 1 :b 2}]]
   a)</code></pre>
 </div>
 </div>
-<div class="openblock">
-<div class="content">
+</div>
+</div>
 <link rel="stylesheet" media="screen" href="http://slides.klipse.tech/includes/deckjs/themes/style/klipse.css">
 <link rel="stylesheet" media="screen" href="http://slides.klipse.tech/amobee/main.css">
 
@@ -148,8 +158,6 @@
     };
 </script>
 <script src="https://storage.googleapis.com/app.klipse.tech/plugin/js/klipse_plugin.js"></script>
-</div>
-</div>
 </section>
 <div aria-role="navigation">
 <a class="deck-prev-link" href="#" title="Previous">&#8592;</a>
