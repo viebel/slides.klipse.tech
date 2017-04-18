@@ -124,15 +124,119 @@
 </div>
 </div>
 </section>
-<section class="slide" id="_exercise_destructuring_part_1">
-<h2>Exercise: Destructuring (part 1)</h2>
+<section class="slide" id="_exercise_destructuring">
+<h2>Exercise: Destructuring</h2>
 <div class="paragraph"><p>How will you destructure a map that is inside a vector, e.g. <code>[{:a 1 :b 2}]</code>?</p></div>
+<div class="listingblock clj">
+<div class="content">
+<pre class="highlight"><code></code></pre>
+</div>
+</div>
 <div class="openblock slide">
 <div class="content">
+<div class="paragraph"><p>Solution:</p></div>
 <div class="listingblock clj">
 <div class="content">
 <pre class="highlight"><code>(let [[{:keys [a b]}] [{:a 1 :b 2}]]
   a)</code></pre>
+</div>
+</div>
+</div>
+</div>
+</section>
+<section class="slide" id="_exercise_destructuring_cont">
+<h2>Exercise: Destructuring (cont.)</h2>
+<div class="paragraph"><p>Write a function <code>foo</code> that receives 4 arguments <code>a</code>, <code>b</code>, <code>c</code> and <code>d</code> where:</p></div>
+<div class="ulist">
+<ul>
+<li><code>a</code> and <code>b</code> are required</li>
+<li><code>c</code> is optional with a default value of 10</li>
+<li><code>d</code> is optional with a default value of <code>nil</code></li>
+</ul>
+</div>
+<div class="openblock slide">
+<div class="content">
+<div class="listingblock clj">
+<div class="content">
+<pre class="highlight"><code>(defn foo [])</code></pre>
+</div>
+</div>
+</div>
+</div>
+</section>
+<section class="slide" id="_destructuring_default_values">
+<h2>Destructuring: default values</h2>
+<div class="paragraph"><p>You can specify default values of a map with the <code>:or</code> directive:</p></div>
+<div class="listingblock clj">
+<div class="content">
+<pre class="highlight"><code>(let [{:keys [a b c d] :or {c 10 d nil}} {}]
+  c)</code></pre>
+</div>
+</div>
+</section>
+<section class="slide" id="_destructuring_function_arguments_on_the_fly">
+<h2>Destructuring function arguments on the fly</h2>
+<div class="paragraph"><p>You can destructure function arguments without writing a <code>let</code> statement.</p></div>
+<div class="paragraph"><p>This is extremly useful!</p></div>
+<div class="listingblock clj">
+<div class="content">
+<pre class="highlight"><code>(defn barbar [a [b c] {:keys [x y]}]
+  [a b c x y])
+
+(barbar 1 [2 3] {:x 4 :y 7})</code></pre>
+</div>
+</div>
+<div class="openblock slide">
+<div class="content">
+<div class="paragraph"><p>Sometimes we want to pass a map - without the enclosing brackets:</p></div>
+<div class="listingblock clj">
+<div class="content">
+<pre class="highlight"><code>(defn foofoo [a [b c] &amp; {:keys [x y]}]
+  [a b c x y])
+
+(foofoo 1 [2 3] :x 4 :y 7)</code></pre>
+</div>
+</div>
+</div>
+</div>
+</section>
+<section class="slide" id="_destructuring_summary_with_hello_world">
+<h2>Destructuring: Summary with hello world</h2>
+<div class="paragraph"><p>Let&#8217;s combine all what we have learned about destructuring:</p></div>
+<div class="listingblock clj">
+<div class="content">
+<pre class="highlight"><code>(require '[clojure.string :as string])
+
+(defn hello-world [&amp; {:keys [language upper-case?]
+                      :or {language :en
+                           upper-case? false}}]
+
+  (let [greeting (case language
+                   :fr "bonjour monde"
+                   :en "hello world")]
+    (if upper-case?
+      (string/upper-case greeting)
+      greeting)))</code></pre>
+</div>
+</div>
+<div class="openblock slide">
+<div class="content">
+<div class="paragraph"><p>With no params:</p></div>
+<div class="listingblock clj">
+<div class="content">
+<pre class="highlight"><code>(hello-world)</code></pre>
+</div>
+</div>
+<div class="paragraph"><p>With <code>:language</code>:</p></div>
+<div class="listingblock clj">
+<div class="content">
+<pre class="highlight"><code>(hello-world :language :fr)</code></pre>
+</div>
+</div>
+<div class="paragraph"><p>With <code>:upper-case?</code>:</p></div>
+<div class="listingblock clj">
+<div class="content">
+<pre class="highlight"><code>(hello-world :upper-case? true)</code></pre>
 </div>
 </div>
 </div>

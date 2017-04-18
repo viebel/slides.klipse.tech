@@ -110,12 +110,18 @@ As with vectors, you can bind the entire map to a local using the :as directive.
 ----
 --
 
-== Exercise: Destructuring (part 1)
+== Exercise: Destructuring
 
 How will you destructure a map that is inside a vector, e.g. `[{:a 1 :b 2}]`?
 
+[source,role="clj"]
+----
+----
+
 [%step]
 --
+Solution:
+
 [source,role="clj"]
 ----
 (let [[{:keys [a b]}] [{:a 1 :b 2}]]
@@ -123,6 +129,107 @@ How will you destructure a map that is inside a vector, e.g. `[{:a 1 :b 2}]`?
 ----
 --
 
+== Exercise: Destructuring (cont.)
+
+Write a function `foo` that receives 4 arguments `a`, `b`, `c` and `d` where:
+
+* `a` and `b` are required
+* `c` is optional with a default value of 10
+* `d` is optional with a default value of `nil`
+
+[%step]
+--
+[source,role="clj"]
+----
+(defn foo [])
+----
+--
+
+== Destructuring: default values
+
+You can specify default values of a map with the `:or` directive:
+
+[source,role="clj"]
+----
+(let [{:keys [a b c d] :or {c 10 d nil}} {}]
+  c)
+----
+
+
+== Destructuring function arguments on the fly
+
+You can destructure function arguments without writing a `let` statement.
+
+This is extremly useful!
+
+[source,role="clj"]
+----
+(defn barbar [a [b c] {:keys [x y]}]
+  [a b c x y])
+
+(barbar 1 [2 3] {:x 4 :y 7})
+----
+
+[%step]
+--
+Sometimes we want to pass a map - without the enclosing brackets:
+
+[source,role="clj"]
+----
+(defn foofoo [a [b c] & {:keys [x y]}]
+  [a b c x y])
+
+(foofoo 1 [2 3] :x 4 :y 7)
+----
+--
+
+
+
+== Destructuring: Summary with hello world
+
+Let's combine all what we have learned about destructuring:
+
+[source,role="clj"]
+----
+(require '[clojure.string :as string])
+
+(defn hello-world [& {:keys [language upper-case?] 
+                      :or {language :en
+                           upper-case? false}}]
+
+  (let [greeting (case language
+                   :fr "bonjour monde"
+                   :en "hello world")]
+    (if upper-case?
+      (string/upper-case greeting)
+      greeting)))
+----
+
+
+[%step]
+--
+With no params:
+
+[source,role="clj"]
+----
+(hello-world)
+----
+
+
+With `:language`:
+
+[source,role="clj"]
+----
+(hello-world :language :fr) 
+----
+
+With `:upper-case?`:
+
+[source,role="clj"]
+----
+(hello-world :upper-case? true)
+----
+--
 
 
 include::klipse.adoc[]
