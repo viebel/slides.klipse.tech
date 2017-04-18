@@ -1,0 +1,123 @@
+= Destructuring and Mutli Arity
+:encoding: utf-8
+:navigation:
+:deckjs_transition: horizontal-slide
+:deckjs_theme: none
+:hardbreaks:
+
+
+== Agenda
+
+* Destructuring - An elegant syntactic sugar
+* Multi arity - functions accepting different number of arguments
+
+
+== Destructuring a sequence
+
+[%step]
+--
+Destructuring the first `n` values of a vector:
+
+[source,role="clj"]
+----
+(def point [5 7])
+
+(let [[x y] point]
+  {:x x
+   :y y})
+----
+--
+
+[%step]
+--
+You can skip some items with `_` (don't care):
+
+[source,role="clj"]
+----
+(def point [5 6 8 7])
+
+(let [[x _ _ y] point]
+  {:x x
+   :y y})
+----
+--
+
+[%step]
+--
+Splitting a vector into `first` and `rest`:
+
+[source,role="clj"]
+----
+(def indexes [1 2 3])
+
+(let [[x & more] indexes]
+  {:x x :more more})
+----
+--
+
+[%step]
+--
+What if you want to keep access to the whole sequence?
+
+[source,role="clj"]
+----
+(def indexes (range 10))
+
+(let [[x & more :as full-list] indexes]
+  {:x x :more more :full-list full-list})
+----
+--
+
+==Destructuring a map
+
+[%step]
+--
+Choose local names and provide keys
+
+[source,role="clj"]
+----
+(def point {:x 5 :y 7})
+
+(let [{the-x :x the-y :y} point]
+  (+ the-x  the-y))
+----
+--
+
+[%step]
+--
+
+Most useful piece of destructuring: when you want to create locals with the same names as the keys of the map, using the `:keys` directive:
+
+
+[source,role="clj"]
+----
+(def point {:x 5 :y 7})
+
+(let [{:keys [x y]} point]
+  (+ x y))
+----
+
+As with vectors, you can bind the entire map to a local using the :as directive.
+
+[source,role="clj"]
+----
+(let [{:keys [x y] :as p} {:x 5 :y 7}]
+  p)
+----
+
+==Exercise: Destructuring (part 1)
+
+How will you destructure a map that is inside a vector, e.g. `[{:a 1 :b 2}]`?
+
+[%step]
+--
+[source,role="clj"]
+----
+(let [[{:keys [a b]}] [{:a 1 :b 2}]]
+  a)
+----
+--
+
+
+
+include::klipse.adoc[]
