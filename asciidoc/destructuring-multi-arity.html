@@ -146,12 +146,13 @@
 </section>
 <section class="slide" id="_exercise_destructuring_cont">
 <h2>Exercise: Destructuring (cont.)</h2>
-<div class="paragraph"><p>Write a function <code>foo</code> that receives 4 arguments <code>a</code>, <code>b</code>, <code>c</code> and <code>d</code> where:</p></div>
+<div class="paragraph"><p>Write a function <code>foo</code> that receives a map with 4 keys <code>:a</code>, <code>:b</code>, <code>:c</code> and <code>:d</code> where:</p></div>
 <div class="ulist">
 <ul>
 <li><code>a</code> and <code>b</code> are required</li>
 <li><code>c</code> is optional with a default value of 10</li>
-<li><code>d</code> is optional with a default value of <code>nil</code></li>
+<li><code>d</code> is optional with a default value of <code>{:title "hello"}</code></li>
+<li><code>e</code> is optional with a default value of <code>{:xAxis {:scale "linear"} :yAxis {:scale "linear}}</code></li>
 </ul>
 </div>
 <div class="openblock slide">
@@ -348,9 +349,10 @@
 <div class="paragraph"><p>The nice thing is that you can call a body from another body:</p></div>
 <div class="listingblock clj">
 <div class="content">
-<pre class="highlight"><code>(defn foo-multi
-  ([] 1)
-  ([a b] (+ a b))
+<pre class="highlight"><code>(defn bar-multi
+  ([] (bar-multi 1))
+  ([a] (bar-multi a 1))
+  ([a b] (bar-multi a b 10))
   ([a b c] (* a b c)))</code></pre>
 </div>
 </div>
@@ -359,11 +361,11 @@
 </section>
 <section class="slide" id="_exercise_multi_arity">
 <h2>Exercise: Multi arity</h2>
-<div class="paragraph"><p>Write a function <code>count-multi</code> that counts the number of arguments it receives without</p></div>
+<div class="paragraph"><p>Write a function <code>count-multi</code> that counts the number of arguments it receives:</p></div>
 <div class="ulist">
 <ul>
-<li>using any conditional like <code>if</code>, <code>when</code>, <code>cond</code> etc&#8230;&#8203;</li>
-<li>using <code>count</code></li>
+<li>without using any conditional like <code>if</code>, <code>when</code>, <code>cond</code> etc&#8230;&#8203;</li>
+<li>without using <code>count</code></li>
 </ul>
 </div>
 <div class="listingblock clj">
@@ -394,6 +396,7 @@
 </div>
 <link rel="stylesheet" media="screen" href="http://slides.klipse.tech/includes/deckjs/themes/style/klipse.css">
 <link rel="stylesheet" media="screen" href="http://slides.klipse.tech/amobee/main.css">
+<link rel="stylesheet" media="screen" href="http://slides.klipse.tech/includes/deckjs/extensions/scale/deck.scale.css">
 
 <link rel="stylesheet" type="text/css" href="https://storage.googleapis.com/app.klipse.tech/css/codemirror.css">
 

@@ -131,11 +131,12 @@ Solution:
 
 == Exercise: Destructuring (cont.)
 
-Write a function `foo` that receives 4 arguments `a`, `b`, `c` and `d` where:
+Write a function `foo` that receives a map with 4 keys `:a`, `:b`, `:c` and `:d` where:
 
 * `a` and `b` are required
 * `c` is optional with a default value of 10
-* `d` is optional with a default value of `nil`
+* `d` is optional with a default value of `{:title "hello"}`
+* `e` is optional with a default value of `{:xAxis {:scale "linear"} :yAxis {:scale "linear}}`
 
 [%step]
 --
@@ -346,9 +347,10 @@ The nice thing is that you can call a body from another body:
 
 [source, role="clj"]
 ----
-(defn foo-multi
-  ([] 1)
-  ([a b] (+ a b))
+(defn bar-multi
+  ([] (bar-multi 1))
+  ([a] (bar-multi a 1))
+  ([a b] (bar-multi a b 10))
   ([a b c] (* a b c)))
 ----
 --
@@ -356,10 +358,10 @@ The nice thing is that you can call a body from another body:
 
 == Exercise: Multi arity
 
-Write a function `count-multi` that counts the number of arguments it receives without
+Write a function `count-multi` that counts the number of arguments it receives:
 
-* using any conditional like `if`, `when`, `cond` etc...
-* using `count`
+* without using any conditional like `if`, `when`, `cond` etc...
+* without using `count`
 
 [source, role="clj"]
 ----
