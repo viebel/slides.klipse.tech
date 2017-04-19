@@ -4,7 +4,7 @@
 <meta content="text/html; charset=utf-8" http-equiv="Content-Type">
 <meta content="IE=edge,chrome=1" http-equiv="X-UA-Compatible">
 <meta content="Asciidoctor 1.5.5" name="generator">
-<title>Destructuring and Mutli Arity</title>
+<title>Destructuring and Multi Arity</title>
 <link href="deck.js/core/deck.core.css" rel="stylesheet">
 <link href="deck.js/extensions/scale/deck.scale.css" media="screen" rel="stylesheet">
 <link href="deck.js/extensions/navigation/deck.navigation.css" media="screen" rel="stylesheet">
@@ -16,7 +16,7 @@
 <body class="article">
 <div class="deck-container">
 <section class="slide" id="title-slide">
-<h1>Destructuring and Mutli Arity</h1>
+<h1>Destructuring and Multi Arity</h1>
 </section>
 <section class="slide" id="_agenda">
 <h2>Agenda</h2>
@@ -188,6 +188,20 @@
 </div>
 <div class="openblock slide">
 <div class="content">
+<div class="paragraph"><p>With this technique, we can have <strong><em>variadic arguments</strong></em>:</p></div>
+<div class="listingblock clj">
+<div class="content">
+<pre class="highlight"><code>(defn count-args [&amp; args]
+  (count args))
+
+(println (count-args 1 2 3 4))
+(println (count-args))</code></pre>
+</div>
+</div>
+</div>
+</div>
+<div class="openblock slide">
+<div class="content">
 <div class="paragraph"><p>Sometimes we want to pass a map - without the enclosing brackets:</p></div>
 <div class="listingblock clj">
 <div class="content">
@@ -195,6 +209,37 @@
   [a b c x y])
 
 (foofoo 1 [2 3] :x 4 :y 7)</code></pre>
+</div>
+</div>
+</div>
+</div>
+</section>
+<section class="slide" id="_exercise_poor_man_multi_arity">
+<h2>Exercise: Poor man multi-arity</h2>
+<div class="paragraph"><p>Write a function <code>fooz</code> that receives three numbers and returns their multiplication - where the 2nd and 3rd number have default values of 10 and 20</p></div>
+<div class="listingblock clj">
+<div class="content">
+<pre class="highlight"><code>(defn fooz [&amp; args])</code></pre>
+</div>
+</div>
+<div class="listingblock clj">
+<div class="content">
+<pre class="highlight"><code>(assert (= (fooz 10 2 3)  60))
+(assert (= (fooz 10 2)  (* 10 2 20)))
+(assert (= (fooz 10)  (* 10 10 20)))</code></pre>
+</div>
+</div>
+<div class="openblock slide">
+<div class="content">
+<div class="paragraph"><p>Solution:</p></div>
+<div class="listingblock clj">
+<div class="content">
+<pre class="highlight"><code>#_(defn fooz [&amp; args]
+  (case (count args)
+    1 (fooz (first args) 10 20)
+    2 (fooz (first args) (second args) 20)
+    3 (* (first args) (second args) (nth args 2))
+    (throw "bad arity")))</code></pre>
 </div>
 </div>
 </div>
@@ -237,6 +282,112 @@
 <div class="listingblock clj">
 <div class="content">
 <pre class="highlight"><code>(hello-world :upper-case? true)</code></pre>
+</div>
+</div>
+</div>
+</div>
+</section>
+<section class="slide" id="_destructuring_summary">
+<h2>Destructuring - summary</h2>
+
+</section>
+<section class="slide" id="_the_arity_of_functions">
+<h2>The arity of functions</h2>
+<div class="paragraph"><p><strong>Definition</strong>: <em>Arity</em> is the number of arguments that a function receives.</p></div>
+<div class="paragraph"><p>Examples:</p></div>
+<div class="ulist">
+<ul>
+<li><strong>0-ary</strong> (a.k.a nullary) functions (no arguments): <code>rand</code>, <code>#(println "foo")</code></li>
+<li><strong>1-ary</strong> (a.k.a unary) functions (1 argument): <code>inc</code>, <code>first</code>, <code>count</code>, <code>#(println %1)</code></li>
+<li><strong>2-ary</strong> (a.k.a binary) functions (2 arguments): <code>map</code>, <code>concat</code>, <code>#(+ %1 %2)</code></li>
+</ul>
+</div>
+<div class="openblock slide">
+<div class="content">
+<div class="paragraph"><p>Some functions are <em>variadic</em> i.e. it accepts any number of arguments.</p></div>
+<div class="paragraph"><p>Examples: <code>+</code>, <code>concat</code>&#8230;&#8203;</p></div>
+<div class="listingblock clj">
+<div class="content">
+<pre class="highlight"><code>(defn my-foo [&amp; args]
+ (count args))</code></pre>
+</div>
+</div>
+</div>
+</div>
+<div class="openblock slide">
+<div class="content">
+<div class="paragraph"><p>Some functions have a multi arity. The body of the functions is specified for each number of arguments.</p></div>
+</div>
+</div>
+</section>
+<section class="slide" id="_multi_arity_functions">
+<h2>Multi-arity functions</h2>
+<div class="paragraph"><p>Here is how we define different bodies for different number of arguments:</p></div>
+<div class="listingblock clj">
+<div class="content">
+<pre class="highlight"><code>(defn foo-multi
+  ([] 1)
+  ([a] (* a a a))
+  ([a b] (+ a b))
+  ([a b c] (* a b c)))</code></pre>
+</div>
+</div>
+<div class="openblock slide">
+<div class="content">
+<div class="paragraph"><p>It is a regular function:</p></div>
+<div class="listingblock clj">
+<div class="content">
+<pre class="highlight"><code>(println (foo-multi))
+(println (foo-multi 1 2 3))</code></pre>
+</div>
+</div>
+</div>
+</div>
+<div class="openblock slide">
+<div class="content">
+<div class="paragraph"><p>The nice thing is that you can call a body from another body:</p></div>
+<div class="listingblock clj">
+<div class="content">
+<pre class="highlight"><code>(defn foo-multi
+  ([] 1)
+  ([a b] (+ a b))
+  ([a b c] (* a b c)))</code></pre>
+</div>
+</div>
+</div>
+</div>
+</section>
+<section class="slide" id="_exercise_multi_arity">
+<h2>Exercise: Multi arity</h2>
+<div class="paragraph"><p>Write a function <code>count-multi</code> that counts the number of arguments it receives without</p></div>
+<div class="ulist">
+<ul>
+<li>using any conditional like <code>if</code>, <code>when</code>, <code>cond</code> etc&#8230;&#8203;</li>
+<li>using <code>count</code></li>
+</ul>
+</div>
+<div class="listingblock clj">
+<div class="content">
+<pre class="highlight"><code>(defn count-multi [])</code></pre>
+</div>
+</div>
+<div class="listingblock clj">
+<div class="content">
+<pre class="highlight"><code>(assert (= 0 (count-multi)))
+(assert (= 1 (count-multi 1)))
+(assert (= 5 (count-multi 1 2 3 4 5)))
+(assert (= 10 (apply count-multi (range 10))))</code></pre>
+</div>
+</div>
+<div class="openblock slide">
+<div class="content">
+<div class="paragraph"><p>Solution:</p></div>
+<div class="listingblock clj">
+<div class="content">
+<pre class="highlight"><code>#_(defn count-multi
+  ([] 0)
+  ([a] 1)
+  ([a &amp; args] (inc (apply count-multi args))))</code></pre>
 </div>
 </div>
 </div>

@@ -1,4 +1,4 @@
-= Destructuring and Mutli Arity
+= Destructuring and Multi Arity
 :encoding: utf-8
 :navigation:
 :deckjs_transition: horizontal-slide
@@ -170,6 +170,22 @@ This is extremly useful!
 (barbar 1 [2 3] {:x 4 :y 7})
 ----
 
+
+[%step]
+--
+With this technique, we can have **__variadic arguments**__:
+
+[source,role="clj"]
+----
+(defn count-args [& args]
+  (count args))
+
+(println (count-args 1 2 3 4))
+(println (count-args))
+----
+--
+
+
 [%step]
 --
 Sometimes we want to pass a map - without the enclosing brackets:
@@ -183,6 +199,43 @@ Sometimes we want to pass a map - without the enclosing brackets:
 ----
 --
 
+== Exercise: Poor man multi-arity
+
+Write a function `fooz` that receives three numbers and returns their multiplication - where the 2nd and 3rd number have default values of 10 and 20
+
+[source,role="clj"]
+----
+(defn fooz [& args])
+
+----
+
+
+[source,role="clj"]
+----
+(assert (= (fooz 10 2 3)  60))
+(assert (= (fooz 10 2)  (* 10 2 20)))
+(assert (= (fooz 10)  (* 10 10 20)))
+----
+
+
+
+
+
+[%step]
+--
+Solution:
+
+[source,role="clj"]
+----
+#_(defn fooz [& args]
+  (case (count args)
+    1 (fooz (first args) 10 20)
+    2 (fooz (first args) (second args) 20)
+    3 (* (first args) (second args) (nth args 2))
+    (throw "bad arity")))
+----
+
+--
 
 
 == Destructuring: Summary with hello world
@@ -231,5 +284,108 @@ With `:upper-case?`:
 ----
 --
 
+== Destructuring - summary
+
+== The arity of functions
+
+*Definition*: _Arity_ is the number of arguments that a function receives.
+
+Examples:
+
+* *0-ary* (a.k.a nullary) functions (no arguments): `rand`, `#(println "foo")`
+* *1-ary* (a.k.a unary) functions (1 argument): `inc`, `first`, `count`, `#(println %1)`
+* *2-ary* (a.k.a binary) functions (2 arguments): `map`, `concat`, `#(+ %1 %2)`
+
+
+[%step]
+--
+Some functions are _variadic_ i.e. it accepts any number of arguments.
+
+Examples: `+`, `concat`...
+
+[source,role="clj"]
+----
+(defn my-foo [& args]
+ (count args))
+----
+
+--
+
+[%step]
+--
+Some functions have a multi arity. The body of the functions is specified for each number of arguments.
+--
+
+== Multi-arity functions
+
+Here is how we define different bodies for different number of arguments:
+
+[source, role="clj"]
+----
+(defn foo-multi
+  ([] 1)
+  ([a] (* a a a))
+  ([a b] (+ a b))
+  ([a b c] (* a b c)))
+----
+
+[%step]
+--
+It is a regular function:
+[source, role="clj"]
+----
+(println (foo-multi))
+(println (foo-multi 1 2 3))
+----
+--
+
+
+[%step]
+--
+The nice thing is that you can call a body from another body:
+
+[source, role="clj"]
+----
+(defn foo-multi
+  ([] 1)
+  ([a b] (+ a b))
+  ([a b c] (* a b c)))
+----
+--
+
+
+== Exercise: Multi arity
+
+Write a function `count-multi` that counts the number of arguments it receives without
+
+* using any conditional like `if`, `when`, `cond` etc...
+* using `count`
+
+[source, role="clj"]
+----
+(defn count-multi [])
+----
+
+[source, role="clj"]
+----
+(assert (= 0 (count-multi)))
+(assert (= 1 (count-multi 1)))
+(assert (= 5 (count-multi 1 2 3 4 5)))
+(assert (= 10 (apply count-multi (range 10))))
+----
+
+
+
+[%step]
+--
+Solution:
+[source, role="clj"]
+----
+#_(defn count-multi
+  ([] 0)
+  ([a] 1)
+  ([a & args] (inc (apply count-multi args))))
+----
+--
 
 include::klipse.adoc[]
