@@ -6,9 +6,9 @@
 <meta content="Asciidoctor 1.5.5" name="generator">
 <title>The history of Clojure</title>
 <link href="deck.js/core/deck.core.css" rel="stylesheet">
-<link href="deck.js/extensions/scale/deck.scale.css" media="screen" rel="stylesheet">
 <link href="deck.js/extensions/menu/deck.menu.css" media="screen" rel="stylesheet">
 <link href="deck.js/extensions/navigation/deck.navigation.css" media="screen" rel="stylesheet">
+<link href="deck.js/extensions/status/deck.status.css" media="screen" rel="stylesheet">
 <link href="deck.js/themes/style/none.css" media="screen" rel="stylesheet">
 <link href="deck.js/themes/transition/horizontal-slide.css" media="screen" rel="stylesheet">
 <link href="deck.js/core/print.css" media="print" rel="stylesheet">
@@ -89,6 +89,15 @@
 <link rel="stylesheet" media="screen" href="http://slides.klipse.tech/asciidoc/klipse.css">
 
 <link rel="stylesheet" type="text/css" href="https://storage.googleapis.com/app.klipse.tech/css/codemirror.css">
+    <script src="http://slides.klipse.tech/includes/deckjs/extensions/status/deck.status.js"></script>
+    <link rel="stylesheet" media="screen" href="http://slides.klipse.tech/includes/deckjs/extensions/status/deck.status.css">
+      <!-- deck.status snippet -->
+      <p class="deck-status" aria-role="status">
+	<span> powered by <a href="https://github.com/viebel/klipse">KLIPSE</a> </span>
+	<span class="deck-status-current"></span>
+	/
+	<span class="deck-status-total"></span>
+      </p>
 
 <script>
     window.klipse_settings = {
@@ -112,12 +121,20 @@
 <a class="deck-prev-link" href="#" title="Previous">&#8592;</a>
 <a class="deck-next-link" href="#" title="Next">&#8594;</a>
 </div>
+<p aria-role="status" class="deck-status">
+<span></span>
+powered by
+<a href="https://github.com/viebel/klipse" target="_new">Klipse</a>
+<span class="deck-status-current"></span>
+/
+<span class="deck-status-total"></span>
+</p>
 </div>
 <script src="deck.js/jquery.min.js"></script>
 <script src="deck.js/core/deck.core.js"></script>
-<script src="deck.js/extensions/scale/deck.scale.js"></script>
 <script src="deck.js/extensions/menu/deck.menu.js"></script>
 <script src="deck.js/extensions/navigation/deck.navigation.js"></script>
+<script src="deck.js/extensions/status/deck.status.js"></script>
 <script>
   (function($, deck, undefined) {
     $.deck.defaults.keys['previous'] = [8, 33, 37, 39];

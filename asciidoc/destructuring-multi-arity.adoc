@@ -3,6 +3,7 @@
 :navigation:
 :deckjs_transition: horizontal-slide
 :menu:
+:status:
 :deckjs_theme: none
 :hardbreaks:
 

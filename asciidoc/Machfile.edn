@@ -7,7 +7,7 @@
  presentation.html {product "presentation.html"
                     depends [asciidoctor-deck.js deck.js]
                     novelty (mach.core/modified-since product "presentation.adoc")
-                    update! #$ ["bundle install && bundle exec asciidoctor -T asciidoctor-deck.js/templates/haml presentation.adoc"]}
+                    update! #$ ["bundle install && bundle exec asciidoctor -T templates/haml presentation.adoc"]}
  destructuring-multi-arity.html {product "destructuring-multi-arity.html"
                     depends [asciidoctor-deck.js deck.js]
                     novelty (mach.core/modified-since product "destructuring-multi-arity.adoc")
