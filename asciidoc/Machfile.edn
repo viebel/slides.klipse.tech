@@ -11,4 +11,8 @@
  destructuring-multi-arity.html {product "destructuring-multi-arity.html"
                     depends [asciidoctor-deck.js deck.js]
                     novelty (mach.core/modified-since product "destructuring-multi-arity.adoc")
-                    update! #$ ["bundle install && bundle exec asciidoctor -T asciidoctor-deck.js/templates/haml destructuring-multi-arity.adoc"]}}
+                                 update! #$ ["bundle install && bundle exec asciidoctor -T templates/haml destructuring-multi-arity.adoc"]}
+ polymorphism.html {product "polymorphism.html"
+                    depends [asciidoctor-deck.js deck.js]
+                    novelty (mach.core/modified-since product "polymorphism.adoc")
+                    update! #$ ["bundle install && bundle exec asciidoctor -T templates/haml polymorphism.adoc"]}}

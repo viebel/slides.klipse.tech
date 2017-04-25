@@ -1,4 +1,5 @@
 ++++
+<link rel="shortcut icon" href="./favicon.png">
 <link rel="stylesheet" media="screen" href="http://slides.klipse.tech/includes/deckjs/themes/style/klipse.css">
 <link rel="stylesheet" media="screen" href="http://slides.klipse.tech/asciidoc/klipse.css">
 

@@ -7,7 +7,7 @@
 :deckjs_transition: horizontal-slide
 :hardbreaks:
 
-== Timeline
+== The timeline
 
 * 1930 - Alonzo Church discovers the  https://en.wikipedia.org/wiki/Lambda_calculus[λ-calculus]
 * 1958 - John McCarthy invents https://en.wikipedia.org/wiki/Lisp_(programming_language)[LISP]

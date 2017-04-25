@@ -1,0 +1,494 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta content="text/html; charset=utf-8" http-equiv="Content-Type">
+<meta content="IE=edge,chrome=1" http-equiv="X-UA-Compatible">
+<meta content="Asciidoctor 1.5.5" name="generator">
+<title>Polymorphism: Multimethods, Protocols, Types and Records</title>
+<link href="deck.js/core/deck.core.css" rel="stylesheet">
+<link href="deck.js/extensions/menu/deck.menu.css" media="screen" rel="stylesheet">
+<link href="deck.js/extensions/navigation/deck.navigation.css" media="screen" rel="stylesheet">
+<link href="deck.js/extensions/status/deck.status.css" media="screen" rel="stylesheet">
+<link href="deck.js/themes/style/none.css" media="screen" rel="stylesheet">
+<link href="deck.js/themes/transition/horizontal-slide.css" media="screen" rel="stylesheet">
+<link href="deck.js/core/print.css" media="print" rel="stylesheet">
+<script src="deck.js/modernizr.custom.js"></script>
+</head>
+<body class="article">
+<div class="deck-container">
+<section class="slide" id="title-slide">
+<h1>Polymorphism: Multimethods, Protocols, Types and Records</h1>
+</section>
+<section class="slide" id="_agenda">
+<h2>Agenda</h2>
+<div class="ulist">
+<ul>
+<li>Multimethods</li>
+<li>Protocols</li>
+<li>Types</li>
+<li>Records</li>
+</ul>
+</div>
+</section>
+<section class="slide" id="_multimethods_vs_multi_arity">
+<h2>Multimethods vs Multi-arity</h2>
+<div class="paragraph"><p>The problem: We want to provide several implementations of a function</p></div>
+<div class="ulist">
+<ul>
+<li>depending not only on the number of arguments</li>
+<li>with the ability to have different implementations in different places</li>
+</ul>
+</div>
+<div class="paragraph"><p>See <a href="http://slides.klipse.tech/asciidoc/destructuring-multi-arity.html">this slides</a> for a tutorial about Multi-arity.</p></div>
+<div class="paragraph"><p>The solution: multimethods</p></div>
+<div class="ulist">
+<ul>
+<li><code>defmulti</code> - define a dispatch function</li>
+<li><code>defmethod</code> - implement each instance</li>
+</ul>
+</div>
+<div class="openblock slide">
+<div class="content">
+<div class="listingblock clj">
+<div class="content">
+<pre class="highlight"><code>(defmulti display (fn [type num] type))
+(defmethod display :rational [_ [a b]]
+  (str a "/" b))
+(display :rational [3 4])</code></pre>
+</div>
+</div>
+</div>
+</div>
+<div class="openblock slide">
+<div class="content">
+<div class="paragraph"><p>Now let&#8217;s define <code>display</code> for complex numbers:</p></div>
+<div class="listingblock clj">
+<div class="content">
+<pre class="highlight"><code>(defmethod display :complex [_ [a b]]
+  (str a " + " b "i"))
+(display :complex [3 4])</code></pre>
+</div>
+</div>
+</div>
+</div>
+</section>
+<section class="slide" id="_multimethods_default">
+<h2>Multimethods - default</h2>
+<div class="paragraph"><p>What happens if no implementation exists?</p></div>
+<div class="listingblock clj">
+<div class="content">
+<pre class="highlight"><code>(display :integer 3)</code></pre>
+</div>
+</div>
+<div class="openblock slide">
+<div class="content">
+<div class="paragraph"><p>Let&#8217;s provide a default implementation:</p></div>
+<div class="listingblock clj">
+<div class="content">
+<pre class="highlight"><code>(defmethod display :default [_ x]
+  (str x))
+(display :integer 3)</code></pre>
+</div>
+</div>
+</div>
+</div>
+</section>
+<section class="slide" id="_multimethods_reflection">
+<h2>Multimethods - reflection</h2>
+<div class="paragraph"><p>We can reflect on multimethods:<br>
+* <code>methods</code> - list the methods<br>
+* <code>get-method</code> - get a method<br>
+* <code>remove-method</code> - remove a method<br>
+* <code>add-method</code> - not available</p></div>
+<div class="openblock slide">
+<div class="content">
+<div class="listingblock clj">
+<div class="content">
+<pre class="highlight"><code>(keys (methods display))</code></pre>
+</div>
+</div>
+<br/>
+<div class="listingblock clj">
+<div class="content">
+<pre class="highlight"><code>(get-method display :complex)</code></pre>
+</div>
+</div>
+</div>
+</div>
+</section>
+<section class="slide" id="_multimethods_dispatching_on_several_arguments">
+<h2>Multimethods - dispatching on several arguments</h2>
+<div class="paragraph"><p>We can dispatch on more than one argument!</p></div>
+<div class="paragraph"><p>For instance, let&#8217;s improve our <code>display</code> function so that it depends also on the format.</p></div>
+<div class="openblock slide">
+<div class="content">
+<div class="listingblock clj">
+<div class="content">
+<pre class="highlight"><code>(defmulti display-formatted
+  (fn [type format _]
+    [type format]))
+
+(defmethod display-formatted [:complex :text]
+  [type format x]
+  (display type x))
+
+(display-formatted :complex :text [1 2])</code></pre>
+</div>
+</div>
+</div>
+</div>
+<div class="openblock slide">
+<div class="content">
+<div class="paragraph"><p>Let&#8217;s display complex numbers nicely in <code>html</code>:</p></div>
+<div class="listingblock clj">
+<div class="content">
+<pre class="highlight"><code>(defmethod display-formatted [:complex :html]
+  [type format [a b]]
+  (str "&lt;span&gt;" a " + " b "&lt;em&gt;i&lt;/em&gt;&lt;/span&gt;"))
+
+(display-formatted :complex :html [1 2])</code></pre>
+</div>
+</div>
+</div>
+</div>
+</section>
+<section class="slide" id="_multimethods_exercise">
+<h2>Multimethods - Exercise</h2>
+<div class="paragraph"><p>Write a function <code>combine</code> that receive two arguments that could be either a sequence or an atome (i.e. not a sequence) and combines them properly:</p></div>
+<div class="ulist">
+<ul>
+<li>with two sequences: concat them</li>
+<li>with two atoms: create a list of the two</li>
+<li>with an atom and a sequence: <a href="https://clojuredocs.org/clojure.core/conj">conj</a> the atom in the sequence</li>
+</ul>
+</div>
+<div class="listingblock clj">
+<div class="content">
+<pre class="highlight"><code>(defmulti combine )</code></pre>
+</div>
+</div>
+<br/>
+<div class="listingblock clj">
+<div class="content">
+<pre class="highlight"><code>(defmethod combine _ [])</code></pre>
+</div>
+</div>
+<br/>
+<div class="listingblock clj">
+<div class="content">
+<pre class="highlight"><code>(defmethod combine _ [])</code></pre>
+</div>
+</div>
+<br/>
+<div class="listingblock clj">
+<div class="content">
+<pre class="highlight"><code>(defmethod combine _ [])</code></pre>
+</div>
+</div>
+<br/>
+<div class="listingblock clj">
+<div class="content">
+<pre class="highlight"><code>(assert (= (combine 1 2) [1 2]))
+(assert (= (combine [1 2] [3 4]) [1 2 3 4]))
+(assert (= (combine [1 2] 3) [1 2 3]))</code></pre>
+</div>
+</div>
+<br/>
+</section>
+<section class="slide" id="_protocols">
+<h2>Protocols</h2>
+<div class="paragraph"><p>Very often, the dispatching logic depends only on the <strong>type</strong> of the <strong>first</strong> argument.<br>
+In that case, it is simple to use protocols, types and records.</p></div>
+<div class="openblock slide">
+<div class="content">
+<div class="paragraph"><p>A protocol is a group of function signature:</p></div>
+<div class="listingblock clj">
+<div class="content">
+<pre class="highlight"><code>(defprotocol IDisplayable
+  (disp [this]))</code></pre>
+</div>
+</div>
+<div class="paragraph"><p>Remark: We use <code>disp</code> and not <code>display</code> in order to not override our previous <code>display</code> functions.</p></div>
+</div>
+</div>
+<div class="openblock slide">
+<div class="content">
+<div class="paragraph"><p>Let&#8217;s define a type that implements this protocol:</p></div>
+<div class="listingblock clj">
+<div class="content">
+<pre class="highlight"><code>(deftype Rational [a b]
+  IDisplayable
+  (disp [_] (str a "/" b)))
+
+(disp (Rational. 1 2))</code></pre>
+</div>
+</div>
+</div>
+</div>
+<div class="openblock slide">
+<div class="content">
+<div class="paragraph"><p>The cool thing with protocols and types (and also records) is that we can extend them after the type is <code><em>closed</em></code>:</p></div>
+<div class="listingblock clj">
+<div class="content">
+<pre class="highlight"><code>(deftype Complex [a b])</code></pre>
+</div>
+</div>
+<br/>
+<div class="listingblock clj">
+<div class="content">
+<pre class="highlight"><code>(extend-type Complex
+   IDisplayable
+  (disp [this] (str (.-a this) " + " (.-b this) "i")))
+
+(disp (Complex. 1 2))</code></pre>
+</div>
+</div>
+</div>
+</div>
+<br/>
+<div class="paragraph"><p>Remark: Sometimes it is more convenient to use <a href="https://clojuredocs.org/clojure.core/extend-protocol">extend-protocol</a>.</p></div>
+</section>
+<section class="slide" id="_protocols_reflection_and_extension">
+<h2>Protocols - reflection and extension</h2>
+<div class="paragraph"><p>We can check - at <em>run time</em> - if an instance of an object satisfies a protocol:</p></div>
+<div class="openblock slide">
+<div class="content">
+<div class="listingblock clj">
+<div class="content">
+<pre class="highlight"><code>(satisfies? IDisplayable (Complex. 1 2))</code></pre>
+</div>
+</div>
+<br/>
+<div class="listingblock clj">
+<div class="content">
+<pre class="highlight"><code>(satisfies? IDisplayable "abc")</code></pre>
+</div>
+</div>
+</div>
+</div>
+<div class="openblock slide">
+<div class="content">
+<div class="paragraph"><p>If we want, we can extend a clojure primitive type:</p></div>
+<div class="listingblock clj">
+<div class="content">
+<pre class="highlight"><code>(extend-type js/String
+  IDisplayable
+  (disp [this] (str "An string: " this)))
+
+(disp "Hello Klipse")</code></pre>
+</div>
+</div>
+</div>
+</div>
+<div class="openblock slide">
+<div class="content">
+<div class="paragraph"><p>We can even provide a default implementation of a protocol to all the clojure objects:</p></div>
+<div class="listingblock clj">
+<div class="content">
+<pre class="highlight"><code>#_(extend-protocol IDisplayable
+  js/Object
+  (disp [this] (str "An obj: " this)))
+
+(disp {:a 1})</code></pre>
+</div>
+</div>
+<br/>
+<div class="paragraph"><p>Remark: We have commented out this code because when it runs too early it conflicts with the slides framewok javascript code.</p></div>
+</div>
+</div>
+<div class="openblock slide">
+<div class="content">
+<div class="paragraph"><p>The proper implementation is selected according to the specificity of the type:</p></div>
+<div class="listingblock clj">
+<div class="content">
+<pre class="highlight"><code>(disp "Hello World")</code></pre>
+</div>
+</div>
+</div>
+</div>
+</section>
+<section class="slide" id="_records">
+<h2>Records</h2>
+<div class="paragraph"><p>Records are a bit richer than types.</p></div>
+<div class="paragraph"><p>If you want to really understand the difference between types and records, you should read <a href="http://blog.klipse.tech/clojurescript/2016/04/25/records-wacky-maps.html">In Clojure, records are wacky maps</a> and <a href="http://blog.klipse.tech/clojurescript/2016/04/26/deftype-explained.html">The power and danger of deftype in clojure and clojurescript</a>.</p></div>
+</section>
+<section class="slide" id="_protocols_exercise">
+<h2>Protocols - Exercise</h2>
+<div class="paragraph"><p>Write a protocol <code>IAnimal</code> with two functions:</p></div>
+<div class="ulist">
+<ul>
+<li><code>my-name</code> - returns the name of the animal ("dog", "cat" etc&#8230;&#8203;)</li>
+<li><code>my-age</code>  - retuns <code>n</code> times the name of the animal, where <code>n</code> is the age of the animal</li>
+</ul>
+</div>
+<div class="paragraph"><p>Implements <code>Cat</code> and <code>Dog</code> types.</p></div>
+<div class="paragraph"><p>For <code>Cat</code>, implement the protocol inside the definition of the type.<br>
+For <code>Dog</code>, implement the protocol outside the definition of the type - using <code>extend-type</code> or <code>extend-protocol</code>.</p></div>
+<div class="listingblock clj">
+<div class="content">
+<pre class="highlight"><code>(defprotocol IAnimal)</code></pre>
+</div>
+</div>
+<br/>
+<div class="listingblock clj">
+<div class="content">
+<pre class="highlight"><code>(deftype Cat [age])</code></pre>
+</div>
+</div>
+<br/>
+<div class="listingblock clj">
+<div class="content">
+<pre class="highlight"><code>(deftype Dog [age])</code></pre>
+</div>
+</div>
+<br/>
+<div class="listingblock clj">
+<div class="content">
+<pre class="highlight"><code>(assert (= (my-name (Dog. 5)) "dog"))
+(assert (= (my-name (Cat. 7)) "cat"))
+(assert (= (my-age (Dog. 5)) "dog dog dog dog dog"))
+(assert (= (my-age (Cat. 7)) "cat cat cat cat cat cat cat"))</code></pre>
+</div>
+</div>
+<link rel="shortcut icon" href="./favicon.png">
+<link rel="stylesheet" media="screen" href="http://slides.klipse.tech/includes/deckjs/themes/style/klipse.css">
+<link rel="stylesheet" media="screen" href="http://slides.klipse.tech/asciidoc/klipse.css">
+
+<link rel="stylesheet" type="text/css" href="https://storage.googleapis.com/app.klipse.tech/css/codemirror.css">
+
+<script>
+    window.klipse_settings = {
+     codemirror_options_in: {
+            lineWrapping: true,
+            autoCloseBrackets: true
+        },
+        codemirror_options_out: {
+            lineWrapping: true
+        },
+        beautify_strings: true,
+        selector: '.clj',
+        selector_js: '.transpile-cljs',
+        selector_reagent: '.reagent',
+    };
+</script>
+<script src="https://storage.googleapis.com/app.klipse.tech/plugin/js/klipse_plugin.js"></script>
+</section>
+<div aria-role="navigation">
+<a class="deck-prev-link" href="#" title="Previous">&#8592;</a>
+<a class="deck-next-link" href="#" title="Next">&#8594;</a>
+</div>
+<p aria-role="status" class="deck-status">
+<span></span>
+powered by
+<a href="https://github.com/viebel/klipse" target="_new">Klipse</a>
+<span class="deck-status-current"></span>
+/
+<span class="deck-status-total"></span>
+</p>
+</div>
+<script src="deck.js/jquery.min.js"></script>
+<script src="deck.js/core/deck.core.js"></script>
+<script src="deck.js/extensions/menu/deck.menu.js"></script>
+<script src="deck.js/extensions/navigation/deck.navigation.js"></script>
+<script src="deck.js/extensions/status/deck.status.js"></script>
+<script>
+  (function($, deck, undefined) {
+    $.deck.defaults.keys['previous'] = [8, 33, 37, 39];
+    $.deck.defaults.keys['next'] = [13, 32, 34, 39];
+  
+    $.extend(true, $[deck].defaults, {
+        countNested: false
+    });
+  
+    $.deck('.slide');
+  })(jQuery, 'deck');
+</script>
+<style>
+  .slide.canvas-image {
+  -moz-background-size: cover;
+  -webkit-background-size: cover;
+  -o-background-size: cover;
+  background-size: cover;
+  display: -moz-box;
+  display: -webkit-box;
+  display: -ms-box;
+  display: box;
+  -moz-box-orient: vertical;
+  -webkit-box-orient: vertical;
+  -ms-box-orient: vertical;
+  box-orient: vertical;
+  -moz-box-align: start;
+  -webkit-box-align: start;
+  -ms-box-align: start;
+  box-align: start;
+  -moz-box-pack: start;
+  -webkit-box-pack: start;
+  -ms-box-pack: start;
+  box-pack: start;}
+  
+  .bottom-left {
+    left: 1%;
+    bottom: 20%; }
+  
+  .top-left {
+    left: 1%;
+    top: 20%; }
+  
+  .bottom-right {
+    right: 1%;
+    bottom: 20%; }
+  
+  .top-right {
+    right: 1%;
+    top: 20%; }
+  
+  .center-up {
+    right: 50%;
+    top: 1%;
+  }
+  
+  .center-down {
+    right: 50%;
+    bottom: 1%;
+  }
+  .canvas-image .canvas-caption p {
+    text-align: center;
+    padding-top: 0;
+    padding: 0;
+    -moz-transform: none;
+    -webkit-transform: none;
+    -o-transform: none;
+    -ms-transform: none;
+    transform: none;
+    display: inline;
+    position: absolute;
+    background-color: rgba(0, 0, 0, 0.7);
+    font-weight: bold;
+    font-size: 58px;
+    -webkit-box-shadow: 2px 2px 2px #000;
+    -moz-box-shadow: 2px 2px 2px #000;
+    box-shadow: 2px 2px 2px #000;
+    padding: 1rem;
+    color: white; }
+  kbd.keyseq { color: #555555; }
+  kbd:not(.keyseq) {
+    display: inline-block;
+    color: #222222;
+    font-size: 0.7em;
+    line-height: 1.4;
+    background-color: #F7F7F7;
+    border: 1px solid #ccc;
+    -webkit-border-radius: 3px;
+    border-radius: 3px;
+    -webkit-box-shadow: 0 1px 0 rgba(0, 0, 0, 0.2), 0 0 0 2px white inset;
+    box-shadow: 0 1px 0 rgba(0, 0, 0, 0.2), 0 0 0 2px white inset;
+    margin: -0.15em 0.15em 0 0.15em;
+    padding: 0.2em 0.6em;
+    vertical-align: middle;
+    white-space: nowrap;
+  }
+  kbd kbd:first-child { margin-left: 0; }
+  kbd kbd:last-child { margin-right: 0; }
+</style>
+</body>
+</html>

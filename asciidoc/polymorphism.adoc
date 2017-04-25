@@ -1,0 +1,353 @@
+= Polymorphism: Multimethods, Protocols, Types and Records
+:encoding: utf-8
+:navigation:
+:deckjs_transition: horizontal-slide
+:menu:
+:status:
+:deckjs_theme: none
+:hardbreaks:
+
+
+== Agenda
+
+* Multimethods
+* Protocols
+* Types
+* Records
+
+== Multimethods vs Multi-arity
+
+The problem: We want to provide several implementations of a function
+
+* depending not only on the number of arguments
+* with the ability to have different implementations in different places
+
+See http://slides.klipse.tech/asciidoc/destructuring-multi-arity.html[this slides] for a tutorial about Multi-arity.
+
+The solution: multimethods
+
+* `defmulti` - define a dispatch function
+* `defmethod` - implement each instance
+
+
+[%step]
+--
+[source, role="clj"]
+----
+(defmulti display (fn [type num] type))
+(defmethod display :rational [_ [a b]]
+  (str a "/" b))
+(display :rational [3 4])
+----
+--
+[%step]
+--
+Now let's define `display` for complex numbers:
+[source, role="clj"]
+----
+(defmethod display :complex [_ [a b]]
+  (str a " + " b "i"))
+(display :complex [3 4])
+----
+--
+
+== Multimethods - default
+
+
+What happens if no implementation exists?
+[source, role="clj"]
+----
+(display :integer 3)
+----
+
+[%step]
+--
+Let's provide a default implementation:
+[source, role="clj"]
+----
+(defmethod display :default [_ x]
+  (str x))
+(display :integer 3) 
+----
+--
+
+
+== Multimethods - reflection
+
+We can reflect on multimethods:
+* `methods` - list the methods
+* `get-method` - get a method
+* `remove-method` - remove a method
+* `add-method` - not available
+
+[%step]
+--
+[source, role="clj"]
+----
+(keys (methods display))
+----
+
+++++
+<br/>
+++++
+
+[source, role="clj"]
+----
+(get-method display :complex)
+----
+--
+
+== Multimethods - dispatching on several arguments
+
+We can dispatch on more than one argument!
+
+For instance, let's improve our `display` function so that it depends also on the format.
+
+[%step]
+--
+[source, role="clj"]
+----
+(defmulti display-formatted 
+  (fn [type format _]
+    [type format]))
+
+(defmethod display-formatted [:complex :text]
+  [type format x]
+  (display type x))
+ 
+(display-formatted :complex :text [1 2]) 
+----
+--
+
+[%step]
+--
+Let's display complex numbers nicely in `html`:
+[source, role="clj"]
+----
+(defmethod display-formatted [:complex :html]
+  [type format [a b]]
+  (str "<span>" a " + " b "<em>i</em></span>"))
+
+(display-formatted :complex :html [1 2])
+----
+--
+
+== Multimethods - Exercise
+
+Write a function `combine` that receive two arguments that could be either a sequence or an atome (i.e. not a sequence) and combines them properly: 
+
+* with two sequences: concat them
+* with two atoms: create a list of the two
+* with an atom and a sequence: https://clojuredocs.org/clojure.core/conj[conj] the atom in the sequence
+
+
+[source, role="clj"]
+----
+(defmulti combine )
+----
+++++
+<br/>
+++++
+
+
+[source, role="clj"]
+----
+(defmethod combine _ [])
+----
+++++
+<br/>
+++++
+
+[source, role="clj"]
+----
+(defmethod combine _ [])
+----
+++++
+<br/>
+++++
+
+[source, role="clj"]
+----
+(defmethod combine _ [])
+----
+++++
+<br/>
+++++
+
+
+[source, role="clj"]
+----
+(assert (= (combine 1 2) [1 2])) 
+(assert (= (combine [1 2] [3 4]) [1 2 3 4])) 
+(assert (= (combine [1 2] 3) [1 2 3]))
+----
+++++
+<br/>
+++++
+
+
+== Protocols
+
+Very often, the dispatching logic depends only on the *type* of the *first* argument.
+In that case, it is simple to use protocols, types and records.
+
+[%step]
+--
+A protocol is a group of function signature:
+[source, role="clj"]
+----
+(defprotocol IDisplayable
+  (disp [this]))
+----
+
+Remark: We use `disp` and not `display` in order to not override our previous `display` functions.
+--
+
+[%step]
+--
+Let's define a type that implements this protocol:
+[source, role="clj"]
+----
+(deftype Rational [a b]
+  IDisplayable
+  (disp [_] (str a "/" b)))
+
+(disp (Rational. 1 2))
+----
+--
+
+[%step]
+--
+The cool thing with protocols and types (and also records) is that we can extend them after the type is `_closed_`:
+[source, role="clj"]
+----
+(deftype Complex [a b])
+----
+
+++++
+<br/>
+++++
+[source, role="clj"]
+----
+(extend-type Complex
+   IDisplayable
+  (disp [this] (str (.-a this) " + " (.-b this) "i")))
+
+(disp (Complex. 1 2))
+----
+--
+++++
+<br/>
+++++
+Remark: Sometimes it is more convenient to use https://clojuredocs.org/clojure.core/extend-protocol[extend-protocol].
+
+
+== Protocols - reflection and extension
+
+We can check - at _run time_ - if an instance of an object satisfies a protocol:
+
+[%step]
+--
+[source, role="clj"]
+----
+(satisfies? IDisplayable (Complex. 1 2))
+----
+++++
+<br/>
+++++
+[source, role="clj"]
+----
+(satisfies? IDisplayable "abc")
+----
+--
+
+[%step]
+--
+If we want, we can extend a clojure primitive type:
+[source, role="clj"]
+----
+(extend-type js/String
+  IDisplayable
+  (disp [this] (str "An string: " this)))
+
+(disp "Hello Klipse")
+----
+--
+
+[%step]
+--
+We can even provide a default implementation of a protocol to all the clojure objects:
+[source, role="clj"]
+----
+#_(extend-protocol IDisplayable
+  js/Object
+  (disp [this] (str "An obj: " this)))
+
+(disp {:a 1})
+----
+++++
+<br/>
+++++
+Remark: We have commented out this code because when it runs too early it conflicts with the slides framewok javascript code.
+--
+
+[%step]
+--
+The proper implementation is selected according to the specificity of the type:
+[source, role="clj"]
+----
+(disp "Hello World")
+----
+--
+
+== Records
+
+Records are a bit richer than types.
+
+If you want to really understand the difference between types and records, you should read http://blog.klipse.tech/clojurescript/2016/04/25/records-wacky-maps.html[In Clojure, records are wacky maps] and http://blog.klipse.tech/clojurescript/2016/04/26/deftype-explained.html[The power and danger of deftype in clojure and clojurescript].
+
+== Protocols - Exercise
+
+Write a protocol `IAnimal` with two functions:
+
+- `my-name` - returns the name of the animal ("dog", "cat" etc...)
+- `my-age`  - retuns `n` times the name of the animal, where `n` is the age of the animal
+
+Implements `Cat` and `Dog` types.
+
+For `Cat`, implement the protocol inside the definition of the type.
+For `Dog`, implement the protocol outside the definition of the type - using `extend-type` or `extend-protocol`.
+
+[source, role="clj"]
+----
+(defprotocol IAnimal)
+----
+++++
+<br/>
+++++
+[source, role="clj"]
+----
+(deftype Cat [age])
+----
+++++
+<br/>
+++++
+[source, role="clj"]
+----
+(deftype Dog [age])
+----
+
+
+++++
+<br/>
+++++
+
+[source, role="clj"]
+----
+(assert (= (my-name (Dog. 5)) "dog"))
+(assert (= (my-name (Cat. 7)) "cat"))
+(assert (= (my-age (Dog. 5)) "dog dog dog dog dog"))
+(assert (= (my-age (Cat. 7)) "cat cat cat cat cat cat cat"))
+----
+
+include::klipse.adoc[]
