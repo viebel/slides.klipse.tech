@@ -2,6 +2,7 @@
 :encoding: utf-8
 :navigation:
 :deckjs_transition: horizontal-slide
+:menu:
 :deckjs_theme: none
 :hardbreaks:
 
