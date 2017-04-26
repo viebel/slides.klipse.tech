@@ -1,0 +1,4 @@
+{create {product (str name ".html")
+         depends [asciidoctor-deck.js deck.js]
+         novelty (mach.core/modified-since product (str name ".adoc"))
+         update! #$ [(str "bundle install && bundle exec asciidoctor -T templates/haml " name ".adoc")]}}

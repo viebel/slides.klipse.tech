@@ -4,15 +4,6 @@
  deck.js {product "deck.js"
           novelty (not (mach.core/file-exists? product))
           update! #$ ["git clone https://github.com/imakewebthings/deck.js"]}
- presentation.html {product "presentation.html"
-                    depends [asciidoctor-deck.js deck.js]
-                    novelty (mach.core/modified-since product "presentation.adoc")
-                    update! #$ ["bundle install && bundle exec asciidoctor -T templates/haml presentation.adoc"]}
- destructuring-multi-arity.html {product "destructuring-multi-arity.html"
-                    depends [asciidoctor-deck.js deck.js]
-                    novelty (mach.core/modified-since product "destructuring-multi-arity.adoc")
-                                 update! #$ ["bundle install && bundle exec asciidoctor -T templates/haml destructuring-multi-arity.adoc"]}
- polymorphism.html {product "polymorphism.html"
-                    depends [asciidoctor-deck.js deck.js]
-                    novelty (mach.core/modified-since product "polymorphism.adoc")
-                    update! #$ ["bundle install && bundle exec asciidoctor -T templates/haml polymorphism.adoc"]}}
+ presentation.html #import [asciidoc/create {name "presentation"}]
+ destructuring-multi-arity.html #import [asciidoc/create {name "destructuring-multi-arity"}] 
+ polymorphism.html #import [asciidoc/create {name "polymorphism"}]}
