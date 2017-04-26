@@ -5,5 +5,6 @@
           novelty (not (mach.core/file-exists? product))
           update! #$ ["git clone https://github.com/imakewebthings/deck.js"]}
  presentation.html #import [asciidoc/create {name "presentation"}]
- destructuring-multi-arity.html #import [asciidoc/create {name "destructuring-multi-arity"}] 
+ destructuring-multi-arity.html #import [asciidoc/create {name "destructuring-multi-arity"}]
+ pattern-matching.html #import [asciidoc/create {name "pattern-matching"}]  
  polymorphism.html #import [asciidoc/create {name "polymorphism"}]}

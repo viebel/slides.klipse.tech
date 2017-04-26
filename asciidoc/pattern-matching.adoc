@@ -1,0 +1,219 @@
+= Pattern Matching in Clojure
+:encoding: utf-8
+:navigation:
+:deckjs_transition: horizontal-slide
+:menu:
+:status:
+:deckjs_theme: none
+:hardbreaks:
+
+== What is pattern matching?
+
+>  Pattern matching is the act of checking a given sequence of tokens for the presence of the constituents of some pattern. Uses of pattern matching include outputting component of the matched pattern.
+
+It is built-in in some languages e.g. Scala, Haskell and ML.
+
+
+
+In clojure, it is provided by `core.match`: the algorithm is based  Luc Maranget’s paper http://www.cs.tufts.edu/~nr/cs257/archive/luc-maranget/jun08.pdf[Compiling Pattern Matching to good Decision Trees].
+
+A gentle description of the algorithm is provided in https://github.com/clojure/core.match/wiki/Understanding-the-algorithm[core.match wiki].
+
+== core.match
+
+We have to require the `match` macro from `core.match`:
+
+[source, role="clj"]
+----
+(require '[cljs.core.match :refer-macros [match]])
+----
+
+It has been made clojurescript self-host compatible by the author of Klipse.
+
+Please vote for this http://dev.clojure.org/jira/browse/MATCH-116[Clojure JIRA ticket]!
+
+== Matching literals
+
+The simplest -and most useful - thing you can do is match literals:
+
+[source,role="clj"]
+----
+(let [x true
+      y true
+      z true]
+  (match [x y z]
+         [_ false true] 1
+         [false true _ ] 2
+         [_ _ false] 3
+         [_ _ true] 4
+         :else 5))
+----
+
+[%step]
+--
+Exercise: Write the same code without pattern matching (Enjoy!).
+[source, role="clj"]
+----
+(let [x true
+      y true
+      z true])
+----
+--
+
+
+== Pattern matching - Binding and variants
+
+You may match values and give them names for later use:
+
+[source, role="clj"]
+----
+(let [x 1 y 2]
+  (match [x y]
+         [1 b] b
+         [a 2] a
+         :else nil))
+----
+
+
+[%step]
+--
+++++
+<br/>
+<br/>
+++++
+
+Real-life example: A function `read-from-db` that could fail returns a pair `[status val]`.
+
+(This is called a variant and it is explained in detailed in this video: https://www.youtube.com/watch?v=ZQkIWWTygio[Variants are Not Unions].)
+
+[source, role="clj"]
+----
+(defn read-from-db []
+  (rand-nth [[:ok 42]
+             [:error "Bad query"]
+             [:error "Bad credentials"]]))
+----
+--
+
+[%step]
+--
+Here is how a caller of `read-from-db` might look like:
+[source, role="clj"]
+----
+(match (read-from-db)
+       [:ok res] res
+       [:error err] (str "An error occured: " err)
+       :else nil)            
+----
+
+++++
+<br/>
+++++
+
+This is super useful!
+
+--
+
+
+
+[%step]
+--
+Exercise: Write the same code without pattern matching (Enjoy!).
+[source, role="clj"]
+----
+(let [[status val] (read-from-db)])
+----
+--
+
+== Pattern Matching - Summary: the power of variants
+
+
+Let's implement our own recursion runner - as it is suggested in this amazing talk: https://youtu.be/ZQkIWWTygio?t=24m54s[Variants are Not Unions].
+
+
+[source, role="clj"]
+----
+(defn run [f init]
+  (loop [args init]
+    (println "[run]" args)
+    (match (f args)
+           [:recur x] (recur x)
+           [:stop x] x)))
+----
+
+
+[%step]
+--
+++++
+<br/>
+++++
+Let's define the factorial tail call recursive function using our new semantics:
+
+* `[:recur x]` instead of `(recur x)`
+* `[:stop res` instead of `res`
+
+
+[source, role="clj"]
+----
+(defn factorial [x]
+  (run (fn [[n res]]
+         (if (= n 1)
+           [:stop res]
+           [:recur [(dec n) (* n res)]]))
+       [x 1]))
+----
+--
+
+[%step]
+--
+++++
+<br/>
+++++
+It works!!!
+
+[source, role="clj"]
+----
+(factorial 5)
+----
+--
+
+[%step]
+--
+++++
+<br/>
+++++
+Now tweak the runner in order to get more control of the iterations.
+
+For instance:
+
+* limit the number of iterations
+* print the values of the iteration once in a while
+
+--
+
+== Exercise - FizzBuzz
+
+Solve FizzBuzz with pattern matching:
+
+[source, role="clj"]
+----
+(defn fizz-buzz [n])
+----
+
+++++
+<br/>
+++++
+
+
+[source, role="clj"]
+----
+(fizz-buzz 19)
+----
+
+== core.match - what else?
+
+There are much more features available for pattern matching.
+
+Be sure to check them out in this http://blog.klipse.tech/clojure/2016/10/25/core-match.html[core.match interactive tutorial].
+
+include::klipse.adoc[]

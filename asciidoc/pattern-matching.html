@@ -1,0 +1,351 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta content="text/html; charset=utf-8" http-equiv="Content-Type">
+<meta content="IE=edge,chrome=1" http-equiv="X-UA-Compatible">
+<meta content="Asciidoctor 1.5.5" name="generator">
+<title>Pattern Matching in Clojure</title>
+<link href="deck.js/core/deck.core.css" rel="stylesheet">
+<link href="deck.js/extensions/menu/deck.menu.css" media="screen" rel="stylesheet">
+<link href="deck.js/extensions/navigation/deck.navigation.css" media="screen" rel="stylesheet">
+<link href="deck.js/extensions/status/deck.status.css" media="screen" rel="stylesheet">
+<link href="deck.js/themes/style/none.css" media="screen" rel="stylesheet">
+<link href="deck.js/themes/transition/horizontal-slide.css" media="screen" rel="stylesheet">
+<link href="deck.js/core/print.css" media="print" rel="stylesheet">
+<script src="deck.js/modernizr.custom.js"></script>
+</head>
+<body class="article">
+<div class="deck-container">
+<section class="slide" id="title-slide">
+<h1>Pattern Matching in Clojure</h1>
+</section>
+<section class="slide" id="_what_is_pattern_matching">
+<h2>What is pattern matching?</h2>
+<div class="quoteblock">
+<blockquote>
+<div class="literalblock">
+<div class="content">
+<pre>Pattern matching is the act of checking a given sequence of tokens for the presence of the constituents of some pattern. Uses of pattern matching include outputting component of the matched pattern.</pre>
+</div>
+</div>
+</blockquote>
+</div>
+<div class="paragraph"><p>It is built-in in some languages e.g. Scala, Haskell and ML.</p></div>
+<div class="paragraph"><p>In clojure, it is provided by <code>core.match</code>: the algorithm is based  Luc Maranget’s paper <a href="http://www.cs.tufts.edu/~nr/cs257/archive/luc-maranget/jun08.pdf">Compiling Pattern Matching to good Decision Trees</a>.</p></div>
+<div class="paragraph"><p>A gentle description of the algorithm is provided in <a href="https://github.com/clojure/core.match/wiki/Understanding-the-algorithm">core.match wiki</a>.</p></div>
+</section>
+<section class="slide" id="_core_match">
+<h2>core.match</h2>
+<div class="paragraph"><p>We have to require the <code>match</code> macro from <code>core.match</code>:</p></div>
+<div class="listingblock clj">
+<div class="content">
+<pre class="highlight"><code>(require '[cljs.core.match :refer-macros [match]])</code></pre>
+</div>
+</div>
+<div class="paragraph"><p>It has been made clojurescript self-host compatible by the author of Klipse.</p></div>
+<div class="paragraph"><p>Please vote for this <a href="http://dev.clojure.org/jira/browse/MATCH-116">Clojure JIRA ticket</a>!</p></div>
+</section>
+<section class="slide" id="_matching_literals">
+<h2>Matching literals</h2>
+<div class="paragraph"><p>The simplest -and most useful - thing you can do is match literals:</p></div>
+<div class="listingblock clj">
+<div class="content">
+<pre class="highlight"><code>(let [x true
+      y true
+      z true]
+  (match [x y z]
+         [_ false true] 1
+         [false true _ ] 2
+         [_ _ false] 3
+         [_ _ true] 4
+         :else 5))</code></pre>
+</div>
+</div>
+<div class="openblock slide">
+<div class="content">
+<div class="paragraph"><p>Exercise: Write the same code without pattern matching (Enjoy!).</p></div>
+<div class="listingblock clj">
+<div class="content">
+<pre class="highlight"><code>(let [x true
+      y true
+      z true])</code></pre>
+</div>
+</div>
+</div>
+</div>
+</section>
+<section class="slide" id="_pattern_matching_binding_and_variants">
+<h2>Pattern matching - Binding and variants</h2>
+<div class="paragraph"><p>You may match values and give them names for later use:</p></div>
+<div class="listingblock clj">
+<div class="content">
+<pre class="highlight"><code>(let [x 1 y 2]
+  (match [x y]
+         [1 b] b
+         [a 2] a
+         :else nil))</code></pre>
+</div>
+</div>
+<div class="openblock slide">
+<div class="content">
+<br/>
+<br/>
+<div class="paragraph"><p>Real-life example: A function <code>read-from-db</code> that could fail returns a pair <code>[status val]</code>.</p></div>
+<div class="paragraph"><p>(This is called a variant and it is explained in detailed in this video: <a href="https://www.youtube.com/watch?v=ZQkIWWTygio">Variants are Not Unions</a>.)</p></div>
+<div class="listingblock clj">
+<div class="content">
+<pre class="highlight"><code>(defn read-from-db []
+  (rand-nth [[:ok 42]
+             [:error "Bad query"]
+             [:error "Bad credentials"]]))</code></pre>
+</div>
+</div>
+</div>
+</div>
+<div class="openblock slide">
+<div class="content">
+<div class="paragraph"><p>Here is how a caller of <code>read-from-db</code> might look like:</p></div>
+<div class="listingblock clj">
+<div class="content">
+<pre class="highlight"><code>(match (read-from-db)
+       [:ok res] res
+       [:error err] (str "An error occured: " err)
+       :else nil)</code></pre>
+</div>
+</div>
+<br/>
+<div class="paragraph"><p>This is super useful!</p></div>
+</div>
+</div>
+<div class="openblock slide">
+<div class="content">
+<div class="paragraph"><p>Exercise: Write the same code without pattern matching (Enjoy!).</p></div>
+<div class="listingblock clj">
+<div class="content">
+<pre class="highlight"><code>(let [[status val] (read-from-db)])</code></pre>
+</div>
+</div>
+</div>
+</div>
+</section>
+<section class="slide" id="_pattern_matching_summary_the_power_of_variants">
+<h2>Pattern Matching - Summary: the power of variants</h2>
+<div class="paragraph"><p>Let&#8217;s implement our own recursion runner - as it is suggested in this amazing talk: <a href="https://youtu.be/ZQkIWWTygio?t=24m54s">Variants are Not Unions</a>.</p></div>
+<div class="listingblock clj">
+<div class="content">
+<pre class="highlight"><code>(defn run [f init]
+  (loop [args init]
+    (println "[run]" args)
+    (match (f args)
+           [:recur x] (recur x)
+           [:stop x] x)))</code></pre>
+</div>
+</div>
+<div class="openblock slide">
+<div class="content">
+<br/>
+<div class="paragraph"><p>Let&#8217;s define the factorial tail call recursive function using our new semantics:</p></div>
+<div class="ulist">
+<ul>
+<li><code>[:recur x]</code> instead of <code>(recur x)</code></li>
+<li><code>[:stop res</code> instead of <code>res</code></li>
+</ul>
+</div>
+<div class="listingblock clj">
+<div class="content">
+<pre class="highlight"><code>(defn factorial [x]
+  (run (fn [[n res]]
+         (if (= n 1)
+           [:stop res]
+           [:recur [(dec n) (* n res)]]))
+       [x 1]))</code></pre>
+</div>
+</div>
+</div>
+</div>
+<div class="openblock slide">
+<div class="content">
+<br/>
+<div class="paragraph"><p>It works!!!</p></div>
+<div class="listingblock clj">
+<div class="content">
+<pre class="highlight"><code>(factorial 5)</code></pre>
+</div>
+</div>
+</div>
+</div>
+<div class="openblock slide">
+<div class="content">
+<br/>
+<div class="paragraph"><p>Now tweak the runner in order to get more control of the iterations.</p></div>
+<div class="paragraph"><p>For instance:</p></div>
+<div class="ulist">
+<ul>
+<li>limit the number of iterations</li>
+<li>print the values of the iteration once in a while</li>
+</ul>
+</div>
+</div>
+</div>
+</section>
+<section class="slide" id="_exercise_fizzbuzz">
+<h2>Exercise - FizzBuzz</h2>
+<div class="paragraph"><p>Solve FizzBuzz with pattern matching:</p></div>
+<div class="listingblock clj">
+<div class="content">
+<pre class="highlight"><code>(defn fizz-buzz [n])</code></pre>
+</div>
+</div>
+<br/>
+<div class="listingblock clj">
+<div class="content">
+<pre class="highlight"><code>(fizz-buzz 19)</code></pre>
+</div>
+</div>
+</section>
+<section class="slide" id="_core_match_what_else">
+<h2>core.match - what else?</h2>
+<div class="paragraph"><p>There are much more features available for pattern matching.</p></div>
+<div class="paragraph"><p>Be sure to check them out in this <a href="http://blog.klipse.tech/clojure/2016/10/25/core-match.html">core.match interactive tutorial</a>.</p></div>
+<link rel="shortcut icon" href="./favicon.png">
+<link rel="stylesheet" media="screen" href="http://slides.klipse.tech/includes/deckjs/themes/style/klipse.css">
+<link rel="stylesheet" media="screen" href="http://slides.klipse.tech/asciidoc/klipse.css">
+
+<link rel="stylesheet" type="text/css" href="https://storage.googleapis.com/app.klipse.tech/css/codemirror.css">
+
+<script>
+    window.klipse_settings = {
+     codemirror_options_in: {
+            lineWrapping: true,
+            autoCloseBrackets: true
+        },
+        codemirror_options_out: {
+            lineWrapping: true
+        },
+        beautify_strings: true,
+        selector: '.clj',
+        selector_js: '.transpile-cljs',
+        selector_reagent: '.reagent',
+    };
+</script>
+<script src="https://storage.googleapis.com/app.klipse.tech/plugin/js/klipse_plugin.js"></script>
+</section>
+<div aria-role="navigation">
+<a class="deck-prev-link" href="#" title="Previous">&#8592;</a>
+<a class="deck-next-link" href="#" title="Next">&#8594;</a>
+</div>
+<p aria-role="status" class="deck-status">
+<span></span>
+powered by
+<a href="https://github.com/viebel/klipse" target="_new">Klipse</a>
+<span class="deck-status-current"></span>
+/
+<span class="deck-status-total"></span>
+</p>
+</div>
+<script src="deck.js/jquery.min.js"></script>
+<script src="deck.js/core/deck.core.js"></script>
+<script src="deck.js/extensions/menu/deck.menu.js"></script>
+<script src="deck.js/extensions/navigation/deck.navigation.js"></script>
+<script src="deck.js/extensions/status/deck.status.js"></script>
+<script>
+  (function($, deck, undefined) {
+    $.deck.defaults.keys['previous'] = [8, 33, 37, 39];
+    $.deck.defaults.keys['next'] = [13, 32, 34, 39];
+  
+    $.extend(true, $[deck].defaults, {
+        countNested: false
+    });
+  
+    $.deck('.slide');
+  })(jQuery, 'deck');
+</script>
+<style>
+  .slide.canvas-image {
+  -moz-background-size: cover;
+  -webkit-background-size: cover;
+  -o-background-size: cover;
+  background-size: cover;
+  display: -moz-box;
+  display: -webkit-box;
+  display: -ms-box;
+  display: box;
+  -moz-box-orient: vertical;
+  -webkit-box-orient: vertical;
+  -ms-box-orient: vertical;
+  box-orient: vertical;
+  -moz-box-align: start;
+  -webkit-box-align: start;
+  -ms-box-align: start;
+  box-align: start;
+  -moz-box-pack: start;
+  -webkit-box-pack: start;
+  -ms-box-pack: start;
+  box-pack: start;}
+  
+  .bottom-left {
+    left: 1%;
+    bottom: 20%; }
+  
+  .top-left {
+    left: 1%;
+    top: 20%; }
+  
+  .bottom-right {
+    right: 1%;
+    bottom: 20%; }
+  
+  .top-right {
+    right: 1%;
+    top: 20%; }
+  
+  .center-up {
+    right: 50%;
+    top: 1%;
+  }
+  
+  .center-down {
+    right: 50%;
+    bottom: 1%;
+  }
+  .canvas-image .canvas-caption p {
+    text-align: center;
+    padding-top: 0;
+    padding: 0;
+    -moz-transform: none;
+    -webkit-transform: none;
+    -o-transform: none;
+    -ms-transform: none;
+    transform: none;
+    display: inline;
+    position: absolute;
+    background-color: rgba(0, 0, 0, 0.7);
+    font-weight: bold;
+    font-size: 58px;
+    -webkit-box-shadow: 2px 2px 2px #000;
+    -moz-box-shadow: 2px 2px 2px #000;
+    box-shadow: 2px 2px 2px #000;
+    padding: 1rem;
+    color: white; }
+  kbd.keyseq { color: #555555; }
+  kbd:not(.keyseq) {
+    display: inline-block;
+    color: #222222;
+    font-size: 0.7em;
+    line-height: 1.4;
+    background-color: #F7F7F7;
+    border: 1px solid #ccc;
+    -webkit-border-radius: 3px;
+    border-radius: 3px;
+    -webkit-box-shadow: 0 1px 0 rgba(0, 0, 0, 0.2), 0 0 0 2px white inset;
+    box-shadow: 0 1px 0 rgba(0, 0, 0, 0.2), 0 0 0 2px white inset;
+    margin: -0.15em 0.15em 0 0.15em;
+    padding: 0.2em 0.6em;
+    vertical-align: middle;
+    white-space: nowrap;
+  }
+  kbd kbd:first-child { margin-left: 0; }
+  kbd kbd:last-child { margin-right: 0; }
+</style>
+</body>
+</html>
