@@ -302,16 +302,138 @@ The proper implementation is selected according to the specificity of the type:
 
 == Records
 
-Records are a bit richer than types.
+What is a record?
+
+[%step]
+--
+> In computer science, a record (also called struct or compound data) is a basic data structure. A record is a collection of fields, possibly of different data types, typically in fixed number and sequence. 
+--
+
+[%step]
+--
+In Clojure, records are a bit richer than types.
 
 If you want to really understand the difference between types and records, you should read http://blog.klipse.tech/clojurescript/2016/04/25/records-wacky-maps.html[In Clojure, records are wacky maps] and http://blog.klipse.tech/clojurescript/2016/04/26/deftype-explained.html[The power and danger of deftype in clojure and clojurescript].
+--
+
+== Records
+
+
+Records are created with `defrecord`:
+
+[source, role="clj"]
+----
+(defrecord A [x y])
+----
+
+[%step]
+--
+There are 3 ways to instantiate a record:
+[source, role="clj"]
+----
+(def a (A. 1 2))
+(def aa (map->A {:x 1 :y 2}))
+(def aaa (->A 1 2))
+(println a aa aaa)
+----
+--
+
+[%step]
+--
+Records equality is based on type and value:
+
+[source, role="clj"]
+----
+(= a aa aaa)
+----
+
+++++
+<br/>
+++++
+
+[source, role="clj"]
+----
+(defrecord B [x y])
+(def b (B. 1 2))
+(= a b)
+----
+--
+
+== Records are wacky maps
+
+At first glance, records behave like maps: keyword access, `get`, `count`, `keys` and iteration work as expected.
+
+[source,role="clj"]
+----
+[(:x a) (get a :z "n/a")]
+----
+++++
+<br/>
+++++
+
+[source,role="clj"]
+----
+(keys a)
+----
+++++
+<br/>
+++++
+
+[source,role="clj"]
+----
+(count a)
+----
+++++
+<br/>
+++++
+
+[source,role="clj"]
+----
+(map (fn [[k v]] [k (inc v)]) a)
+----
+++++
+<br/>
+++++
+
+== Records - wacky maps
+
+Here are the differences between records and maps:
+
+Unlike a regular map, a record is not callable as a function.
+
+[source,role="clj"]
+----
+(a :a)
+----
+++++
+<br/>
+++++
+When you assoc a record you get another record.
+
+[source,role="clj"]
+----
+(println (assoc a :z "zzz"))
+----
+++++
+<br/>
+++++
+When you dissoc basis keys in a record you get a map instead of a record.
+
+[source,role="clj"]
+----
+(println (dissoc a :a))
+----
+++++
+<br/>
+++++
+
 
 == Protocols - Exercise
 
 Write a protocol `IAnimal` with two functions:
 
 - `my-name` - returns the name of the animal ("dog", "cat" etc...)
-- `my-age`  - retuns `n` times the name of the animal, where `n` is the age of the animal
+- `my-age`  - returns `n` times the name of the animal, where `n` is the age of the animal
 
 Implements `Cat` and `Dog` types.
 

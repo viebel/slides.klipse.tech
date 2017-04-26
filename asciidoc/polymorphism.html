@@ -309,8 +309,115 @@ In that case, it is simple to use protocols, types and records.</p></div>
 </section>
 <section class="slide" id="_records">
 <h2>Records</h2>
-<div class="paragraph"><p>Records are a bit richer than types.</p></div>
+<div class="paragraph"><p>What is a record?</p></div>
+<div class="openblock slide">
+<div class="content">
+<div class="quoteblock">
+<blockquote>
+<div class="paragraph"><p>In computer science, a record (also called struct or compound data) is a basic data structure. A record is a collection of fields, possibly of different data types, typically in fixed number and sequence.</p></div>
+</blockquote>
+</div>
+</div>
+</div>
+<div class="openblock slide">
+<div class="content">
+<div class="paragraph"><p>In Clojure, records are a bit richer than types.</p></div>
 <div class="paragraph"><p>If you want to really understand the difference between types and records, you should read <a href="http://blog.klipse.tech/clojurescript/2016/04/25/records-wacky-maps.html">In Clojure, records are wacky maps</a> and <a href="http://blog.klipse.tech/clojurescript/2016/04/26/deftype-explained.html">The power and danger of deftype in clojure and clojurescript</a>.</p></div>
+</div>
+</div>
+</section>
+<section class="slide" id="_records_2">
+<h2>Records</h2>
+<div class="paragraph"><p>Records are created with <code>defrecord</code>:</p></div>
+<div class="listingblock clj">
+<div class="content">
+<pre class="highlight"><code>(defrecord A [x y])</code></pre>
+</div>
+</div>
+<div class="openblock slide">
+<div class="content">
+<div class="paragraph"><p>There are 3 ways to instantiate a record:</p></div>
+<div class="listingblock clj">
+<div class="content">
+<pre class="highlight"><code>(def a (A. 1 2))
+(def aa (map-&gt;A {:x 1 :y 2}))
+(def aaa (-&gt;A 1 2))
+(println a aa aaa)</code></pre>
+</div>
+</div>
+</div>
+</div>
+<div class="openblock slide">
+<div class="content">
+<div class="paragraph"><p>Records equality is based on type and value:</p></div>
+<div class="listingblock clj">
+<div class="content">
+<pre class="highlight"><code>(= a aa aaa)</code></pre>
+</div>
+</div>
+<br/>
+<div class="listingblock clj">
+<div class="content">
+<pre class="highlight"><code>(defrecord B [x y])
+(def b (B. 1 2))
+(= a b)</code></pre>
+</div>
+</div>
+</div>
+</div>
+</section>
+<section class="slide" id="_records_are_wacky_maps">
+<h2>Records are wacky maps</h2>
+<div class="paragraph"><p>At first glance, records behave like maps: keyword access, <code>get</code>, <code>count</code>, <code>keys</code> and iteration work as expected.</p></div>
+<div class="listingblock clj">
+<div class="content">
+<pre class="highlight"><code>[(:x a) (get a :z "n/a")]</code></pre>
+</div>
+</div>
+<br/>
+<div class="listingblock clj">
+<div class="content">
+<pre class="highlight"><code>(keys a)</code></pre>
+</div>
+</div>
+<br/>
+<div class="listingblock clj">
+<div class="content">
+<pre class="highlight"><code>(count a)</code></pre>
+</div>
+</div>
+<br/>
+<div class="listingblock clj">
+<div class="content">
+<pre class="highlight"><code>(map (fn [[k v]] [k (inc v)]) a)</code></pre>
+</div>
+</div>
+<br/>
+</section>
+<section class="slide" id="_records_wacky_maps">
+<h2>Records - wacky maps</h2>
+<div class="paragraph"><p>Here are the differences between records and maps:</p></div>
+<div class="paragraph"><p>Unlike a regular map, a record is not callable as a function.</p></div>
+<div class="listingblock clj">
+<div class="content">
+<pre class="highlight"><code>(a :a)</code></pre>
+</div>
+</div>
+<br/>
+<div class="paragraph"><p>When you assoc a record you get another record.</p></div>
+<div class="listingblock clj">
+<div class="content">
+<pre class="highlight"><code>(println (assoc a :z "zzz"))</code></pre>
+</div>
+</div>
+<br/>
+<div class="paragraph"><p>When you dissoc basis keys in a record you get a map instead of a record.</p></div>
+<div class="listingblock clj">
+<div class="content">
+<pre class="highlight"><code>(println (dissoc a :a))</code></pre>
+</div>
+</div>
+<br/>
 </section>
 <section class="slide" id="_protocols_exercise">
 <h2>Protocols - Exercise</h2>
@@ -318,7 +425,7 @@ In that case, it is simple to use protocols, types and records.</p></div>
 <div class="ulist">
 <ul>
 <li><code>my-name</code> - returns the name of the animal ("dog", "cat" etc&#8230;&#8203;)</li>
-<li><code>my-age</code>  - retuns <code>n</code> times the name of the animal, where <code>n</code> is the age of the animal</li>
+<li><code>my-age</code>  - returns <code>n</code> times the name of the animal, where <code>n</code> is the age of the animal</li>
 </ul>
 </div>
 <div class="paragraph"><p>Implements <code>Cat</code> and <code>Dog</code> types.</p></div>
