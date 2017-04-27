@@ -11,6 +11,7 @@
 
 == Beginners - what we have learned
 
+
 * Persistent Data Structures: Lists, Vectors, Maps, Sets
 * High order functions: map, filter, partial, reduce, comp...
 * Lazy Sequences
@@ -20,6 +21,15 @@
 * A bit of unit testing and generative testing
 * Polymorphism a la clojure
 * Introduction to macros
+
+++++
+<br/>
+<br/>
+<br/>
+++++
+
+Please take a couple of minutes to answer https://www.surveymonkey.com/r/MX9H8QN[this anonymous survey].
+
 
 == Feelings
 
@@ -52,6 +62,16 @@
 * core.async
 * polymorhphism
 * core.async
+
+++++
+<br/>
+<br/>
+<br/>
+++++
+
+Please take a couple of minutes to answer https://www.surveymonkey.com/r/MX9H8QN[this anonymous survey].
+
+
 
 == What's next?
 
