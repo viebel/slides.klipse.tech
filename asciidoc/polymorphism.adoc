@@ -134,7 +134,7 @@ Let's display complex numbers nicely in `html`:
 
 == Multimethods - Exercise
 
-Write a function `combine` that receive two arguments that could be either a sequence or an atome (i.e. not a sequence) and combines them properly: 
+Write a function `combine` that receives two arguments that could be either a sequence or an atom (i.e. not a sequence) and combines them properly: 
 
 * with two sequences: concat them
 * with two atoms: create a list of the two
