@@ -180,6 +180,7 @@ Write a function `combine` that receives two arguments that could be either a se
 (assert (= (combine 1 2) [1 2])) 
 (assert (= (combine [1 2] [3 4]) [1 2 3 4])) 
 (assert (= (combine [1 2] 3) [1 2 3]))
+(assert (= (combine 3 [1 2]) [1 2 3]))
 ----
 ++++
 <br/>
