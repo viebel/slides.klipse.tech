@@ -61,7 +61,7 @@ Please take a couple of minutes to answer https://www.surveymonkey.com/r/MX9H8QN
 * deep dive into macros
 * core.async
 * polymorhphism
-* core.async
+* pattern matching
 
 ++++
 <br/>
