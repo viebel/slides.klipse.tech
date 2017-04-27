@@ -6,5 +6,6 @@
           update! #$ ["git clone https://github.com/imakewebthings/deck.js"]}
  presentation.html #import [asciidoc/create {name "presentation"}]
  destructuring-multi-arity.html #import [asciidoc/create {name "destructuring-multi-arity"}]
- pattern-matching.html #import [asciidoc/create {name "pattern-matching"}]  
+ pattern-matching.html #import [asciidoc/create {name "pattern-matching"}]
+ amobee-summary.html #import [asciidoc/create {name "amobee-summary"}]   
  polymorphism.html #import [asciidoc/create {name "polymorphism"}]}

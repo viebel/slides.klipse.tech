@@ -1,0 +1,63 @@
+= Amobee Clojure workshop: summary
+:encoding: utf-8
+:navigation:
+:deckjs_transition: horizontal-slide
+:menu:
+:status:
+:deckjs_theme: none
+:hardbreaks:
+
+
+
+== Beginners - what we have learned
+
+* Persistent Data Structures: Lists, Vectors, Maps, Sets
+* High order functions: map, filter, partial, reduce, comp...
+* Lazy Sequences
+* Tail call recursion: loop/recur
+* Destructuring
+* Multi-arity and variadic functions
+* A bit of unit testing and generative testing
+* Polymorphism a la clojure
+* Introduction to macros
+
+== Feelings
+
+++++
+
+<img src="./images/lot.jpg"></img>
+++++
+
+
+== Feelings
+
+++++
+
+<img src="./images/way.jpg"></img>
+++++
+
+== What's next?
+
+* Clojurescript
+* core.async
+* deep dive into macros
+* pattern matching
+* Get involved in a clojure project at Amobee
+
+
+== Advanced - what we have learned
+
+* clojure.spec
+* deep dive into macros
+* core.async
+* polymorhphism
+* core.async
+
+== What's next?
+
+* Take time to improve yourself
+* Be part of the community (Clojure is not ruby!)
+* unit tests are your friends
+* refactor
+
+include::klipse.adoc[]
