@@ -4,7 +4,7 @@
 <meta content="text/html; charset=utf-8" http-equiv="Content-Type">
 <meta content="IE=edge,chrome=1" http-equiv="X-UA-Compatible">
 <meta content="Asciidoctor 1.5.5" name="generator">
-<title>Literate Blogging with Klipse</title>
+<title>Illiterate Blogging with Klipse</title>
 <link href="deck.js/core/deck.core.css" rel="stylesheet">
 <link href="deck.js/extensions/menu/deck.menu.css" media="screen" rel="stylesheet">
 <link href="deck.js/extensions/navigation/deck.navigation.css" media="screen" rel="stylesheet">
@@ -17,7 +17,22 @@
 <body class="article">
 <div class="deck-container">
 <section class="slide" id="title-slide">
-<h1>Literate Blogging with Klipse</h1>
+<h1>Illiterate Blogging with Klipse</h1>
+</section>
+<section class="slide" id="_two_types_of_programmers">
+<h2>Two types of programmers</h2>
+<div class="openblock slide">
+<div class="content">
+<div class="paragraph"><p>Programmers of type 0</p></div>
+<div class="paragraph"><p>They share their ideas in github repos</p></div>
+</div>
+</div>
+<div class="openblock slide">
+<div class="content">
+<div class="paragraph"><p>Programmers of type 1<br>
+They share their ideas in blog posts</p></div>
+</div>
+</div>
 </section>
 <section class="slide" id="_programmers_of_type_0">
 <h2>Programmers of type 0</h2>
@@ -31,18 +46,114 @@
 <section class="slide" id="_programmers_of_type_1">
 <h2>Programmers of type 1</h2>
 <div class="paragraph slide"><p>How do <strong>regular</strong> programmers of type 1 tell stories?</p></div>
-<div class="paragraph slide"><p>They write <strong>ideas</strong>.</p></div>
-<div class="paragraph slide"><p>How do <strong>good</strong> programmers of type 0 tell stories?</p></div>
-<div class="paragraph slide"><p>They write <strong>static code snippets</strong>.</p></div>
-<div class="paragraph slide"><p>How do <strong>excellent</strong> programmers of type 0 tell stories?</p></div>
-<div class="paragraph slide"><p>They add <strong>images</strong>.</p></div>
+<div class="paragraph slide"><p>They write their <strong>ideas</strong> in a natural language.</p></div>
+<div class="paragraph slide"><p>How do <strong>good</strong> programmers of type 1 tell stories?</p></div>
+<div class="paragraph slide"><p>They write <strong>static code snippets</strong> in a programming language.</p></div>
+<div class="paragraph slide"><p>How do <strong>excellent</strong> programmers of type 1 tell stories?</p></div>
+<div class="paragraph slide"><p>They add <strong>pictures</strong> to illustrate their ideas.</p></div>
 </section>
 <section class="slide" id="_the_problems">
 <h2>The problems</h2>
-<div class="paragraph"><p>Problem #0: Readers are not as [.line-through]#smart#familiar with the concepts as the blog author.</p></div>
-<div class="paragraph"><p>We need <span class="line-through">ten</span> make that twenty V</p></div>
-<div class="paragraph"><p>Problem #1: Readers are lazy.</p></div>
-<div class="paragraph slide"><p>No reader is going to clone a repository to experiment with ideas exposed in a blog post.</p></div>
+<div class="openblock slide">
+<div class="content">
+<div class="paragraph"><p>Problem 0: Readers are not as <span class="line-through">smart</span> familiar with the concepts as the blog author.</p></div>
+<div class="paragraph"><p>They cannot digest complex code just by meditating at it.<br>
+They need to interact with it.</p></div>
+</div>
+</div>
+<div class="openblock slide">
+<div class="content">
+<div class="paragraph"><p>Problem 1: Readers are lazy.<br>
+Noboding is going to clone your github repo and execute <code>lein run</code> to interact with the code you have linked to in your blog post.</p></div>
+</div>
+</div>
+<div class="openblock slide">
+<div class="content">
+<div class="paragraph"><p><span class="line-through">Problem</span> Fact 2: Readers are kids.<br>
+They love to play.</p></div>
+</div>
+</div>
+</section>
+<section class="slide" id="_the_solution">
+<h2>The solution</h2>
+<div class="quoteblock">
+<blockquote>
+<div class="literalblock">
+<div class="content">
+<pre>Illiterate blogging with https://github.com/viebel/klipse[Klipse]</pre>
+</div>
+</div>
+</blockquote>
+</div>
+<div class="openblock slide">
+<div class="content">
+<div class="paragraph"><p>Literate Programming:<br>
+Embed natural language sentences in a program.</p></div>
+<div class="paragraph"><p>Illiterate Blogging:<br>
+Embed interactive code snippets in a blog post.</p></div>
+</div>
+</div>
+</section>
+<section class="slide" id="_klipse_a_demo">
+<h2>Klipse: A demo</h2>
+<div class="paragraph"><p><a href="http://exupero.org/hazard/post/fractals/">An interactive blog post about fractals</a> by <a href="https://twitter.com/exupero">@exupero</a>.</p></div>
+</section>
+<section class="slide" id="_interlude_what_is_self_host_clojurescript">
+<h2>Interlude: What is self-host ClojureScript?</h2>
+
+</section>
+<section class="slide" id="_klipse_the_features">
+<h2>Klipse: The features</h2>
+<div class="ulist">
+<ul>
+<li class="slide">code is evaluated as you type (configurable)</li>
+<li class="slide">supports many languages: clojure, javascript (es7, jsx, react), ruby, python, brainfuck, scheme&#8230;&#8203;</li>
+<li class="slide">clojurescript transpilation</li>
+<li class="slide">external libraries</li>
+<li class="slide">printing</li>
+<li class="slide">core.async</li>
+<li class="slide">limited size printing</li>
+<li class="slide">infinite loop partial prevention</li>
+<li class="slide">code evaluation in a loop</li>
+<li class="slide">interacting with the DOM</li>
+<li class="slide">reagent snippets</li>
+</ul>
+</div>
+</section>
+<section class="slide" id="_klipse_the_challenges">
+<h2>Klipse: the challenges</h2>
+<div class="ulist">
+<ul>
+<li>Clojurescript in not clojure: threads, types, core.async&#8230;&#8203;</li>
+<li>Self-Host Clojurescript is not Clojurescript: many libs are not yet ported (core.logic, core.matrix&#8230;&#8203;)</li>
+<li>Security issues for blogging platform</li>
+<li>Infinite loops</li>
+</ul>
+</div>
+</section>
+<section class="slide" id="_klipse_the_integration">
+<h2>Klipse: The integration</h2>
+
+</section>
+<section class="slide" id="_survey">
+<h2>Survey</h2>
+<div class="ulist">
+<ul>
+<li class="slide">How many people are bloggers?</li>
+<li class="slide">How many people have a github repository?</li>
+<li class="slide">How many people read blogs?</li>
+</ul>
+</div>
+</section>
+<section class="slide" id="_what_s_in_it_for_you">
+<h2>What&#8217;s in it for you?</h2>
+<div class="ulist">
+<ul>
+<li class="slide">Ask from bloggers to <em>klipsify</em> their articles</li>
+<li class="slide">Write an interactive blog post: It&#8217;s the best way to learn a topic and It&#8217;s really fun!</li>
+<li class="slide">Klipsify your library documentation</li>
+</ul>
+</div>
 <link rel="shortcut icon" href="./favicon.png">
 <link rel="stylesheet" media="screen" href="http://slides.klipse.tech/includes/deckjs/themes/style/klipse.css">
 <link rel="stylesheet" media="screen" href="http://slides.klipse.tech/asciidoc/klipse.css">

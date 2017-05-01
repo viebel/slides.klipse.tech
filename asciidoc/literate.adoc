@@ -1,4 +1,4 @@
-= Literate Blogging with Klipse
+= Illiterate Blogging with Klipse
 :encoding: utf-8
 :navigation:
 :deckjs_transition: horizontal-slide
@@ -6,6 +6,23 @@
 :status:
 :deckjs_theme: none
 :hardbreaks:
+
+
+== Two types of programmers
+
+[%step]
+--
+Programmers of type 0
+
+They share their ideas in github repos
+
+--
+[%step]
+--
+Programmers of type 1
+They share their ideas in blog posts
+--
+
 
 = Programmers of type 0
 
@@ -34,32 +51,104 @@ They write *tests*.
 How do *regular* programmers of type 1 tell stories?
 
 [%step]
-They write *ideas*.
+They write their *ideas* in a natural language.
 
 [%step]
-How do *good* programmers of type 0 tell stories?
+How do *good* programmers of type 1 tell stories?
 
 [%step]
-They write *static code snippets*.
+They write *static code snippets* in a programming language.
 
 [%step]
-How do *excellent* programmers of type 0 tell stories?
+How do *excellent* programmers of type 1 tell stories?
 
 [%step]
-They add *images*.
+They add *pictures* to illustrate their ideas.
 
 
 = The problems
 
-Problem #0: Readers are not as [.line-through]#smart#familiar with the concepts as the blog author.
+[%step]
+--
+Problem 0: Readers are not as [.line-through]#smart# familiar with the concepts as the blog author.
 
-We need [.line-through]#ten# make that twenty V
+They cannot digest complex code just by meditating at it.
+They need to interact with it.
+--
 
-Problem #1: Readers are lazy.
+[%step]
+--
+Problem 1: Readers are lazy.
+Noboding is going to clone your github repo and execute `lein run` to interact with the code you have linked to in your blog post.
+--
+
+[%step]
+--
+[.line-through]#Problem# Fact 2: Readers are kids.
+They love to play.
+--
+
+
+
+= The solution
+
+
+>  Illiterate blogging with https://github.com/viebel/klipse[Klipse]
+
+[%step]
+--
+Literate Programming:
+Embed natural language sentences in a program.
+
+Illiterate Blogging:
+Embed interactive code snippets in a blog post.
+--
+
+= Klipse: A demo
+
+http://exupero.org/hazard/post/fractals/[An interactive blog post about fractals] by https://twitter.com/exupero[@exupero].
+
+= Interlude: What is self-host ClojureScript?
+
+= Klipse: The features
+
+[%step]
+- code is evaluated as you type (configurable)
+- supports many languages: clojure, javascript (es7, jsx, react), ruby, python, brainfuck, scheme...
+- clojurescript transpilation
+- external libraries
+- printing
+- core.async
+- limited size printing
+- infinite loop partial prevention
+- code evaluation in a loop
+- interacting with the DOM
+- reagent snippets
+
+= Klipse: the challenges
+
+- Clojurescript in not clojure: threads, types, core.async...
+- Self-Host Clojurescript is not Clojurescript: many libs are not yet ported (core.logic, core.matrix...)
+- Security issues for blogging platform
+- Infinite loops
+
+
+= Klipse: The integration
+
+= Survey
 
 [%step]
 
-No reader is going to clone a repository to experiment with ideas exposed in a blog post.
+- How many people are bloggers?
+- How many people have a github repository?
+- How many people read blogs?
+
+= What's in it for you?
+
+[%step]
+- Ask from bloggers to _klipsify_ their articles
+- Write an interactive blog post: It's the best way to learn a topic and It's really fun!
+- Klipsify your library documentation 
 
 
 
