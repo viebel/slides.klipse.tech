@@ -1,0 +1,67 @@
+= Literate Blogging with Klipse
+:encoding: utf-8
+:navigation:
+:deckjs_transition: horizontal-slide
+:menu:
+:status:
+:deckjs_theme: none
+:hardbreaks:
+
+= Programmers of type 0
+
+[%step]
+How do *regular* programmers of type 0 tell stories?
+
+[%step]
+They write *code*.
+
+[%step]
+How do *good* programmers of type 0 tell stories?
+
+[%step]
+They write *comments*.
+
+[%step]
+How do *excellent* programmers of type 0 tell stories?
+
+[%step]
+They write *tests*.
+
+
+= Programmers of type 1
+
+[%step]
+How do *regular* programmers of type 1 tell stories?
+
+[%step]
+They write *ideas*.
+
+[%step]
+How do *good* programmers of type 0 tell stories?
+
+[%step]
+They write *static code snippets*.
+
+[%step]
+How do *excellent* programmers of type 0 tell stories?
+
+[%step]
+They add *images*.
+
+
+= The problems
+
+Problem #0: Readers are not as [.line-through]#smart#familiar with the concepts as the blog author.
+
+We need [.line-through]#ten# make that twenty V
+
+Problem #1: Readers are lazy.
+
+[%step]
+
+No reader is going to clone a repository to experiment with ideas exposed in a blog post.
+
+
+
+
+include::klipse.adoc[]

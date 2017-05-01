@@ -7,5 +7,6 @@
  presentation.html #import [asciidoc/create {name "presentation"}]
  destructuring-multi-arity.html #import [asciidoc/create {name "destructuring-multi-arity"}]
  pattern-matching.html #import [asciidoc/create {name "pattern-matching"}]
- amobee-summary.html #import [asciidoc/create {name "amobee-summary"}]   
+ amobee-summary.html #import [asciidoc/create {name "amobee-summary"}]
+ literate.html #import [asciidoc/create {name "literate"}]    
  polymorphism.html #import [asciidoc/create {name "polymorphism"}]}
