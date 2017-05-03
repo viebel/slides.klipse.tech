@@ -186,7 +186,7 @@ They need to interact with it.</p></div>
 <div class="openblock slide">
 <div class="content">
 <div class="paragraph"><p>Problem 1: Readers are lazy.<br>
-Noboding is going to clone your github repo and execute <code>lein run</code> to interact with the code you have linked to in your blog post.</p></div>
+Noboding is going to clone your github repo to interact with the code you have linked to in your blog post.</p></div>
 </div>
 </div>
 <div class="openblock slide">
@@ -239,6 +239,7 @@ They love to play.</p></div>
 <li class="slide">snippet preamble</li>
 <li class="slide">printing</li>
 <li class="slide">code evaluation in a loop</li>
+<li class="slide">load code from a github gist</li>
 <li class="slide">interacting with the DOM</li>
 <li class="slide">the CodeMirror editor is configurable: options and CSS</li>
 </ul>
@@ -308,7 +309,8 @@ obj</code></pre>
 <div class="paragraph"><p><code>console.log</code> is redirected to the result box</p></div>
 <div class="listingblock eval-js">
 <div class="content">
-<pre class="highlight"><code>console.log("Hello World!")</code></pre>
+<pre class="highlight"><code>console.log("Hello World!")
+3 + 4</code></pre>
 </div>
 </div>
 </div>
@@ -352,8 +354,7 @@ run();
 <h2>Klipse: react.js and JSX</h2>
 <div class="openblock slide">
 <div class="content">
-<div class="paragraph"><p>JSX is &#8230;&#8203;</p></div>
-<div class="paragraph"><p>kind of a macro system</p></div>
+<div class="paragraph"><p>JSX is a language for writing <code>react</code> components almost in HTML</p></div>
 </div>
 </div>
 <div class="openblock slide">
@@ -390,7 +391,12 @@ run();
 </div>
 </div>
 </div>
-<div class="paragraph slide"><p>JSX code is transpiled by <a href="https://github.com/babel/babel-standalone">babel-standalone</a>.</p></div>
+<div class="openblock slide">
+<div class="content">
+<div class="paragraph"><p>JSX code is transpiled by <a href="https://github.com/babel/babel-standalone">babel-standalone</a>.</p></div>
+<div class="paragraph"><p>Learn more about JSX in this <a href="http://blog.klipse.tech/javascript/2016/12/14/jsx.html">interactive JSX tutorial</a>.</p></div>
+</div>
+</div>
 </section>
 <section class="slide" id="_klipse_ruby">
 <h2>Klipse: Ruby</h2>
@@ -417,7 +423,6 @@ run();
   (+ a b))</code></pre>
 </div>
 </div>
-<div class="paragraph"><p>The evaluation of scheme code in the browser is powered by <a href="http://www.biwascheme.org/">BiwaScheme</a>.</p></div>
 </div>
 </div>
 <div class="openblock slide">
@@ -442,7 +447,7 @@ run();
 </div>
 <div class="openblock slide">
 <div class="content">
-<div class="paragraph"><p>Factorial implemented with iteration</p></div>
+<div class="paragraph"><p>Factorial implemented with iteration (a.k.a tail-call recursion)</p></div>
 <div class="listingblock scheme">
 <div class="content">
 <pre class="highlight"><code>(define (factorial-iter n)
@@ -460,6 +465,16 @@ run();
 </div>
 </div>
 </div>
+<div class="openblock slide">
+<div class="content">
+<div class="paragraph"><p>Learn more about schem in this <a href="http://blog.klipse.tech/scheme/2016/09/11/scheme-tutorial-1.html">Interactive overview of Scheme&#8217;s semantics</a>.<br>
+The evaluation of scheme code in the browser is powered by <a href="http://www.biwascheme.org/">BiwaScheme</a>.</p></div>
+</div>
+</div>
+</section>
+<section class="slide" id="_klipse_scheme_fun_with_car_and_cdr">
+<h2>Klipse: Scheme - fun with car and cdr</h2>
+
 </section>
 <section class="slide" id="_klipse_lua_implemented_in_webassembly">
 <h2>Klipse: Lua (implemented in WebAssembly)</h2>
@@ -519,7 +534,7 @@ for i in range(4):
 <div class="paragraph"><p>The different elements of the stories need to be connected together.</p></div>
 <div class="openblock slide">
 <div class="content">
-<div class="paragraph"><p>Let&#8217;s show how to write a <strong>Hello World</strong> function in Clojure:</p></div>
+<div class="paragraph"><p>Let&#8217;s see how to write a <strong>Hello World</strong> function in Clojure:</p></div>
 <div class="listingblock clj">
 <div class="content">
 <pre class="highlight"><code>(defn hello [name]

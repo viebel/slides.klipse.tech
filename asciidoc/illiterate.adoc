@@ -147,7 +147,7 @@ They need to interact with it.
 [%step]
 --
 Problem 1: Readers are lazy.
-Noboding is going to clone your github repo and execute `lein run` to interact with the code you have linked to in your blog post.
+Noboding is going to clone your github repo to interact with the code you have linked to in your blog post.
 --
 
 [%step]
@@ -195,6 +195,7 @@ The code evaluation is done in the browser: no server is involved at all!
 - snippet preamble	
 - printing
 - code evaluation in a loop
+- load code from a github gist
 - interacting with the DOM
 - the CodeMirror editor is configurable: options and CSS
 
@@ -243,6 +244,7 @@ $("#container-1")
 ++++
 --
 
+
 == Klipse: javascript
 
 
@@ -271,6 +273,7 @@ ES2017 code is transpiled by https://github.com/babel/babel-standalone[babel-sta
 [source.eval-js]
 ----
 console.log("Hello World!")
+3 + 4
 ----
 --
 
@@ -314,9 +317,7 @@ $(klipse_container)
 
 [%step]
 --
-JSX is ...
-
-kind of a macro system
+JSX is a language for writing `react` components almost in HTML 
 --
 
 [%step]
@@ -351,7 +352,11 @@ Let's leverage the functional power of javascript
 --
 
 [%step]
+--
 JSX code is transpiled by https://github.com/babel/babel-standalone[babel-standalone].
+
+Learn more about JSX in this http://blog.klipse.tech/javascript/2016/12/14/jsx.html[interactive JSX tutorial].
+--
 
 
 
@@ -379,7 +384,6 @@ Scheme
   (b 2))
   (+ a b))
 ----
-The evaluation of scheme code in the browser is powered by http://www.biwascheme.org/[BiwaScheme].
 --
 
 [%step]
@@ -404,7 +408,7 @@ Factorial implemented with recursion
 
 [%step]
 --
-Factorial implemented with iteration
+Factorial implemented with iteration (a.k.a tail-call recursion)
 
 [source.scheme]
 ----
@@ -422,6 +426,13 @@ Factorial implemented with iteration
 ----
 --
 
+[%step]
+--
+Learn more about schem in this http://blog.klipse.tech/scheme/2016/09/11/scheme-tutorial-1.html[Interactive overview of Scheme's semantics].
+The evaluation of scheme code in the browser is powered by http://www.biwascheme.org/[BiwaScheme].
+--
+
+== Klipse: Scheme - fun with car and cdr
 
 
 
@@ -485,7 +496,7 @@ The different elements of the stories need to be connected together.
 
 [%step]
 --
-Let's show how to write a *Hello World* function in Clojure:
+Let's see how to write a *Hello World* function in Clojure:
 
 [source.clj]
 ----

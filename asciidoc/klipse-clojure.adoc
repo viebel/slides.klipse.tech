@@ -1,0 +1,86 @@
+= Klipse for Clojure
+:encoding: utf-8
+:navigation:
+:deckjs_transition: horizontal-slide
+:menu:
+:status:
+:deckjs_theme: none
+:hardbreaks:
+
+
+
+== Running code in a loop
+
+[%step]
+--
+Let's create a klipse snippet that is evaluated again and again in intervals.
+
+Setting `data-loop-msec` to the time in msec between the evaluations.
+--
+
+[%step]
+--
+For example, this is how we display a random number each second (Check the page source!):
+[.text]
+----
+<pre><code class="lang-eval-clojure" data-loop-msec="1000">
+(rand)
+</code></pre>
+----
+--
+
+[%step]
+--
+This snippet is evaluated each second - without any user interaction:
+++++
+<pre><code class="clj" data-loop-msec="1000">
+(rand)
+</code></pre>
+++++
+--
+
+
+== Load code from a github gist
+
+[%step]
+--
+Sometimes, you don't want to keep your code in the source of your blog but rather have it in a github gist.
+It will allow you to modify the code of the snippet without having to republish your gitbook.
+--
+
+[%step]
+--
+Here is a gist that defines a function `read-several-exps` for reading several expressions from a string.
+(`read-string` reads only a single expression)
+++++
+<script src="https://gist.github.com/viebel/8cb19d258fea39a64146721ce50603d0.js"></script>
+++++
+--
+
+[%step]
+--
+To kliplisfy the gist, we use `data-gist-id` with the id of the gist - including the username.
+
+Here is how it is included in the current presentation (check the page source!):
+
+[.text]
+----
+<pre><code class="clj" data-gist-id="viebel/8cb19d258fea39a64146721ce50603d0">
+</code></pre>
+----
+--
+
+[%step]
+--
+Here is the klipsified gist:
+++++
+<pre><code class="clj" data-gist-id="viebel/8cb19d258fea39a64146721ce50603d0">
+</code></pre>
+++++
+--
+
+include::klipse.adoc[]
+++++
+<script src="https://cdnjs.cloudflare.com/ajax/libs/react/15.5.4/react-with-addons.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/react/15.5.4/react-dom.min.js"></script>
+++++
