@@ -402,3 +402,7 @@ blockquote cite {
 .line-through {
     text-decoration: line-through;
 }
+
+.klipse-container {
+    margin-bottom: 10px;
+}
