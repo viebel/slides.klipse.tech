@@ -8,6 +8,29 @@
 :hardbreaks:
 
 
+== Klipse: The features
+
+[%step]
+- code is evaluated as you type (configurable)
+- environment is shared between code snippets
+- hidden code snippets
+- snippet preamble	
+- printing
+- supports many languages: clojure, javascript (es7, jsx, react), ruby, python, brainfuck, scheme...
+- clojurescript transpilation
+- code evaluation in a loop
+- load code from a github gist
+- interacting with the DOM
+- the CodeMirror editor is configurable: options and CSS
+
+[%step]
+- caching of external libs: core.async
+- custom external libraries
+- limited size printing
+- infinite loop partial prevention
+- reagent snippets
+- output is beautified and strings are beautified
+
 
 == Running code in a loop
 
@@ -39,7 +62,200 @@ This snippet is evaluated each second - without any user interaction:
 ++++
 --
 
+== Hiding some details from the reader
 
+[%step]
+--
+> Less is more
+
+
+You don't want to confuse your readers with technical details that are not revelant to the main idea of your article.
+
+But you need this (irrelevant) code to let the other parts of the code run properly.
+--
+
+[%step]
+--
+Two mechanisms for hiding code from the reader but not from Klipse:
+- A hidden Klipse snippet
+- `data-preamble`
+--
+
+
+[%step]
+--
+You can hide a snippet using CSS
+[.text]
+----
+<pre class="hidden"><code class="clj">
+(def irrelevant-constant
+42)
+</code></pre>
+----
+++++
+<pre class="hidden"><code class="clj">
+(def irrelevant-constant  42)
+</code></pre>
+<p style="font-style:italic; color: blue">
+There is a hidden Klipse snippet just above me
+</p>
+++++
+
+
+We can use the hidden code in subsequent klipse snippets:
+[source.clj]
+----
+irrelevant-constant
+----
+--
+
+[%step]
+--
+We can hide part of the Klipse snippet's code using `data-preamble`.
+[.text]
+----
+<pre><code class="clj" data-preamble="(def random-num  (rand))">
+random-num
+</code></pre>
+----
+--
+
+[%step]
+--
+++++
+<pre><code class="clj" data-preamble="(def random-num (rand))">
+random-num
+</code></pre>
+++++
+--
+
+== Caching of clojure libs
+
+[%step]
+--
+clojure libs cached in Klipse:
+
+- core.async
+- core.match
+- clojure.spec
+- clojure.math.combinatorics
+- reagent
+- reagent-froms
+- clojure.test.check
+- net.cgrand.macrovich
+--
+
+[%step]
+--
+Let's require `core.async`
+[source.clj]
+----
+(require '[clojure.core.async :refer [chan <! timeout put!]])
+(require-macros '[cljs.core.async.macros :refer [go]])
+----
+--
+
+[%step]
+--
+Let's create a communication channel
+
+[source.clj]
+----
+(def msg-chan (chan))
+----
+
+A consumer:
+++++
+<pre><code class="clj" data-eval-idle-msec="99999999999">
+(let [container js/klipse-container]
+  (go
+    (let [div (js/document.createElement "div")]
+      (.appendChild container div)
+      (set! (.-innerText div) 
+            (&lt;! msg-chan))))) 
+</code></pre>
+++++
+
+A publisher
+[source.clj]
+----
+(put! msg-chan "Hello")
+----
+--
+
+[%step]
+--
+Check this http://app.klipse.tech/?container&cljs_in.gist=viebel/c229fbca8e6d89b2695f1849b5127e93[amazing demo] by the author of `core.async`.
+--
+
+== Clojure.libs - math.combinatorics and core.match
+
+Let's generate all the permutations of an array
+
+[source.clj]
+----
+(require '[clojure.math.combinatorics :refer [permutations]])
+----
+[source.clj]
+----
+(permutations [1 2 3])
+----
+
+[%step]
+--
+Here is a http://blog.klipse.tech/clojure/2016/09/16/combinatorics-riddle.html[not so easy riddle that one could solve with permutations]
+--
+
+[%step]
+--
+`Core.match` - pattern matching - will simplify a lot your code and make it much more elegant.
+--
+
+[%step]
+--
+[source.clj]
+----
+(require '[cljs.core.match :refer-macros [match]])
+----
+[source.clj]
+----
+(let [x 1 y 2]
+  (match [x y]
+         [1 b] b
+         [a 2] a
+         :else nil))
+----
+--
+
+[%step]
+Here is an http://blog.klipse.tech/clojure/2016/10/25/core-match.html[interactive tutorial of core.match]
+
+== External libs
+
+[%step]
+--
+You can also include code from an external lib, that is not cached in Klipse.
+
+Klipse can load code dynamically from any source or code repository e.g. github.
+
+`data-external-libs` is like the class path.
+--
+
+[%step]
+--
+For instance, let's play with a https://github.com/krisajenkins/original-lisp[clojure implementation of McCarthy's LISP].
+
+++++
+<pre><code class="clj" data-external-libs="https://raw.githubusercontent.com/viebel/original-lisp/48badc99b6e7cfba7b86742d2a0b9ccc5db18953/src">
+(require '[original-lisp.core :refer [l-eval]])
+</code></pre>
+++++
+
+[source.clj]
+----
+(l-eval '(car '(10 2)) '())
+----
+--
 == Load code from a github gist
 
 [%step]

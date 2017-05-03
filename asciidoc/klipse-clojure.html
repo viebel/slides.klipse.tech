@@ -19,6 +19,34 @@
 <section class="slide" id="title-slide">
 <h1>Klipse for Clojure</h1>
 </section>
+<section class="slide" id="_klipse_the_features">
+<h2>Klipse: The features</h2>
+<div class="ulist">
+<ul>
+<li class="slide">code is evaluated as you type (configurable)</li>
+<li class="slide">environment is shared between code snippets</li>
+<li class="slide">hidden code snippets</li>
+<li class="slide">snippet preamble</li>
+<li class="slide">printing</li>
+<li class="slide">supports many languages: clojure, javascript (es7, jsx, react), ruby, python, brainfuck, scheme&#8230;&#8203;</li>
+<li class="slide">clojurescript transpilation</li>
+<li class="slide">code evaluation in a loop</li>
+<li class="slide">load code from a github gist</li>
+<li class="slide">interacting with the DOM</li>
+<li class="slide">the CodeMirror editor is configurable: options and CSS</li>
+</ul>
+</div>
+<div class="ulist">
+<ul>
+<li class="slide">caching of external libs: core.async</li>
+<li class="slide">custom external libraries</li>
+<li class="slide">limited size printing</li>
+<li class="slide">infinite loop partial prevention</li>
+<li class="slide">reagent snippets</li>
+<li class="slide">output is beautified and strings are beautified</li>
+</ul>
+</div>
+</section>
 <section class="slide" id="_running_code_in_a_loop">
 <h2>Running code in a loop</h2>
 <div class="openblock slide">
@@ -45,6 +73,198 @@
 <pre><code class="clj" data-loop-msec="1000">
 (rand)
 </code></pre>
+</div>
+</div>
+</section>
+<section class="slide" id="_hiding_some_details_from_the_reader">
+<h2>Hiding some details from the reader</h2>
+<div class="openblock slide">
+<div class="content">
+<div class="quoteblock">
+<blockquote>
+<div class="paragraph"><p>Less is more</p></div>
+</blockquote>
+</div>
+<div class="paragraph"><p>You don&#8217;t want to confuse your readers with technical details that are not revelant to the main idea of your article.</p></div>
+<div class="paragraph"><p>But you need this (irrelevant) code to let the other parts of the code run properly.</p></div>
+</div>
+</div>
+<div class="openblock slide">
+<div class="content">
+<div class="paragraph"><p>Two mechanisms for hiding code from the reader but not from Klipse:<br>
+- A hidden Klipse snippet<br>
+- <code>data-preamble</code></p></div>
+</div>
+</div>
+<div class="openblock slide">
+<div class="content">
+<div class="paragraph"><p>You can hide a snippet using CSS</p></div>
+<div class="listingblock text">
+<div class="content">
+<pre><code>&lt;pre class="hidden"&gt;&lt;code class="clj"&gt;
+(def irrelevant-constant
+42)
+&lt;/code&gt;&lt;/pre&gt;</code></pre>
+</div>
+</div>
+<pre class="hidden"><code class="clj">
+(def irrelevant-constant  42)
+</code></pre>
+<p style="font-style:italic; color: blue">
+There is a hidden Klipse snippet just above me
+</p>
+<div class="paragraph"><p>We can use the hidden code in subsequent klipse snippets:</p></div>
+<div class="listingblock clj">
+<div class="content">
+<pre class="highlight"><code>irrelevant-constant</code></pre>
+</div>
+</div>
+</div>
+</div>
+<div class="openblock slide">
+<div class="content">
+<div class="paragraph"><p>We can hide part of the Klipse snippet&#8217;s code using <code>data-preamble</code>.</p></div>
+<div class="listingblock text">
+<div class="content">
+<pre><code>&lt;pre&gt;&lt;code class="clj" data-preamble="(def random-num  (rand))"&gt;
+random-num
+&lt;/code&gt;&lt;/pre&gt;</code></pre>
+</div>
+</div>
+</div>
+</div>
+<div class="openblock slide">
+<div class="content">
+<pre><code class="clj" data-preamble="(def random-num (rand))">
+random-num
+</code></pre>
+</div>
+</div>
+</section>
+<section class="slide" id="_caching_of_clojure_libs">
+<h2>Caching of clojure libs</h2>
+<div class="openblock slide">
+<div class="content">
+<div class="paragraph"><p>clojure libs cached in Klipse:</p></div>
+<div class="ulist">
+<ul>
+<li>core.async</li>
+<li>core.match</li>
+<li>clojure.spec</li>
+<li>clojure.math.combinatorics</li>
+<li>reagent</li>
+<li>reagent-froms</li>
+<li>clojure.test.check</li>
+<li>net.cgrand.macrovich</li>
+</ul>
+</div>
+</div>
+</div>
+<div class="openblock slide">
+<div class="content">
+<div class="paragraph"><p>Let&#8217;s require <code>core.async</code></p></div>
+<div class="listingblock clj">
+<div class="content">
+<pre class="highlight"><code>(require '[clojure.core.async :refer [chan &lt;! timeout put!]])
+(require-macros '[cljs.core.async.macros :refer [go]])</code></pre>
+</div>
+</div>
+</div>
+</div>
+<div class="openblock slide">
+<div class="content">
+<div class="paragraph"><p>Let&#8217;s create a communication channel</p></div>
+<div class="listingblock clj">
+<div class="content">
+<pre class="highlight"><code>(def msg-chan (chan))</code></pre>
+</div>
+</div>
+<div class="paragraph"><p>A consumer:</p></div>
+<pre><code class="clj" data-eval-idle-msec="99999999999">
+(let [container js/klipse-container]
+  (go
+    (let [div (js/document.createElement "div")]
+      (.appendChild container div)
+      (set! (.-innerText div)
+            (&lt;! msg-chan)))))
+</code></pre>
+<div class="paragraph"><p>A publisher</p></div>
+<div class="listingblock clj">
+<div class="content">
+<pre class="highlight"><code>(put! msg-chan "Hello")</code></pre>
+</div>
+</div>
+</div>
+</div>
+<div class="openblock slide">
+<div class="content">
+<div class="paragraph"><p>Check this <a href="http://app.klipse.tech/?container&amp;cljs_in.gist=viebel/c229fbca8e6d89b2695f1849b5127e93">amazing demo</a> by the author of <code>core.async</code>.</p></div>
+</div>
+</div>
+</section>
+<section class="slide" id="_clojure_libs_math_combinatorics_and_core_match">
+<h2>Clojure.libs - math.combinatorics and core.match</h2>
+<div class="paragraph"><p>Let&#8217;s generate all the permutations of an array</p></div>
+<div class="listingblock clj">
+<div class="content">
+<pre class="highlight"><code>(require '[clojure.math.combinatorics :refer [permutations]])</code></pre>
+</div>
+</div>
+<div class="listingblock clj">
+<div class="content">
+<pre class="highlight"><code>(permutations [1 2 3])</code></pre>
+</div>
+</div>
+<div class="openblock slide">
+<div class="content">
+<div class="paragraph"><p>Here is a <a href="http://blog.klipse.tech/clojure/2016/09/16/combinatorics-riddle.html">not so easy riddle that one could solve with permutations</a></p></div>
+</div>
+</div>
+<div class="openblock slide">
+<div class="content">
+<div class="paragraph"><p><code>Core.match</code> - pattern matching - will simplify a lot your code and make it much more elegant.</p></div>
+</div>
+</div>
+<div class="openblock slide">
+<div class="content">
+<div class="listingblock clj">
+<div class="content">
+<pre class="highlight"><code>(require '[cljs.core.match :refer-macros [match]])</code></pre>
+</div>
+</div>
+<div class="listingblock clj">
+<div class="content">
+<pre class="highlight"><code>(let [x 1 y 2]
+  (match [x y]
+         [1 b] b
+         [a 2] a
+         :else nil))</code></pre>
+</div>
+</div>
+</div>
+</div>
+<div class="paragraph slide"><p>Here is an <a href="http://blog.klipse.tech/clojure/2016/10/25/core-match.html">interactive tutorial of core.match</a></p></div>
+</section>
+<section class="slide" id="_external_libs">
+<h2>External libs</h2>
+<div class="openblock slide">
+<div class="content">
+<div class="paragraph"><p>You can also include code from an external lib, that is not cached in Klipse.</p></div>
+<div class="paragraph"><p>Klipse can load code dynamically from any source or code repository e.g. github.</p></div>
+<div class="paragraph"><p><code>data-external-libs</code> is like the class path.</p></div>
+</div>
+</div>
+<div class="openblock slide">
+<div class="content">
+<div class="paragraph"><p>For instance, let&#8217;s play with a <a href="https://github.com/krisajenkins/original-lisp">clojure implementation of McCarthy&#8217;s LISP</a>.</p></div>
+<pre><code class="clj" data-external-libs="https://raw.githubusercontent.com/viebel/original-lisp/48badc99b6e7cfba7b86742d2a0b9ccc5db18953/src">
+(require '[original-lisp.core :refer [l-eval]])
+</code></pre>
+<div class="listingblock clj">
+<div class="content">
+<pre class="highlight"><code>(l-eval '(car '(10 2)) '())</code></pre>
+</div>
+</div>
 </div>
 </div>
 </section>
