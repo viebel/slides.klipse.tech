@@ -17,6 +17,26 @@
 .left {
     float: left;
 }
+.right {
+    float: rigth;
+}
+
+.margin-left {
+    margin-left: 10px;
+}
+
+.margin-right {
+    margin-right: 10px;
+}
+.margin-top {
+    margin-top: 10px;
+}
+
+.margin-bottom {
+    margin-bottom: 10px;
+}
+
+
 .clear {
     clear: both;
 }
@@ -28,3 +48,4 @@
 p,ul,ol {
     font-size: 1.7em;
 }
+
