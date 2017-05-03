@@ -238,21 +238,25 @@ They love to play.</p></div>
 <li class="slide">hidden code snippets</li>
 <li class="slide">snippet preamble</li>
 <li class="slide">printing</li>
-<li class="slide">output is beautified and strings are beautified</li>
-<li class="slide">external libraries</li>
-<li class="slide">core.async</li>
-<li class="slide">limited size printing</li>
-<li class="slide">infinite loop partial prevention</li>
 <li class="slide">code evaluation in a loop</li>
 <li class="slide">interacting with the DOM</li>
-<li class="slide">reagent snippets</li>
 <li class="slide">the CodeMirror editor is configurable: options and CSS</li>
+</ul>
+</div>
+<div class="ulist">
+<ul>
+<li class="slide">caching of external libs: core.async</li>
+<li class="slide">custom external libraries</li>
+<li class="slide">limited size printing</li>
+<li class="slide">infinite loop partial prevention</li>
+<li class="slide">reagent snippets</li>
+<li class="slide">output is beautified and strings are beautified</li>
 </ul>
 </div>
 </section>
 <section class="slide" id="_klipse_code_is_evaluated_as_you_type">
 <h2>Klipse: code is evaluated as you type</h2>
-<div class="paragraph"><p>Zero-delay between the code editing and it&#8217;s evaluation is key for creativity.</p></div>
+<div class="paragraph"><p>Zero-delay between the trial and the result is key for <strong>creativity</strong>.</p></div>
 <br/><br/>
 <div class="videoblock">
 <iframe allowfullscreen height="480" src="//www.youtube.com/embed/PUv66718DII?rel=0&amp;start=218" width="640"></iframe>
@@ -269,20 +273,129 @@ They love to play.</p></div>
 </div>
 <div class="openblock slide">
 <div class="content">
-<div class="listingblock eval-js">
-<div class="content">
-<pre class="highlight"><code>1+2</code></pre>
-</div>
-</div>
+<pre><code class="eval-js" data-async-code="true">
+$("#container-1")
+.css({color: 'white',
+       backgroundColor: 'blue',
+      padding: '10px',
+      fontSize: '50px'})
+.text("Hello World")
+</code></pre>
 <div id="container-1"></div>
 </div>
 </div>
+</section>
+<section class="slide" id="_klipse_javascript">
+<h2>Klipse: javascript</h2>
+<div class="openblock slide">
+<div class="content">
+<div class="paragraph"><p>Demonstrate EcmaScript 2017 features before they are available in the browser</p></div>
+<div class="listingblock es2017">
+<div class="content">
+<pre class="highlight"><code>const cond = true;
+const obj = {
+  ...(cond ? {a: 1} : {}),
+  b: 2,
+};
+obj</code></pre>
+</div>
+</div>
+<div class="paragraph"><p>ES2017 code is transpiled by <a href="https://github.com/babel/babel-standalone">babel-standalone</a>.</p></div>
+</div>
+</div>
+<div class="openblock slide">
+<div class="content">
+<div class="paragraph"><p><code>console.log</code> is redirected to the result box</p></div>
+<div class="listingblock eval-js">
+<div class="content">
+<pre class="highlight"><code>console.log("Hello World!")</code></pre>
+</div>
+</div>
+</div>
+</div>
+<div class="openblock slide">
+<div class="content">
+<div class="paragraph"><p>Let&#8217;s escape the callback hell!<br>
+<code>async</code> and <code>await</code> in action</p></div>
+<pre><code class="eval-js" data-async-code="true">
+async function sleep(ms = 0) {
+  return new Promise(r => setTimeout(r, ms));
+}
+
+async function run() {
+  console.log("Before: " + (new Date()).toString());
+  await sleep(1000);
+  console.log("After:  " + (new Date()).toString());
+}
+
+run();
+</code></pre>
+</div>
+</div>
+<div class="openblock slide">
+<div class="content">
+<div class="paragraph"><p>Each snippet is bounded to a klipse container accessible through <code>window.klipse_container</code> with id <code>window.klipse_container_id</code>.</p></div>
+<div class="listingblock eval-js">
+<div class="content">
+<pre class="highlight"><code>$(klipse_container)
+  .css({color: 'white',
+        backgroundColor: 'blue',
+        padding: '10px',
+        fontSize: '50px'})
+  .text("Hello World")</code></pre>
+</div>
+</div>
+</div>
+</div>
+</section>
+<section class="slide" id="_klipse_react_js_and_jsx">
+<h2>Klipse: react.js and JSX</h2>
+<div class="openblock slide">
+<div class="content">
+<div class="paragraph"><p>JSX is &#8230;&#8203;</p></div>
+<div class="paragraph"><p>kind of a macro system</p></div>
+</div>
+</div>
+<div class="openblock slide">
+<div class="content">
+<div class="paragraph"><p>It is transpiled into plain javascript</p></div>
+<div class="listingblock transpile-jsx">
+<div class="content">
+<pre class="highlight"><code>const element = &lt;h1&gt;Hello, world!&lt;/h1&gt;;</code></pre>
+</div>
+</div>
+</div>
+</div>
+<div class="openblock slide">
+<div class="content">
+<div class="paragraph"><p>We can mix static and dynamic pieces of code</p></div>
+<div class="listingblock render-jsx">
+<div class="content">
+<pre class="highlight"><code>&lt;p style= {{color:"blue"} }&gt;Hello, world -- 14*3={14*3}!&lt;/p&gt;</code></pre>
+</div>
+</div>
+</div>
+</div>
+<div class="openblock slide">
+<div class="content">
+<div class="paragraph"><p>Let&#8217;s leverage the functional power of javascript</p></div>
+<div class="listingblock render-jsx">
+<div class="content">
+<pre class="highlight"><code>&lt;div&gt;
+  {[1,2,3].map(i =&gt;
+               &lt;p style= {{color:"blue"} }&gt;Hello, world -- 14*{i}={14*i}!&lt;/p&gt;
+              )}
+&lt;/div&gt;</code></pre>
+</div>
+</div>
+</div>
+</div>
+<div class="paragraph slide"><p>JSX code is transpiled by <a href="https://github.com/babel/babel-standalone">babel-standalone</a>.</p></div>
 </section>
 <section class="slide" id="_klipse_ruby">
 <h2>Klipse: Ruby</h2>
 <div class="openblock slide">
 <div class="content">
-<br/><br/>
 <div class="listingblock ruby">
 <div class="content">
 <pre class="highlight"><code>[1,2]*10</code></pre>
@@ -291,9 +404,11 @@ They love to play.</p></div>
 <div class="paragraph"><p>The evaluation of ruby code in the browser is powered by <a href="http://opalrb.org/">Opal</a>.</p></div>
 </div>
 </div>
+</section>
+<section class="slide" id="_klipse_scheme">
+<h2>Klipse: Scheme</h2>
 <div class="openblock slide">
 <div class="content">
-<br/><br/>
 <div class="paragraph"><p>Scheme</p></div>
 <div class="listingblock scheme">
 <div class="content">
@@ -302,12 +417,54 @@ They love to play.</p></div>
   (+ a b))</code></pre>
 </div>
 </div>
+<div class="paragraph"><p>The evaluation of scheme code in the browser is powered by <a href="http://www.biwascheme.org/">BiwaScheme</a>.</p></div>
 </div>
 </div>
 <div class="openblock slide">
 <div class="content">
-<br/><br/>
-<div class="paragraph"><p>Lua - implemented in WebAssembly</p></div>
+<div class="paragraph"><p>Let&#8217;s enjoy a bit of code from <a href="https://mitpress.mit.edu/sicp/full-text/book/book.html">SICP</a>: Recursion vs. Iteration.</p></div>
+</div>
+</div>
+<div class="openblock slide">
+<div class="content">
+<div class="paragraph"><p>Factorial implemented with recursion</p></div>
+<div class="listingblock scheme">
+<div class="content">
+<pre class="highlight"><code>(define (factorial-rec n)
+  (if (= n 1)
+      1
+      (* n (factorial-rec (- n 1)))))
+
+(factorial-rec 5)</code></pre>
+</div>
+</div>
+</div>
+</div>
+<div class="openblock slide">
+<div class="content">
+<div class="paragraph"><p>Factorial implemented with iteration</p></div>
+<div class="listingblock scheme">
+<div class="content">
+<pre class="highlight"><code>(define (factorial-iter n)
+  (fact-iter-inner 1 1 n))
+
+(define (fact-iter-inner product counter max-count)
+  (if (&gt; counter max-count)
+      product
+      (fact-iter-inner (* counter product)
+                 (+ counter 1)
+                 max-count)))
+
+(factorial-iter 5)</code></pre>
+</div>
+</div>
+</div>
+</div>
+</section>
+<section class="slide" id="_klipse_lua_implemented_in_webassembly">
+<h2>Klipse: Lua (implemented in WebAssembly)</h2>
+<div class="openblock slide">
+<div class="content">
 <div class="listingblock lua">
 <div class="content">
 <pre class="highlight"><code>function hello(s)
@@ -317,14 +474,14 @@ end
 print("Hello " .. "World!")</code></pre>
 </div>
 </div>
+<div class="paragraph"><p>The evaluation of lua code in the browser is powered by <a href="https://github.com/vvanders/wasm_lua">wasm_lua</a>.</p></div>
 </div>
 </div>
 </section>
-<section class="slide" id="_klipse_many_languages">
-<h2>Klipse: Many Languages</h2>
+<section class="slide" id="_klipse_python">
+<h2>Klipse: Python</h2>
 <div class="openblock slide">
 <div class="content">
-<br/><br/>
 <div class="paragraph"><p>Python</p></div>
 <div class="listingblock python">
 <div class="content">
@@ -335,7 +492,6 @@ print("Hello " .. "World!")</code></pre>
 </div>
 <div class="openblock slide">
 <div class="content">
-<br/><br/>
 <div class="paragraph"><p>Python Turtle</p></div>
 <div class="listingblock python">
 <div class="content">
@@ -384,7 +540,6 @@ for i in range(4):
 </div>
 <div class="openblock slide">
 <div class="content">
-<br/>
 <div class="paragraph"><p>☕You can embed a <code>jsfiddle</code> or a <code>codepen</code> in a blog post with an <code>&lt;iframe&gt;</code>.<br>
 But you cannot share neither code nor data between the iframes.</p></div>
 </div>
@@ -463,7 +618,9 @@ But you cannot share neither code nor data between the iframes.</p></div>
     selector_lua: '.lua',
     };
 </script>
-<script src="https://storage.googleapis.com/app.klipse.tech/plugin/js/klipse_plugin.js"></script>
+<script src="https://storage.googleapis.com/app.klipse.tech/plugin/js/klipse_plugin.js?v=7.0.6"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/react/15.5.4/react-with-addons.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/react/15.5.4/react-dom.min.js"></script>
 <style>
 h1 {
 font-family: cursive;

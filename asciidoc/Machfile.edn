@@ -8,5 +8,5 @@
  destructuring-multi-arity.html #import [asciidoc/create {name "destructuring-multi-arity"}]
  pattern-matching.html #import [asciidoc/create {name "pattern-matching"}]
  amobee-summary.html #import [asciidoc/create {name "amobee-summary"}]
- literate.html #import [asciidoc/create {name "literate"}]    
+ illiterate.html #import [asciidoc/create {name "illiterate"}]    
  polymorphism.html #import [asciidoc/create {name "polymorphism"}]}

@@ -194,19 +194,21 @@ The code evaluation is done in the browser: no server is involved at all!
 - hidden code snippets
 - snippet preamble	
 - printing
-- output is beautified and strings are beautified
-- external libraries
-- core.async
-- limited size printing
-- infinite loop partial prevention
 - code evaluation in a loop
 - interacting with the DOM
-- reagent snippets
 - the CodeMirror editor is configurable: options and CSS
+
+[%step]
+- caching of external libs: core.async
+- custom external libraries
+- limited size printing
+- infinite loop partial prevention
+- reagent snippets
+- output is beautified and strings are beautified
 
 == Klipse: code is evaluated as you type
 
-Zero-delay between the code editing and it's evaluation is key for creativity.
+Zero-delay between the trial and the result is key for *creativity*.
 
 ++++
 <br/><br/>
@@ -226,22 +228,138 @@ video::PUv66718DII[youtube,640,480, start=218]
 
 [%step]
 --
-[source.eval-js]
-----
-1+2  
-----
+++++
+<pre><code class="eval-js" data-async-code="true">
+$("#container-1")
+.css({color: 'white',
+       backgroundColor: 'blue',
+      padding: '10px',
+      fontSize: '50px'})
+.text("Hello World")
+</code></pre>
+++++
 ++++
 <div id="container-1"></div>
 ++++
 --
 
+== Klipse: javascript
+
+
+[%step]
+--
+Demonstrate EcmaScript 2017 features before they are available in the browser
+
+
+[source.es2017]
+----
+const cond = true;
+const obj = {
+  ...(cond ? {a: 1} : {}),
+  b: 2,
+};
+obj
+----
+ES2017 code is transpiled by https://github.com/babel/babel-standalone[babel-standalone].
+--
+
+
+[%step]
+--
+`console.log` is redirected to the result box
+
+[source.eval-js]
+----
+console.log("Hello World!")
+----
+--
+
+
+[%step]
+--
+Let's escape the callback hell!
+`async` and `await` in action
+++++
+<pre><code class="eval-js" data-async-code="true">
+async function sleep(ms = 0) {
+  return new Promise(r => setTimeout(r, ms));
+}
+
+async function run() {
+  console.log("Before: " + (new Date()).toString());
+  await sleep(1000);
+  console.log("After:  " + (new Date()).toString());
+}
+
+run();
+</code></pre>
+++++
+--
+
+[%step]
+--
+Each snippet is bounded to a klipse container accessible through `window.klipse_container` with id `window.klipse_container_id`.
+[source.eval-js]
+----
+$(klipse_container)
+  .css({color: 'white',
+        backgroundColor: 'blue',
+        padding: '10px',
+        fontSize: '50px'})
+  .text("Hello World")
+----
+--
+
+== Klipse: react.js and JSX
+
+[%step]
+--
+JSX is ...
+
+kind of a macro system
+--
+
+[%step]
+--
+It is transpiled into plain javascript
+[source.transpile-jsx]
+----
+const element = <h1>Hello, world!</h1>;
+----
+--
+
+[%step]
+--
+We can mix static and dynamic pieces of code
+[source.render-jsx]
+----
+<p style= {{color:"blue"} }>Hello, world -- 14*3={14*3}!</p>
+----
+--
+
+[%step]
+--
+Let's leverage the functional power of javascript
+[source.render-jsx]
+----
+<div>
+  {[1,2,3].map(i => 
+               <p style= {{color:"blue"} }>Hello, world -- 14*{i}={14*i}!</p>
+              )}
+</div>
+----
+--
+
+[%step]
+JSX code is transpiled by https://github.com/babel/babel-standalone[babel-standalone].
+
+
+
 == Klipse: Ruby
 
 [%step]
 --
-++++
-<br/><br/>
-++++
+
 [source.ruby]
 ----
 [1,2]*10
@@ -250,12 +368,10 @@ video::PUv66718DII[youtube,640,480, start=218]
 The evaluation of ruby code in the browser is powered by http://opalrb.org/[Opal].
 --
 
+== Klipse: Scheme
 
 [%step]
 --
-++++
-<br/><br/>
-++++
 Scheme
 [source.scheme]
 ----
@@ -263,15 +379,56 @@ Scheme
   (b 2))
   (+ a b))
 ----
+The evaluation of scheme code in the browser is powered by http://www.biwascheme.org/[BiwaScheme].
 --
 
 [%step]
 --
-++++
-<br/><br/>
-++++
+Let's enjoy a bit of code from https://mitpress.mit.edu/sicp/full-text/book/book.html[SICP]: Recursion vs. Iteration.
+--
 
-Lua - implemented in WebAssembly
+[%step]
+--
+Factorial implemented with recursion
+
+[source.scheme]
+----
+(define (factorial-rec n)
+  (if (= n 1)
+      1
+      (* n (factorial-rec (- n 1)))))
+
+(factorial-rec 5)
+----
+--
+
+[%step]
+--
+Factorial implemented with iteration
+
+[source.scheme]
+----
+(define (factorial-iter n)
+  (fact-iter-inner 1 1 n))
+
+(define (fact-iter-inner product counter max-count)
+  (if (> counter max-count)
+      product
+      (fact-iter-inner (* counter product)
+                 (+ counter 1)
+                 max-count)))
+
+(factorial-iter 5)
+----
+--
+
+
+
+
+== Klipse: Lua (implemented in WebAssembly)
+
+[%step]
+--
 [source.lua]
 ----
 function hello(s)
@@ -280,15 +437,14 @@ end
 
 print("Hello " .. "World!")
 ----
+
+The evaluation of lua code in the browser is powered by https://github.com/vvanders/wasm_lua[wasm_lua].
 --
 
-== Klipse: Many Languages
+== Klipse: Python
 
 [%step]
 --
-++++
-<br/><br/>
-++++
 
 Python
 [source.python]
@@ -300,9 +456,6 @@ print([x + 1 for x in range(10)])
 
 [%step]
 --
-++++
-<br/><br/>
-++++
 
 Python Turtle
 [source.python]
@@ -351,9 +504,6 @@ And now, let's see how to use this function:
 [%step]
 --
 
-++++
-<br/>
-++++
 ☕You can embed a `jsfiddle` or a `codepen` in a blog post with an `<iframe>`.
 But you cannot share neither code nor data between the iframes.
 --
@@ -393,6 +543,8 @@ But you cannot share neither code nor data between the iframes.
 
 include::klipse.adoc[]
 ++++
+<script src="https://cdnjs.cloudflare.com/ajax/libs/react/15.5.4/react-with-addons.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/react/15.5.4/react-dom.min.js"></script>
 <style>
 h1 {
 font-family: cursive;
