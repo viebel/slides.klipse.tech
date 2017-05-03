@@ -1,4 +1,4 @@
-= Illiterate Blogging with Klipse
+= Illiterate Blogging with Klipse 
 :encoding: utf-8
 :navigation:
 :deckjs_transition: horizontal-slide
@@ -8,24 +8,54 @@
 :hardbreaks:
 
 
-== Two types of programmers
+== Who am I?
+[.left]
+--
+- A mathematician
+- A coder
+- A pragmatic theorist
+- A freak of interactivity
+- Founded Audyx in 2013 - an Audiology Startup with 30K LOCs in Clojurescript
+- Author of Klipse
+- A Web consultant: Full-Stack, clojure{,script}, ruby{, on rails}, javascript, react
+--
+
+image::https://pbs.twimg.com/profile_images/713278171353911296/1a2useM2.jpg[me]
+
+== Agenda
+
+- How programmers traditionnaly tell stories?
+- Problems with the traditional approach
+- What is Illiterate blogging?
+- Examples of Illiterate blogging
+- What's in it for you
+
+== Two types of programmers - type 0
+
+[%step]
+- Programmers of type 0 love code
+- Programmers of type 0 are very smart
+- Programmers of type 0 share their ideas in github repos
 
 [%step]
 --
-Programmers of type 0
-
-They share their ideas in github repos
-
+.Code for Clojure Conj 2015 talk about using automatas to solve riddles
+[caption="Mark Engelberg: ", link="https://github.com/Engelberg/automata"]
+image::images/automata-readme.png[readme]
 --
+
+== Two types of programmers - type 1
 [%step]
---
-Programmers of type 1
-They share their ideas in blog posts
---
+- Programmers of type 1 love words
+- Programmers of type 1 express themselves very well
+- Programmers of type 1 share their ideas in blog posts
 
+[%step]
+.EcmaScript proposal: Object.entries() and Object.values()
+[caption="Dr. Axel Rauschmayer: ", link="http://2ality.com/2015/11/stage3-object-entries.html"]
+image::images/es-proposal.png[readme]
 
-= Programmers of type 0
-
+== Regular Programmers of type 0
 [%step]
 How do *regular* programmers of type 0 tell stories?
 
@@ -33,40 +63,78 @@ How do *regular* programmers of type 0 tell stories?
 They write *code*.
 
 [%step]
+image::images/automata-code.png[code]
+
+
+== Good Programmers of type 0
+[%step]
 How do *good* programmers of type 0 tell stories?
 
 [%step]
-They write *comments*.
+They write code and *comments*.
 
+[%step]
+image::images/automata-comments.png[code]
+
+== Excellent Programmers of type 0
 [%step]
 How do *excellent* programmers of type 0 tell stories?
 
 [%step]
-They write *tests*.
+They write code, comments and *tests*.
+
+[%step]
+image::images/automata-tests.png[code]
 
 
-= Programmers of type 1
+== All Programmers of type 0
+
+[%step]
+How do *all* programmers of type 0 make their code interactive?
+
+[%step]
+They encourage the reader to try it at the REPL
+[%step]
+image::images/automata-repl.png[code]
+
+== Regular Programmers of type 1
 
 [%step]
 How do *regular* programmers of type 1 tell stories?
 
 [%step]
 They write their *ideas* in a natural language.
+[%step]
+image::images/es-text.png[code]
 
+== Good Programmers of type 1
 [%step]
 How do *good* programmers of type 1 tell stories?
 
 [%step]
 They write *static code snippets* in a programming language.
+[%step]
+image::images/es-code.png[code]
 
+== Excellent Programmers of type 1
 [%step]
 How do *excellent* programmers of type 1 tell stories?
 
 [%step]
 They add *pictures* to illustrate their ideas.
+[%step]
+image::images/es-image.png[code]
 
+== All Programmers of type 1
+[%step]
+How do *all* programmers of type 0 make their code interactive?
 
-= The problems
+[%step]
+They include the result of the evaluation inside their static code snippets.
+[%step]
+image::images/es-repl.png[code]
+
+== The problems from the readers perspective
 
 [%step]
 --
@@ -90,67 +158,251 @@ They love to play.
 
 
 
-= The solution
+== The solution
 
-
->  Illiterate blogging with https://github.com/viebel/klipse[Klipse]
+[custom-quote]#Illiterate blogging with https://github.com/viebel/klipse[Klipse]#
 
 [%step]
 --
-Literate Programming:
-Embed natural language sentences in a program.
+*Literate Programming*: Embedding of natural language sentences in a program.
 
-Illiterate Blogging:
-Embed interactive code snippets in a blog post.
+*Illiterate Blogging*: Embedding of interactive code snippets in a blog post.
 --
 
-= Klipse: A demo
+== Klipse demo
 
-http://exupero.org/hazard/post/fractals/[An interactive blog post about fractals] by https://twitter.com/exupero[@exupero].
+- http://blog.klipse.tech/clojure/2016/09/30/automata-segments-1.html[Interactive version of solving riddles with automata]
+- http://blog.klipse.tech/javascript/2016/12/19/es2017-entries.html[Interactive version of ES proposal: Object.entries() and Object.values()]
+- http://exupero.org/hazard/post/fractals/[An interactive blog post about fractals] by https://twitter.com/exupero[@exupero].
 
-= Interlude: What is self-host ClojureScript?
+== Klipse: How does it work?
 
-= Klipse: The features
+The klipse plugin is a javascript tag that transforms static code snippets of an html page into live and interactive snippets:
+
+- *Live*: The code is executed in your browser
+- *Interactive*: The reader can modify the code and it is evaluated as she types
+
+The code evaluation is done in the browser: no server is involved at all!
+
+== Klipse: The features
 
 [%step]
 - code is evaluated as you type (configurable)
 - supports many languages: clojure, javascript (es7, jsx, react), ruby, python, brainfuck, scheme...
 - clojurescript transpilation
-- external libraries
+- environment is shared between code snippets
+- hidden code snippets
+- snippet preamble	
 - printing
+- output is beautified and strings are beautified
+- external libraries
 - core.async
 - limited size printing
 - infinite loop partial prevention
 - code evaluation in a loop
 - interacting with the DOM
 - reagent snippets
+- the CodeMirror editor is configurable: options and CSS
 
-= Klipse: the challenges
+== Klipse: code is evaluated as you type
 
-- Clojurescript in not clojure: threads, types, core.async...
+Zero-delay between the code editing and it's evaluation is key for creativity.
+
+++++
+<br/><br/>
+++++
+video::PUv66718DII[youtube,640,480, start=218]
+++++
+<br/><br/>
+++++
+
+[%step]
+--
+[source.eval-js]
+----
+[1,2,3].map(x => x + 1)
+----
+--
+
+[%step]
+--
+[source.eval-js]
+----
+1+2  
+----
+++++
+<div id="container-1"></div>
+++++
+--
+
+== Klipse: Ruby
+
+[%step]
+--
+++++
+<br/><br/>
+++++
+[source.ruby]
+----
+[1,2]*10
+----
+
+The evaluation of ruby code in the browser is powered by http://opalrb.org/[Opal].
+--
+
+
+[%step]
+--
+++++
+<br/><br/>
+++++
+Scheme
+[source.scheme]
+----
+(let ((a 1)
+  (b 2))
+  (+ a b))
+----
+--
+
+[%step]
+--
+++++
+<br/><br/>
+++++
+
+Lua - implemented in WebAssembly
+[source.lua]
+----
+function hello(s)
+  print("Hello " .. s)
+end
+
+print("Hello " .. "World!")
+----
+--
+
+== Klipse: Many Languages
+
+[%step]
+--
+++++
+<br/><br/>
+++++
+
+Python
+[source.python]
+----
+print([x + 1 for x in range(10)])
+----
+--
+
+
+[%step]
+--
+++++
+<br/><br/>
+++++
+
+Python Turtle
+[source.python]
+----
+import turtle
+
+t = turtle.Turtle()
+
+for i in range(4):
+	t.forward(150)
+	t.left(90) 
+----
+--
+
+[%step]
+--
+You can even http://blog.klipse.tech/python/2017/01/04/python-turtle-fractal.html[draw fractals] with the python turtle.
+
+The evaluation of python code in the browser is powered by https://github.com/skulpt/skulpt[Skulpt].
+--
+
+== Klipse: environment is shared between Klipse snippets
+
+A blog post is a story.
+
+The different elements of the stories need to be connected together.
+
+[%step]
+--
+Let's show how to write a *Hello World* function in Clojure:
+
+[source.clj]
+----
+(defn hello [name]
+  (str "hello " name "\n"))
+----
+--
+[%step]
+--
+And now, let's see how to use this function:
+[source.clj]
+----
+(hello "Klipse")
+----
+--
+[%step]
+--
+
+++++
+<br/>
+++++
+☕You can embed a `jsfiddle` or a `codepen` in a blog post with an `<iframe>`.
+But you cannot share neither code nor data between the iframes.
+--
+
+
+== Klipse: the challenges
+
+- Clojurescript is not clojure: threads, types, core.async...
 - Self-Host Clojurescript is not Clojurescript: many libs are not yet ported (core.logic, core.matrix...)
 - Security issues for blogging platform
 - Infinite loops
 
 
-= Klipse: The integration
+== Klipse: The integration
 
-= Survey
+== Survey
 
 [%step]
 
 - How many people are bloggers?
 - How many people have a github repository?
+- Are you a programmer of type 0 or type 1?
 - How many people read blogs?
 
-= What's in it for you?
+== What's in it for you?
 
 [%step]
 - Ask from bloggers to _klipsify_ their articles
 - Write an interactive blog post: It's the best way to learn a topic and It's really fun!
+- Klipsify a tutorial, a scientific paper, a blog post...
 - Klipsify your library documentation 
+
+== Interlude: What is self-host ClojureScript?
 
 
 
 
 include::klipse.adoc[]
+++++
+<style>
+h1 {
+font-family: cursive;
+}
+.title {
+font-style: italic;
+}
+.custom-quote {
+font-family: cursive;
+font-size: 2.5em;
+}
+</style>
+++++

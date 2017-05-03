@@ -18,6 +18,19 @@
         selector: '.clj',
         selector_js: '.transpile-cljs',
         selector_reagent: '.reagent',
+        selector_eval_js: '.eval-js',
+    selector_render_jsx: '.render-jsx',
+        selector_es2017: '.es2017',
+        selector_brainfuck: '.brainfuck',
+        selector_transpile_jsx: '.transpile-jsx',
+        selector_eval_php: '.php',
+        selector_eval_python_client: '.python',
+        selector_eval_html: '.html',
+        selector_sql: '.sql',
+        selector_eval_ruby: '.ruby',
+        selector_eval_scheme: '.scheme',
+    selector_eval_cpp: '.cpp',
+    selector_lua: '.lua',	
     };
 </script>
 <script src="https://storage.googleapis.com/app.klipse.tech/plugin/js/klipse_plugin.js"></script>
