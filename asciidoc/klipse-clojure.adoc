@@ -46,10 +46,21 @@ More details:
 - https://github.com/viebel/klipse/blob/master/repl.md[Klipse REPL manual] for accessing all the feature of the Klipse REPL
 --
 
+== Join the ride
+
+++++
+              <div class="left">
+		<img src='https://chart.googleapis.com/chart?cht=qr&chl=http%3A%2F%2Fslides.klipse.tech%2Fasciidoc%2Fklipse-clojure.html&chs=300x300' alt='qr code'></img>
+	      </div>
+++++
+
 == Klipse: the REPL
 
 [%step]
 --
+
+http://app.klipse.tech
+
 Usage:
 
 - have fun with clojure stuff without a clojure env available

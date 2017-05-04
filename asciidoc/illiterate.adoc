@@ -372,7 +372,7 @@ Are you ready for a journey into the wonderland of programming languages?
 
 ++++
               <div class="left">
-		<img src='https://chart.googleapis.com/chart?cht=qr&chl=http%3A%2F%2Fslides.klipse.tech%2Famobee%2Fclojure-basics.html&chs=300x300' alt='qr code'></img>
+		<img src='https://chart.googleapis.com/chart?cht=qr&chl=http%3A%2F%2Fslides.klipse.tech%2Fasciidoc%2Filliterate.html&chs=300x300' alt='qr code'></img>
 	      </div>
 ++++
 
