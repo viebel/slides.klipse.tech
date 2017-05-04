@@ -21,29 +21,87 @@
 </section>
 <section class="slide" id="_klipse_the_features">
 <h2>Klipse: The features</h2>
+<div class="openblock slide">
+<div class="content">
+<div class="paragraph"><p>All languages:</p></div>
 <div class="ulist">
 <ul>
-<li class="slide">code is evaluated as you type (configurable)</li>
-<li class="slide">environment is shared between code snippets</li>
-<li class="slide">hidden code snippets</li>
-<li class="slide">snippet preamble</li>
-<li class="slide">printing</li>
-<li class="slide">supports many languages: clojure, javascript (es7, jsx, react), ruby, python, brainfuck, scheme&#8230;&#8203;</li>
-<li class="slide">clojurescript transpilation</li>
-<li class="slide">code evaluation in a loop</li>
-<li class="slide">load code from a github gist</li>
-<li class="slide">interacting with the DOM</li>
-<li class="slide">the CodeMirror editor is configurable: options and CSS</li>
+<li>code is evaluated as you type (configurable)</li>
+<li>environment is shared between code snippets</li>
+<li>hidden code snippets</li>
+<li>snippet preamble</li>
+<li>printing</li>
+<li>clojurescript transpilation</li>
+<li>code evaluation in a loop</li>
+<li>load code from a github gist</li>
+<li>interacting with the DOM</li>
+<li>the CodeMirror editor is configurable: options and CSS</li>
 </ul>
 </div>
+</div>
+</div>
+<div class="openblock slide">
+<div class="content">
+<div class="paragraph"><p>Only for Clojure:</p></div>
 <div class="ulist">
 <ul>
-<li class="slide">caching of external libs: core.async</li>
-<li class="slide">custom external libraries</li>
-<li class="slide">limited size printing</li>
-<li class="slide">infinite loop partial prevention</li>
-<li class="slide">reagent snippets</li>
-<li class="slide">output is beautified and strings are beautified</li>
+<li>caching of external libs: core.async</li>
+<li>custom external libraries</li>
+<li>limited size printing</li>
+<li>infinite loop partial prevention</li>
+<li>reagent snippets</li>
+<li>output is beautified and strings are beautified</li>
+</ul>
+</div>
+</div>
+</div>
+<div class="openblock slide">
+<div class="content">
+<div class="paragraph"><p>More details:</p></div>
+<div class="ulist">
+<ul>
+<li><a href="https://github.com/viebel/klipse">Klipse README</a>: all the details about how to configure the Klipse snippets</li>
+<li><a href="https://github.com/viebel/klipse/blob/master/repl.md">Klipse REPL manual</a> for accessing all the feature of the Klipse REPL</li>
+</ul>
+</div>
+</div>
+</div>
+</section>
+<section class="slide" id="_klipse_the_repl">
+<h2>Klipse: the REPL</h2>
+<div class="openblock slide">
+<div class="content">
+<div class="paragraph"><p>Usage:</p></div>
+<div class="ulist">
+<ul>
+<li>have fun with clojure stuff without a clojure env available</li>
+<li>share your discoveries on twitter</li>
+<li>ask for help on slack/google group</li>
+<li>what else?</li>
+</ul>
+</div>
+</div>
+</div>
+<div class="openblock slide">
+<div class="content">
+<div class="paragraph"><p>A couple of examples:</p></div>
+<div class="ulist">
+<ul>
+<li><a href="http://app.klipse.tech/?eval_only=1&amp;cljs_in.gist=viebel/63f651d83d5ba02db8f4f3ce8d8b644f">Recursively transforms all map keys from keywords to namespaced-qualified keywords</a></li>
+<li><a href="http://app.klipse.tech/?eval_only=1&amp;cljs_in.gist=viebel/7d9534250b3eb8be087005ec11c4ebe5">The Set game with clojure.spec</a></li>
+<li><a href="http://app.klipse.tech/?container&amp;cljs_in.gist=viebel/c2ac28ec26e4e11f494152555cfe4898">A simple algorithm to generate wallpapers</a></li>
+<li><a href="http://app.klipse.tech/?container&amp;cljs_in.gist=viebel/c229fbca8e6d89b2695f1849b5127e93">core.async is fast</a></li>
+</ul>
+</div>
+</div>
+</div>
+</section>
+<section class="slide" id="_interactive_documentation">
+<h2>Interactive documentation</h2>
+<div class="ulist">
+<ul>
+<li class="slide"><a href="http://viebel.github.io/gadjett/gadjett.collections.html">Demo for a a personal lib</a></li>
+<li class="slide"><a href="http://viebel.github.io/klipse/examples/test.check/doc/intro.html">test.check</a></li>
 </ul>
 </div>
 </section>
@@ -51,7 +109,7 @@
 <h2>Running code in a loop</h2>
 <div class="openblock slide">
 <div class="content">
-<div class="paragraph"><p>Let&#8217;s create a klipse snippet that is evaluated again and again in intervals.</p></div>
+<div class="paragraph"><p>Let&#8217;s create a Klipse snippet that is evaluated again and again in intervals.</p></div>
 <div class="paragraph"><p>Setting <code>data-loop-msec</code> to the time in msec between the evaluations.</p></div>
 </div>
 </div>
@@ -91,9 +149,13 @@
 </div>
 <div class="openblock slide">
 <div class="content">
-<div class="paragraph"><p>Two mechanisms for hiding code from the reader but not from Klipse:<br>
-- A hidden Klipse snippet<br>
-- <code>data-preamble</code></p></div>
+<div class="paragraph"><p>Two mechanisms for hiding code from the reader but not from Klipse:</p></div>
+<div class="ulist">
+<ul>
+<li>A hidden Klipse snippet</li>
+<li><code>data-preamble</code></li>
+</ul>
+</div>
 </div>
 </div>
 <div class="openblock slide">
@@ -113,7 +175,7 @@
 <p style="font-style:italic; color: blue">
 There is a hidden Klipse snippet just above me
 </p>
-<div class="paragraph"><p>We can use the hidden code in subsequent klipse snippets:</p></div>
+<div class="paragraph"><p>We can use the hidden code in subsequent Klipse snippets:</p></div>
 <div class="listingblock clj">
 <div class="content">
 <pre class="highlight"><code>irrelevant-constant</code></pre>
@@ -148,6 +210,10 @@ random-num
 <div class="paragraph"><p>clojure libs cached in Klipse:</p></div>
 <div class="ulist">
 <ul>
+<li>clojure.walk</li>
+<li>clojure.set</li>
+<li>clojure.data</li>
+<li>clojure.zip</li>
 <li>core.async</li>
 <li>core.match</li>
 <li>clojure.spec</li>
@@ -160,6 +226,9 @@ random-num
 </div>
 </div>
 </div>
+</section>
+<section class="slide" id="_core_async">
+<h2>core.async</h2>
 <div class="openblock slide">
 <div class="content">
 <div class="paragraph"><p>Let&#8217;s require <code>core.async</code></p></div>
@@ -257,6 +326,13 @@ random-num
 <div class="openblock slide">
 <div class="content">
 <div class="paragraph"><p>For instance, let&#8217;s play with a <a href="https://github.com/krisajenkins/original-lisp">clojure implementation of McCarthy&#8217;s LISP</a>.</p></div>
+<div class="listingblock text">
+<div class="content">
+<pre><code>&lt;pre&gt;&lt;code class="clj" data-external-libs="https://raw.githubusercontent.com/viebel/original-lisp/48badc99b6e7cfba7b86742d2a0b9ccc5db18953/src"&gt;
+(require '[original-lisp.core :refer [l-eval]])
+&lt;/code&gt;&lt;/pre&gt;</code></pre>
+</div>
+</div>
 <pre><code class="clj" data-external-libs="https://raw.githubusercontent.com/viebel/original-lisp/48badc99b6e7cfba7b86742d2a0b9ccc5db18953/src">
 (require '[original-lisp.core :refer [l-eval]])
 </code></pre>
@@ -300,6 +376,154 @@ It will allow you to modify the code of the snippet without having to republish 
 <div class="paragraph"><p>Here is the klipsified gist:</p></div>
 <pre><code class="clj" data-gist-id="viebel/8cb19d258fea39a64146721ce50603d0">
 </code></pre>
+</div>
+</div>
+</section>
+<section class="slide" id="_reagent_snippets">
+<h2>Reagent snippets</h2>
+<div class="openblock slide">
+<div class="content">
+<div class="paragraph"><p>Reagent is one of the most elegant lib for creating a react components.</p></div>
+<div class="paragraph"><p>Judge by yourself</p></div>
+</div>
+</div>
+<div class="openblock slide">
+<div class="content">
+<div class="paragraph"><p>Let&#8217;s require reagent</p></div>
+<div class="listingblock clj">
+<div class="content">
+<pre class="highlight"><code>(require '[reagent.core :as r])</code></pre>
+</div>
+</div>
+</div>
+</div>
+<div class="openblock slide">
+<div class="content">
+<div class="paragraph"><p>Let&#8217;s start the show!</p></div>
+<div class="paragraph"><p>A simple reagent component</p></div>
+<div class="listingblock reagent">
+<div class="content">
+<pre class="highlight"><code>(defn hello [name]
+  [:p (str "Hello " name "!")])
+
+[hello "Klipse"]</code></pre>
+</div>
+</div>
+</div>
+</div>
+<div class="openblock slide">
+<div class="content">
+<div class="paragraph"><p>Let&#8217;s leverage the power of expression of Clojure</p></div>
+<div class="listingblock reagent">
+<div class="content">
+<pre class="highlight"><code>[:div
+ (for [name ["World" "Meetup" "Klipse"]]
+   [hello name])]</code></pre>
+</div>
+</div>
+</div>
+</div>
+</section>
+<section class="slide" id="_reagent_cont">
+<h2>Reagent (cont.)</h2>
+<div class="openblock slide">
+<div class="content">
+<div class="paragraph"><p>A BMI calculator</p></div>
+<div class="listingblock reagent">
+<div class="content">
+<pre class="highlight"><code>(def bmi-data (r/atom {:height 180 :weight 80}))
+
+(defn calc-bmi []
+  (let [{:keys [height weight bmi] :as data} @bmi-data
+        h (/ height 100)]
+    (if (nil? bmi)
+      (assoc data :bmi (/ weight (* h h)))
+      (assoc data :weight (* bmi h h)))))
+
+(defn slider [param value min max]
+  [:input {:type "range" :value value :min min :max max
+           :style {:width "100%"}
+           :on-change (fn [e]
+                        (swap! bmi-data assoc param (.-target.value e))
+                        (when (not= param :bmi)
+                          (swap! bmi-data assoc :bmi nil)))}])
+
+(defn bmi-component []
+  (let [{:keys [weight height bmi]} (calc-bmi)
+        [color diagnose] (cond
+                           (&lt; bmi 18.5) ["orange" "underweight"]
+                           (&lt; bmi 25) ["inherit" "normal"]
+                           (&lt; bmi 30) ["orange" "overweight"]
+                           :else ["red" "obese"])]
+    [:div
+     [:h3 "BMI calculator"]
+     [:div
+      "Height: " (int height) "cm"
+      [slider :height height 100 220]]
+     [:div
+      "Weight: " (int weight) "kg"
+      [slider :weight weight 30 150]]
+     [:div
+      "BMI: " (int bmi) " "
+      [:span {:style {:color color}} diagnose]
+      [slider :bmi bmi 10 50]]]))</code></pre>
+</div>
+</div>
+</div>
+</div>
+<div class="ulist">
+<ul>
+<li class="slide">Here are the full details about <a href="http://blog.klipse.tech/reagent/2016/12/31/reagent-in-klipse.html">reagent inside Klipse</a>.</li>
+<li class="slide">You can even use <code>om.next</code> or <code>re-frame</code> inside Klipse.</li>
+<li class="slide"><a href="http://timothypratley.blogspot.co.il/2017/01/reagent-deep-dive-part-1.html">Reagent deep dive interactive tutorial</a></li>
+</ul>
+</div>
+</section>
+<section class="slide" id="_clojurescript_transpilation">
+<h2>Clojurescript transpilation</h2>
+<div class="openblock slide">
+<div class="content">
+<div class="paragraph"><p>Understand how clojurescript overcomes the limitations of javascript:</p></div>
+<div class="ulist">
+<ul>
+<li>no question marks and hyphens in symbols</li>
+<li>truth definition is weird</li>
+</ul>
+</div>
+<div class="listingblock transpile-cljs">
+<div class="content">
+<pre class="highlight"><code>(defn is-it-true? [x]
+  (let [a x
+        a x]
+    (if a true false)))</code></pre>
+</div>
+</div>
+</div>
+</div>
+<div class="openblock slide">
+<div class="content">
+<div class="paragraph"><p>Learn more about <a href="http://blog.klipse.tech/clojure/2016/04/02/truth-in-cljs.html">Truth in clojurescript</a>.</p></div>
+</div>
+</div>
+</section>
+<section class="slide" id="_what_s_in_it_for_you">
+<h2>What&#8217;s in it for you?</h2>
+<div class="ulist">
+<ul>
+<li class="slide">Ask from bloggers to <em>klipsify</em> their articles</li>
+<li class="slide">Give a star to <a href="https://github.com/viebel/klipse">Klipse on Github</a></li>
+<li class="slide">Share the world about code interactivty with your friends</li>
+<li class="slide">Write an interactive blog post: It&#8217;s the best way to learn a topic and It&#8217;s really fun!</li>
+<li class="slide">Klipsify a tutorial, a scientific paper, a blog post&#8230;&#8203;</li>
+<li class="slide">Klipsify your library documentation</li>
+</ul>
+</div>
+</section>
+<section class="slide" id="_questions">
+<h2>Questions</h2>
+<div class="imageblock">
+<div class="content">
+<img alt="questions" src="images/questions.jpg">
 </div>
 </div>
 <link rel="shortcut icon" href="./favicon.png">

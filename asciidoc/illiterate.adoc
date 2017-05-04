@@ -543,13 +543,15 @@ But you cannot share neither code nor data between the iframes.
 
 [%step]
 - Ask from bloggers to _klipsify_ their articles
+- Give a star to https://github.com/viebel/klipse[Klipse on Github]
+- Share the world about code interactivty with your friends
 - Write an interactive blog post: It's the best way to learn a topic and It's really fun!
 - Klipsify a tutorial, a scientific paper, a blog post...
 - Klipsify your library documentation 
 
-== Interlude: What is self-host ClojureScript?
+== Questions
 
-
+image::images/questions.jpg[questions]
 
 
 include::klipse.adoc[]

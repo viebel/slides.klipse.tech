@@ -11,32 +11,76 @@
 == Klipse: The features
 
 [%step]
+--
+All languages:
+
 - code is evaluated as you type (configurable)
 - environment is shared between code snippets
 - hidden code snippets
 - snippet preamble	
 - printing
-- supports many languages: clojure, javascript (es7, jsx, react), ruby, python, brainfuck, scheme...
 - clojurescript transpilation
 - code evaluation in a loop
 - load code from a github gist
 - interacting with the DOM
 - the CodeMirror editor is configurable: options and CSS
+--
 
 [%step]
+--
+Only for Clojure:
+
 - caching of external libs: core.async
 - custom external libraries
 - limited size printing
 - infinite loop partial prevention
 - reagent snippets
 - output is beautified and strings are beautified
+--
+
+[%step]
+--
+More details:
+
+- https://github.com/viebel/klipse[Klipse README]: all the details about how to configure the Klipse snippets
+- https://github.com/viebel/klipse/blob/master/repl.md[Klipse REPL manual] for accessing all the feature of the Klipse REPL
+--
+
+== Klipse: the REPL
+
+[%step]
+--
+Usage:
+
+- have fun with clojure stuff without a clojure env available
+- share your discoveries on twitter
+- ask for help on slack/google group
+- what else?
+--
+
+[%step]
+--
+A couple of examples:
+
+- http://app.klipse.tech/?eval_only=1&cljs_in.gist=viebel/63f651d83d5ba02db8f4f3ce8d8b644f[Recursively transforms all map keys from keywords to namespaced-qualified keywords]
+- http://app.klipse.tech/?eval_only=1&cljs_in.gist=viebel/7d9534250b3eb8be087005ec11c4ebe5[The Set game with clojure.spec]
+- http://app.klipse.tech/?container&cljs_in.gist=viebel/c2ac28ec26e4e11f494152555cfe4898[A simple algorithm to generate wallpapers]
+- http://app.klipse.tech/?container&cljs_in.gist=viebel/c229fbca8e6d89b2695f1849b5127e93[core.async is fast]
+--
+
+== Interactive documentation
+
+[%step]
+- http://viebel.github.io/gadjett/gadjett.collections.html[Demo for a a personal lib]
+- http://viebel.github.io/klipse/examples/test.check/doc/intro.html[test.check]
+
 
 
 == Running code in a loop
 
 [%step]
 --
-Let's create a klipse snippet that is evaluated again and again in intervals.
+Let's create a Klipse snippet that is evaluated again and again in intervals.
 
 Setting `data-loop-msec` to the time in msec between the evaluations.
 --
@@ -77,6 +121,7 @@ But you need this (irrelevant) code to let the other parts of the code run prope
 [%step]
 --
 Two mechanisms for hiding code from the reader but not from Klipse:
+
 - A hidden Klipse snippet
 - `data-preamble`
 --
@@ -102,7 +147,7 @@ There is a hidden Klipse snippet just above me
 ++++
 
 
-We can use the hidden code in subsequent klipse snippets:
+We can use the hidden code in subsequent Klipse snippets:
 [source.clj]
 ----
 irrelevant-constant
@@ -135,6 +180,10 @@ random-num
 --
 clojure libs cached in Klipse:
 
+- clojure.walk
+- clojure.set
+- clojure.data
+- clojure.zip
 - core.async
 - core.match
 - clojure.spec
@@ -144,6 +193,8 @@ clojure libs cached in Klipse:
 - clojure.test.check
 - net.cgrand.macrovich
 --
+
+== core.async
 
 [%step]
 --
@@ -245,6 +296,13 @@ Klipse can load code dynamically from any source or code repository e.g. github.
 --
 For instance, let's play with a https://github.com/krisajenkins/original-lisp[clojure implementation of McCarthy's LISP].
 
+[.text]
+----
+<pre><code class="clj" data-external-libs="https://raw.githubusercontent.com/viebel/original-lisp/48badc99b6e7cfba7b86742d2a0b9ccc5db18953/src">
+(require '[original-lisp.core :refer [l-eval]])
+</code></pre>
+----
+
 ++++
 <pre><code class="clj" data-external-libs="https://raw.githubusercontent.com/viebel/original-lisp/48badc99b6e7cfba7b86742d2a0b9ccc5db18953/src">
 (require '[original-lisp.core :refer [l-eval]])
@@ -294,6 +352,141 @@ Here is the klipsified gist:
 </code></pre>
 ++++
 --
+
+== Reagent snippets
+
+[%step]
+--
+Reagent is one of the most elegant lib for creating a react components.
+
+Judge by yourself
+--
+
+[%step]
+--
+Let's require reagent
+[source.clj]
+----
+(require '[reagent.core :as r])
+----
+--
+
+
+[%step]
+--
+Let's start the show!
+
+A simple reagent component
+[source.reagent]
+----
+(defn hello [name]
+  [:p (str "Hello " name "!")])
+
+[hello "Klipse"]
+----
+--
+
+[%step]
+--
+Let's leverage the power of expression of Clojure
+[source.reagent]
+----
+[:div
+ (for [name ["World" "Meetup" "Klipse"]]
+   [hello name])]
+----
+--
+
+== Reagent (cont.)
+[%step]
+--
+A BMI calculator
+[source.reagent]
+----
+(def bmi-data (r/atom {:height 180 :weight 80}))
+
+(defn calc-bmi []
+  (let [{:keys [height weight bmi] :as data} @bmi-data
+        h (/ height 100)]
+    (if (nil? bmi)
+      (assoc data :bmi (/ weight (* h h)))
+      (assoc data :weight (* bmi h h)))))
+
+(defn slider [param value min max]
+  [:input {:type "range" :value value :min min :max max
+           :style {:width "100%"}
+           :on-change (fn [e]
+                        (swap! bmi-data assoc param (.-target.value e))
+                        (when (not= param :bmi)
+                          (swap! bmi-data assoc :bmi nil)))}])
+
+(defn bmi-component []
+  (let [{:keys [weight height bmi]} (calc-bmi)
+        [color diagnose] (cond
+                           (< bmi 18.5) ["orange" "underweight"]
+                           (< bmi 25) ["inherit" "normal"]
+                           (< bmi 30) ["orange" "overweight"]
+                           :else ["red" "obese"])]
+    [:div
+     [:h3 "BMI calculator"]
+     [:div
+      "Height: " (int height) "cm"
+      [slider :height height 100 220]]
+     [:div
+      "Weight: " (int weight) "kg"
+      [slider :weight weight 30 150]]
+     [:div
+      "BMI: " (int bmi) " "
+      [:span {:style {:color color}} diagnose]
+      [slider :bmi bmi 10 50]]]))
+----
+--
+
+[%step]
+
+- Here are the full details about http://blog.klipse.tech/reagent/2016/12/31/reagent-in-klipse.html[reagent inside Klipse].
+- You can even use `om.next` or `re-frame` inside Klipse.
+- http://timothypratley.blogspot.co.il/2017/01/reagent-deep-dive-part-1.html[Reagent deep dive interactive tutorial]
+
+
+== Clojurescript transpilation
+
+
+[%step]
+--
+Understand how clojurescript overcomes the limitations of javascript:
+
+- no question marks and hyphens in symbols
+- truth definition is weird
+
+[source.transpile-cljs]
+----
+(defn is-it-true? [x] 
+  (let [a x
+        a x]
+    (if a true false)))
+----
+--
+
+[%step]
+--
+Learn more about http://blog.klipse.tech/clojure/2016/04/02/truth-in-cljs.html[Truth in clojurescript].
+--
+
+
+== What's in it for you?
+
+[%step]
+- Ask from bloggers to _klipsify_ their articles
+- Give a star to https://github.com/viebel/klipse[Klipse on Github]
+- Share the world about code interactivty with your friends
+- Write an interactive blog post: It's the best way to learn a topic and It's really fun!
+- Klipsify a tutorial, a scientific paper, a blog post...
+- Klipsify your library documentation 
+
+== Questions
+
+image::images/questions.jpg[questions]
 
 include::klipse.adoc[]
 ++++
