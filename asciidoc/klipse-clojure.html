@@ -105,6 +105,37 @@
 </ul>
 </div>
 </section>
+<section class="slide" id="_klipse_code_is_evaluated_as_you_type">
+<h2>Klipse: code is evaluated as you type</h2>
+<div class="paragraph"><p>Zero-delay between the trial and the result is key for <strong>creativity</strong>.</p></div>
+<br/><br/>
+<div class="videoblock">
+<iframe allowfullscreen height="480" src="//www.youtube.com/embed/PUv66718DII?rel=0&amp;start=218" width="640"></iframe>
+</div>
+<br/><br/>
+<div class="openblock slide">
+<div class="content">
+<div class="listingblock eval-js">
+<div class="content">
+<pre class="highlight"><code>[1,2,3].map(x =&gt; x + 1)</code></pre>
+</div>
+</div>
+</div>
+</div>
+<div class="openblock slide">
+<div class="content">
+<pre><code class="eval-js" data-async-code="true">
+$("#container-1")
+.css({color: 'white',
+       backgroundColor: 'blue',
+      padding: '10px',
+      fontSize: '50px'})
+.text("Hello World")
+</code></pre>
+<div id="container-1"></div>
+</div>
+</div>
+</section>
 <section class="slide" id="_running_code_in_a_loop">
 <h2>Running code in a loop</h2>
 <div class="openblock slide">
@@ -200,6 +231,38 @@ random-num
 <pre><code class="clj" data-preamble="(def random-num (rand))">
 random-num
 </code></pre>
+</div>
+</div>
+</section>
+<section class="slide" id="_klipse_environment_is_shared_between_klipse_snippets">
+<h2>Klipse: environment is shared between Klipse snippets</h2>
+<div class="paragraph"><p>A blog post is a story.</p></div>
+<div class="paragraph"><p>The different elements of the stories need to be connected together.</p></div>
+<div class="openblock slide">
+<div class="content">
+<div class="paragraph"><p>Let&#8217;s see how to write a <strong>Hello World</strong> function in Clojure:</p></div>
+<div class="listingblock clj">
+<div class="content">
+<pre class="highlight"><code>(defn hello [name]
+  (str "hello " name "\n"))</code></pre>
+</div>
+</div>
+</div>
+</div>
+<div class="openblock slide">
+<div class="content">
+<div class="paragraph"><p>And now, let&#8217;s see how to use this function:</p></div>
+<div class="listingblock clj">
+<div class="content">
+<pre class="highlight"><code>(hello "Klipse")</code></pre>
+</div>
+</div>
+</div>
+</div>
+<div class="openblock slide">
+<div class="content">
+<div class="paragraph"><p>☕You can embed a <code>jsfiddle</code> or a <code>codepen</code> in a blog post with an <code>&lt;iframe&gt;</code>.<br>
+But you cannot share neither code nor data between the iframes.</p></div>
 </div>
 </div>
 </section>
@@ -504,6 +567,17 @@ It will allow you to modify the code of the snippet without having to republish 
 <div class="content">
 <div class="paragraph"><p>Learn more about <a href="http://blog.klipse.tech/clojure/2016/04/02/truth-in-cljs.html">Truth in clojurescript</a>.</p></div>
 </div>
+</div>
+</section>
+<section class="slide" id="_klipse_the_challenges">
+<h2>Klipse: the challenges</h2>
+<div class="ulist">
+<ul>
+<li>Clojurescript is not clojure: threads, types, core.async&#8230;&#8203;</li>
+<li>Self-Host Clojurescript is not Clojurescript: many libs are not yet ported (core.logic, core.matrix&#8230;&#8203;)</li>
+<li>Security issues for blogging platform</li>
+<li>Infinite loops</li>
+</ul>
 </div>
 </section>
 <section class="slide" id="_what_s_in_it_for_you">

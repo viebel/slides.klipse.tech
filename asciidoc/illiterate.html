@@ -31,6 +31,12 @@
 <li>A freak of interactivity</li>
 <li>Founded Audyx in 2013 - an Audiology Startup with 30K LOCs in Clojurescript</li>
 <li>Author of Klipse</li>
+</ul>
+</div>
+                      <a class="github-button" href="https://github.com/viebel/klipse" data-count-href="/viebel/klipse/stargazers" data-count-api="/repos/viebel/klipse#stargazers_count" data-count-aria-label="# stargazers on GitHub" aria-label="Star viebel/klipse on GitHub">KLIPSE</a>
+                    <script async defer id="github-bjs" src="https://buttons.github.io/buttons.js"></script>
+<div class="ulist">
+<ul>
 <li>A Web consultant: Full-Stack, clojure{,script}, ruby{, on rails}, javascript, react</li>
 </ul>
 </div>
@@ -50,7 +56,9 @@
 <li>Problems with the traditional approach</li>
 <li>What is Illiterate blogging?</li>
 <li>Examples of Illiterate blogging</li>
-<li>What&#8217;s in it for you</li>
+<li>Languages supported by Klipse</li>
+<li>What&#8217;s in it for you?</li>
+<li>Live blogging session</li>
 </ul>
 </div>
 </section>
@@ -92,6 +100,15 @@
 </a>
 </div>
 <div class="title">Dr. Axel Rauschmayer: EcmaScript proposal: Object.entries() and Object.values()</div>
+</div>
+</section>
+<section class="slide" id="_naming">
+<h2>Naming</h2>
+<div class="ulist">
+<ul>
+<li>How would you call programmers of type 0 and 1?</li>
+<li>What type of programmer are you?</li>
+</ul>
 </div>
 </section>
 <section class="slide" id="_regular_programmers_of_type_0">
@@ -218,6 +235,8 @@ They love to play.</p></div>
 </section>
 <section class="slide" id="_klipse_how_does_it_work">
 <h2>Klipse: How does it work?</h2>
+<div class="openblock slide">
+<div class="content">
 <div class="paragraph"><p>The klipse plugin is a javascript tag that transforms static code snippets of an html page into live and interactive snippets:</p></div>
 <div class="ulist">
 <ul>
@@ -226,9 +245,25 @@ They love to play.</p></div>
 </ul>
 </div>
 <div class="paragraph"><p>The code evaluation is done in the browser: no server is involved at all!</p></div>
+</div>
+</div>
+<div class="openblock slide">
+<div class="content">
+<div class="ulist">
+<ul>
+<li>The code snippets are put in dom elements with a class of your choice.</li>
+<li>Code snippets of different languages must have different classes.</li>
+<li>The classes are passed to the <code>klipse_settings</code> object.</li>
+<li>You can configure the settings of each Klipse snippet by setting <code>data-</code> attributes.</li>
+</ul>
+</div>
+<div class="paragraph"><p>More details in <a href="https://github.com/viebel/klipse">Klipse README</a>.</p></div>
+</div>
+</div>
+<div class="paragraph slide"><p><a href="https://jsfiddle.net/viebel/50oLnykk/">A minimal example of a html page with Klipse</a>.</p></div>
 </section>
-<section class="slide" id="_klipse_the_features">
-<h2>Klipse: The features</h2>
+<section class="slide" id="_klipse_main_features">
+<h2>Klipse: Main features</h2>
 <div class="ulist">
 <ul>
 <li class="slide">code is evaluated as you type (configurable)</li>
@@ -237,21 +272,11 @@ They love to play.</p></div>
 <li class="slide">environment is shared between code snippets</li>
 <li class="slide">hidden code snippets</li>
 <li class="slide">snippet preamble</li>
-<li class="slide">printing</li>
+<li class="slide">pretty printing</li>
 <li class="slide">code evaluation in a loop</li>
 <li class="slide">load code from a github gist</li>
 <li class="slide">interacting with the DOM</li>
 <li class="slide">the CodeMirror editor is configurable: options and CSS</li>
-</ul>
-</div>
-<div class="ulist">
-<ul>
-<li class="slide">caching of external libs: core.async</li>
-<li class="slide">custom external libraries</li>
-<li class="slide">limited size printing</li>
-<li class="slide">infinite loop partial prevention</li>
-<li class="slide">reagent snippets</li>
-<li class="slide">output is beautified and strings are beautified</li>
 </ul>
 </div>
 </section>
@@ -283,6 +308,119 @@ $("#container-1")
 .text("Hello World")
 </code></pre>
 <div id="container-1"></div>
+</div>
+</div>
+</section>
+<section class="slide" id="_klipse_environment_is_shared_between_klipse_snippets">
+<h2>Klipse: environment is shared between Klipse snippets</h2>
+<div class="paragraph"><p>A blog post is a story.</p></div>
+<div class="paragraph"><p>The different elements of the stories need to be connected together.</p></div>
+<div class="openblock slide">
+<div class="content">
+<div class="paragraph"><p>Let&#8217;s see how to write a <strong>Hello World</strong> function in Clojure:</p></div>
+<div class="listingblock clj">
+<div class="content">
+<pre class="highlight"><code>(defn hello [name]
+  (str "hello " name "\n"))</code></pre>
+</div>
+</div>
+</div>
+</div>
+<div class="openblock slide">
+<div class="content">
+<div class="paragraph"><p>And now, let&#8217;s see how to use this function:</p></div>
+<div class="listingblock clj">
+<div class="content">
+<pre class="highlight"><code>(hello "Klipse")</code></pre>
+</div>
+</div>
+</div>
+</div>
+<div class="openblock slide">
+<div class="content">
+<div class="paragraph"><p>☕You can embed a <code>jsfiddle</code> or a <code>codepen</code> in a blog post with an <code>&lt;iframe&gt;</code>.<br>
+But you cannot share neither the code nor the data between the iframes.</p></div>
+</div>
+</div>
+</section>
+<section class="slide" id="_hiding_some_details_from_the_reader">
+<h2>Hiding some details from the reader</h2>
+<div class="openblock slide">
+<div class="content">
+<div class="quoteblock">
+<blockquote>
+<div class="paragraph"><p>Less is more</p></div>
+</blockquote>
+</div>
+<div class="paragraph"><p>You don&#8217;t want to confuse your readers with technical details that are not revelant to the main idea of your article.</p></div>
+<div class="paragraph"><p>But you need this (irrelevant) code to let the other parts of the code run properly.</p></div>
+</div>
+</div>
+<div class="openblock slide">
+<div class="content">
+<div class="paragraph"><p>Two mechanisms for hiding code from the reader but not from Klipse:</p></div>
+<div class="ulist">
+<ul>
+<li>A hidden Klipse snippet</li>
+<li><code>data-preamble</code></li>
+</ul>
+</div>
+</div>
+</div>
+<div class="openblock slide">
+<div class="content">
+<div class="paragraph"><p>You can hide a snippet using CSS</p></div>
+<div class="listingblock text">
+<div class="content">
+<pre><code>&lt;pre class="hidden"&gt;&lt;code class="clj"&gt;
+(def irrelevant-constant
+42)
+&lt;/code&gt;&lt;/pre&gt;</code></pre>
+</div>
+</div>
+<pre class="hidden"><code class="clj">
+(def irrelevant-constant  42)
+</code></pre>
+<p style="font-style:italic; color: blue">
+There is a hidden Klipse snippet just above me
+</p>
+<div class="paragraph"><p>We can use the hidden code in subsequent Klipse snippets:</p></div>
+<div class="listingblock clj">
+<div class="content">
+<pre class="highlight"><code>irrelevant-constant</code></pre>
+</div>
+</div>
+</div>
+</div>
+<div class="openblock slide">
+<div class="content">
+<div class="paragraph"><p>We can hide part of the Klipse snippet&#8217;s code using <code>data-preamble</code>.</p></div>
+<div class="listingblock text">
+<div class="content">
+<pre><code>&lt;pre&gt;&lt;code class="clj" data-preamble="(def random-num  (rand))"&gt;
+random-num
+&lt;/code&gt;&lt;/pre&gt;</code></pre>
+</div>
+</div>
+</div>
+</div>
+<div class="openblock slide">
+<div class="content">
+<pre><code class="clj" data-preamble="(def random-num (rand))">
+random-num
+</code></pre>
+</div>
+</div>
+</section>
+<section class="slide" id="_warning">
+<h2>Warning</h2>
+<div class="paragraph"><p>Are you ready for a journey into the wonderland of programming languages?</p></div>
+              <div class="left">
+		<img src='https://chart.googleapis.com/chart?cht=qr&chl=http%3A%2F%2Fslides.klipse.tech%2Famobee%2Fclojure-basics.html&chs=300x300' alt='qr code'></img>
+	      </div>
+<div class="imageblock">
+<div class="content">
+<img alt="journey" src="images/journey.jpg" width="900">
 </div>
 </div>
 </section>
@@ -334,9 +472,34 @@ run();
 </code></pre>
 </div>
 </div>
+</section>
+<section class="slide" id="_klipse_javascript_with_dom">
+<h2>Klipse: javascript with DOM</h2>
 <div class="openblock slide">
 <div class="content">
-<div class="paragraph"><p>Each snippet is bounded to a klipse container accessible through <code>window.klipse_container</code> with id <code>window.klipse_container_id</code>.</p></div>
+<div class="paragraph"><p>Klipse is 100% client side.<br>
+You can interact with the page that contains the Klipse snippets.</p></div>
+</div>
+</div>
+<div class="openblock slide">
+<div class="content">
+<div class="listingblock eval-js">
+<div class="content">
+<pre class="highlight"><code>$('#container-1345')
+  .css({color: 'white',
+        backgroundColor: 'green',
+        padding: '10px',
+        fontSize: '50px'})
+  .text("Hello World")
+1</code></pre>
+</div>
+</div>
+<div id="container-1345"></div>
+</div>
+</div>
+<div class="openblock slide">
+<div class="content">
+<div class="paragraph"><p>Each Klipse snippet is bound to a container accessible through <code>window.klipse_container</code> with id <code>window.klipse_container_id</code>.</p></div>
 <div class="listingblock eval-js">
 <div class="content">
 <pre class="highlight"><code>$(klipse_container)
@@ -344,7 +507,8 @@ run();
         backgroundColor: 'blue',
         padding: '10px',
         fontSize: '50px'})
-  .text("Hello World")</code></pre>
+  .text("I am the container bound to the Klipse snippet just above me")
+1</code></pre>
 </div>
 </div>
 </div>
@@ -402,11 +566,31 @@ run();
 <h2>Klipse: Ruby</h2>
 <div class="openblock slide">
 <div class="content">
+<div class="paragraph"><p>Simple stuff</p></div>
 <div class="listingblock ruby">
 <div class="content">
 <pre class="highlight"><code>[1,2]*10</code></pre>
 </div>
 </div>
+</div>
+</div>
+<div class="openblock slide">
+<div class="content">
+<div class="paragraph"><p>Let&#8217;s have some real fun!!!<br>
+How would you call this piece of ruby code?</p></div>
+<div class="listingblock ruby">
+<div class="content">
+<pre class="highlight"><code>-&gt;(f){
+  f[f]
+  }[-&gt;(func){
+    -&gt;(n) { n == 0 ? 1 : n * func[func][n-1]}
+    }][19]</code></pre>
+</div>
+</div>
+</div>
+</div>
+<div class="openblock slide">
+<div class="content">
 <div class="paragraph"><p>The evaluation of ruby code in the browser is powered by <a href="http://opalrb.org/">Opal</a>.</p></div>
 </div>
 </div>
@@ -419,8 +603,8 @@ run();
 <div class="listingblock scheme">
 <div class="content">
 <pre class="highlight"><code>(let ((a 1)
-  (b 2))
-  (+ a b))</code></pre>
+      (b 2))
+  (cdr (list a b a b)))</code></pre>
 </div>
 </div>
 </div>
@@ -440,9 +624,10 @@ run();
       1
       (* n (factorial-rec (- n 1)))))
 
-(factorial-rec 5)</code></pre>
+(factorial-rec 50000)</code></pre>
 </div>
 </div>
+<div class="paragraph"><p>No stack overflow because BiwaScheme is <a href="https://github.com/biwascheme/biwascheme/issues/95">smart</a>.</p></div>
 </div>
 </div>
 <div class="openblock slide">
@@ -467,14 +652,74 @@ run();
 </div>
 <div class="openblock slide">
 <div class="content">
-<div class="paragraph"><p>Learn more about schem in this <a href="http://blog.klipse.tech/scheme/2016/09/11/scheme-tutorial-1.html">Interactive overview of Scheme&#8217;s semantics</a>.<br>
+<div class="paragraph"><p>Learn more about scheme in this <a href="http://blog.klipse.tech/scheme/2016/09/11/scheme-tutorial-1.html">Interactive overview of Scheme&#8217;s semantics</a>.<br>
 The evaluation of scheme code in the browser is powered by <a href="http://www.biwascheme.org/">BiwaScheme</a>.</p></div>
 </div>
 </div>
 </section>
 <section class="slide" id="_klipse_scheme_fun_with_car_and_cdr">
 <h2>Klipse: Scheme - fun with car and cdr</h2>
+<div class="paragraph"><p>Who wants to share a fun piece of code with <code>car</code> and <code>cdr</code>?</p></div>
+</section>
+<section class="slide" id="_klipse_brainfuck">
+<h2>Klipse: Brainfuck</h2>
+<div class="openblock slide">
+<div class="content">
+<div class="paragraph"><p>Brainfuck is an esoteric language with only 8 characters.</p></div>
+<div class="paragraph"><p>It helps to understand what is a Turing machine</p></div>
+</div>
+</div>
+<div class="openblock slide">
+<div class="content">
+<div class="listingblock brainfuck">
+<div class="content">
+<pre class="highlight"><code>+++++++++++++++++++++++++++++++++ Increment 33 times
+.
++++++++++                         Increment 9 times
+.
+&gt;&gt;                                Move forward twice</code></pre>
+</div>
+</div>
+</div>
+</div>
+<div class="openblock slide">
+<div class="content">
+<div class="paragraph"><p>Addition of two numbers</p></div>
+<div class="listingblock brainfuck">
+<div class="content">
+<pre class="highlight"><code>+++++++    put 7 on cell #0
+&gt;          move to cell #1
++++        put 3 on cell # 1
+&lt;          move to cell #0
+[-&gt;+&lt;]     dec cell #0 and inc cell #1 until cell #0 is 0
+&gt;          move to cell #1
+.          output cell #1</code></pre>
+</div>
+</div>
+</div>
+</div>
+<div class="openblock slide">
+<div class="content">
+<div class="paragraph"><p>Hello World</p></div>
+<div class="listingblock brainfuck">
+<div class="content">
+<pre class="highlight"><code>++++++++++[&gt;+++++++&gt;++++++++++&gt;+++&gt;+&lt;&lt;&lt;&lt;-]&gt;++.&gt;+.+++++++..+++.&gt;++.&lt;&lt;+++++++++++++++.&gt;.+++.------.--------.&gt;+.&gt;</code></pre>
+</div>
+</div>
+</div>
+</div>
+<div class="openblock slide">
+<div class="content">
+<div class="paragraph"><p>Eval</p></div>
+<div class="listingblock brainfuck">
+<div class="content">
+<pre class="highlight"><code>[in: ++++++++++[&gt;+++++++&gt;++++++++++&gt;+++&gt;+&lt;&lt;&lt;&lt;-]&gt;++.&gt;+.+++++++..+++.&gt;++.&lt;&lt;+++++++++++++++.&gt;.+++.------.--------.&gt;+.&gt;.!]
 
+&gt;&gt;&gt;&gt;+[-&gt;&gt;&gt;++&gt;+&gt;+++++++[&lt;++++&gt;&gt;++&lt;-]++&gt;&gt;+&gt;+&gt;+++++[&gt;++&gt;++++++&lt;&lt;-]+&gt;&gt;&gt;,&lt;++[[&gt;[-&gt;&gt;]&lt;[&gt;&gt;]&lt;&lt;-]&lt;[&lt;]&lt;+&gt;&gt;[&gt;]&gt;[&lt;+&gt;-[[&lt;+&gt;-]&gt;]&lt;[[[-]&lt;]++&lt;-[&lt;+++++++++&gt;[&lt;-&gt;-]&gt;&gt;]&gt;&gt;]]&lt;&lt;]&gt;[-]+&lt;&lt;[--[[-]&gt;&gt;-&lt;&lt;&lt;+&gt;]&gt;&gt;[-&lt;&lt;&lt;&lt;[&gt;+&lt;-]+&lt;&lt;+[-&gt;[&lt;+&gt;&gt;&gt;&gt;&gt;&gt;+&lt;&lt;&lt;&lt;&lt;-]&lt;[&gt;+&lt;-]&gt;&gt;&gt;&gt;&gt;&gt;&gt;+&lt;[-[-[-[-[-[-[-[-[[-]&gt;-&lt;]&gt;[-&lt;&lt;+++++++&gt;&gt;]&lt;]]]&gt;[-]&lt;]&gt;[-&lt;&lt;+++&gt;&gt;]&lt;]&gt;[-&lt;&lt;+&gt;&gt;]&lt;]&gt;[-]&lt;]&gt;[-&lt;&lt;&lt;&lt;&lt;&lt;&lt;+&gt;&gt;&gt;&gt;&gt;&gt;&gt;]&lt;]&gt;[-]&lt;&lt;&lt;&lt;&lt;]&gt;&gt;&gt;[&lt;&lt;+&gt;&gt;-]&lt;+&lt;[-[-[-[-[-[-[-[-[-[-[[-]&gt;-&lt;&lt;&lt;[-]&lt;&lt;+&gt;&gt;]]]]&gt;[-]&lt;]&gt;[-&lt;&lt;&lt;[-]&lt;&lt;+++++++&gt;&gt;&gt;]&lt;]]]&gt;[-]&lt;]&gt;[-&lt;&lt;&lt;[-]&lt;&lt;+++++++&gt;&gt;&gt;]&lt;]]&gt;[-]&lt;&lt;&lt;&lt;&lt;&lt;[-]&gt;&gt;[-&lt;&lt;&lt;[&gt;+&gt;&gt;+&lt;&lt;&lt;-]&gt;[&lt;+&gt;-]&gt;&gt;[-[-[[-]&gt;&gt;]&gt;[&lt;&lt;[&lt;+&gt;&gt;+&lt;-]&gt;[&lt;+&gt;-]+&lt;&lt;-[-[-[-[-[-[-[-[-[-[-&lt;+&gt;]&lt;+++++++++++++&gt;&gt;[-]&gt;-&gt;-&lt;&lt;]]]&gt;&gt;[-&gt;&gt;&gt;&gt;&gt;]&lt;&lt;]&gt;&gt;[-&lt;&lt;&lt;++++++++++++&gt;&gt;[-]&gt;&gt;-]&lt;&lt;]&gt;&gt;[-&gt;&gt;&gt;&gt;&gt;]&lt;&lt;]&gt;&gt;[-&lt;&lt;&lt;+++++++++++&gt;&gt;[-]&gt;&gt;-]&lt;&lt;]&gt;&gt;[-&lt;&lt;&lt;++++++++++&gt;&gt;[-]&gt;&gt;-]&lt;&lt;]]&gt;&gt;[-&gt;&gt;&gt;&gt;&gt;]&lt;&lt;]&lt;]]&gt;[&gt;&gt;]&lt;&lt;&lt;]&gt;&gt;+&gt;&gt;&gt;]&lt;&lt;]&gt;&gt;[-&gt;+&gt;]&lt;&lt;&lt;]&lt;&lt;[&lt;&lt;]&gt;&gt;[[&lt;+&gt;&gt;+&lt;-]+&lt;-[-[-[-[-[-[-[-[-[-[-[-[-[-[-[-&gt;-&gt;&gt;[&gt;&gt;]&gt;&gt;[&gt;&gt;]&lt;[&lt;-&lt;&lt;-&lt;]&lt;[&lt;&lt;]&lt;&lt;[&lt;&lt;]&lt;]&gt;[-&gt;&gt;[&gt;&gt;]&gt;&gt;[&gt;&gt;]&lt;[&gt;+&gt;&gt;+&gt;]&lt;[&lt;&lt;]&lt;&lt;[&lt;&lt;]]&lt;]&gt;[-&gt;&gt;[&gt;&gt;]&gt;&gt;[&gt;&gt;]&lt;[-]&lt;[&lt;&lt;]&lt;&lt;[&lt;&lt;]]&lt;]&gt;[-&gt;&gt;[&gt;&gt;]&gt;&gt;[&gt;&gt;]&lt;[&lt;-&lt;]&lt;[&lt;&lt;]&lt;&lt;[&lt;&lt;]]&lt;]&gt;[-&gt;&gt;[&gt;&gt;]&gt;&gt;[&gt;&gt;]&lt;[&gt;+&gt;]&lt;[&lt;&lt;]&lt;&lt;[&lt;&lt;]]&lt;]&gt;[-&gt;&gt;[&gt;&gt;]&gt;&gt;[&gt;&gt;]&lt;&lt;-&lt;&lt;-&lt;&lt;[&lt;&lt;]&lt;&lt;[&lt;&lt;]]&lt;]&gt;[-&gt;&gt;[&gt;&gt;]&gt;&gt;[&gt;&gt;]+&gt;&gt;+[&lt;&lt;]&lt;&lt;[&lt;&lt;]]&lt;]&gt;[-&gt;&gt;[&gt;&gt;]&gt;&gt;[&gt;&gt;]&lt;++&lt;[&lt;&lt;]&lt;&lt;[&lt;&lt;]]&lt;]&gt;[-&gt;&gt;[&gt;&gt;]&gt;&gt;[&gt;&gt;]&lt;+&lt;[&lt;&lt;]&lt;&lt;[&lt;&lt;]]&lt;]&gt;[-&gt;&gt;[&gt;&gt;]&gt;&gt;[&gt;&gt;]&lt;,&lt;[&lt;&lt;]&lt;&lt;[&lt;&lt;]]&lt;]&gt;[-&gt;&gt;[&gt;&gt;]&gt;&gt;[&gt;&gt;]&lt;-&lt;[&lt;&lt;]&lt;&lt;[&lt;&lt;]]&lt;]&gt;[-&gt;&gt;[&gt;&gt;]&gt;&gt;[&gt;&gt;]&lt;.&lt;[&lt;&lt;]&lt;&lt;[&lt;&lt;]]&lt;]&gt;[-&gt;&gt;[&gt;&gt;]&gt;&gt;[&gt;&gt;]&lt;&lt;-&lt;&lt;[&lt;&lt;]&lt;&lt;[&lt;&lt;]]&lt;]&gt;[-&gt;&gt;[&gt;&gt;]&gt;&gt;[&gt;&gt;]+[&lt;&lt;]&lt;&lt;[&lt;&lt;]]&lt;]&gt;[-&gt;&gt;[&gt;&gt;]&gt;&gt;[&gt;&gt;]&lt;[&gt;+&gt;&gt;+&lt;&lt;&lt;-]&gt;[&lt;+&gt;-]&gt;&gt;[&lt;&lt;+&gt;&gt;[-]]+&lt;&lt;[&gt;&gt;-&lt;&lt;-]&gt;&gt;[&lt;&lt;+&gt;&gt;&gt;&gt;+&lt;&lt;-]&gt;&gt;[&lt;&lt;+&gt;&gt;-]&lt;&lt;[&gt;&gt;+&lt;&lt;-]+&gt;&gt;[&lt;&lt;-&gt;&gt;-]&lt;&lt;&lt;&lt;[-&lt;&lt;[&lt;&lt;]&lt;&lt;[&lt;&lt;]&lt;&lt;&lt;&lt;&lt;++&gt;&gt;]&gt;&gt;[-&lt;&lt;&lt;&lt;&lt;&lt;[&lt;&lt;]&lt;&lt;[&lt;&lt;]&lt;]&gt;]&lt;]&gt;[-&gt;&gt;[&gt;&gt;]&gt;&gt;[&gt;&gt;]&lt;[&gt;+&gt;&gt;+&lt;&lt;&lt;-]&gt;[[&lt;+&gt;-]&gt;&gt;[-]+&lt;&lt;]&gt;&gt;[&lt;&lt;+&gt;&gt;&gt;&gt;+&lt;&lt;-]&gt;&gt;[&lt;&lt;+&gt;&gt;-]&lt;&lt;[&gt;&gt;+&lt;&lt;-]+&gt;&gt;[&lt;&lt;-&gt;&gt;-]&lt;&lt;&lt;&lt;[-&lt;&lt;[&lt;&lt;]&lt;&lt;[&lt;&lt;]&lt;&lt;&lt;&lt;&lt;+&gt;&gt;]&gt;&gt;[-&lt;&lt;&lt;&lt;&lt;&lt;[&lt;&lt;]&lt;&lt;[&lt;&lt;]&lt;]&gt;]&gt;[&lt;+&gt;-]&lt;&lt;&lt;&lt;&lt;&lt;[&gt;&gt;+&lt;&lt;-[-&gt;&gt;-&gt;&gt;+[&gt;&gt;&gt;[-&lt;+&gt;&gt;+&lt;]+&lt;-[-[[-]&gt;-&lt;]&gt;[-&lt;&lt;&lt;+&gt;&gt;&gt;]&lt;]&gt;[-&lt;&lt;&lt;-&gt;&gt;&gt;]&gt;[-&lt;+&gt;]&lt;&lt;&lt;&lt;[&gt;&gt;+&lt;&lt;-]&gt;&gt;]&lt;&lt;&lt;&lt;&lt;&lt;]&gt;&gt;[-&lt;&lt;+[&gt;&gt;&gt;[-&lt;+&gt;&gt;+&lt;]+&lt;-[-[[-]&gt;-&lt;]&gt;[-&lt;&lt;&lt;-&gt;&gt;&gt;]&lt;]&gt;[-&lt;&lt;&lt;+&gt;&gt;&gt;]&gt;[-&lt;+&gt;]&lt;&lt;&lt;&lt;[&lt;&lt;+&gt;&gt;-]&lt;&lt;]]]&gt;&gt;&gt;&gt;&gt;&gt;&gt;]</code></pre>
+</div>
+</div>
+</div>
+</div>
 </section>
 <section class="slide" id="_klipse_lua_implemented_in_webassembly">
 <h2>Klipse: Lua (implemented in WebAssembly)</h2>
@@ -528,52 +773,9 @@ for i in range(4):
 </div>
 </div>
 </section>
-<section class="slide" id="_klipse_environment_is_shared_between_klipse_snippets">
-<h2>Klipse: environment is shared between Klipse snippets</h2>
-<div class="paragraph"><p>A blog post is a story.</p></div>
-<div class="paragraph"><p>The different elements of the stories need to be connected together.</p></div>
-<div class="openblock slide">
-<div class="content">
-<div class="paragraph"><p>Let&#8217;s see how to write a <strong>Hello World</strong> function in Clojure:</p></div>
-<div class="listingblock clj">
-<div class="content">
-<pre class="highlight"><code>(defn hello [name]
-  (str "hello " name "\n"))</code></pre>
-</div>
-</div>
-</div>
-</div>
-<div class="openblock slide">
-<div class="content">
-<div class="paragraph"><p>And now, let&#8217;s see how to use this function:</p></div>
-<div class="listingblock clj">
-<div class="content">
-<pre class="highlight"><code>(hello "Klipse")</code></pre>
-</div>
-</div>
-</div>
-</div>
-<div class="openblock slide">
-<div class="content">
-<div class="paragraph"><p>☕You can embed a <code>jsfiddle</code> or a <code>codepen</code> in a blog post with an <code>&lt;iframe&gt;</code>.<br>
-But you cannot share neither code nor data between the iframes.</p></div>
-</div>
-</div>
-</section>
-<section class="slide" id="_klipse_the_challenges">
-<h2>Klipse: the challenges</h2>
-<div class="ulist">
-<ul>
-<li>Clojurescript is not clojure: threads, types, core.async&#8230;&#8203;</li>
-<li>Self-Host Clojurescript is not Clojurescript: many libs are not yet ported (core.logic, core.matrix&#8230;&#8203;)</li>
-<li>Security issues for blogging platform</li>
-<li>Infinite loops</li>
-</ul>
-</div>
-</section>
 <section class="slide" id="_klipse_the_integration">
 <h2>Klipse: The integration</h2>
-
+<div class="paragraph"><p>All the details are in <a href="https://github.com/viebel/klipse">Klipse README</a></p></div>
 </section>
 <section class="slide" id="_survey">
 <h2>Survey</h2>
@@ -588,15 +790,25 @@ But you cannot share neither code nor data between the iframes.</p></div>
 </section>
 <section class="slide" id="_what_s_in_it_for_you">
 <h2>What&#8217;s in it for you?</h2>
+<div class="openblock slide">
+<div class="content">
 <div class="ulist">
 <ul>
-<li class="slide">Ask from bloggers to <em>klipsify</em> their articles</li>
-<li class="slide">Give a star to <a href="https://github.com/viebel/klipse">Klipse on Github</a></li>
-<li class="slide">Share the world about code interactivty with your friends</li>
-<li class="slide">Write an interactive blog post: It&#8217;s the best way to learn a topic and It&#8217;s really fun!</li>
-<li class="slide">Klipsify a tutorial, a scientific paper, a blog post&#8230;&#8203;</li>
-<li class="slide">Klipsify your library documentation</li>
+<li>Ask from bloggers to <em>klipsify</em> their articles</li>
+<li>Give a star to <a href="https://github.com/viebel/klipse">Klipse on Github</a></li>
 </ul>
+</div>
+                      <a class="github-button" href="https://github.com/viebel/klipse" data-count-href="/viebel/klipse/stargazers" data-count-api="/repos/viebel/klipse#stargazers_count" data-count-aria-label="# stargazers on GitHub" aria-label="Star viebel/klipse on GitHub">KLIPSE</a>
+                    <script async defer id="github-bjs" src="https://buttons.github.io/buttons.js"></script>
+<div class="ulist">
+<ul>
+<li>Share the world about code interactivty with your friends</li>
+<li>Write an interactive blog post: It&#8217;s the best way to learn a topic and it&#8217;s really fun!</li>
+<li>Klipsify a tutorial, a scientific paper, a blog post&#8230;&#8203;</li>
+<li>Klipsify your library documentation</li>
+</ul>
+</div>
+</div>
 </div>
 </section>
 <section class="slide" id="_questions">
@@ -604,6 +816,15 @@ But you cannot share neither code nor data between the iframes.</p></div>
 <div class="imageblock">
 <div class="content">
 <img alt="questions" src="images/questions.jpg">
+</div>
+</div>
+</section>
+<section class="slide" id="_enough_words">
+<h2>Enough words</h2>
+<div class="paragraph"><p>Let&#8217;s write our first illiterate blog post together</p></div>
+<div class="imageblock">
+<div class="content">
+<img alt="collaboration" src="images/collaboration.png">
 </div>
 </div>
 <link rel="shortcut icon" href="./favicon.png">
@@ -654,6 +875,43 @@ font-style: italic;
 font-family: cursive;
 font-size: 2.5em;
 }
+.klipse-result table{
+margin: 10px auto 0px auto;
+}
+.klipse-result strong {
+    color: red;
+}
+
+.klipse-result table
+{
+    font-family: "Lucida Sans Unicode", "Lucida Grande", Sans-Serif;
+    font-size: 12px;
+    text-align: left;
+}
+.klipse-result table {
+       border: 1px solid black;
+}
+
+.klipse-result  table
+{
+    font-size: 13px;
+    font-weight: normal;
+    padding: 8px;
+    background: #b9c9fe;
+    color: #039;
+}
+.klipse-result table
+{
+    padding: 8px;
+    background: #e8edff;
+    color: #669;
+}
+.klipse-result tr:hover td
+{
+    background: #d0dafd;
+    color: #339;
+}
+
 </style>
 </section>
 <div aria-role="navigation">

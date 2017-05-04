@@ -17,10 +17,15 @@
 - A freak of interactivity
 - Founded Audyx in 2013 - an Audiology Startup with 30K LOCs in Clojurescript
 - Author of Klipse
+++++
+                      <a class="github-button" href="https://github.com/viebel/klipse" data-count-href="/viebel/klipse/stargazers" data-count-api="/repos/viebel/klipse#stargazers_count" data-count-aria-label="# stargazers on GitHub" aria-label="Star viebel/klipse on GitHub">KLIPSE</a>
+                    <script async defer id="github-bjs" src="https://buttons.github.io/buttons.js"></script>
+++++
 - A Web consultant: Full-Stack, clojure{,script}, ruby{, on rails}, javascript, react
 --
 
 image::https://pbs.twimg.com/profile_images/713278171353911296/1a2useM2.jpg[me]
+
 
 == Agenda
 
@@ -28,7 +33,9 @@ image::https://pbs.twimg.com/profile_images/713278171353911296/1a2useM2.jpg[me]
 - Problems with the traditional approach
 - What is Illiterate blogging?
 - Examples of Illiterate blogging
-- What's in it for you
+- Languages supported by Klipse
+- What's in it for you?
+- Live blogging session
 
 == Two types of programmers - type 0
 
@@ -54,6 +61,11 @@ image::images/automata-readme.png[readme]
 .EcmaScript proposal: Object.entries() and Object.values()
 [caption="Dr. Axel Rauschmayer: ", link="http://2ality.com/2015/11/stage3-object-entries.html"]
 image::images/es-proposal.png[readme]
+
+== Naming
+
+- How would you call programmers of type 0 and 1?
+- What type of programmer are you?
 
 == Regular Programmers of type 0
 [%step]
@@ -177,14 +189,33 @@ They love to play.
 
 == Klipse: How does it work?
 
+[%step]
+--
 The klipse plugin is a javascript tag that transforms static code snippets of an html page into live and interactive snippets:
 
 - *Live*: The code is executed in your browser
 - *Interactive*: The reader can modify the code and it is evaluated as she types
 
 The code evaluation is done in the browser: no server is involved at all!
+--
 
-== Klipse: The features
+
+[%step]
+--
+
+- The code snippets are put in dom elements with a class of your choice.
+- Code snippets of different languages must have different classes.
+- The classes are passed to the `klipse_settings` object.
+- You can configure the settings of each Klipse snippet by setting `data-` attributes.
+
+More details in https://github.com/viebel/klipse[Klipse README].
+--
+
+[%step]
+
+https://jsfiddle.net/viebel/50oLnykk/[A minimal example of a html page with Klipse].
+
+== Klipse: Main features
 
 [%step]
 - code is evaluated as you type (configurable)
@@ -193,19 +224,11 @@ The code evaluation is done in the browser: no server is involved at all!
 - environment is shared between code snippets
 - hidden code snippets
 - snippet preamble	
-- printing
+- pretty printing
 - code evaluation in a loop
 - load code from a github gist
 - interacting with the DOM
 - the CodeMirror editor is configurable: options and CSS
-
-[%step]
-- caching of external libs: core.async
-- custom external libraries
-- limited size printing
-- infinite loop partial prevention
-- reagent snippets
-- output is beautified and strings are beautified
 
 == Klipse: code is evaluated as you type
 
@@ -244,10 +267,119 @@ $("#container-1")
 ++++
 --
 
+== Klipse: environment is shared between Klipse snippets
+
+A blog post is a story.
+
+The different elements of the stories need to be connected together.
+
+[%step]
+--
+Let's see how to write a *Hello World* function in Clojure:
+
+[source.clj]
+----
+(defn hello [name]
+  (str "hello " name "\n"))
+----
+--
+[%step]
+--
+And now, let's see how to use this function:
+[source.clj]
+----
+(hello "Klipse")
+----
+--
+[%step]
+--
+
+☕You can embed a `jsfiddle` or a `codepen` in a blog post with an `<iframe>`.
+But you cannot share neither the code nor the data between the iframes.
+--
+
+== Hiding some details from the reader
+
+[%step]
+--
+> Less is more
+
+
+You don't want to confuse your readers with technical details that are not revelant to the main idea of your article.
+
+But you need this (irrelevant) code to let the other parts of the code run properly.
+--
+
+[%step]
+--
+Two mechanisms for hiding code from the reader but not from Klipse:
+
+- A hidden Klipse snippet
+- `data-preamble`
+--
+
+
+[%step]
+--
+You can hide a snippet using CSS
+[.text]
+----
+<pre class="hidden"><code class="clj">
+(def irrelevant-constant
+42)
+</code></pre>
+----
+++++
+<pre class="hidden"><code class="clj">
+(def irrelevant-constant  42)
+</code></pre>
+<p style="font-style:italic; color: blue">
+There is a hidden Klipse snippet just above me
+</p>
+++++
+
+
+We can use the hidden code in subsequent Klipse snippets:
+[source.clj]
+----
+irrelevant-constant
+----
+--
+
+[%step]
+--
+We can hide part of the Klipse snippet's code using `data-preamble`.
+[.text]
+----
+<pre><code class="clj" data-preamble="(def random-num  (rand))">
+random-num
+</code></pre>
+----
+--
+
+[%step]
+--
+++++
+<pre><code class="clj" data-preamble="(def random-num (rand))">
+random-num
+</code></pre>
+++++
+--
+
+== Warning
+
+Are you ready for a journey into the wonderland of programming languages?
+
+++++
+              <div class="left">
+		<img src='https://chart.googleapis.com/chart?cht=qr&chl=http%3A%2F%2Fslides.klipse.tech%2Famobee%2Fclojure-basics.html&chs=300x300' alt='qr code'></img>
+	      </div>
+++++
+
+image::images/journey.jpg[journey,900]
+
 
 == Klipse: javascript
-
-
 [%step]
 --
 Demonstrate EcmaScript 2017 features before they are available in the browser
@@ -299,9 +431,36 @@ run();
 ++++
 --
 
+== Klipse: javascript with DOM
+
 [%step]
 --
-Each snippet is bounded to a klipse container accessible through `window.klipse_container` with id `window.klipse_container_id`.
+Klipse is 100% client side.
+You can interact with the page that contains the Klipse snippets.
+--
+
+[%step]
+--
+[source.eval-js]
+----
+$('#container-1345')
+  .css({color: 'white',
+        backgroundColor: 'green',
+        padding: '10px',
+        fontSize: '50px'})
+  .text("Hello World")
+1
+----
+
+++++
+<div id="container-1345"></div>
+++++
+
+--
+
+[%step]
+--
+Each Klipse snippet is bound to a container accessible through `window.klipse_container` with id `window.klipse_container_id`.
 [source.eval-js]
 ----
 $(klipse_container)
@@ -309,7 +468,8 @@ $(klipse_container)
         backgroundColor: 'blue',
         padding: '10px',
         fontSize: '50px'})
-  .text("Hello World")
+  .text("I am the container bound to the Klipse snippet just above me")
+1
 ----
 --
 
@@ -364,12 +524,28 @@ Learn more about JSX in this http://blog.klipse.tech/javascript/2016/12/14/jsx.h
 
 [%step]
 --
-
+Simple stuff
 [source.ruby]
 ----
 [1,2]*10
 ----
+--
 
+[%step]
+--
+Let's have some real fun!!!
+How would you call this piece of ruby code?
+[source.ruby]
+----
+->(f){
+  f[f]
+  }[->(func){
+    ->(n) { n == 0 ? 1 : n * func[func][n-1]}
+    }][19]
+----
+--
+[%step]
+--
 The evaluation of ruby code in the browser is powered by http://opalrb.org/[Opal].
 --
 
@@ -381,8 +557,8 @@ Scheme
 [source.scheme]
 ----
 (let ((a 1)
-  (b 2))
-  (+ a b))
+      (b 2))
+  (cdr (list a b a b)))
 ----
 --
 
@@ -402,8 +578,10 @@ Factorial implemented with recursion
       1
       (* n (factorial-rec (- n 1)))))
 
-(factorial-rec 5)
+(factorial-rec 50000)
 ----
+
+No stack overflow because BiwaScheme is https://github.com/biwascheme/biwascheme/issues/95[smart].
 --
 
 [%step]
@@ -428,13 +606,68 @@ Factorial implemented with iteration (a.k.a tail-call recursion)
 
 [%step]
 --
-Learn more about schem in this http://blog.klipse.tech/scheme/2016/09/11/scheme-tutorial-1.html[Interactive overview of Scheme's semantics].
+Learn more about scheme in this http://blog.klipse.tech/scheme/2016/09/11/scheme-tutorial-1.html[Interactive overview of Scheme's semantics].
 The evaluation of scheme code in the browser is powered by http://www.biwascheme.org/[BiwaScheme].
 --
 
 == Klipse: Scheme - fun with car and cdr
 
+Who wants to share a fun piece of code with `car` and `cdr`?
 
+== Klipse: Brainfuck
+
+[%step]
+--
+Brainfuck is an esoteric language with only 8 characters.
+
+It helps to understand what is a Turing machine
+--
+
+[%step]
+--
+[source.brainfuck]
+----
++++++++++++++++++++++++++++++++++ Increment 33 times
+.
++++++++++                         Increment 9 times
+.
+>>                                Move forward twice
+----
+--
+
+[%step]
+--
+Addition of two numbers
+[source.brainfuck]
+----
++++++++    put 7 on cell #0
+>          move to cell #1
++++        put 3 on cell # 1
+<          move to cell #0
+[->+<]     dec cell #0 and inc cell #1 until cell #0 is 0
+>          move to cell #1
+.          output cell #1
+----
+--
+
+[%step]
+--
+Hello World
+[source.brainfuck]
+----
+++++++++++[>+++++++>++++++++++>+++>+<<<<-]>++.>+.+++++++..+++.>++.<<+++++++++++++++.>.+++.------.--------.>+.>
+----
+--
+[%step]
+--
+Eval
+[source.brainfuck]
+----
+[in: ++++++++++[>+++++++>++++++++++>+++>+<<<<-]>++.>+.+++++++..+++.>++.<<+++++++++++++++.>.+++.------.--------.>+.>.!]
+
+>>>>+[->>>++>+>+++++++[<++++>>++<-]++>>+>+>+++++[>++>++++++<<-]+>>>,<++[[>[->>]<[>>]<<-]<[<]<+>>[>]>[<+>-[[<+>-]>]<[[[-]<]++<-[<+++++++++>[<->-]>>]>>]]<<]>[-]+<<[--[[-]>>-<<<+>]>>[-<<<<[>+<-]+<<+[->[<+>>>>>>+<<<<<-]<[>+<-]>>>>>>>+<[-[-[-[-[-[-[-[-[[-]>-<]>[-<<+++++++>>]<]]]>[-]<]>[-<<+++>>]<]>[-<<+>>]<]>[-]<]>[-<<<<<<<+>>>>>>>]<]>[-]<<<<<]>>>[<<+>>-]<+<[-[-[-[-[-[-[-[-[-[-[[-]>-<<<[-]<<+>>]]]]>[-]<]>[-<<<[-]<<+++++++>>>]<]]]>[-]<]>[-<<<[-]<<+++++++>>>]<]]>[-]<<<<<<[-]>>[-<<<[>+>>+<<<-]>[<+>-]>>[-[-[[-]>>]>[<<[<+>>+<-]>[<+>-]+<<-[-[-[-[-[-[-[-[-[-[-<+>]<+++++++++++++>>[-]>->-<<]]]>>[->>>>>]<<]>>[-<<<++++++++++++>>[-]>>-]<<]>>[->>>>>]<<]>>[-<<<+++++++++++>>[-]>>-]<<]>>[-<<<++++++++++>>[-]>>-]<<]]>>[->>>>>]<<]<]]>[>>]<<<]>>+>>>]<<]>>[->+>]<<<]<<[<<]>>[[<+>>+<-]+<-[-[-[-[-[-[-[-[-[-[-[-[-[-[-[->->>[>>]>>[>>]<[<-<<-<]<[<<]<<[<<]<]>[->>[>>]>>[>>]<[>+>>+>]<[<<]<<[<<]]<]>[->>[>>]>>[>>]<[-]<[<<]<<[<<]]<]>[->>[>>]>>[>>]<[<-<]<[<<]<<[<<]]<]>[->>[>>]>>[>>]<[>+>]<[<<]<<[<<]]<]>[->>[>>]>>[>>]<<-<<-<<[<<]<<[<<]]<]>[->>[>>]>>[>>]+>>+[<<]<<[<<]]<]>[->>[>>]>>[>>]<++<[<<]<<[<<]]<]>[->>[>>]>>[>>]<+<[<<]<<[<<]]<]>[->>[>>]>>[>>]<,<[<<]<<[<<]]<]>[->>[>>]>>[>>]<-<[<<]<<[<<]]<]>[->>[>>]>>[>>]<.<[<<]<<[<<]]<]>[->>[>>]>>[>>]<<-<<[<<]<<[<<]]<]>[->>[>>]>>[>>]+[<<]<<[<<]]<]>[->>[>>]>>[>>]<[>+>>+<<<-]>[<+>-]>>[<<+>>[-]]+<<[>>-<<-]>>[<<+>>>>+<<-]>>[<<+>>-]<<[>>+<<-]+>>[<<->>-]<<<<[-<<[<<]<<[<<]<<<<<++>>]>>[-<<<<<<[<<]<<[<<]<]>]<]>[->>[>>]>>[>>]<[>+>>+<<<-]>[[<+>-]>>[-]+<<]>>[<<+>>>>+<<-]>>[<<+>>-]<<[>>+<<-]+>>[<<->>-]<<<<[-<<[<<]<<[<<]<<<<<+>>]>>[-<<<<<<[<<]<<[<<]<]>]>[<+>-]<<<<<<[>>+<<-[->>->>+[>>>[-<+>>+<]+<-[-[[-]>-<]>[-<<<+>>>]<]>[-<<<->>>]>[-<+>]<<<<[>>+<<-]>>]<<<<<<]>>[-<<+[>>>[-<+>>+<]+<-[-[[-]>-<]>[-<<<->>>]<]>[-<<<+>>>]>[-<+>]<<<<[<<+>>-]<<]]]>>>>>>>]
+----
+--
 
 == Klipse: Lua (implemented in WebAssembly)
 
@@ -488,47 +721,9 @@ You can even http://blog.klipse.tech/python/2017/01/04/python-turtle-fractal.htm
 The evaluation of python code in the browser is powered by https://github.com/skulpt/skulpt[Skulpt].
 --
 
-== Klipse: environment is shared between Klipse snippets
-
-A blog post is a story.
-
-The different elements of the stories need to be connected together.
-
-[%step]
---
-Let's see how to write a *Hello World* function in Clojure:
-
-[source.clj]
-----
-(defn hello [name]
-  (str "hello " name "\n"))
-----
---
-[%step]
---
-And now, let's see how to use this function:
-[source.clj]
-----
-(hello "Klipse")
-----
---
-[%step]
---
-
-☕You can embed a `jsfiddle` or a `codepen` in a blog post with an `<iframe>`.
-But you cannot share neither code nor data between the iframes.
---
-
-
-== Klipse: the challenges
-
-- Clojurescript is not clojure: threads, types, core.async...
-- Self-Host Clojurescript is not Clojurescript: many libs are not yet ported (core.logic, core.matrix...)
-- Security issues for blogging platform
-- Infinite loops
-
-
 == Klipse: The integration
+
+All the details are in https://github.com/viebel/klipse[Klipse README]
 
 == Survey
 
@@ -542,16 +737,31 @@ But you cannot share neither code nor data between the iframes.
 == What's in it for you?
 
 [%step]
+--
 - Ask from bloggers to _klipsify_ their articles
 - Give a star to https://github.com/viebel/klipse[Klipse on Github]
+++++
+                      <a class="github-button" href="https://github.com/viebel/klipse" data-count-href="/viebel/klipse/stargazers" data-count-api="/repos/viebel/klipse#stargazers_count" data-count-aria-label="# stargazers on GitHub" aria-label="Star viebel/klipse on GitHub">KLIPSE</a>
+                    <script async defer id="github-bjs" src="https://buttons.github.io/buttons.js"></script>
+
+++++
+
 - Share the world about code interactivty with your friends
-- Write an interactive blog post: It's the best way to learn a topic and It's really fun!
+- Write an interactive blog post: It's the best way to learn a topic and it's really fun!
 - Klipsify a tutorial, a scientific paper, a blog post...
 - Klipsify your library documentation 
+--
 
 == Questions
 
 image::images/questions.jpg[questions]
+
+== Enough words
+
+Let's write our first illiterate blog post together
+
+image::images/collaboration.png[collaboration]
+
 
 
 include::klipse.adoc[]
@@ -569,5 +779,42 @@ font-style: italic;
 font-family: cursive;
 font-size: 2.5em;
 }
+.klipse-result table{
+margin: 10px auto 0px auto;
+}
+.klipse-result strong {
+    color: red;
+}
+
+.klipse-result table
+{
+    font-family: "Lucida Sans Unicode", "Lucida Grande", Sans-Serif;
+    font-size: 12px;
+    text-align: left;
+}
+.klipse-result table {
+       border: 1px solid black;
+}
+
+.klipse-result  table
+{
+    font-size: 13px;
+    font-weight: normal;
+    padding: 8px;
+    background: #b9c9fe;
+    color: #039;
+}
+.klipse-result table
+{
+    padding: 8px;
+    background: #e8edff; 
+    color: #669;
+}
+.klipse-result tr:hover td
+{
+    background: #d0dafd;
+    color: #339;
+}
+
 </style>
 ++++

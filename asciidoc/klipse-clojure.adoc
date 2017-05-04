@@ -75,6 +75,43 @@ A couple of examples:
 - http://viebel.github.io/klipse/examples/test.check/doc/intro.html[test.check]
 
 
+== Klipse: code is evaluated as you type
+
+Zero-delay between the trial and the result is key for *creativity*.
+
+++++
+<br/><br/>
+++++
+video::PUv66718DII[youtube,640,480, start=218]
+++++
+<br/><br/>
+++++
+
+[%step]
+--
+[source.eval-js]
+----
+[1,2,3].map(x => x + 1)
+----
+--
+
+[%step]
+--
+++++
+<pre><code class="eval-js" data-async-code="true">
+$("#container-1")
+.css({color: 'white',
+       backgroundColor: 'blue',
+      padding: '10px',
+      fontSize: '50px'})
+.text("Hello World")
+</code></pre>
+++++
+++++
+<div id="container-1"></div>
+++++
+--
+
 
 == Running code in a loop
 
@@ -173,6 +210,38 @@ random-num
 </code></pre>
 ++++
 --
+
+== Klipse: environment is shared between Klipse snippets
+
+A blog post is a story.
+
+The different elements of the stories need to be connected together.
+
+[%step]
+--
+Let's see how to write a *Hello World* function in Clojure:
+
+[source.clj]
+----
+(defn hello [name]
+  (str "hello " name "\n"))
+----
+--
+[%step]
+--
+And now, let's see how to use this function:
+[source.clj]
+----
+(hello "Klipse")
+----
+--
+[%step]
+--
+
+☕You can embed a `jsfiddle` or a `codepen` in a blog post with an `<iframe>`.
+But you cannot share neither code nor data between the iframes.
+--
+
 
 == Caching of clojure libs
 
@@ -473,6 +542,14 @@ Understand how clojurescript overcomes the limitations of javascript:
 Learn more about http://blog.klipse.tech/clojure/2016/04/02/truth-in-cljs.html[Truth in clojurescript].
 --
 
+== Klipse: the challenges
+
+- Clojurescript is not clojure: threads, types, core.async...
+- Self-Host Clojurescript is not Clojurescript: many libs are not yet ported (core.logic, core.matrix...)
+- Security issues for blogging platform
+- Infinite loops
+
+
 
 == What's in it for you?
 
@@ -493,3 +570,5 @@ include::klipse.adoc[]
 <script src="https://cdnjs.cloudflare.com/ajax/libs/react/15.5.4/react-with-addons.min.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/react/15.5.4/react-dom.min.js"></script>
 ++++
+
+
