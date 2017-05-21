@@ -1,0 +1,196 @@
+= A practical introduction to Functional Programming
+:encoding: utf-8
+:navigation:
+:deckjs_transition: horizontal-slide
+:menu:
+:status:
+:deckjs_theme: none
+:hardbreaks:
+
+== Who am I?
+[.left]
+--
+- Yehonathan Sharvit https://twitter.com/viebel[@viebel]
+- A mathematician
+- A coder
+- A pragmatic theorist
+- A freak of interactivity
+- Founded Audyx in 2013 - an Audiology Startup with 30K LOCs in Clojurescript
+- Author of https://github.com/viebel/klipse[Klipse] - a simple client-side code evaluator pluggable on any web page 
+++++
+                      <a class="github-button" href="https://github.com/viebel/klipse" data-count-href="/viebel/klipse/stargazers" data-count-api="/repos/viebel/klipse#stargazers_count" data-count-aria-label="# stargazers on GitHub" aria-label="Star viebel/klipse on GitHub">KLIPSE</a>
+                    <script async defer id="github-bjs" src="https://buttons.github.io/buttons.js"></script>
+++++
+- A Web consultant: Full-Stack, clojure{,script}, ruby{, on rails}, javascript, react
+- A simple client-side code evaluator pluggable on any web page[CodeMentor Xpert]
+--
+
+image::https://pbs.twimg.com/profile_images/713278171353911296/1a2useM2.jpg[me]
+
+
+== Agenda
+
+- The Paradigms of Functional Programming
+- A brief history of Functional Programming
+- Functional Programming in practice
+- Discussion and Questions
+
+== The paradigms of Functional Programming
+
+* Functions are first class citizens
+* Declarative
+* Pure Functions
+* Immutability
+* Laziness
+
+== Functions - first class citizens
+
+[%step]
+--
+* Functions can be passed to variable definitions
+* Functions can be passed as arguments to functions
+--
+
+[%step]
+--
+set a function into a var in js
+--
+
+[%step]
+--
+map in js
+--
+
+[%step]
+--
+comp in clojure
+--
+
+[%step]
+--
+partial in clojure
+--
+
+== Pure functions
+
+A pure Function depends only on its parameters (not on a global state)
+A pure function has no side effect
+
+Examples of pure and not pure
+
+== Declarative programming
+
+compare for vs. each
+you don't care about how the iteration is done
+you care about what to to do with each element
+
+== Immutability
+
+Instead of mutating an object, you create a new version of it
+
+== Laziness
+
+We can deal with infinite sequences
+
+[%step]
+--
+list all the integers in clojure
+--
+
+== A brief history of Functional Programming
+
+[%step]
+--
+++++
+<h3>1930: λ-calculus</h3>
+++++
+* Alonzo Church discovers the  https://en.wikipedia.org/wiki/Lambda_calculus[λ-calculus]
+* Everything is a function
+* Even numbers!
+--
+
+[%step]
+--
+++++
+<h3>1958: LISP</h3>
+++++
+* John McCarthy invents https://en.wikipedia.org/wiki/Lisp_(programming_language)[LISP]
+* It is the 1st FP language
+* Everything is a S-Expression: `(+ 1 2 3)` instead of `1 + 2 + 3` or `+(1,2,3)`
+* Only 7 terms: CAR, CDR, ATOM, LAMBDA, LABEL, COND, QUOTE
+--
+
+[%step]
+--
+++++
+<h3>1995: Javascript the language of the browser</h3>
+++++
+* Brendan Eich is recruited by Netscape to do "scheme in the browser"
+* Eventually, he invents Javascript
+* Functions are 1st class citizens
+--
+
+== A brief history of Functional Programming (cont.)
+
+* 2004 - Martin Odersky invents Scala - A JVM statically typed language with functional programming support
+* 2007 - Rich Hickey invents Clojure - A practical dialect of LISP on top of JVM
+* 2013 - Facebook creates react.js - A functional javascript frontend framework
+* 2015 - Dan Abramov invents redux - A javascript library that imposes FP constraints on a frontend app
+ 
+== Functional Programming in practice - Frontend
+
+Many functional languages are transpiled in Javascript: Clojure, Scala, F#, Ocaml.
+
+== Functional Programming in practice - ClojureScript
+
+The power of Clojure in the browser!
+
+== Functional Programming in practice - React.js
+
+The UI is a (pure) function of the state (virtual DOM).
+Do not mutate the state.
+Write functions that manipulate the state instead of the DOM.
+The framework will update the DOM efficiently.
+
+== Functional Programming in practice - Redux
+
+* Single source of truth
+* State is read-only
+* Changes are made with pure functions
+
+
+== Functional Programming in practice - Backend (Web server, micro services)
+
+The development process of a web server is much more effective with languages that support functional programming e.g. ruby.
+
+Much less boilerplate: no need to write everything in an object.
+Much simpler to manipulate data with maps (dictionaries) and arrays.
+
+Sometimes, you need to leverage the java ecosystem.
+No problem, let's build a functional that is compiled into Java ByteCode and creates a syntax for *interop*: interacting with the hosting language.
+
+Scala, Clojure.
+
+== Functional Programming in practice - Big Data
+
+When we need to write a (relatively small) worker that is part of a computation pipe, we need a language:
+
+- lightweight
+- easy to manipulate JSON-like data
+- combine functions
+- immutability is effective
+- stateless
+
+Examples: Spark (scala), Storm (Clojure), Onyx (Clojure)
+
+
+
+== Discussion and Questions
+
+== References
+
+include::klipse.adoc[]
+++++
+<script src="https://cdnjs.cloudflare.com/ajax/libs/react/15.5.4/react-with-addons.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/react/15.5.4/react-dom.min.js"></script>
+++++

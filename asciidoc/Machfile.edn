@@ -9,5 +9,6 @@
  pattern-matching.html #import [asciidoc/create {name "pattern-matching"}]
  amobee-summary.html #import [asciidoc/create {name "amobee-summary"}]
  illiterate.html #import [asciidoc/create {name "illiterate"}]
+ practical-intro-functional-programming.html #import [asciidoc/create {name "practical-intro-functional-programming"}]
  klipse-clojure.html #import [asciidoc/create {name "klipse-clojure"}]    
  polymorphism.html #import [asciidoc/create {name "polymorphism"}]}
