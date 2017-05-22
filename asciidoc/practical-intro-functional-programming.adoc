@@ -22,7 +22,7 @@
                     <script async defer id="github-bjs" src="https://buttons.github.io/buttons.js"></script>
 ++++
 - A Web consultant: Full-Stack, clojure{,script}, ruby{, on rails}, javascript, react
-- A simple client-side code evaluator pluggable on any web page[CodeMentor Xpert]
+- A https://www.codementor.io/yehonathansharvit[CodeMentor Xpert] (You can hire me!)
 --
 
 image::https://pbs.twimg.com/profile_images/713278171353911296/1a2useM2.jpg[me]
@@ -49,34 +49,299 @@ image::https://pbs.twimg.com/profile_images/713278171353911296/1a2useM2.jpg[me]
 --
 * Functions can be passed to variable definitions
 * Functions can be passed as arguments to functions
+* Functions can return functions
+--
+
+== Functions - passed to variable definitions
+
+[%step]
+--
+Javascript
+[source.eval-js]
+----
+function foo() { return 42}
+var bar = function() { return 43}
+x = [foo(), bar()]
+----
+
+--
+[%step]
+--
+EcmaScript6
+[source.eval-js]
+----
+baz = () => 42
+baz()
+----
 --
 
 [%step]
 --
-set a function into a var in js
+Clojure
+[source.clj]
+----
+(defn foox [] 42)
+(def bax (fn [] 43))
+[(foox) (bax)]
+----
 --
 
 [%step]
 --
-map in js
+Ruby
+[source.ruby]
+----
+def foow
+  42
+end
+baw  = ->() { 43 }
+[foow(), baw[]]
+----
+--
+
+
+
+== Functions - passed as arguments to functions
+
+In function languages, you can create anonymous functions i.e. functions that don't have a name.
+
+[%step]
+--
+Javascript
+[source.eval-js]
+----
+[1,2,3].map(function(x) { return x + 1})
+----
+
+--
+[%step]
+--
+EcmaScript6
+[source.eval-js]
+----
+[1,2,3].map((x) => x+1)
+----
 --
 
 [%step]
 --
-comp in clojure
+Clojure
+[source.clj]
+----
+(map inc [1 2 3])
+----
 --
 
 [%step]
 --
-partial in clojure
+Ruby
+[source.ruby]
+----
+[1,2,3].map {|x|
+  x + 1
+  }
+----
+--
+
+== Functions that return functions
+
+An important function in FP is `partial` (or `curry`).
+
+`partial` takes a function and a list of arguments and returns a function where some arguments are fixed.
+
+Let's see it in action!
+
+[%step]
+--
+Javascript
+We are going to use http://ramdajs.com/[Ramda].
+[source.eval-js]
+----
+function add(x, y) { return x + y}
+var add10 = R.partial(add, [10])
+add10(19)
+----
+
+--
+[%step]
+--
+EcmaScript6
+[source.eval-js]
+----
+const add = (x, y) => x + y
+const add10 = R.partial(add, [10])
+add10(19)
+----
+--
+
+[%step]
+--
+Clojure
+[source.clj]
+----
+(defn add [x y] (+ x y))
+(let [add10 (partial add 10)]
+  (add10 32))
+----
+--
+
+[%step]
+--
+Ruby
+In ruby, it's called `curry`.
+[source.ruby]
+----
+add  = ->(x,y) do x + y end
+add10 = add.curry.(10)
+add10.(9)
+----
+--
+
+== Exercise
+
+Let's write our own version of `partial` in ES6
+
+[%step]
+--
+[source.eval-js]
+----
+partial = () => 1
+
+----
+--
+
+[%step]
+--
+[source.eval-js]
+----
+partial = (f, x) => (y) => f(x, y)
+partial(add, 10)(9)
+----
+--
+
+== Declarative style
+
+Let's compare `map` and `for` in javascript.
+
+With `map`, you don't deal with low-level details
+You only express what to do with each element of the array.
+
+[%step]
+--
+[source.eval-js]
+----
+[1,2,3].map(x => x + 1)
+----
+--
+
+[%step]
+--
+With `for`, you have deal with low-level details.
+
+You have to express:
+
+* how the array is iterated
+* what is the name of the index
+* how the elements are combined in the returned array
+
+[source.eval-js]
+----
+const arr = [1,2,3]
+const f = x => x + 1
+let retArr = []
+for(let i = 0; i < arr.length; i++) {
+  retArr.push(f(arr[i]))
+}
+retArr
+----
 --
 
 == Pure functions
 
-A pure Function depends only on its parameters (not on a global state)
-A pure function has no side effect
+[%step]
+--
+A pure function
 
-Examples of pure and not pure
+* depends only on its parameters (not on a global state)
+* has no side effects
+--
+
+[%step]
+--
+Pure functions are much simpler
+
+* to combine
+* to test
+* to debug
+* to understand
+* to refactor
+--
+
+== Pure functions - no implicit dependencies
+
+
+[%step]
+--
+This function depends on a global parameter
+[source.eval-js]
+----
+const N = 1e9
+const rand = () => Math.round(N*Math.random())
+rand()
+----
+--
+
+[%step]
+--
+Let's rewrite it as a pure function
+[source.eval-js]
+----
+const rand = (max) => Math.round(max*Math.random())
+rand(1e9)
+----
+--
+
+== Pure functions - no side effects
+
+[%step]
+--
+This function writes the error to the console in case of a failure.
+
+How will you test such a function?
+[source.eval-js]
+----
+const trySomething = (x) => {
+  if (x) {
+    return x*42
+  }
+  console.log(`I cannot do ${x}`)
+}
+trySomething()
+----
+--
+
+[%step]
+--
+Let's rewrite it as a pure function.
+We will return an array with:
+
+* the status
+* the data
+
+[source.eval-js]
+----
+trySomethingPure = (x) => {
+  if (x) {
+    return ["ok", x*42]
+  }
+  return ["error", `I cannot do ${x}`]
+}
+trySomethingPure(1)
+----
+--
+
+
+
 
 == Declarative programming
 
@@ -193,4 +458,5 @@ include::klipse.adoc[]
 ++++
 <script src="https://cdnjs.cloudflare.com/ajax/libs/react/15.5.4/react-with-addons.min.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/react/15.5.4/react-dom.min.js"></script>
+<script src="https://cdn.jsdelivr.net/ramda/0.23/ramda.min.js"></script>
 ++++

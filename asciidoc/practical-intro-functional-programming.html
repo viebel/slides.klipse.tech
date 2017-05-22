@@ -39,7 +39,7 @@
 <div class="ulist">
 <ul>
 <li>A Web consultant: Full-Stack, clojure{,script}, ruby{, on rails}, javascript, react</li>
-<li>A simple client-side code evaluator pluggable on any web page[CodeMentor Xpert]</li>
+<li>A <a href="https://www.codementor.io/yehonathansharvit">CodeMentor Xpert</a> (You can hire me!)</li>
 </ul>
 </div>
 </div>
@@ -81,36 +81,324 @@
 <ul>
 <li>Functions can be passed to variable definitions</li>
 <li>Functions can be passed as arguments to functions</li>
+<li>Functions can return functions</li>
+</ul>
+</div>
+</div>
+</div>
+</section>
+<section class="slide" id="_functions_passed_to_variable_definitions">
+<h2>Functions - passed to variable definitions</h2>
+<div class="openblock slide">
+<div class="content">
+<div class="paragraph"><p>Javascript</p></div>
+<div class="listingblock eval-js">
+<div class="content">
+<pre class="highlight"><code>function foo() { return 42}
+var bar = function() { return 43}
+x = [foo(), bar()]</code></pre>
+</div>
+</div>
+</div>
+</div>
+<div class="openblock slide">
+<div class="content">
+<div class="paragraph"><p>EcmaScript6</p></div>
+<div class="listingblock eval-js">
+<div class="content">
+<pre class="highlight"><code>baz = () =&gt; 42
+baz()</code></pre>
+</div>
+</div>
+</div>
+</div>
+<div class="openblock slide">
+<div class="content">
+<div class="paragraph"><p>Clojure</p></div>
+<div class="listingblock clj">
+<div class="content">
+<pre class="highlight"><code>(defn foox [] 42)
+(def bax (fn [] 43))
+[(foox) (bax)]</code></pre>
+</div>
+</div>
+</div>
+</div>
+<div class="openblock slide">
+<div class="content">
+<div class="paragraph"><p>Ruby</p></div>
+<div class="listingblock ruby">
+<div class="content">
+<pre class="highlight"><code>def foow
+  42
+end
+baw  = -&gt;() { 43 }
+[foow(), baw[]]</code></pre>
+</div>
+</div>
+</div>
+</div>
+</section>
+<section class="slide" id="_functions_passed_as_arguments_to_functions">
+<h2>Functions - passed as arguments to functions</h2>
+<div class="paragraph"><p>In function languages, you can create anonymous functions i.e. functions that don&#8217;t have a name.</p></div>
+<div class="openblock slide">
+<div class="content">
+<div class="paragraph"><p>Javascript</p></div>
+<div class="listingblock eval-js">
+<div class="content">
+<pre class="highlight"><code>[1,2,3].map(function(x) { return x + 1})</code></pre>
+</div>
+</div>
+</div>
+</div>
+<div class="openblock slide">
+<div class="content">
+<div class="paragraph"><p>EcmaScript6</p></div>
+<div class="listingblock eval-js">
+<div class="content">
+<pre class="highlight"><code>[1,2,3].map((x) =&gt; x+1)</code></pre>
+</div>
+</div>
+</div>
+</div>
+<div class="openblock slide">
+<div class="content">
+<div class="paragraph"><p>Clojure</p></div>
+<div class="listingblock clj">
+<div class="content">
+<pre class="highlight"><code>(map inc [1 2 3])</code></pre>
+</div>
+</div>
+</div>
+</div>
+<div class="openblock slide">
+<div class="content">
+<div class="paragraph"><p>Ruby</p></div>
+<div class="listingblock ruby">
+<div class="content">
+<pre class="highlight"><code>[1,2,3].map {|x|
+  x + 1
+  }</code></pre>
+</div>
+</div>
+</div>
+</div>
+</section>
+<section class="slide" id="_functions_that_return_functions">
+<h2>Functions that return functions</h2>
+<div class="paragraph"><p>An important function in FP is <code>partial</code> (or <code>curry</code>).</p></div>
+<div class="paragraph"><p><code>partial</code> takes a function and a list of arguments and returns a function where some arguments are fixed.</p></div>
+<div class="paragraph"><p>Let&#8217;s see it in action!</p></div>
+<div class="openblock slide">
+<div class="content">
+<div class="paragraph"><p>Javascript<br>
+We are going to use <a href="http://ramdajs.com/">Ramda</a>.</p></div>
+<div class="listingblock eval-js">
+<div class="content">
+<pre class="highlight"><code>function add(x, y) { return x + y}
+var add10 = R.partial(add, [10])
+add10(19)</code></pre>
+</div>
+</div>
+</div>
+</div>
+<div class="openblock slide">
+<div class="content">
+<div class="paragraph"><p>EcmaScript6</p></div>
+<div class="listingblock eval-js">
+<div class="content">
+<pre class="highlight"><code>const add = (x, y) =&gt; x + y
+const add10 = R.partial(add, [10])
+add10(19)</code></pre>
+</div>
+</div>
+</div>
+</div>
+<div class="openblock slide">
+<div class="content">
+<div class="paragraph"><p>Clojure</p></div>
+<div class="listingblock clj">
+<div class="content">
+<pre class="highlight"><code>(defn add [x y] (+ x y))
+(let [add10 (partial add 10)]
+  (add10 32))</code></pre>
+</div>
+</div>
+</div>
+</div>
+<div class="openblock slide">
+<div class="content">
+<div class="paragraph"><p>Ruby<br>
+In ruby, it&#8217;s called <code>curry</code>.</p></div>
+<div class="listingblock ruby">
+<div class="content">
+<pre class="highlight"><code>add  = -&gt;(x,y) do x + y end
+add10 = add.curry.(10)
+add10.(9)</code></pre>
+</div>
+</div>
+</div>
+</div>
+</section>
+<section class="slide" id="_exercise">
+<h2>Exercise</h2>
+<div class="paragraph"><p>Let&#8217;s write our own version of <code>partial</code> in ES6</p></div>
+<div class="openblock slide">
+<div class="content">
+<div class="listingblock eval-js">
+<div class="content">
+<pre class="highlight"><code>partial = () =&gt; 1</code></pre>
+</div>
+</div>
+</div>
+</div>
+<div class="openblock slide">
+<div class="content">
+<div class="listingblock eval-js">
+<div class="content">
+<pre class="highlight"><code>partial = (f, x) =&gt; (y) =&gt; f(x, y)
+partial(add, 10)(9)</code></pre>
+</div>
+</div>
+</div>
+</div>
+</section>
+<section class="slide" id="_declarative_style">
+<h2>Declarative style</h2>
+<div class="paragraph"><p>Let&#8217;s compare <code>map</code> and <code>for</code> in javascript.</p></div>
+<div class="paragraph"><p>With <code>map</code>, you don&#8217;t deal with low-level details<br>
+You only express what to do with each element of the array.</p></div>
+<div class="openblock slide">
+<div class="content">
+<div class="listingblock eval-js">
+<div class="content">
+<pre class="highlight"><code>[1,2,3].map(x =&gt; x + 1)</code></pre>
+</div>
+</div>
+</div>
+</div>
+<div class="openblock slide">
+<div class="content">
+<div class="paragraph"><p>With <code>for</code>, you have deal with low-level details.</p></div>
+<div class="paragraph"><p>You have to express:</p></div>
+<div class="ulist">
+<ul>
+<li>how the array is iterated</li>
+<li>what is the name of the index</li>
+<li>how the elements are combined in the returned array</li>
+</ul>
+</div>
+<div class="listingblock eval-js">
+<div class="content">
+<pre class="highlight"><code>const arr = [1,2,3]
+const f = x =&gt; x + 1
+let retArr = []
+for(let i = 0; i &lt; arr.length; i++) {
+  retArr.push(f(arr[i]))
+}
+retArr</code></pre>
+</div>
+</div>
+</div>
+</div>
+</section>
+<section class="slide" id="_pure_functions">
+<h2>Pure functions</h2>
+<div class="openblock slide">
+<div class="content">
+<div class="paragraph"><p>A pure function</p></div>
+<div class="ulist">
+<ul>
+<li>depends only on its parameters (not on a global state)</li>
+<li>has no side effects</li>
 </ul>
 </div>
 </div>
 </div>
 <div class="openblock slide">
 <div class="content">
-<div class="paragraph"><p>set a function into a var in js</p></div>
+<div class="paragraph"><p>Pure functions are much simpler</p></div>
+<div class="ulist">
+<ul>
+<li>to combine</li>
+<li>to test</li>
+<li>to debug</li>
+<li>to understand</li>
+<li>to refactor</li>
+</ul>
 </div>
-</div>
-<div class="openblock slide">
-<div class="content">
-<div class="paragraph"><p>map in js</p></div>
-</div>
-</div>
-<div class="openblock slide">
-<div class="content">
-<div class="paragraph"><p>comp in clojure</p></div>
-</div>
-</div>
-<div class="openblock slide">
-<div class="content">
-<div class="paragraph"><p>partial in clojure</p></div>
 </div>
 </div>
 </section>
-<section class="slide" id="_pure_functions">
-<h2>Pure functions</h2>
-<div class="paragraph"><p>A pure Function depends only on its parameters (not on a global state)<br>
-A pure function has no side effect</p></div>
-<div class="paragraph"><p>Examples of pure and not pure</p></div>
+<section class="slide" id="_pure_functions_no_implicit_dependencies">
+<h2>Pure functions - no implicit dependencies</h2>
+<div class="openblock slide">
+<div class="content">
+<div class="paragraph"><p>This function depends on a global parameter</p></div>
+<div class="listingblock eval-js">
+<div class="content">
+<pre class="highlight"><code>const N = 1e9
+const rand = () =&gt; Math.round(N*Math.random())
+rand()</code></pre>
+</div>
+</div>
+</div>
+</div>
+<div class="openblock slide">
+<div class="content">
+<div class="paragraph"><p>Let&#8217;s rewrite it as a pure function</p></div>
+<div class="listingblock eval-js">
+<div class="content">
+<pre class="highlight"><code>const rand = (max) =&gt; Math.round(max*Math.random())
+rand(1e9)</code></pre>
+</div>
+</div>
+</div>
+</div>
+</section>
+<section class="slide" id="_pure_functions_no_side_effects">
+<h2>Pure functions - no side effects</h2>
+<div class="openblock slide">
+<div class="content">
+<div class="paragraph"><p>This function writes the error to the console in case of a failure.</p></div>
+<div class="paragraph"><p>How will you test such a function?</p></div>
+<div class="listingblock eval-js">
+<div class="content">
+<pre class="highlight"><code>const trySomething = (x) =&gt; {
+  if (x) {
+    return x*42
+  }
+  console.log(`I cannot do ${x}`)
+}
+trySomething()</code></pre>
+</div>
+</div>
+</div>
+</div>
+<div class="openblock slide">
+<div class="content">
+<div class="paragraph"><p>Let&#8217;s rewrite it as a pure function.<br>
+We will return an array with:</p></div>
+<div class="ulist">
+<ul>
+<li>the status</li>
+<li>the data</li>
+</ul>
+</div>
+<div class="listingblock eval-js">
+<div class="content">
+<pre class="highlight"><code>trySomethingPure = (x) =&gt; {
+  if (x) {
+    return ["ok", x*42]
+  }
+  return ["error", `I cannot do ${x}`]
+}
+trySomethingPure(1)</code></pre>
+</div>
+</div>
+</div>
+</div>
 </section>
 <section class="slide" id="_declarative_programming">
 <h2>Declarative programming</h2>
@@ -273,6 +561,7 @@ No problem, let&#8217;s build a functional that is compiled into Java ByteCode a
 <script src="https://storage.googleapis.com/app.klipse.tech/plugin/js/klipse_plugin.js?v=7.0.6"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/react/15.5.4/react-with-addons.min.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/react/15.5.4/react-dom.min.js"></script>
+<script src="https://cdn.jsdelivr.net/ramda/0.23/ramda.min.js"></script>
 </section>
 <div aria-role="navigation">
 <a class="deck-prev-link" href="#" title="Previous">&#8592;</a>
