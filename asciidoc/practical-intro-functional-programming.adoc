@@ -199,14 +199,28 @@ add10.(9)
 
 == Exercise
 
-Let's write our own version of `partial` in ES6
+Let's write our own version of `partial`:
 
 [%step]
 --
+in ES6
 [source.eval-js]
 ----
 partial = () => 1
 
+----
+
+If you prefer you can write it in `clojure`:
+[source.clj]
+----
+(defn my-partial [f x])
+----
+
+or in ruby:
+[source.ruby]
+----
+def partial(f, x)
+end
 ----
 --
 
@@ -343,24 +357,141 @@ trySomethingPure(1)
 
 
 
-== Declarative programming
-
-compare for vs. each
-you don't care about how the iteration is done
-you care about what to to do with each element
-
-== Immutability
-
-Instead of mutating an object, you create a new version of it
-
-== Laziness
-
-We can deal with infinite sequences
+== Immutability - the problem
 
 [%step]
 --
-list all the integers in clojure
+In non-functional languages, the default API mutates our objects.
+You modify `b` and in fact, you modify also `a`!
 --
+
+[%step]
+--
+In javascript:
+[source.eval-js]
+----
+const a = {size: 42};
+b = a;
+b.size = 43
+a
+----
+--
+
+[%step]
+--
+In ruby:
+[source.ruby]
+----
+a = {size: 42}
+b = a
+b['size'] = 33
+a
+----
+--
+
+[%step]
+--
+In clojure, no problem it is clojure data structures are immutable!
+--
+
+
+
+== Immutability - the solution
+
+Instead of mutating an object, you create a new version of it.
+Usually, this is not effective.
+But some languages (e.g. `clojure) support immutability natively and provide an effective implementation of persistent data structure.
+
+[%step]
+--
+Clojure
+[source.clj]
+----
+(let [a {:size 42}
+      b a]
+  (assoc b :size 33)
+  a)
+----
+--
+
+[%step]
+--
+In order to enjoy immutability in Javascript, you have to use a library like https://facebook.github.io/immutable-js/[immutable.js]
+--
+[%step]
+--
+[source.eval-js]
+----
+a = Immutable.fromJS({size: {shoes: 42 }})
+b = a.setIn(["size", "shoes"], 43)
+a
+----
+--
+
+[%step]
+--
+There is a https://github.com/hamstergem/hamster[immutable library] available for ruby
+--
+
+== Laziness
+
+In functional languages, some sequences are lazy.
+The elements are evaluated only when we really need them.
+
+Let's see some examples in `clojure`:
+
+[%step]
+--
+[source.clj]
+----
+(def lazy-a (map (fn [x] (println x) x) [1 2 3]))(def lazy-a (map (fn [x] (println x) x) [1 2 3]))
+----
+Nothing is printed, until we access the elements...
+--
+
+[%step]
+--
+[source.clj]
+----
+(nth lazy-a 0)
+----
+--
+
+== Laziness - infinite sequences
+
+Nothing prevents from lazy sequences to be infinite!
+[%step]
+--
+All the natural numbers
+[source.clj]
+----
+(def natural-numbers (range))
+----
+--
+
+
+[%step]
+--
+Infinite repetition of an element
+[source.clj]
+----
+(def infinite-hello (repeat :hello))
+(nth infinite-hello 100)
+----
+Don't try to count the elements!
+--
+
+[%step]
+--
+An infinite sequence of random numbers
+[source.clj]
+----
+(def infinite-random-numbers (repeatedly (partial rand-int 100)))
+(nth infinite-random-numbers 345)
+----
+--
+
+
 
 == A brief history of Functional Programming
 
@@ -395,9 +526,18 @@ list all the integers in clojure
 * Functions are 1st class citizens
 --
 
+[%step]
+--
+++++
+<h3>2004: Scala - FP on the JVM</h3>
+++++
+* 2004 - Martin Odersky invents Scala
+* A JVM statically typed language with functional programming support
+* It is very complicated!!!
+--
+
 == A brief history of Functional Programming (cont.)
 
-* 2004 - Martin Odersky invents Scala - A JVM statically typed language with functional programming support
 * 2007 - Rich Hickey invents Clojure - A practical dialect of LISP on top of JVM
 * 2013 - Facebook creates react.js - A functional javascript frontend framework
 * 2015 - Dan Abramov invents redux - A javascript library that imposes FP constraints on a frontend app
@@ -412,10 +552,66 @@ The power of Clojure in the browser!
 
 == Functional Programming in practice - React.js
 
-The UI is a (pure) function of the state (virtual DOM).
-Do not mutate the state.
-Write functions that manipulate the state instead of the DOM.
-The framework will update the DOM efficiently.
+
+++++
+<h3>Insights</h3>
+++++
+* The UI is a (pure) function of the state (virtual DOM).
+* Functions compose very well
+
+++++
+<h3>Guidelines</h3>
+++++
+* Write functions that create UI components.
+* Do not mutate the state, create a new version of it (immutability).
+* Write functions that manipulate the state instead of the DOM (reduce the presence of the dirty stuff).
+* The framework will update the DOM efficiently.
+* Separate UI components from Logic components.
+
+== React.js in action - A pure component
+
+[%step]
+--
+++++
+<pre><code class="eval-jsx" data-gist-id="viebel/527582f3d3fa2ea28ada99fc63fe2383">
+</code></pre>
+++++
+--
+
+[%step]
+--
+[source.eval-js]
+----
+ReactDOM.render(React.createElement(Square, {value: 42,
+                                             onClick: () => alert("clicked")}), klipse_container)
+----
+--
+
+++++
+<br/>
+<br/>
+++++
+
+[%step]
+--
+[source.render-jsx]
+----
+<Square
+value={26}
+  onClick={() => alert("clicked")}
+/>
+----
+++++
+<br/>
+<br/>
+++++
+--
+
+[%step]
+--
+Exercise: display the value when the square is clicked
+--
+
 
 == Functional Programming in practice - Redux
 
@@ -459,4 +655,6 @@ include::klipse.adoc[]
 <script src="https://cdnjs.cloudflare.com/ajax/libs/react/15.5.4/react-with-addons.min.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/react/15.5.4/react-dom.min.js"></script>
 <script src="https://cdn.jsdelivr.net/ramda/0.23/ramda.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/immutable/3.8.1/immutable.min.js"></script>
+<link rel="stylesheet" media="screen" href="http://slides.klipse.tech/klipse-meetup-react-2017-jan/game.css">
 ++++

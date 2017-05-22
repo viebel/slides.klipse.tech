@@ -243,12 +243,26 @@ add10.(9)</code></pre>
 </section>
 <section class="slide" id="_exercise">
 <h2>Exercise</h2>
-<div class="paragraph"><p>Let&#8217;s write our own version of <code>partial</code> in ES6</p></div>
+<div class="paragraph"><p>Let&#8217;s write our own version of <code>partial</code>:</p></div>
 <div class="openblock slide">
 <div class="content">
+<div class="paragraph"><p>in ES6</p></div>
 <div class="listingblock eval-js">
 <div class="content">
 <pre class="highlight"><code>partial = () =&gt; 1</code></pre>
+</div>
+</div>
+<div class="paragraph"><p>If you prefer you can write it in <code>clojure</code>:</p></div>
+<div class="listingblock clj">
+<div class="content">
+<pre class="highlight"><code>(defn my-partial [f x])</code></pre>
+</div>
+</div>
+<div class="paragraph"><p>or in ruby:</p></div>
+<div class="listingblock ruby">
+<div class="content">
+<pre class="highlight"><code>def partial(f, x)
+end</code></pre>
 </div>
 </div>
 </div>
@@ -400,22 +414,145 @@ trySomethingPure(1)</code></pre>
 </div>
 </div>
 </section>
-<section class="slide" id="_declarative_programming">
-<h2>Declarative programming</h2>
-<div class="paragraph"><p>compare for vs. each<br>
-you don&#8217;t care about how the iteration is done<br>
-you care about what to to do with each element</p></div>
+<section class="slide" id="_immutability_the_problem">
+<h2>Immutability - the problem</h2>
+<div class="openblock slide">
+<div class="content">
+<div class="paragraph"><p>In non-functional languages, the default API mutates our objects.<br>
+You modify <code>b</code> and in fact, you modify also <code>a</code>!</p></div>
+</div>
+</div>
+<div class="openblock slide">
+<div class="content">
+<div class="paragraph"><p>In javascript:</p></div>
+<div class="listingblock eval-js">
+<div class="content">
+<pre class="highlight"><code>const a = {size: 42};
+b = a;
+b.size = 43
+a</code></pre>
+</div>
+</div>
+</div>
+</div>
+<div class="openblock slide">
+<div class="content">
+<div class="paragraph"><p>In ruby:</p></div>
+<div class="listingblock ruby">
+<div class="content">
+<pre class="highlight"><code>a = {size: 42}
+b = a
+b['size'] = 33
+a</code></pre>
+</div>
+</div>
+</div>
+</div>
+<div class="openblock slide">
+<div class="content">
+<div class="paragraph"><p>In clojure, no problem it is clojure data structures are immutable!</p></div>
+</div>
+</div>
 </section>
-<section class="slide" id="_immutability">
-<h2>Immutability</h2>
-<div class="paragraph"><p>Instead of mutating an object, you create a new version of it</p></div>
+<section class="slide" id="_immutability_the_solution">
+<h2>Immutability - the solution</h2>
+<div class="paragraph"><p>Instead of mutating an object, you create a new version of it.<br>
+Usually, this is not effective.<br>
+But some languages (e.g. `clojure) support immutability natively and provide an effective implementation of persistent data structure.</p></div>
+<div class="openblock slide">
+<div class="content">
+<div class="paragraph"><p>Clojure</p></div>
+<div class="listingblock clj">
+<div class="content">
+<pre class="highlight"><code>(let [a {:size 42}
+      b a]
+  (assoc b :size 33)
+  a)</code></pre>
+</div>
+</div>
+</div>
+</div>
+<div class="openblock slide">
+<div class="content">
+<div class="paragraph"><p>In order to enjoy immutability in Javascript, you have to use a library like <a href="https://facebook.github.io/immutable-js/">immutable.js</a></p></div>
+</div>
+</div>
+<div class="openblock slide">
+<div class="content">
+<div class="listingblock eval-js">
+<div class="content">
+<pre class="highlight"><code>a = Immutable.fromJS({size: {shoes: 42 }})
+b = a.setIn(["size", "shoes"], 43)
+a</code></pre>
+</div>
+</div>
+</div>
+</div>
+<div class="openblock slide">
+<div class="content">
+<div class="paragraph"><p>There is a <a href="https://github.com/hamstergem/hamster">immutable library</a> available for ruby</p></div>
+</div>
+</div>
 </section>
 <section class="slide" id="_laziness">
 <h2>Laziness</h2>
-<div class="paragraph"><p>We can deal with infinite sequences</p></div>
+<div class="paragraph"><p>In functional languages, some sequences are lazy.<br>
+The elements are evaluated only when we really need them.</p></div>
+<div class="paragraph"><p>Let&#8217;s see some examples in <code>clojure</code>:</p></div>
 <div class="openblock slide">
 <div class="content">
-<div class="paragraph"><p>list all the integers in clojure</p></div>
+<div class="listingblock clj">
+<div class="content">
+<pre class="highlight"><code>(def lazy-a (map (fn [x] (println x) x) [1 2 3]))(def lazy-a (map (fn [x] (println x) x) [1 2 3]))</code></pre>
+</div>
+</div>
+<div class="paragraph"><p>Nothing is printed, until we access the elements&#8230;&#8203;</p></div>
+</div>
+</div>
+<div class="openblock slide">
+<div class="content">
+<div class="listingblock clj">
+<div class="content">
+<pre class="highlight"><code>(nth lazy-a 0)</code></pre>
+</div>
+</div>
+</div>
+</div>
+</section>
+<section class="slide" id="_laziness_infinite_sequences">
+<h2>Laziness - infinite sequences</h2>
+<div class="paragraph"><p>Nothing prevents from lazy sequences to be infinite!</p></div>
+<div class="openblock slide">
+<div class="content">
+<div class="paragraph"><p>All the natural numbers</p></div>
+<div class="listingblock clj">
+<div class="content">
+<pre class="highlight"><code>(def natural-numbers (range))</code></pre>
+</div>
+</div>
+</div>
+</div>
+<div class="openblock slide">
+<div class="content">
+<div class="paragraph"><p>Infinite repetition of an element</p></div>
+<div class="listingblock clj">
+<div class="content">
+<pre class="highlight"><code>(def infinite-hello (repeat :hello))
+(nth infinite-hello 100)</code></pre>
+</div>
+</div>
+<div class="paragraph"><p>Don&#8217;t try to count the elements!</p></div>
+</div>
+</div>
+<div class="openblock slide">
+<div class="content">
+<div class="paragraph"><p>An infinite sequence of random numbers</p></div>
+<div class="listingblock clj">
+<div class="content">
+<pre class="highlight"><code>(def infinite-random-numbers (repeatedly (partial rand-int 100)))
+(nth infinite-random-numbers 345)</code></pre>
+</div>
+</div>
 </div>
 </div>
 </section>
@@ -458,12 +595,23 @@ you care about what to to do with each element</p></div>
 </div>
 </div>
 </div>
+<div class="openblock slide">
+<div class="content">
+<h3>2004: Scala - FP on the JVM</h3>
+<div class="ulist">
+<ul>
+<li>2004 - Martin Odersky invents Scala</li>
+<li>A JVM statically typed language with functional programming support</li>
+<li>It is very complicated!!!</li>
+</ul>
+</div>
+</div>
+</div>
 </section>
 <section class="slide" id="_a_brief_history_of_functional_programming_cont">
 <h2>A brief history of Functional Programming (cont.)</h2>
 <div class="ulist">
 <ul>
-<li>2004 - Martin Odersky invents Scala - A JVM statically typed language with functional programming support</li>
 <li>2007 - Rich Hickey invents Clojure - A practical dialect of LISP on top of JVM</li>
 <li>2013 - Facebook creates react.js - A functional javascript frontend framework</li>
 <li>2015 - Dan Abramov invents redux - A javascript library that imposes FP constraints on a frontend app</li>
@@ -480,10 +628,63 @@ you care about what to to do with each element</p></div>
 </section>
 <section class="slide" id="_functional_programming_in_practice_react_js">
 <h2>Functional Programming in practice - React.js</h2>
-<div class="paragraph"><p>The UI is a (pure) function of the state (virtual DOM).<br>
-Do not mutate the state.<br>
-Write functions that manipulate the state instead of the DOM.<br>
-The framework will update the DOM efficiently.</p></div>
+<h3>Insights</h3>
+<div class="ulist">
+<ul>
+<li>The UI is a (pure) function of the state (virtual DOM).</li>
+<li>Functions compose very well</li>
+</ul>
+</div>
+<h3>Guidelines</h3>
+<div class="ulist">
+<ul>
+<li>Write functions that create UI components.</li>
+<li>Do not mutate the state, create a new version of it (immutability).</li>
+<li>Write functions that manipulate the state instead of the DOM (reduce the presence of the dirty stuff).</li>
+<li>The framework will update the DOM efficiently.</li>
+<li>Separate UI components from Logic components.</li>
+</ul>
+</div>
+</section>
+<section class="slide" id="_react_js_in_action_a_pure_component">
+<h2>React.js in action - A pure component</h2>
+<div class="openblock slide">
+<div class="content">
+<pre><code class="eval-jsx" data-gist-id="viebel/527582f3d3fa2ea28ada99fc63fe2383">
+</code></pre>
+</div>
+</div>
+<div class="openblock slide">
+<div class="content">
+<div class="listingblock eval-js">
+<div class="content">
+<pre class="highlight"><code>ReactDOM.render(React.createElement(Square, {value: 42,
+                                             onClick: () =&gt; alert("clicked")}), klipse_container)</code></pre>
+</div>
+</div>
+</div>
+</div>
+<br/>
+<br/>
+<div class="openblock slide">
+<div class="content">
+<div class="listingblock render-jsx">
+<div class="content">
+<pre class="highlight"><code>&lt;Square
+value={26}
+  onClick={() =&gt; alert("clicked")}
+/&gt;</code></pre>
+</div>
+</div>
+<br/>
+<br/>
+</div>
+</div>
+<div class="openblock slide">
+<div class="content">
+<div class="paragraph"><p>Exercise: display the value when the square is clicked</p></div>
+</div>
+</div>
 </section>
 <section class="slide" id="_functional_programming_in_practice_redux">
 <h2>Functional Programming in practice - Redux</h2>
@@ -544,7 +745,8 @@ No problem, let&#8217;s build a functional that is compiled into Java ByteCode a
         selector_js: '.transpile-cljs',
         selector_reagent: '.reagent',
         selector_eval_js: '.eval-js',
-    selector_render_jsx: '.render-jsx',
+    	selector_render_jsx: '.render-jsx',
+        selector_jsx: '.eval-jsx',
         selector_es2017: '.es2017',
         selector_brainfuck: '.brainfuck',
         selector_transpile_jsx: '.transpile-jsx',
@@ -562,6 +764,8 @@ No problem, let&#8217;s build a functional that is compiled into Java ByteCode a
 <script src="https://cdnjs.cloudflare.com/ajax/libs/react/15.5.4/react-with-addons.min.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/react/15.5.4/react-dom.min.js"></script>
 <script src="https://cdn.jsdelivr.net/ramda/0.23/ramda.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/immutable/3.8.1/immutable.min.js"></script>
+<link rel="stylesheet" media="screen" href="http://slides.klipse.tech/klipse-meetup-react-2017-jan/game.css">
 </section>
 <div aria-role="navigation">
 <a class="deck-prev-link" href="#" title="Previous">&#8592;</a>
