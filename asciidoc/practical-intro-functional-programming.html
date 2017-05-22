@@ -614,7 +614,7 @@ The elements are evaluated only when we really need them.</p></div>
 <ul>
 <li>2007 - Rich Hickey invents Clojure - A practical dialect of LISP on top of JVM</li>
 <li>2013 - Facebook creates react.js - A functional javascript frontend framework</li>
-<li>2015 - Dan Abramov invents redux - A javascript library that imposes FP constraints on a frontend app</li>
+<li>2015 - Dan Abramov invents <a href="http://redux.js.org/">redux</a> - A javascript library that imposes FP constraints on a frontend app</li>
 </ul>
 </div>
 </section>
@@ -686,14 +686,147 @@ value={26}
 </div>
 </div>
 </section>
+<section class="slide" id="_react_js_in_action_modifying_the_state">
+<h2>React.js in action - modifying the state</h2>
+<div class="openblock slide">
+<div class="content">
+<div class="listingblock eval-jsx">
+<div class="content">
+<pre class="highlight"><code>class SquareLogic extends React.Component {
+  constructor(props) {
+    super(props)
+    this.state = {
+      val: 10
+    }
+  }
+  increment() {
+    let state = R.assoc('val', this.state.val + 1, this.state)
+    this.setState(state)
+  }
+  render() {
+    return (
+      &lt;Square value={this.state.val}
+      onClick= {() =&gt; this.increment()}/&gt;
+      )
+  }
+}
+window.SquareLogic = SquareLogic</code></pre>
+</div>
+</div>
+<div class="listingblock render-jsx">
+<div class="content">
+<pre class="highlight"><code>&lt;SquareLogic/&gt;</code></pre>
+</div>
+</div>
+</div>
+</div>
+</section>
 <section class="slide" id="_functional_programming_in_practice_redux">
 <h2>Functional Programming in practice - Redux</h2>
+<div class="paragraph"><p><a href="http://redux.js.org/docs/introduction/ThreePrinciples.html">Three principles</a> (constraints):</p></div>
 <div class="ulist">
 <ul>
 <li>Single source of truth</li>
 <li>State is read-only</li>
 <li>Changes are made with pure functions</li>
 </ul>
+</div>
+<div class="paragraph"><p>Many Positive consequences:</p></div>
+<div class="ulist">
+<ul>
+<li>Easy to test</li>
+<li>Easy to track actions</li>
+<li>Easy to visualize state of the app</li>
+<li>Time travel (undo)</li>
+<li>Send state over the wire</li>
+<li>Store/Retrieve state from localStorage</li>
+</ul>
+</div>
+</section>
+<section class="slide" id="_redux_in_action">
+<h2>Redux in action</h2>
+<div class="openblock slide">
+<div class="content">
+<div class="paragraph"><p>Component</p></div>
+<div class="listingblock eval-js">
+<div class="content">
+<pre class="highlight"><code>const mapDispatchToProps = (dispatch) =&gt; ({
+  onClick() {
+    dispatch(incrementSquareValue())
+  }
+})
+const mapStateToProps = (state) =&gt; ({
+  value: state.square.value
+})
+window.SquareRedux = ReactRedux.connect(mapStateToProps, mapDispatchToProps)(Square)</code></pre>
+</div>
+</div>
+</div>
+</div>
+<div class="openblock slide">
+<div class="content">
+<div class="paragraph"><p>Actions</p></div>
+<div class="listingblock eval-js">
+<div class="content">
+<pre class="highlight"><code>incrementSquareValue = () =&gt; ({
+  type: 'INCREMENT_SQUARE_VALUE'
+})</code></pre>
+</div>
+</div>
+</div>
+</div>
+<div class="openblock slide">
+<div class="content">
+<div class="paragraph"><p>Reducers</p></div>
+<div class="listingblock eval-js">
+<div class="content">
+<pre class="highlight"><code>square = (state={value: 0}, action) =&gt; {
+  switch(action.type) {
+    case 'INCREMENT_SQUARE_VALUE':
+      return R.assoc('value', state.value + 1, state)
+    default:
+      return state
+                    }
+}
+app = Redux.combineReducers({square: square})</code></pre>
+</div>
+</div>
+</div>
+</div>
+<div class="openblock slide">
+<div class="content">
+<div class="paragraph"><p>The store</p></div>
+<div class="listingblock eval-js">
+<div class="content">
+<pre class="highlight"><code>store = Redux.createStore(app)</code></pre>
+</div>
+</div>
+</div>
+</div>
+<div class="openblock slide">
+<div class="content">
+<div class="paragraph"><p>The App</p></div>
+<div class="listingblock render-jsx">
+<div class="content">
+<pre class="highlight"><code>&lt;ReactRedux.Provider store={store}&gt;
+  &lt;SquareRedux/&gt;
+&lt;/ReactRedux.Provider&gt;</code></pre>
+</div>
+</div>
+</div>
+</div>
+<br/>
+<br/>
+<div class="openblock slide">
+<div class="content">
+<div class="paragraph"><p>Playground</p></div>
+<div class="listingblock eval-js">
+<div class="content">
+<pre class="highlight"><code>// store.dispatch(incrementSquareValue())
+// store.getState()</code></pre>
+</div>
+</div>
+</div>
 </div>
 </section>
 <section class="slide" id="_functional_programming_in_practice_backend_web_server_micro_services">
@@ -766,6 +899,8 @@ No problem, let&#8217;s build a functional that is compiled into Java ByteCode a
 <script src="https://cdn.jsdelivr.net/ramda/0.23/ramda.min.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/immutable/3.8.1/immutable.min.js"></script>
 <link rel="stylesheet" media="screen" href="http://slides.klipse.tech/klipse-meetup-react-2017-jan/game.css">
+<script src="https://cdnjs.cloudflare.com/ajax/libs/redux/3.6.0/redux.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/react-redux/5.0.5/react-redux.min.js"></script>
 </section>
 <div aria-role="navigation">
 <a class="deck-prev-link" href="#" title="Previous">&#8592;</a>

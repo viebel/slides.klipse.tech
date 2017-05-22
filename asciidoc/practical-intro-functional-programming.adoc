@@ -540,7 +540,7 @@ An infinite sequence of random numbers
 
 * 2007 - Rich Hickey invents Clojure - A practical dialect of LISP on top of JVM
 * 2013 - Facebook creates react.js - A functional javascript frontend framework
-* 2015 - Dan Abramov invents redux - A javascript library that imposes FP constraints on a frontend app
+* 2015 - Dan Abramov invents http://redux.js.org/[redux] - A javascript library that imposes FP constraints on a frontend app
  
 == Functional Programming in practice - Frontend
 
@@ -612,12 +612,135 @@ value={26}
 Exercise: display the value when the square is clicked
 --
 
+== React.js in action - modifying the state
 
+[%step]
+--
+[source.eval-jsx]
+----
+class SquareLogic extends React.Component {
+  constructor(props) {
+    super(props)
+    this.state = {
+      val: 10
+    }
+  }
+  increment() {
+    let state = R.assoc('val', this.state.val + 1, this.state)
+    this.setState(state)
+  }
+  render() {
+    return (
+      <Square value={this.state.val}
+      onClick= {() => this.increment()}/>
+      )
+  }
+}
+window.SquareLogic = SquareLogic
+----
+
+
+[source.render-jsx]
+----
+<SquareLogic/>
+----
+--
 == Functional Programming in practice - Redux
+
+http://redux.js.org/docs/introduction/ThreePrinciples.html[Three principles] (constraints):
 
 * Single source of truth
 * State is read-only
 * Changes are made with pure functions
+
+Many Positive consequences:
+
+* Easy to test
+* Easy to track actions
+* Easy to visualize state of the app
+* Time travel (undo)
+* Send state over the wire
+* Store/Retrieve state from localStorage
+
+== Redux in action
+
+[%step]
+--
+Component
+[source.eval-js]
+----
+const mapDispatchToProps = (dispatch) => ({
+  onClick() {
+    dispatch(incrementSquareValue())
+  }
+})
+const mapStateToProps = (state) => ({
+  value: state.square.value
+})
+window.SquareRedux = ReactRedux.connect(mapStateToProps, mapDispatchToProps)(Square)
+----
+--
+
+[%step]
+--
+Actions
+[source.eval-js]
+----
+incrementSquareValue = () => ({
+  type: 'INCREMENT_SQUARE_VALUE'
+})
+----
+--
+
+[%step]
+--
+Reducers
+[source.eval-js]
+----
+square = (state={value: 0}, action) => {
+  switch(action.type) {
+    case 'INCREMENT_SQUARE_VALUE':
+      return R.assoc('value', state.value + 1, state)
+    default:
+      return state
+                    }
+}
+app = Redux.combineReducers({square: square})
+----
+--
+[%step]
+--
+The store
+[source.eval-js]
+----
+store = Redux.createStore(app)
+----
+--
+
+[%step]
+--
+The App
+[source.render-jsx]
+----
+<ReactRedux.Provider store={store}>
+  <SquareRedux/>
+</ReactRedux.Provider> 
+----
+--
+++++
+<br/>
+<br/>
+++++
+
+[%step]
+--
+Playground
+[source.eval-js]
+----
+// store.dispatch(incrementSquareValue())
+// store.getState()
+----
+--
 
 
 == Functional Programming in practice - Backend (Web server, micro services)
@@ -657,4 +780,6 @@ include::klipse.adoc[]
 <script src="https://cdn.jsdelivr.net/ramda/0.23/ramda.min.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/immutable/3.8.1/immutable.min.js"></script>
 <link rel="stylesheet" media="screen" href="http://slides.klipse.tech/klipse-meetup-react-2017-jan/game.css">
+<script src="https://cdnjs.cloudflare.com/ajax/libs/redux/3.6.0/redux.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/react-redux/5.0.5/react-redux.min.js"></script>
 ++++
