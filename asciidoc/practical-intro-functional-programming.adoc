@@ -52,6 +52,20 @@ image::https://pbs.twimg.com/profile_images/713278171353911296/1a2useM2.jpg[me]
 * Functions can return functions
 --
 
+== Warning
+
+Are you ready for a journey into the wonderland of Functional Programming?
+
+++++
+              <div class="left">
+		<img src='https://chart.googleapis.com/chart?cht=qr&chl=http%3A%2F%2Fslides.klipse.tech%2Fasciidoc%2Fpractical-intro-functional-programming.html&chs=300x300' alt='qr code'></img>
+	      </div>
+++++
+
+image::images/journey.jpg[journey,900]
+
+
+
 == Functions - passed to variable definitions
 
 [%step]
