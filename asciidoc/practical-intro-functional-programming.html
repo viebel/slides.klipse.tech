@@ -19,6 +19,26 @@
 <section class="slide" id="title-slide">
 <h1>A practical introduction to Functional Programming</h1>
 </section>
+<section class="slide" id="_agenda">
+<h2>Agenda</h2>
+<div class="ulist">
+<ul>
+<li>The Paradigms of Functional Programming</li>
+<li>A brief history of Functional Programming</li>
+<li>Functional Programming in practice</li>
+<li>Discussion and Questions</li>
+</ul>
+</div>
+</section>
+<section class="slide" id="_the_goal">
+<h2>The Goal</h2>
+<div class="ulist">
+<ul>
+<li>Give you a taste of Functional Programming</li>
+<li>Motivate you to try Functional Programming at work or on your personal project</li>
+</ul>
+</div>
+</section>
 <section class="slide" id="_who_am_i">
 <h2>Who am I?</h2>
 <div class="openblock left">
@@ -48,17 +68,6 @@
 <div class="content">
 <img alt="me" src="https://pbs.twimg.com/profile_images/713278171353911296/1a2useM2.jpg">
 </div>
-</div>
-</section>
-<section class="slide" id="_agenda">
-<h2>Agenda</h2>
-<div class="ulist">
-<ul>
-<li>The Paradigms of Functional Programming</li>
-<li>A brief history of Functional Programming</li>
-<li>Functional Programming in practice</li>
-<li>Discussion and Questions</li>
-</ul>
 </div>
 </section>
 <section class="slide" id="_the_paradigms_of_functional_programming">
@@ -462,7 +471,7 @@ a</code></pre>
 </div>
 <div class="openblock slide">
 <div class="content">
-<div class="paragraph"><p>In clojure, no problem it is clojure data structures are immutable!</p></div>
+<div class="paragraph"><p>In clojure, no problem: clojure data structures are immutable!</p></div>
 </div>
 </div>
 </section>
@@ -470,16 +479,16 @@ a</code></pre>
 <h2>Immutability - the solution</h2>
 <div class="paragraph"><p>Instead of mutating an object, you create a new version of it.<br>
 Usually, this is not effective.<br>
-But some languages (e.g. `clojure) support immutability natively and provide an effective implementation of persistent data structure.</p></div>
+But some languages (e.g. clojure) support immutability natively and provide an effective implementation of persistent data structure.</p></div>
 <div class="openblock slide">
 <div class="content">
 <div class="paragraph"><p>Clojure</p></div>
 <div class="listingblock clj">
 <div class="content">
 <pre class="highlight"><code>(let [a {:size 42}
-      b a]
-  (assoc b :size 33)
-  a)</code></pre>
+      b a
+      c (assoc b :size 33)]
+  [a b c])</code></pre>
 </div>
 </div>
 </div>
@@ -515,7 +524,7 @@ The elements are evaluated only when we really need them.</p></div>
 <div class="content">
 <div class="listingblock clj">
 <div class="content">
-<pre class="highlight"><code>(def lazy-a (map (fn [x] (println x) x) [1 2 3]))(def lazy-a (map (fn [x] (println x) x) [1 2 3]))</code></pre>
+<pre class="highlight"><code>(def lazy-a (map (fn [x] (println "val:" x) x) [1 2 3]))</code></pre>
 </div>
 </div>
 <div class="paragraph"><p>Nothing is printed, until we access the elements&#8230;&#8203;</p></div>
@@ -539,7 +548,8 @@ The elements are evaluated only when we really need them.</p></div>
 <div class="paragraph"><p>All the natural numbers</p></div>
 <div class="listingblock clj">
 <div class="content">
-<pre class="highlight"><code>(def natural-numbers (range))</code></pre>
+<pre class="highlight"><code>(def natural-numbers (range))
+(take 10 natural-numbers)</code></pre>
 </div>
 </div>
 </div>
@@ -576,8 +586,12 @@ The elements are evaluated only when we really need them.</p></div>
 <div class="ulist">
 <ul>
 <li>Alonzo Church discovers the  <a href="https://en.wikipedia.org/wiki/Lambda_calculus">λ-calculus</a></li>
-<li>Everything is a function</li>
-<li>Even numbers!</li>
+<li>Everything is a (anonymous) function with one argument</li>
+<li>No names in the language - only function argument</li>
+<li>Even numbers are expressed as functions</li>
+<li>0 := λfx.x</li>
+<li>1 := λfx.f x</li>
+<li>2 := λfx.f (f x)</li>
 </ul>
 </div>
 </div>
@@ -624,9 +638,11 @@ The elements are evaluated only when we really need them.</p></div>
 <h2>A brief history of Functional Programming (cont.)</h2>
 <div class="ulist">
 <ul>
-<li>2007 - Rich Hickey invents Clojure - A practical dialect of LISP on top of JVM</li>
-<li>2013 - Facebook creates react.js - A functional javascript frontend framework</li>
-<li>2015 - Dan Abramov invents <a href="http://redux.js.org/">redux</a> - A javascript library that imposes FP constraints on a frontend app</li>
+<li class="slide">2007 - Rich Hickey invents Clojure - A practical dialect of LISP on top of JVM</li>
+<li class="slide">2011 - ClojureScript - Clojure rocks, Javascript Reaches!</li>
+<li class="slide">2013 - Facebook creates react.js - A functional javascript frontend framework</li>
+<li class="slide">2015 - Dan Abramov invents <a href="http://redux.js.org/">redux</a> - A javascript library that imposes FP constraints on a frontend app</li>
+<li class="slide">2017, May 23 - A practical introduction to FP</li>
 </ul>
 </div>
 </section>
@@ -644,13 +660,14 @@ The elements are evaluated only when we really need them.</p></div>
 <div class="ulist">
 <ul>
 <li>The UI is a (pure) function of the state (virtual DOM).</li>
-<li>Functions compose very well</li>
+<li>Functions compose very well.</li>
 </ul>
 </div>
 <h3>Guidelines</h3>
 <div class="ulist">
 <ul>
 <li>Write functions that create UI components.</li>
+<li>The state is a plain Javascript Object.</li>
 <li>Do not mutate the state, create a new version of it (immutability).</li>
 <li>Write functions that manipulate the state instead of the DOM (reduce the presence of the dirty stuff).</li>
 <li>The framework will update the DOM efficiently.</li>
@@ -743,6 +760,8 @@ window.SquareLogic = SquareLogic</code></pre>
 <li>Changes are made with pure functions</li>
 </ul>
 </div>
+<div class="openblock slide">
+<div class="content">
 <div class="paragraph"><p>Many Positive consequences:</p></div>
 <div class="ulist">
 <ul>
@@ -753,6 +772,8 @@ window.SquareLogic = SquareLogic</code></pre>
 <li>Send state over the wire</li>
 <li>Store/Retrieve state from localStorage</li>
 </ul>
+</div>
+</div>
 </div>
 </section>
 <section class="slide" id="_redux_in_action">
@@ -843,12 +864,17 @@ app = Redux.combineReducers({square: square})</code></pre>
 </section>
 <section class="slide" id="_functional_programming_in_practice_backend_web_server_micro_services">
 <h2>Functional Programming in practice - Backend (Web server, micro services)</h2>
-<div class="paragraph"><p>The development process of a web server is much more effective with languages that support functional programming e.g. ruby.</p></div>
-<div class="paragraph"><p>Much less boilerplate: no need to write everything in an object.<br>
-Much simpler to manipulate data with maps (dictionaries) and arrays.</p></div>
-<div class="paragraph"><p>Sometimes, you need to leverage the java ecosystem.<br>
-No problem, let&#8217;s build a functional that is compiled into Java ByteCode and creates a syntax for <strong>interop</strong>: interacting with the hosting language.</p></div>
-<div class="paragraph"><p>Scala, Clojure.</p></div>
+<div class="ulist">
+<ul>
+<li>The development process of a web server is much more effective with languages that support FP</li>
+<li>Examples: ruby, node.js, clojure, Scala.</li>
+<li>Much less boilerplate than Object Oriented: no need to wrap  everything in an object.</li>
+<li>Dynamic type - Much simpler to manipulate data with maps (dictionaries) and arrays.</li>
+<li>Sometimes, you need to leverage the java ecosystem.</li>
+<li>No problem, let&#8217;s build a functional language that is compiled into Java ByteCode and creates a syntax for <strong>interop</strong>: interacting with the hosting language.</li>
+<li>Examples: Scala, Clojure.</li>
+</ul>
+</div>
 </section>
 <section class="slide" id="_functional_programming_in_practice_big_data">
 <h2>Functional Programming in practice - Big Data</h2>
@@ -864,12 +890,42 @@ No problem, let&#8217;s build a functional that is compiled into Java ByteCode a
 </div>
 <div class="paragraph"><p>Examples: Spark (scala), Storm (Clojure), Onyx (Clojure)</p></div>
 </section>
+<section class="slide" id="_functional_programming_more">
+<h2>Functional Programming - more</h2>
+<div class="ulist">
+<ul>
+<li>Unit Tests</li>
+<li>The REPL</li>
+<li>Generative testing (a.k.a. Property based testing)</li>
+<li>Macros</li>
+<li>Homoiconicity</li>
+<li>Pattern matching</li>
+<li>Tail-call recursion</li>
+</ul>
+</div>
+</section>
+<section class="slide" id="_going_further">
+<h2>Going further</h2>
+<div class="ulist">
+<ul>
+<li><a href="https://mitpress.mit.edu/sicp/full-text/book/book.html">Structure and Interpretation of Computer Programs (SICP)</a> - The bible of functional programming</li>
+<li><a href="http://blog.klipse.tech/">My Blog</a> - An interactive journey into functional programming with Yehonathan Sharvit</li>
+<li><a href="http://blog.klipse.tech/lambda/2016/08/10/almost-y-combinator-javascript.html">Introducing the Y-combinator</a></li>
+<li><a href="http://www-formal.stanford.edu/jmc/recursive.pdf">The original McCarthy paper about LISP</a></li>
+<li><a href="http://redux.js.org/">Redux</a></li>
+<li><a href="https://facebook.github.io/react/">React.js</a></li>
+<li><a href="https://clojure.org/">Clojure</a></li>
+<li><a href="https://www.youtube.com/watch?v=-6BsiVyC1kM">The Value of Values - by the author of Clojure</a></li>
+</ul>
+</div>
+</section>
 <section class="slide" id="_discussion_and_questions">
 <h2>Discussion and Questions</h2>
-
-</section>
-<section class="slide" id="_references">
-<h2>References</h2>
+<div class="imageblock">
+<div class="content">
+<img alt="questions" src="images/questions.jpg">
+</div>
+</div>
 <link rel="shortcut icon" href="./favicon.png">
 <link rel="stylesheet" media="screen" href="http://slides.klipse.tech/includes/deckjs/themes/style/klipse.css">
 <link rel="stylesheet" media="screen" href="http://slides.klipse.tech/asciidoc/klipse.css">
