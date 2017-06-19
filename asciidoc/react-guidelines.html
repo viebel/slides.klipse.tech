@@ -1,0 +1,569 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta content="text/html; charset=utf-8" http-equiv="Content-Type">
+<meta content="IE=edge,chrome=1" http-equiv="X-UA-Compatible">
+<meta content="Asciidoctor 1.5.5" name="generator">
+<title>React.js: From basics to Redux</title>
+<link href="deck.js/core/deck.core.css" rel="stylesheet">
+<link href="deck.js/extensions/menu/deck.menu.css" media="screen" rel="stylesheet">
+<link href="deck.js/extensions/navigation/deck.navigation.css" media="screen" rel="stylesheet">
+<link href="deck.js/extensions/status/deck.status.css" media="screen" rel="stylesheet">
+<link href="deck.js/themes/style/none.css" media="screen" rel="stylesheet">
+<link href="deck.js/themes/transition/horizontal-slide.css" media="screen" rel="stylesheet">
+<link href="deck.js/core/print.css" media="print" rel="stylesheet">
+<script src="deck.js/modernizr.custom.js"></script>
+</head>
+<body class="article">
+<div class="deck-container">
+<section class="slide" id="title-slide">
+<h1>React.js: From basics to Redux</h1>
+</section>
+<section class="slide" id="_agenda">
+<h2>Agenda</h2>
+<div class="ulist">
+<ul>
+<li>UI components</li>
+<li>Controlled components</li>
+<li>DOM components</li>
+<li>Logic components</li>
+<li>Redux</li>
+</ul>
+</div>
+</section>
+<section class="slide" id="_who_am_i">
+<h2>Who am I?</h2>
+<div class="openblock left">
+<div class="content">
+<div class="ulist">
+<ul>
+<li>Yehonathan Sharvit <a href="https://twitter.com/viebel">@viebel</a></li>
+<li>A mathematician</li>
+<li>A coder</li>
+<li>A pragmatic theorist</li>
+<li>A freak of interactivity</li>
+<li>Founded Audyx in 2013 - an Audiology Startup with 30K LOCs in Clojurescript</li>
+<li>Author of <a href="https://github.com/viebel/klipse">Klipse</a> - a simple client-side code evaluator pluggable on any web page</li>
+</ul>
+</div>
+                      <a class="github-button" href="https://github.com/viebel/klipse" data-count-href="/viebel/klipse/stargazers" data-count-api="/repos/viebel/klipse#stargazers_count" data-count-aria-label="# stargazers on GitHub" aria-label="Star viebel/klipse on GitHub">KLIPSE</a>
+                    <script async defer id="github-bjs" src="https://buttons.github.io/buttons.js"></script>
+<div class="ulist">
+<ul>
+<li>A Web consultant: Full-Stack, clojure{,script}, ruby{, on rails}, javascript, react</li>
+</ul>
+</div>
+</div>
+</div>
+<div class="imageblock">
+<div class="content">
+<img alt="me" src="https://pbs.twimg.com/profile_images/713278171353911296/1a2useM2.jpg">
+</div>
+</div>
+</section>
+<section class="slide" id="_a_brief_history_of_functional_programming">
+<h2>A brief history of Functional Programming</h2>
+<div class="openblock slide">
+<div class="content">
+<h3>1930: λ-calculus</h3>
+<div class="ulist">
+<ul>
+<li>Alonzo Church discovers the  <a href="https://en.wikipedia.org/wiki/Lambda_calculus">λ-calculus</a></li>
+<li>Everything is a (anonymous) function with one argument</li>
+<li>No names in the language - only function argument</li>
+<li>Even numbers are expressed as functions</li>
+<li>0 := λfx.x</li>
+<li>1 := λfx.f x</li>
+<li>2 := λfx.f (f x)</li>
+</ul>
+</div>
+</div>
+</div>
+<div class="openblock slide">
+<div class="content">
+<h3>1958: LISP</h3>
+<div class="ulist">
+<ul>
+<li>John McCarthy invents <a href="https://en.wikipedia.org/wiki/Lisp_(programming_language)">LISP</a></li>
+<li>It is the 1st FP language</li>
+<li>Everything is a S-Expression: <code>(+ 1 2 3)</code> instead of <code>1 + 2 + 3</code> or <code>+(1,2,3)</code></li>
+<li>Only 7 terms: CAR, CDR, ATOM, LAMBDA, LABEL, COND, QUOTE</li>
+</ul>
+</div>
+</div>
+</div>
+<div class="openblock slide">
+<div class="content">
+<h3>1995: Javascript the language of the browser</h3>
+<div class="ulist">
+<ul>
+<li>Brendan Eich is recruited by Netscape to do "scheme in the browser"</li>
+<li>Eventually, he invents Javascript</li>
+<li>Functions are 1st class citizens</li>
+</ul>
+</div>
+</div>
+</div>
+<div class="openblock slide">
+<div class="content">
+<h3>2004: Scala - FP on the JVM</h3>
+<div class="ulist">
+<ul>
+<li>2004 - Martin Odersky invents Scala</li>
+<li>A JVM statically typed language with functional programming support</li>
+<li>It is very complicated!!!</li>
+</ul>
+</div>
+</div>
+</div>
+</section>
+<section class="slide" id="_a_brief_history_of_functional_programming_cont">
+<h2>A brief history of Functional Programming (cont.)</h2>
+<div class="ulist">
+<ul>
+<li class="slide">2007 - Rich Hickey invents Clojure - A practical dialect of LISP on top of JVM</li>
+<li class="slide">2011 - ClojureScript - Clojure rocks, Javascript Reaches!</li>
+<li class="slide">2013 - Facebook creates react.js - A functional javascript frontend framework</li>
+<li class="slide">2015 - Dan Abramov invents <a href="http://redux.js.org/">redux</a> - A javascript library that imposes FP constraints on a frontend app</li>
+</ul>
+</div>
+</section>
+<section class="slide" id="_functional_programming_in_practice_react_js">
+<h2>Functional Programming in practice - React.js</h2>
+<h3>Insights</h3>
+<div class="ulist">
+<ul>
+<li>The UI is a (pure) function of the state (virtual DOM).</li>
+<li>Functions compose very well.</li>
+</ul>
+</div>
+<h3>Guidelines</h3>
+<div class="ulist">
+<ul>
+<li>Write functions that create UI components.</li>
+<li>The state is a plain Javascript Object.</li>
+<li>Do not mutate the state, create a new version of it (immutability).</li>
+<li>Write functions that manipulate the state instead of the DOM (reduce the presence of the dirty stuff).</li>
+<li>The framework will update the DOM efficiently.</li>
+<li>Separate UI components from Logic components.</li>
+</ul>
+</div>
+</section>
+<section class="slide" id="_a_pure_ui_components">
+<h2>A pure UI components</h2>
+<div class="openblock slide">
+<div class="content">
+<pre><code class="eval-jsx" data-gist-id="viebel/527582f3d3fa2ea28ada99fc63fe2383">
+</code></pre>
+</div>
+</div>
+<div class="openblock slide">
+<div class="content">
+<div class="listingblock eval-js">
+<div class="content">
+<pre class="highlight"><code>ReactDOM.render(React.createElement(Square, {value: 42,
+                                             onClick: () =&gt; alert("clicked")}), klipse_container)</code></pre>
+</div>
+</div>
+</div>
+</div>
+<br/>
+<br/>
+<div class="openblock slide">
+<div class="content">
+<div class="listingblock render-jsx">
+<div class="content">
+<pre class="highlight"><code>&lt;Square
+value={26}
+  onClick={() =&gt; alert("clicked")}
+/&gt;</code></pre>
+</div>
+</div>
+<br/>
+<br/>
+</div>
+</div>
+<div class="openblock slide">
+<div class="content">
+<div class="paragraph"><p>Exercise: display the value when the square is clicked</p></div>
+</div>
+</div>
+</section>
+<section class="slide" id="_controlled_components">
+<h2>Controlled components</h2>
+<div class="openblock slide">
+<div class="content">
+<pre><code class="eval-jsx" data-gist-id="viebel/e2150d4a4bae8982c2cb546de9c36013">
+</code></pre>
+</div>
+</div>
+<div class="openblock slide">
+<div class="content">
+<div class="listingblock render-jsx">
+<div class="content">
+<pre class="highlight"><code>&lt;TextInput/&gt;</code></pre>
+</div>
+</div>
+</div>
+</div>
+<div class="openblock slide">
+<div class="content">
+<div class="paragraph"><p>Exercises:<br>
+1. Convert the input to upper case<br>
+2. Prepend <code>input:</code> to the input</p></div>
+</div>
+</div>
+</section>
+<section class="slide" id="_dom_interaction">
+<h2>DOM interaction</h2>
+<div class="openblock slide">
+<div class="content">
+<pre><code class="eval-jsx" data-gist-id="viebel/3556cbd89ab268a82344bb06180132bc">
+</code></pre>
+</div>
+</div>
+<div class="openblock slide">
+<div class="content">
+<div class="listingblock render-jsx">
+<div class="content">
+<pre class="highlight"><code>&lt;MyCanvas bgColor="blue"/&gt;</code></pre>
+</div>
+</div>
+</div>
+</div>
+<div class="openblock slide">
+<div class="content">
+<div class="paragraph"><p>Exercises:<br>
+1. Add a button that cleans the canvas<br>
+2. Add more params to props: fill color, point thickness&#8230;&#8203;<br>
+3. Add an element that displays the number of points in the canvas</p></div>
+</div>
+</div>
+</section>
+<section class="slide" id="_logic_components">
+<h2>Logic components</h2>
+<div class="openblock slide">
+<div class="content">
+<div class="listingblock eval-jsx">
+<div class="content">
+<pre class="highlight"><code>class SquareLogic extends React.Component {
+  constructor(props) {
+    super(props)
+    this.state = {
+      val: 10
+    }
+  }
+  increment() {
+    let state = R.assoc('val', this.state.val + 1, this.state)
+    this.setState(state)
+  }
+  render() {
+    return (
+      &lt;Square value={this.state.val}
+      onClick= {() =&gt; this.increment()}/&gt;
+      )
+  }
+}
+window.SquareLogic = SquareLogic</code></pre>
+</div>
+</div>
+<div class="listingblock render-jsx">
+<div class="content">
+<pre class="highlight"><code>&lt;SquareLogic/&gt;</code></pre>
+</div>
+</div>
+</div>
+</div>
+<div class="openblock slide">
+<div class="content">
+<div class="paragraph"><p>Exercises:<br>
+1. Draw 4 squares instead of 1<br>
+2. On odd squares, increment - on even squares, decrement<br>
+3. Display the number of clicks<br>
+4. Add a reset button<br>
+5. Add an undo button</p></div>
+</div>
+</div>
+</section>
+<section class="slide" id="_redux_react_influenced_by_clojurescript">
+<h2>Redux - React influenced by ClojureScript</h2>
+<div class="paragraph"><p><a href="http://redux.js.org/docs/introduction/ThreePrinciples.html">Three principles</a> (constraints):</p></div>
+<div class="ulist">
+<ul>
+<li>Single source of truth</li>
+<li>State is read-only</li>
+<li>Changes are made with pure functions</li>
+</ul>
+</div>
+<div class="openblock slide">
+<div class="content">
+<div class="paragraph"><p>Many Positive consequences:</p></div>
+<div class="ulist">
+<ul>
+<li>Easy to test</li>
+<li>Easy to track actions</li>
+<li>Easy to visualize state of the app</li>
+<li>Time travel (undo)</li>
+<li>Send state over the wire</li>
+<li>Store/Retrieve state from localStorage</li>
+</ul>
+</div>
+</div>
+</div>
+</section>
+<section class="slide" id="_redux_in_action">
+<h2>Redux in action</h2>
+<div class="openblock slide">
+<div class="content">
+<div class="paragraph"><p>Component</p></div>
+<div class="listingblock eval-js">
+<div class="content">
+<pre class="highlight"><code>const mapDispatchToProps = (dispatch) =&gt; ({
+  onClick() {
+    dispatch(incrementSquareValue())
+  }
+})
+const mapStateToProps = (state) =&gt; ({
+  value: state.square.value
+})
+window.SquareRedux = ReactRedux.connect(mapStateToProps, mapDispatchToProps)(Square)</code></pre>
+</div>
+</div>
+</div>
+</div>
+<div class="openblock slide">
+<div class="content">
+<div class="paragraph"><p>Actions</p></div>
+<div class="listingblock eval-js">
+<div class="content">
+<pre class="highlight"><code>incrementSquareValue = () =&gt; ({
+  type: 'INCREMENT_SQUARE_VALUE'
+})</code></pre>
+</div>
+</div>
+</div>
+</div>
+<div class="openblock slide">
+<div class="content">
+<div class="paragraph"><p>Reducers</p></div>
+<div class="listingblock eval-js">
+<div class="content">
+<pre class="highlight"><code>square = (state={value: 0}, action) =&gt; {
+  switch(action.type) {
+    case 'INCREMENT_SQUARE_VALUE':
+      return R.assoc('value', state.value + 1, state)
+    default:
+      return state
+                    }
+}
+app = Redux.combineReducers({square: square})</code></pre>
+</div>
+</div>
+</div>
+</div>
+<div class="openblock slide">
+<div class="content">
+<div class="paragraph"><p>The store</p></div>
+<div class="listingblock eval-js">
+<div class="content">
+<pre class="highlight"><code>store = Redux.createStore(app)</code></pre>
+</div>
+</div>
+</div>
+</div>
+<div class="openblock slide">
+<div class="content">
+<div class="paragraph"><p>The App</p></div>
+<div class="listingblock render-jsx">
+<div class="content">
+<pre class="highlight"><code>&lt;ReactRedux.Provider store={store}&gt;
+  &lt;SquareRedux/&gt;
+&lt;/ReactRedux.Provider&gt;</code></pre>
+</div>
+</div>
+</div>
+</div>
+<br/>
+<br/>
+<div class="openblock slide">
+<div class="content">
+<div class="paragraph"><p>Playground</p></div>
+<div class="listingblock eval-js">
+<div class="content">
+<pre class="highlight"><code>// store.dispatch(incrementSquareValue())
+// store.getState()</code></pre>
+</div>
+</div>
+</div>
+</div>
+</section>
+<section class="slide" id="_discussion_and_questions">
+<h2>Discussion and Questions</h2>
+<div class="imageblock">
+<div class="content">
+<img alt="questions" src="images/questions.jpg">
+</div>
+</div>
+<link rel="shortcut icon" href="./favicon.png">
+<link rel="stylesheet" media="screen" href="http://slides.klipse.tech/includes/deckjs/themes/style/klipse.css">
+<link rel="stylesheet" media="screen" href="http://slides.klipse.tech/asciidoc/klipse.css">
+
+<link rel="stylesheet" type="text/css" href="https://storage.googleapis.com/app.klipse.tech/css/codemirror.css">
+
+<script>
+    window.klipse_settings = {
+     codemirror_options_in: {
+            lineWrapping: true,
+            autoCloseBrackets: true
+        },
+        codemirror_options_out: {
+            lineWrapping: true
+        },
+        beautify_strings: true,
+        selector: '.clj',
+        selector_js: '.transpile-cljs',
+        selector_reagent: '.reagent',
+        selector_eval_js: '.eval-js',
+    	selector_render_jsx: '.render-jsx',
+        selector_jsx: '.eval-jsx',
+        selector_es2017: '.es2017',
+        selector_brainfuck: '.brainfuck',
+        selector_transpile_jsx: '.transpile-jsx',
+        selector_eval_php: '.php',
+        selector_eval_python_client: '.python',
+        selector_eval_html: '.html',
+        selector_sql: '.sql',
+        selector_eval_ruby: '.ruby',
+        selector_eval_scheme: '.scheme',
+    selector_eval_cpp: '.cpp',
+    selector_lua: '.lua',
+    };
+</script>
+<script src="https://storage.googleapis.com/app.klipse.tech/plugin/js/klipse_plugin.js?v=7.0.6"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/react/15.5.4/react-with-addons.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/react/15.5.4/react-dom.min.js"></script>
+<script src="https://cdn.jsdelivr.net/ramda/0.23/ramda.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/immutable/3.8.1/immutable.min.js"></script>
+<link rel="stylesheet" media="screen" href="http://slides.klipse.tech/klipse-meetup-react-2017-jan/game.css">
+<script src="https://cdnjs.cloudflare.com/ajax/libs/redux/3.6.0/redux.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/react-redux/5.0.5/react-redux.min.js"></script>
+</section>
+<div aria-role="navigation">
+<a class="deck-prev-link" href="#" title="Previous">&#8592;</a>
+<a class="deck-next-link" href="#" title="Next">&#8594;</a>
+</div>
+<p aria-role="status" class="deck-status">
+<span></span>
+powered by
+<a href="https://github.com/viebel/klipse" target="_new">Klipse</a>
+<span class="deck-status-current"></span>
+/
+<span class="deck-status-total"></span>
+</p>
+</div>
+<script src="deck.js/jquery.min.js"></script>
+<script src="deck.js/core/deck.core.js"></script>
+<script src="deck.js/extensions/menu/deck.menu.js"></script>
+<script src="deck.js/extensions/navigation/deck.navigation.js"></script>
+<script src="deck.js/extensions/status/deck.status.js"></script>
+<script>
+  (function($, deck, undefined) {
+    $.deck.defaults.keys['previous'] = [8, 33, 37, 39];
+    $.deck.defaults.keys['next'] = [13, 32, 34, 39];
+  
+    $.extend(true, $[deck].defaults, {
+        countNested: false
+    });
+  
+    $.deck('.slide');
+  })(jQuery, 'deck');
+</script>
+<style>
+  .slide.canvas-image {
+  -moz-background-size: cover;
+  -webkit-background-size: cover;
+  -o-background-size: cover;
+  background-size: cover;
+  display: -moz-box;
+  display: -webkit-box;
+  display: -ms-box;
+  display: box;
+  -moz-box-orient: vertical;
+  -webkit-box-orient: vertical;
+  -ms-box-orient: vertical;
+  box-orient: vertical;
+  -moz-box-align: start;
+  -webkit-box-align: start;
+  -ms-box-align: start;
+  box-align: start;
+  -moz-box-pack: start;
+  -webkit-box-pack: start;
+  -ms-box-pack: start;
+  box-pack: start;}
+  
+  .bottom-left {
+    left: 1%;
+    bottom: 20%; }
+  
+  .top-left {
+    left: 1%;
+    top: 20%; }
+  
+  .bottom-right {
+    right: 1%;
+    bottom: 20%; }
+  
+  .top-right {
+    right: 1%;
+    top: 20%; }
+  
+  .center-up {
+    right: 50%;
+    top: 1%;
+  }
+  
+  .center-down {
+    right: 50%;
+    bottom: 1%;
+  }
+  .canvas-image .canvas-caption p {
+    text-align: center;
+    padding-top: 0;
+    padding: 0;
+    -moz-transform: none;
+    -webkit-transform: none;
+    -o-transform: none;
+    -ms-transform: none;
+    transform: none;
+    display: inline;
+    position: absolute;
+    background-color: rgba(0, 0, 0, 0.7);
+    font-weight: bold;
+    font-size: 58px;
+    -webkit-box-shadow: 2px 2px 2px #000;
+    -moz-box-shadow: 2px 2px 2px #000;
+    box-shadow: 2px 2px 2px #000;
+    padding: 1rem;
+    color: white; }
+  kbd.keyseq { color: #555555; }
+  kbd:not(.keyseq) {
+    display: inline-block;
+    color: #222222;
+    font-size: 0.7em;
+    line-height: 1.4;
+    background-color: #F7F7F7;
+    border: 1px solid #ccc;
+    -webkit-border-radius: 3px;
+    border-radius: 3px;
+    -webkit-box-shadow: 0 1px 0 rgba(0, 0, 0, 0.2), 0 0 0 2px white inset;
+    box-shadow: 0 1px 0 rgba(0, 0, 0, 0.2), 0 0 0 2px white inset;
+    margin: -0.15em 0.15em 0 0.15em;
+    padding: 0.2em 0.6em;
+    vertical-align: middle;
+    white-space: nowrap;
+  }
+  kbd kbd:first-child { margin-left: 0; }
+  kbd kbd:last-child { margin-right: 0; }
+</style>
+</body>
+</html>

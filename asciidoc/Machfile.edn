@@ -10,5 +10,6 @@
  amobee-summary.html #import [asciidoc/create {name "amobee-summary"}]
  illiterate.html #import [asciidoc/create {name "illiterate"}]
  practical-intro-functional-programming.html #import [asciidoc/create {name "practical-intro-functional-programming"}]
- klipse-clojure.html #import [asciidoc/create {name "klipse-clojure"}]    
+ klipse-clojure.html #import [asciidoc/create {name "klipse-clojure"}]
+ react-guidelines.html #import [asciidoc/create {name "react-guidelines"}]    
  polymorphism.html #import [asciidoc/create {name "polymorphism"}]}

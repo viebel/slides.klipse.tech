@@ -1,0 +1,369 @@
+= React.js: From basics to Redux
+:encoding: utf-8
+:navigation:
+:deckjs_transition: horizontal-slide
+:menu:
+:status:
+:deckjs_theme: none
+:hardbreaks:
+
+
+== Agenda
+
+- UI components
+- Controlled components
+- DOM components
+- Logic components
+- Redux
+
+== Who am I?
+[.left]
+--
+- Yehonathan Sharvit https://twitter.com/viebel[@viebel]
+- A mathematician
+- A coder
+- A pragmatic theorist
+- A freak of interactivity
+- Founded Audyx in 2013 - an Audiology Startup with 30K LOCs in Clojurescript
+- Author of https://github.com/viebel/klipse[Klipse] - a simple client-side code evaluator pluggable on any web page 
+++++
+                      <a class="github-button" href="https://github.com/viebel/klipse" data-count-href="/viebel/klipse/stargazers" data-count-api="/repos/viebel/klipse#stargazers_count" data-count-aria-label="# stargazers on GitHub" aria-label="Star viebel/klipse on GitHub">KLIPSE</a>
+                    <script async defer id="github-bjs" src="https://buttons.github.io/buttons.js"></script>
+++++
+- A Web consultant: Full-Stack, clojure{,script}, ruby{, on rails}, javascript, react
+--
+
+image::https://pbs.twimg.com/profile_images/713278171353911296/1a2useM2.jpg[me]
+
+
+== A brief history of Functional Programming
+
+[%step]
+--
+++++
+<h3>1930: λ-calculus</h3>
+++++
+* Alonzo Church discovers the  https://en.wikipedia.org/wiki/Lambda_calculus[λ-calculus]
+* Everything is a (anonymous) function with one argument 
+* No names in the language - only function argument
+* Even numbers are expressed as functions
+* 0 := λfx.x
+* 1 := λfx.f x
+* 2 := λfx.f (f x)
+--
+
+[%step]
+--
+++++
+<h3>1958: LISP</h3>
+++++
+* John McCarthy invents https://en.wikipedia.org/wiki/Lisp_(programming_language)[LISP]
+* It is the 1st FP language
+* Everything is a S-Expression: `(+ 1 2 3)` instead of `1 + 2 + 3` or `+(1,2,3)`
+* Only 7 terms: CAR, CDR, ATOM, LAMBDA, LABEL, COND, QUOTE
+--
+
+[%step]
+--
+++++
+<h3>1995: Javascript the language of the browser</h3>
+++++
+* Brendan Eich is recruited by Netscape to do "scheme in the browser"
+* Eventually, he invents Javascript
+* Functions are 1st class citizens
+--
+
+[%step]
+--
+++++
+<h3>2004: Scala - FP on the JVM</h3>
+++++
+* 2004 - Martin Odersky invents Scala
+* A JVM statically typed language with functional programming support
+* It is very complicated!!!
+--
+
+== A brief history of Functional Programming (cont.)
+
+[%step]
+* 2007 - Rich Hickey invents Clojure - A practical dialect of LISP on top of JVM
+* 2011 - ClojureScript - Clojure rocks, Javascript Reaches!
+* 2013 - Facebook creates react.js - A functional javascript frontend framework
+* 2015 - Dan Abramov invents http://redux.js.org/[redux] - A javascript library that imposes FP constraints on a frontend app
+ 
+== Functional Programming in practice - React.js
+
+
+++++
+<h3>Insights</h3>
+++++
+* The UI is a (pure) function of the state (virtual DOM).
+* Functions compose very well.
+
+
+++++
+<h3>Guidelines</h3>
+++++
+* Write functions that create UI components.
+* The state is a plain Javascript Object.
+* Do not mutate the state, create a new version of it (immutability).
+* Write functions that manipulate the state instead of the DOM (reduce the presence of the dirty stuff).
+* The framework will update the DOM efficiently.
+* Separate UI components from Logic components.
+
+== A pure UI components
+
+[%step]
+--
+++++
+<pre><code class="eval-jsx" data-gist-id="viebel/527582f3d3fa2ea28ada99fc63fe2383">
+</code></pre>
+++++
+--
+
+[%step]
+--
+[source.eval-js]
+----
+ReactDOM.render(React.createElement(Square, {value: 42,
+                                             onClick: () => alert("clicked")}), klipse_container)
+----
+--
+
+++++
+<br/>
+<br/>
+++++
+
+[%step]
+--
+[source.render-jsx]
+----
+<Square
+value={26}
+  onClick={() => alert("clicked")}
+/>
+----
+++++
+<br/>
+<br/>
+++++
+--
+
+[%step]
+--
+Exercise: display the value when the square is clicked
+--
+
+== Controlled components
+
+[%step]
+--
+++++
+<pre><code class="eval-jsx" data-gist-id="viebel/e2150d4a4bae8982c2cb546de9c36013">
+</code></pre>
+++++
+--
+
+[%step]
+--
+[source.render-jsx]
+----
+<TextInput/>
+----
+--
+
+[%step]
+--
+Exercises:
+1. Convert the input to upper case
+2. Prepend `input:` to the input
+--
+
+== DOM interaction
+
+[%step]
+--
+++++
+<pre><code class="eval-jsx" data-gist-id="viebel/3556cbd89ab268a82344bb06180132bc">
+</code></pre>
+++++
+--
+
+[%step]
+--
+[source.render-jsx]
+----
+<MyCanvas bgColor="blue"/>
+----
+--
+
+[%step]
+--
+Exercises:
+1. Add a button that cleans the canvas
+2. Add more params to props: fill color, point thickness...
+3. Add an element that displays the number of points in the canvas
+--
+
+==  Logic components
+
+[%step]
+--
+[source.eval-jsx]
+----
+class SquareLogic extends React.Component {
+  constructor(props) {
+    super(props)
+    this.state = {
+      val: 10
+    }
+  }
+  increment() {
+    let state = R.assoc('val', this.state.val + 1, this.state)
+    this.setState(state)
+  }
+  render() {
+    return (
+      <Square value={this.state.val}
+      onClick= {() => this.increment()}/>
+      )
+  }
+}
+window.SquareLogic = SquareLogic
+----
+
+
+[source.render-jsx]
+----
+<SquareLogic/>
+----
+--
+
+[%step]
+--
+Exercises:
+1. Draw 4 squares instead of 1
+2. On odd squares, increment - on even squares, decrement
+3. Display the number of clicks
+4. Add a reset button
+5. Add an undo button
+--
+
+== Redux - React influenced by ClojureScript
+
+http://redux.js.org/docs/introduction/ThreePrinciples.html[Three principles] (constraints):
+
+* Single source of truth
+* State is read-only
+* Changes are made with pure functions
+
+[%step]
+--
+Many Positive consequences:
+
+* Easy to test
+* Easy to track actions
+* Easy to visualize state of the app
+* Time travel (undo)
+* Send state over the wire
+* Store/Retrieve state from localStorage
+--
+
+== Redux in action
+
+[%step]
+--
+Component
+[source.eval-js]
+----
+const mapDispatchToProps = (dispatch) => ({
+  onClick() {
+    dispatch(incrementSquareValue())
+  }
+})
+const mapStateToProps = (state) => ({
+  value: state.square.value
+})
+window.SquareRedux = ReactRedux.connect(mapStateToProps, mapDispatchToProps)(Square)
+----
+--
+
+[%step]
+--
+Actions
+[source.eval-js]
+----
+incrementSquareValue = () => ({
+  type: 'INCREMENT_SQUARE_VALUE'
+})
+----
+--
+
+[%step]
+--
+Reducers
+[source.eval-js]
+----
+square = (state={value: 0}, action) => {
+  switch(action.type) {
+    case 'INCREMENT_SQUARE_VALUE':
+      return R.assoc('value', state.value + 1, state)
+    default:
+      return state
+                    }
+}
+app = Redux.combineReducers({square: square})
+----
+--
+[%step]
+--
+The store
+[source.eval-js]
+----
+store = Redux.createStore(app)
+----
+--
+
+[%step]
+--
+The App
+[source.render-jsx]
+----
+<ReactRedux.Provider store={store}>
+  <SquareRedux/>
+</ReactRedux.Provider> 
+----
+--
+++++
+<br/>
+<br/>
+++++
+
+[%step]
+--
+Playground
+[source.eval-js]
+----
+// store.dispatch(incrementSquareValue())
+// store.getState()
+----
+--
+
+
+== Discussion and Questions
+
+image::images/questions.jpg[questions]
+
+
+
+include::klipse.adoc[]
+++++
+<script src="https://cdnjs.cloudflare.com/ajax/libs/react/15.5.4/react-with-addons.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/react/15.5.4/react-dom.min.js"></script>
+<script src="https://cdn.jsdelivr.net/ramda/0.23/ramda.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/immutable/3.8.1/immutable.min.js"></script>
+<link rel="stylesheet" media="screen" href="http://slides.klipse.tech/klipse-meetup-react-2017-jan/game.css">
+<script src="https://cdnjs.cloudflare.com/ajax/libs/redux/3.6.0/redux.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/react-redux/5.0.5/react-redux.min.js"></script>
+++++
