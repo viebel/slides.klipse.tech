@@ -102,16 +102,19 @@ image::https://pbs.twimg.com/profile_images/713278171353911296/1a2useM2.jpg[me]
 
 
 ++++
-<h3>Guidelines</h3>
+<h3>Paradigms</h3>
 ++++
-* Write functions that create UI components.
+* Write functions that create UI components and compose the functions.
 * The state is a plain Javascript Object.
 * Do not mutate the state, create a new version of it (immutability).
 * Write functions that manipulate the state instead of the DOM (reduce the presence of the dirty stuff).
 * The framework will update the DOM efficiently.
 * Separate UI components from Logic components.
+* Create a new markup language - JSX - that is transpiled into javascript.
 
-== A pure UI components
+== Pure UI components
+
+We should try to maximize the usage of pure components e.g. components written as functions with no state that depends only on their props.
 
 [%step]
 --
@@ -149,6 +152,11 @@ value={26}
 <br/>
 ++++
 --
+[%step]
+--
+You can do almost everything with JSX, but there are some pitfalls. 
+Be sure to check this http://blog.klipse.tech/javascript/2016/12/14/jsx.html[interactive JSX guide]
+--
 
 [%step]
 --
@@ -156,6 +164,9 @@ Exercise: display the value when the square is clicked
 --
 
 == Controlled components
+
+The react state is the single source of truth.
+The state of the html element is updated by a react handler that listens to `onChange` type of events.
 
 [%step]
 --
@@ -175,12 +186,19 @@ Exercise: display the value when the square is clicked
 
 [%step]
 --
+Here is the http://blog.klipse.tech/react/2016/12/20/react-controlled-components.html[full interactive guide about reaxct controlled components]
+--
+[%step]
+--
 Exercises:
 1. Convert the input to upper case
 2. Prepend `input:` to the input
 --
 
 == DOM interaction
+
+Sometimes (not too often!), we need to interact directly with the DOM e.g. for manipulating a `canvas` element.
+React allows us to get access to the DOM elements that are rendered.
 
 [%step]
 --
@@ -355,7 +373,65 @@ Playground
 
 image::images/questions.jpg[questions]
 
+== What else?
 
+- unit tests
+- redux dev tools
+- redux middlewares
+- redux thunks
+- watch react videos to see what crazy things people can do
+- ES6 tricks
+- props validation
+
+== Small project
+
+Write a react redux application with:
+1. A Game page: Tic Tac Toe
+2. A Params page: Display groups of parameters as specified by a dynamic JSON. The parameters should be grouped according to the first part of their name. The required controls are: text input, number input, checkbox and dropdown.
+3. A header that display the name of the current page and allow to switch pages
+
+Remarks:
+1. BootStrap your react project with https://github.com/facebookincubator/create-react-app[Create React App]
+2. You must write unit tests for your reducers and your components with jest and enzyme
+3. Use yarn
+4. Use http://ramdajs.com/docs/[ramda] for data manipulation
+
+
+Here is an example of a JSON that defines the params
+--
+[source.eval-js]
+const params = [
+  {
+    "Name":"Basics.Title",
+    "Type":"TextInput",
+    "Value":"Hello World",
+    "Description":"Title of the book"
+  },
+  {
+    "Name":"Advanced.Color_Cover",
+    "Type":"Checkbox",
+    "Value":["Red", "Black"],
+    "Description":"Colors of the cover",
+    "ListValues":["Red","Green","Blue","Black"],
+  },
+  {
+    "Name":"Basics.Color",
+    "VariableType":"Dropdown",
+    "Value":"Red",
+    "Description":"Color of the font",
+    "ListValues":["Red","Green","Blue","Black"],
+  },
+  {
+    "Name":"Basics.budget",
+    "Type":"Number",
+    "Value":95.2,
+    "Description":"Budget",
+    "Min":1.0,
+    "Max":100.0,
+    "Step":0.5,
+  },
+]
+--
 
 include::klipse.adoc[]
 ++++

@@ -332,9 +332,31 @@
 	<pre><code class="eval-js" data-external-libs="https://cdnjs.cloudflare.com/ajax/libs/react/15.4.1/react-with-addons.js, https://cdnjs.cloudflare.com/ajax/libs/react/15.4.1/react-dom.js">
 	    !!React
 	</code></pre>
+	<div class="slide">
+	  <p>
+	    React components are created by functions (or classes).
+	    <pre><code class="eval-js">
+		const element = React.createElement(
+  "p",
+  {style: {color: "red"}},
+  "Hello, world!"
+)
+ReactDOM.render(element, klipse_container)
+1
+	    </code></pre>
+	  </p>
+	</div>
+	<div class="slide">
+	  <p>
+	    Exercise:<br>
+	    Render a nested react compoment that contains 2 paragraphs, one of the paragraph has bold and italic texts and the other has texts in blue and red.
+	  </p>
+	  <pre><code class="eval-js">
+	  </code></pre>
+	  </div>
       </section>
       <section class="slide">
-	<h2>Interlude - JSX </h2>
+	<h2> JSX </h2>
 
 	<p> <a href="JSX://facebook.github.io/react/docs/introducing-jsx.html">JSX </a>is ... </p>
 	<div class="slide">
@@ -358,8 +380,15 @@
           <p>
             The JSX transpiler runs before the code is deployed.<br>
             It's a compile time syntactic sugar.<br>
-            Compare vs. angular.js
+            Compare vs. angular.js <br>
+	    Instead of writing the logic inside the HTML, we write the UI inside the Javascript.
           </p>
+	</div>
+	<div class="slide">
+	  <p>
+	    You can do almost everything with JSX, but there are some pitfalls. <br>
+	    Be sure to check this <a href="http://blog.klipse.tech/javascript/2016/12/14/jsx.html">interactive JSX guide</a>.
+	  </p>
 	</div>
       </section>
 
@@ -382,15 +411,15 @@
 	  <p> We can compose React components using function composition </p>
           <pre><code class="render-jsx">
 	      &lt;div&gt;
-		{
+	      {
 	      [1,2,3,4,5]
 	      .map(i => 
-		&lt;Square
-		  key={i}
-		  value={i}
-		  onClick={() => alert(`click on ${i}`)}
-		  /&gt;
-		  )}
+	      &lt;Square
+	      key={i}
+	      value={i}
+	      onClick={() => alert(`click on ${i}`)}
+	      /&gt;
+	      )}
 	      &lt;/div&gt; 
 	  </code></pre>
 	</div>

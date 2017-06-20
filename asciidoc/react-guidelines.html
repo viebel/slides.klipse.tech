@@ -137,20 +137,22 @@
 <li>Functions compose very well.</li>
 </ul>
 </div>
-<h3>Guidelines</h3>
+<h3>Paradigms</h3>
 <div class="ulist">
 <ul>
-<li>Write functions that create UI components.</li>
+<li>Write functions that create UI components and compose the functions.</li>
 <li>The state is a plain Javascript Object.</li>
 <li>Do not mutate the state, create a new version of it (immutability).</li>
 <li>Write functions that manipulate the state instead of the DOM (reduce the presence of the dirty stuff).</li>
 <li>The framework will update the DOM efficiently.</li>
 <li>Separate UI components from Logic components.</li>
+<li>Create a new markup language - JSX - that is transpiled into javascript.</li>
 </ul>
 </div>
 </section>
-<section class="slide" id="_a_pure_ui_components">
-<h2>A pure UI components</h2>
+<section class="slide" id="_pure_ui_components">
+<h2>Pure UI components</h2>
+<div class="paragraph"><p>We should try to maximize the usage of pure components e.g. components written as functions with no state that depends only on their props.</p></div>
 <div class="openblock slide">
 <div class="content">
 <pre><code class="eval-jsx" data-gist-id="viebel/527582f3d3fa2ea28ada99fc63fe2383">
@@ -185,12 +187,20 @@ value={26}
 </div>
 <div class="openblock slide">
 <div class="content">
+<div class="paragraph"><p>You can do almost everything with JSX, but there are some pitfalls.<br>
+Be sure to check this <a href="http://blog.klipse.tech/javascript/2016/12/14/jsx.html">interactive JSX guide</a></p></div>
+</div>
+</div>
+<div class="openblock slide">
+<div class="content">
 <div class="paragraph"><p>Exercise: display the value when the square is clicked</p></div>
 </div>
 </div>
 </section>
 <section class="slide" id="_controlled_components">
 <h2>Controlled components</h2>
+<div class="paragraph"><p>The react state is the single source of truth.<br>
+The state of the html element is updated by a react handler that listens to <code>onChange</code> type of events.</p></div>
 <div class="openblock slide">
 <div class="content">
 <pre><code class="eval-jsx" data-gist-id="viebel/e2150d4a4bae8982c2cb546de9c36013">
@@ -208,6 +218,11 @@ value={26}
 </div>
 <div class="openblock slide">
 <div class="content">
+<div class="paragraph"><p>Here is the <a href="http://blog.klipse.tech/react/2016/12/20/react-controlled-components.html">full interactive guide about reaxct controlled components</a></p></div>
+</div>
+</div>
+<div class="openblock slide">
+<div class="content">
 <div class="paragraph"><p>Exercises:<br>
 1. Convert the input to upper case<br>
 2. Prepend <code>input:</code> to the input</p></div>
@@ -216,6 +231,8 @@ value={26}
 </section>
 <section class="slide" id="_dom_interaction">
 <h2>DOM interaction</h2>
+<div class="paragraph"><p>Sometimes (not too often!), we need to interact directly with the DOM e.g. for manipulating a <code>canvas</code> element.<br>
+React allows us to get access to the DOM elements that are rendered.</p></div>
 <div class="openblock slide">
 <div class="content">
 <pre><code class="eval-jsx" data-gist-id="viebel/3556cbd89ab268a82344bb06180132bc">
@@ -402,6 +419,72 @@ app = Redux.combineReducers({square: square})</code></pre>
 <div class="imageblock">
 <div class="content">
 <img alt="questions" src="images/questions.jpg">
+</div>
+</div>
+</section>
+<section class="slide" id="_what_else">
+<h2>What else?</h2>
+<div class="ulist">
+<ul>
+<li>unit tests</li>
+<li>redux dev tools</li>
+<li>redux middlewares</li>
+<li>redux thunks</li>
+<li>watch react videos to see what crazy things people can do</li>
+<li>ES6 tricks</li>
+<li>props validation</li>
+</ul>
+</div>
+</section>
+<section class="slide" id="_small_project">
+<h2>Small project</h2>
+<div class="paragraph"><p>Write a react redux application with:<br>
+1. A Game page: Tic Tac Toe<br>
+2. A Params page: Display groups of parameters as specified by a dynamic JSON. The parameters should be grouped according to the first part of their name. The required controls are: text input, number input, checkbox and dropdown.<br>
+3. A header that display the name of the current page and allow to switch pages</p></div>
+<div class="paragraph"><p>Remarks:<br>
+1. BootStrap your react project with <a href="https://github.com/facebookincubator/create-react-app">Create React App</a><br>
+2. You must write unit tests for your reducers and your components with jest and enzyme<br>
+3. Use yarn<br>
+4. Use <a href="http://ramdajs.com/docs/">ramda</a> for data manipulation</p></div>
+<div class="paragraph"><p>Here is an example of a JSON that defines the params</p></div>
+<div class="openblock">
+<div class="content">
+<div class="listingblock eval-js">
+<div class="content">
+<pre class="highlight"><code>const params = [
+  {
+    "Name":"Basics.Title",
+    "Type":"TextInput",
+    "Value":"Hello World",
+    "Description":"Title of the book"
+  },
+  {
+    "Name":"Advanced.Color_Cover",
+    "Type":"Checkbox",
+    "Value":["Red", "Black"],
+    "Description":"Colors of the cover",
+    "ListValues":["Red","Green","Blue","Black"],
+  },
+  {
+    "Name":"Basics.Color",
+    "VariableType":"Dropdown",
+    "Value":"Red",
+    "Description":"Color of the font",
+    "ListValues":["Red","Green","Blue","Black"],
+  },
+  {
+    "Name":"Basics.budget",
+    "Type":"Number",
+    "Value":95.2,
+    "Description":"Budget",
+    "Min":1.0,
+    "Max":100.0,
+    "Step":0.5,
+  },
+]</code></pre>
+</div>
+</div>
 </div>
 </div>
 <link rel="shortcut icon" href="./favicon.png">
