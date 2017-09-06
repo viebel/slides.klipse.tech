@@ -1,0 +1,871 @@
+= React on steroids with ClojureScript
+:encoding: utf-8
+:navigation:
+:deckjs_transition: horizontal-slide
+:menu:
+:status:
+:deckjs_theme: none
+:hardbreaks:
+
+
+== Agenda
+
+- ClojureScript: a pragmatic LISP
+- Hiccup: HTML as data
+- Reagent: an elegant interface to React
+- More about ClojureScript
+- References
+
+== The Goal
+
+- LISP is cool
+- Power of expression
+- Pragmatic Theoretic stuff 
+
+== Who am I?
+[.left]
+--
+- Yehonathan Sharvit https://twitter.com/viebel[@viebel]
+- A mathematician
+- A coder
+- A pragmatic theorist
+- A freak of interactivity
+- Founded Audyx in 2013 - an Audiology Startup with 30K LOCs in Clojurescript
+- Author of https://github.com/viebel/klipse[Klipse] - a simple client-side code evaluator pluggable on any web page 
+++++
+                      <a class="github-button" href="https://github.com/viebel/klipse" data-count-href="/viebel/klipse/stargazers" data-count-api="/repos/viebel/klipse#stargazers_count" data-count-aria-label="# stargazers on GitHub" aria-label="Star viebel/klipse on GitHub">KLIPSE</a>
+                    <script async defer id="github-bjs" src="https://buttons.github.io/buttons.js"></script>
+++++
+- A Web consultant: Full-Stack, clojure, clojurescript, javascript, node.js, react
+- Blogger about functional programming at http://blog.klipse.tech/[blog.klipse.tech]
+--
+
+image::https://pbs.twimg.com/profile_images/713278171353911296/1a2useM2.jpg[me]
+
+
+== ClojureScript - historical perspective
+
+* 1930: Alonzo Church discovers the  https://en.wikipedia.org/wiki/Lambda_calculus[λ-calculus]
+* 1958: John McCarthy invents https://en.wikipedia.org/wiki/Lisp_(programming_language)[LISP]
+* 1995: Brendan Eich is recruited by Netscape to do "scheme in the browser"
+* Eventually, he invents Javascript
+* 2007 - Rich Hickey invents Clojure - A practical dialect of LISP on top of JVM
+* 2011 - ClojureScript - Clojure rocks, Javascript reaches!
+* 2013 - Facebook creates react.js - A functional javascript frontend framework
+* Dec 2013 - First release of reagent - A react cljs interface that is faster than react!
+
+== LISP
+
+LISP is homoiconic: the syntax of the code is the same as the syntax of the data - lists.
+LISP stands for LIst Processing.
+
+Code is expressed as lists where:
+- the first element of the list is the function
+- rest of the list are the arguments to the function
+
+Unlike in javacsript, every piece of LISP code is an expression (including `if`, `for` etc...).
+
+== Clojure - functions
+
+[%step]
+--
+Function definition:
+
+[source, role="clj"]
+----
+(defn hello [name]
+  (str "Hello " name "!"))
+----
+--
+
+[%step]
+--
+Function application:
+
+[source, role="clj"]
+----
+(hello "React Next")
+----
+--
+
+
+== Interactivity
+
+You can follow this presentation on your desktop, tablet, phone...
+
+++++
+              <div class="left">
+		<img src='https://chart.googleapis.com/chart?cht=qr&chl=http%3A%2F%2Fslides.klipse.react-steroids-cljs.html&chs=300x300' alt='qr code'></img>
+		<a style="font-size:3em;" href="https://tinyurl.com/introFP"> https://tinyurl.com/introFP </a>
+	      </div>
+++++
+
+image::images/journey.jpg[journey,900]
+
+
+
+== Functions - passed to variable definitions
+
+[%step]
+--
+Javascript
+[source.eval-js]
+----
+function foo() { return 42}
+var bar = function() { return 43}
+x = [foo(), bar()]
+----
+
+--
+[%step]
+--
+EcmaScript6
+[source.eval-js]
+----
+baz = () => 42
+baz()
+----
+--
+
+[%step]
+--
+Clojure
+[source.clj]
+----
+(defn foox [] 42)
+(def bax (fn [] 43))
+[(foox) (bax)]
+----
+--
+
+[%step]
+--
+Ruby
+[source.ruby]
+----
+def foow
+  42
+end
+baw  = ->() { 43 }
+[foow(), baw[]]
+----
+--
+
+
+
+== Functions - passed as arguments to functions
+
+In function languages, you can create anonymous functions i.e. functions that don't have a name.
+
+[%step]
+--
+Javascript
+[source.eval-js]
+----
+[1,2,3].map(function(x) { return x + 1})
+----
+
+--
+[%step]
+--
+EcmaScript6
+[source.eval-js]
+----
+[1,2,3].map((x) => x+1)
+----
+--
+
+[%step]
+--
+Clojure
+[source.clj]
+----
+(map inc [1 2 3])
+----
+--
+
+[%step]
+--
+Ruby
+[source.ruby]
+----
+[1,2,3].map {|x|
+  x + 1
+  }
+----
+--
+
+== Functions that return functions
+
+An important function in FP is `partial` (or `curry`).
+
+`partial` takes a function and a list of arguments and returns a function where some arguments are fixed.
+
+Let's see it in action!
+
+[%step]
+--
+Javascript
+We are going to use http://ramdajs.com/[Ramda].
+[source.eval-js]
+----
+function add(x, y) { return x + y}
+var add10 = R.partial(add, [10])
+add10(19)
+----
+
+--
+[%step]
+--
+EcmaScript6
+[source.eval-js]
+----
+const add = (x, y) => x + y
+const add10 = R.partial(add, [10])
+add10(19)
+----
+--
+
+[%step]
+--
+Clojure
+[source.clj]
+----
+(defn add [x y] (+ x y))
+(let [add10 (partial add 10)]
+  (add10 32))
+----
+--
+
+[%step]
+--
+Ruby
+In ruby, it's called `curry`.
+[source.ruby]
+----
+add  = ->(x,y) do x + y end
+add10 = add.curry.(10)
+add10.(9)
+----
+--
+
+== Exercise
+
+Let's write our own version of `partial`:
+
+[%step]
+--
+in ES6
+[source.eval-js]
+----
+partial = () => 1
+
+----
+
+If you prefer you can write it in `clojure`:
+[source.clj]
+----
+(defn my-partial [f x])
+----
+
+or in ruby:
+[source.ruby]
+----
+def partial(f, x)
+end
+----
+--
+
+[%step]
+--
+[source.eval-js]
+----
+partial = (f, x) => (y) => f(x, y)
+partial(add, 10)(9)
+----
+--
+
+== Declarative style
+
+Let's compare `map` and `for` in javascript.
+
+With `map`, you don't deal with low-level details
+You only express what to do with each element of the array.
+
+[%step]
+--
+[source.eval-js]
+----
+[1,2,3].map(x => x + 1)
+----
+--
+
+[%step]
+--
+With `for`, you have deal with low-level details.
+
+You have to express:
+
+* how the array is iterated
+* what is the name of the index
+* how the elements are combined in the returned array
+
+[source.eval-js]
+----
+const arr = [1,2,3]
+const f = x => x + 1
+let retArr = []
+for(let i = 0; i < arr.length; i++) {
+  retArr.push(f(arr[i]))
+}
+retArr
+----
+--
+
+== Pure functions
+
+[%step]
+--
+A pure function
+
+* depends only on its parameters (not on a global state)
+* has no side effects
+--
+
+[%step]
+--
+Pure functions are much simpler
+
+* to combine
+* to test
+* to debug
+* to understand
+* to refactor
+--
+
+== Pure functions - no implicit dependencies
+
+
+[%step]
+--
+This function depends on a global parameter
+[source.eval-js]
+----
+const N = 1e9
+const rand = () => Math.round(N*Math.random())
+rand()
+----
+--
+
+[%step]
+--
+Let's rewrite it as a pure function
+[source.eval-js]
+----
+const rand = (max) => Math.round(max*Math.random())
+rand(1e9)
+----
+--
+
+== Pure functions - no side effects
+
+[%step]
+--
+This function writes the error to the console in case of a failure.
+
+How will you test such a function?
+[source.eval-js]
+----
+const trySomething = (x) => {
+  if (x) {
+    return x*42
+  }
+  console.log(`I cannot do ${x}`)
+}
+trySomething()
+----
+--
+
+[%step]
+--
+Let's rewrite it as a pure function.
+We will return an array with:
+
+* the status
+* the data
+
+[source.eval-js]
+----
+trySomethingPure = (x) => {
+  if (x) {
+    return ["ok", x*42]
+  }
+  return ["error", `I cannot do ${x}`]
+}
+trySomethingPure(1)
+----
+--
+
+
+
+
+== Immutability - the problem
+
+[%step]
+--
+In non-functional languages, the default API mutates our objects.
+You modify `b` and in fact, you modify also `a`!
+--
+
+[%step]
+--
+In javascript:
+[source.eval-js]
+----
+const a = {size: 42};
+b = a;
+b.size = 43
+a
+----
+--
+
+[%step]
+--
+In ruby:
+[source.ruby]
+----
+a = {size: 42}
+b = a
+b['size'] = 33
+a
+----
+--
+
+[%step]
+--
+In clojure, no problem: clojure data structures are immutable!
+--
+
+
+
+== Immutability - the solution
+
+Instead of mutating an object, you create a new version of it.
+Usually, this is not effective.
+But some languages (e.g. clojure) support immutability natively and provide an effective implementation of persistent data structure.
+
+[%step]
+--
+Clojure
+[source.clj]
+----
+(let [a {:size 42}
+      b a
+      c (assoc b :size 33)]
+  [a b c])
+----
+--
+
+[%step]
+--
+In order to enjoy immutability in Javascript, you have to use a library like https://facebook.github.io/immutable-js/[immutable.js]
+--
+[%step]
+--
+[source.eval-js]
+----
+a = Immutable.fromJS({size: {shoes: 42 }})
+b = a.setIn(["size", "shoes"], 43)
+a
+----
+--
+
+[%step]
+--
+There is a https://github.com/hamstergem/hamster[immutable library] available for ruby
+--
+
+== Laziness
+
+In functional languages, some sequences are lazy.
+The elements are evaluated only when we really need them.
+
+Let's see some examples in `clojure`:
+
+[%step]
+--
+[source.clj]
+----
+(def lazy-a (map (fn [x] (println "val:" x) x) [1 2 3]))
+----
+Nothing is printed, until we access the elements...
+--
+
+[%step]
+--
+[source.clj]
+----
+(nth lazy-a 0)
+----
+--
+
+== Laziness - infinite sequences
+
+Nothing prevents from lazy sequences to be infinite!
+[%step]
+--
+All the natural numbers
+[source.clj]
+----
+(def natural-numbers (range))
+(take 10 natural-numbers)
+----
+--
+
+
+[%step]
+--
+Infinite repetition of an element
+[source.clj]
+----
+(def infinite-hello (repeat :hello))
+(nth infinite-hello 100)
+----
+Don't try to count the elements!
+--
+
+[%step]
+--
+An infinite sequence of random numbers
+[source.clj]
+----
+(def infinite-random-numbers (repeatedly (partial rand-int 100)))
+(nth infinite-random-numbers 345)
+----
+--
+
+
+
+== A brief history of Functional Programming
+
+[%step]
+--
+++++
+<h3>1930: λ-calculus</h3>
+++++
+* Alonzo Church discovers the  https://en.wikipedia.org/wiki/Lambda_calculus[λ-calculus]
+* Everything is a (anonymous) function with one argument 
+* No names in the language - only function argument
+* Even numbers are expressed as functions
+* 0 := λfx.x
+* 1 := λfx.f x
+* 2 := λfx.f (f x)
+--
+
+[%step]
+--
+++++
+<h3>1958: LISP</h3>
+++++
+* John McCarthy invents https://en.wikipedia.org/wiki/Lisp_(programming_language)[LISP]
+* It is the 1st FP language
+* Everything is a S-Expression: `(+ 1 2 3)` instead of `1 + 2 + 3` or `+(1,2,3)`
+* Only 7 terms: CAR, CDR, ATOM, LAMBDA, LABEL, COND, QUOTE
+--
+
+[%step]
+--
+++++
+<h3>1995: Javascript the language of the browser</h3>
+++++
+* Brendan Eich is recruited by Netscape to do "scheme in the browser"
+* Eventually, he invents Javascript
+* Functions are 1st class citizens
+--
+
+[%step]
+--
+++++
+<h3>2004: Scala - FP on the JVM</h3>
+++++
+* 2004 - Martin Odersky invents Scala
+* A JVM statically typed language with functional programming support
+* It is very complicated!!!
+--
+
+== A brief history of Functional Programming (cont.)
+
+[%step]
+* 2007 - Rich Hickey invents Clojure - A practical dialect of LISP on top of JVM
+* 2011 - ClojureScript - Clojure rocks, Javascript Reaches!
+* 2013 - Facebook creates react.js - A functional javascript frontend framework
+* 2015 - Dan Abramov invents http://redux.js.org/[redux] - A javascript library that imposes FP constraints on a frontend app
+* 2017, May 23 - A practical introduction to FP
+ 
+== Functional Programming in practice - Frontend
+
+Many functional languages are transpiled in Javascript: Clojure, Scala, F#, Ocaml.
+
+== Functional Programming in practice - ClojureScript
+
+The power of Clojure in the browser!
+
+== Functional Programming in practice - React.js
+
+
+++++
+<h3>Insights</h3>
+++++
+* The UI is a (pure) function of the state (virtual DOM).
+* Functions compose very well.
+
+
+++++
+<h3>Guidelines</h3>
+++++
+* Write functions that create UI components.
+* The state is a plain Javascript Object.
+* Do not mutate the state, create a new version of it (immutability).
+* Write functions that manipulate the state instead of the DOM (reduce the presence of the dirty stuff).
+* The framework will update the DOM efficiently.
+* Separate UI components from Logic components.
+
+== React.js in action - A pure component
+
+[%step]
+--
+++++
+<pre><code class="eval-jsx" data-gist-id="viebel/527582f3d3fa2ea28ada99fc63fe2383">
+</code></pre>
+++++
+--
+
+[%step]
+--
+[source.eval-js]
+----
+ReactDOM.render(React.createElement(Square, {value: 42,
+                                             onClick: () => alert("clicked")}), klipse_container)
+----
+--
+
+++++
+<br/>
+<br/>
+++++
+
+[%step]
+--
+[source.render-jsx]
+----
+<Square
+value={26}
+  onClick={() => alert("clicked")}
+/>
+----
+++++
+<br/>
+<br/>
+++++
+--
+
+[%step]
+--
+Exercise: display the value when the square is clicked
+--
+
+== React.js in action - modifying the state
+
+[%step]
+--
+[source.eval-jsx]
+----
+class SquareLogic extends React.Component {
+  constructor(props) {
+    super(props)
+    this.state = {
+      val: 10
+    }
+  }
+  increment() {
+    let state = R.assoc('val', this.state.val + 1, this.state)
+    this.setState(state)
+  }
+  render() {
+    return (
+      <Square value={this.state.val}
+      onClick= {() => this.increment()}/>
+      )
+  }
+}
+window.SquareLogic = SquareLogic
+----
+
+
+[source.render-jsx]
+----
+<SquareLogic/>
+----
+--
+== Functional Programming in practice - Redux
+
+http://redux.js.org/docs/introduction/ThreePrinciples.html[Three principles] (constraints):
+
+* Single source of truth
+* State is read-only
+* Changes are made with pure functions
+
+[%step]
+--
+Many Positive consequences:
+
+* Easy to test
+* Easy to track actions
+* Easy to visualize state of the app
+* Time travel (undo)
+* Send state over the wire
+* Store/Retrieve state from localStorage
+--
+
+== Redux in action
+
+[%step]
+--
+Component
+[source.eval-js]
+----
+const mapDispatchToProps = (dispatch) => ({
+  onClick() {
+    dispatch(incrementSquareValue())
+  }
+})
+const mapStateToProps = (state) => ({
+  value: state.square.value
+})
+window.SquareRedux = ReactRedux.connect(mapStateToProps, mapDispatchToProps)(Square)
+----
+--
+
+[%step]
+--
+Actions
+[source.eval-js]
+----
+incrementSquareValue = () => ({
+  type: 'INCREMENT_SQUARE_VALUE'
+})
+----
+--
+
+[%step]
+--
+Reducers
+[source.eval-js]
+----
+square = (state={value: 0}, action) => {
+  switch(action.type) {
+    case 'INCREMENT_SQUARE_VALUE':
+      return R.assoc('value', state.value + 1, state)
+    default:
+      return state
+                    }
+}
+app = Redux.combineReducers({square: square})
+----
+--
+[%step]
+--
+The store
+[source.eval-js]
+----
+store = Redux.createStore(app)
+----
+--
+
+[%step]
+--
+The App
+[source.render-jsx]
+----
+<ReactRedux.Provider store={store}>
+  <SquareRedux/>
+</ReactRedux.Provider> 
+----
+--
+++++
+<br/>
+<br/>
+++++
+
+[%step]
+--
+Playground
+[source.eval-js]
+----
+// store.dispatch(incrementSquareValue())
+// store.getState()
+----
+--
+
+
+== Functional Programming in practice - Backend (Web server, micro services)
+
+* The development process of a web server is much more effective with languages that support FP
+* Examples: ruby, node.js, clojure, Scala.
+* Much less boilerplate than Object Oriented: no need to wrap  everything in an object.
+* Dynamic type - Much simpler to manipulate data with maps (dictionaries) and arrays.
+
+* Sometimes, you need to leverage the java ecosystem.
+* No problem, let's build a functional language that is compiled into Java ByteCode and creates a syntax for *interop*: interacting with the hosting language.
+* Examples: Scala, Clojure.
+
+== Functional Programming in practice - Big Data
+
+When we need to write a (relatively small) worker that is part of a computation pipe, we need a language:
+
+- lightweight
+- easy to manipulate JSON-like data
+- combine functions
+- immutability is effective
+- stateless
+
+Examples: Spark (scala), Storm (Clojure), Onyx (Clojure)
+
+== Functional Programming - more
+
+* Unit Tests
+* The REPL
+* Generative testing (a.k.a. Property based testing)
+* Macros
+* Homoiconicity
+* Pattern matching
+* Tail-call recursion
+
+
+== Going further
+
+* https://mitpress.mit.edu/sicp/full-text/book/book.html[Structure and Interpretation of Computer Programs (SICP)] - The bible of functional programming
+* http://blog.klipse.tech/[My Blog] - An interactive journey into functional programming with Yehonathan Sharvit
+* http://blog.klipse.tech/lambda/2016/08/10/almost-y-combinator-javascript.html[Introducing the Y-combinator]
+* http://www-formal.stanford.edu/jmc/recursive.pdf[The original McCarthy paper about LISP]
+* http://redux.js.org/[Redux]
+* https://facebook.github.io/react/[React.js]
+* https://clojure.org/[Clojure]
+* https://www.youtube.com/watch?v=-6BsiVyC1kM[The Value of Values - by the author of Clojure]
+
+== Discussion and Questions
+
+image::images/questions.jpg[questions]
+
+
+
+include::klipse.adoc[]
+++++
+<script src="https://cdnjs.cloudflare.com/ajax/libs/react/15.5.4/react-with-addons.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/react/15.5.4/react-dom.min.js"></script>
+<script src="https://cdn.jsdelivr.net/ramda/0.23/ramda.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/immutable/3.8.1/immutable.min.js"></script>
+<link rel="stylesheet" media="screen" href="http://slides.klipse.tech/klipse-meetup-react-2017-jan/game.css">
+<script src="https://cdnjs.cloudflare.com/ajax/libs/redux/3.6.0/redux.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/react-redux/5.0.5/react-redux.min.js"></script>
+++++
