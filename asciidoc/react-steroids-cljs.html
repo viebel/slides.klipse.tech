@@ -19,15 +19,24 @@
 <section class="slide" id="title-slide">
 <h1>React on steroids with ClojureScript</h1>
 </section>
+<div id="preamble">
+<div class="sectionbody">
+<pre class="hidden"><code class="clj">
+(ns my.m$macros)
+(require '[reagent.core :as r])
+(require '[reagent.ratom :as ratom])
+
+</code></pre>
+</div>
+</div>
 <section class="slide" id="_agenda">
 <h2>Agenda</h2>
 <div class="ulist">
 <ul>
 <li>ClojureScript: a pragmatic LISP</li>
 <li>Hiccup: HTML as data</li>
-<li>Reagent: an elegant interface to React</li>
-<li>More about ClojureScript</li>
-<li>References</li>
+<li>Reagent: an elegant ClojureScript interface to React</li>
+<li>Going further</li>
 </ul>
 </div>
 </section>
@@ -122,10 +131,11 @@ LISP stands for LIst Processing.</p></div>
 </section>
 <section class="slide" id="_interactivity">
 <h2>Interactivity</h2>
-<div class="paragraph"><p>You can follow this presentation on your desktop, tablet, phone&#8230;&#8203;</p></div>
+<div class="paragraph"><p>You can follow this presentation on your desktop, tablet, phone&#8230;&#8203;<br>
+All the code snippets are interative!</p></div>
               <div class="left">
 		<img src='https://chart.googleapis.com/chart?cht=qr&chl=http%3A%2F%2Fslides.klipse.tech%2Fasciidoc%2Freact-steroids-cljs.html&chs=300x300' alt='qr code'></img>
-		<a style="font-size:3em;" href="https://tinyurl.com/introFP"> https://tinyurl.com/introFP </a>
+		<a style="font-size:3em;" href="https://tinyurl.com/introFP"> https://tinyurl.com/recljs </a>
 	      </div>
 <div class="imageblock">
 <div class="content">
@@ -133,819 +143,423 @@ LISP stands for LIst Processing.</p></div>
 </div>
 </div>
 </section>
-<section class="slide" id="_functions_passed_to_variable_definitions">
-<h2>Functions - passed to variable definitions</h2>
+<section class="slide" id="_clojure_immutable_data_structures">
+<h2>Clojure - Immutable data structures</h2>
 <div class="openblock slide">
 <div class="content">
-<div class="paragraph"><p>Javascript</p></div>
-<div class="listingblock eval-js">
-<div class="content">
-<pre class="highlight"><code>function foo() { return 42}
-var bar = function() { return 43}
-x = [foo(), bar()]</code></pre>
-</div>
-</div>
-</div>
-</div>
-<div class="openblock slide">
-<div class="content">
-<div class="paragraph"><p>EcmaScript6</p></div>
-<div class="listingblock eval-js">
-<div class="content">
-<pre class="highlight"><code>baz = () =&gt; 42
-baz()</code></pre>
-</div>
-</div>
-</div>
-</div>
-<div class="openblock slide">
-<div class="content">
-<div class="paragraph"><p>Clojure</p></div>
-<div class="listingblock clj">
-<div class="content">
-<pre class="highlight"><code>(defn foox [] 42)
-(def bax (fn [] 43))
-[(foox) (bax)]</code></pre>
-</div>
-</div>
-</div>
-</div>
-<div class="openblock slide">
-<div class="content">
-<div class="paragraph"><p>Ruby</p></div>
-<div class="listingblock ruby">
-<div class="content">
-<pre class="highlight"><code>def foow
-  42
-end
-baw  = -&gt;() { 43 }
-[foow(), baw[]]</code></pre>
-</div>
-</div>
-</div>
-</div>
-</section>
-<section class="slide" id="_functions_passed_as_arguments_to_functions">
-<h2>Functions - passed as arguments to functions</h2>
-<div class="paragraph"><p>In function languages, you can create anonymous functions i.e. functions that don&#8217;t have a name.</p></div>
-<div class="openblock slide">
-<div class="content">
-<div class="paragraph"><p>Javascript</p></div>
-<div class="listingblock eval-js">
-<div class="content">
-<pre class="highlight"><code>[1,2,3].map(function(x) { return x + 1})</code></pre>
-</div>
-</div>
-</div>
-</div>
-<div class="openblock slide">
-<div class="content">
-<div class="paragraph"><p>EcmaScript6</p></div>
-<div class="listingblock eval-js">
-<div class="content">
-<pre class="highlight"><code>[1,2,3].map((x) =&gt; x+1)</code></pre>
-</div>
-</div>
-</div>
-</div>
-<div class="openblock slide">
-<div class="content">
-<div class="paragraph"><p>Clojure</p></div>
-<div class="listingblock clj">
-<div class="content">
-<pre class="highlight"><code>(map inc [1 2 3])</code></pre>
-</div>
-</div>
-</div>
-</div>
-<div class="openblock slide">
-<div class="content">
-<div class="paragraph"><p>Ruby</p></div>
-<div class="listingblock ruby">
-<div class="content">
-<pre class="highlight"><code>[1,2,3].map {|x|
-  x + 1
-  }</code></pre>
-</div>
-</div>
-</div>
-</div>
-</section>
-<section class="slide" id="_functions_that_return_functions">
-<h2>Functions that return functions</h2>
-<div class="paragraph"><p>An important function in FP is <code>partial</code> (or <code>curry</code>).</p></div>
-<div class="paragraph"><p><code>partial</code> takes a function and a list of arguments and returns a function where some arguments are fixed.</p></div>
-<div class="paragraph"><p>Let&#8217;s see it in action!</p></div>
-<div class="openblock slide">
-<div class="content">
-<div class="paragraph"><p>Javascript<br>
-We are going to use <a href="http://ramdajs.com/">Ramda</a>.</p></div>
-<div class="listingblock eval-js">
-<div class="content">
-<pre class="highlight"><code>function add(x, y) { return x + y}
-var add10 = R.partial(add, [10])
-add10(19)</code></pre>
-</div>
-</div>
-</div>
-</div>
-<div class="openblock slide">
-<div class="content">
-<div class="paragraph"><p>EcmaScript6</p></div>
-<div class="listingblock eval-js">
-<div class="content">
-<pre class="highlight"><code>const add = (x, y) =&gt; x + y
-const add10 = R.partial(add, [10])
-add10(19)</code></pre>
-</div>
-</div>
-</div>
-</div>
-<div class="openblock slide">
-<div class="content">
-<div class="paragraph"><p>Clojure</p></div>
-<div class="listingblock clj">
-<div class="content">
-<pre class="highlight"><code>(defn add [x y] (+ x y))
-(let [add10 (partial add 10)]
-  (add10 32))</code></pre>
-</div>
-</div>
-</div>
-</div>
-<div class="openblock slide">
-<div class="content">
-<div class="paragraph"><p>Ruby<br>
-In ruby, it&#8217;s called <code>curry</code>.</p></div>
-<div class="listingblock ruby">
-<div class="content">
-<pre class="highlight"><code>add  = -&gt;(x,y) do x + y end
-add10 = add.curry.(10)
-add10.(9)</code></pre>
-</div>
-</div>
-</div>
-</div>
-</section>
-<section class="slide" id="_exercise">
-<h2>Exercise</h2>
-<div class="paragraph"><p>Let&#8217;s write our own version of <code>partial</code>:</p></div>
-<div class="openblock slide">
-<div class="content">
-<div class="paragraph"><p>in ES6</p></div>
-<div class="listingblock eval-js">
-<div class="content">
-<pre class="highlight"><code>partial = () =&gt; 1</code></pre>
-</div>
-</div>
-<div class="paragraph"><p>If you prefer you can write it in <code>clojure</code>:</p></div>
-<div class="listingblock clj">
-<div class="content">
-<pre class="highlight"><code>(defn my-partial [f x])</code></pre>
-</div>
-</div>
-<div class="paragraph"><p>or in ruby:</p></div>
-<div class="listingblock ruby">
-<div class="content">
-<pre class="highlight"><code>def partial(f, x)
-end</code></pre>
-</div>
-</div>
-</div>
-</div>
-<div class="openblock slide">
-<div class="content">
-<div class="listingblock eval-js">
-<div class="content">
-<pre class="highlight"><code>partial = (f, x) =&gt; (y) =&gt; f(x, y)
-partial(add, 10)(9)</code></pre>
-</div>
-</div>
-</div>
-</div>
-</section>
-<section class="slide" id="_declarative_style">
-<h2>Declarative style</h2>
-<div class="paragraph"><p>Let&#8217;s compare <code>map</code> and <code>for</code> in javascript.</p></div>
-<div class="paragraph"><p>With <code>map</code>, you don&#8217;t deal with low-level details<br>
-You only express what to do with each element of the array.</p></div>
-<div class="openblock slide">
-<div class="content">
-<div class="listingblock eval-js">
-<div class="content">
-<pre class="highlight"><code>[1,2,3].map(x =&gt; x + 1)</code></pre>
-</div>
-</div>
-</div>
-</div>
-<div class="openblock slide">
-<div class="content">
-<div class="paragraph"><p>With <code>for</code>, you have deal with low-level details.</p></div>
-<div class="paragraph"><p>You have to express:</p></div>
-<div class="ulist">
-<ul>
-<li>how the array is iterated</li>
-<li>what is the name of the index</li>
-<li>how the elements are combined in the returned array</li>
-</ul>
-</div>
-<div class="listingblock eval-js">
-<div class="content">
-<pre class="highlight"><code>const arr = [1,2,3]
-const f = x =&gt; x + 1
-let retArr = []
-for(let i = 0; i &lt; arr.length; i++) {
-  retArr.push(f(arr[i]))
-}
-retArr</code></pre>
-</div>
-</div>
-</div>
-</div>
-</section>
-<section class="slide" id="_pure_functions">
-<h2>Pure functions</h2>
-<div class="openblock slide">
-<div class="content">
-<div class="paragraph"><p>A pure function</p></div>
-<div class="ulist">
-<ul>
-<li>depends only on its parameters (not on a global state)</li>
-<li>has no side effects</li>
-</ul>
-</div>
-</div>
-</div>
-<div class="openblock slide">
-<div class="content">
-<div class="paragraph"><p>Pure functions are much simpler</p></div>
-<div class="ulist">
-<ul>
-<li>to combine</li>
-<li>to test</li>
-<li>to debug</li>
-<li>to understand</li>
-<li>to refactor</li>
-</ul>
-</div>
-</div>
-</div>
-</section>
-<section class="slide" id="_pure_functions_no_implicit_dependencies">
-<h2>Pure functions - no implicit dependencies</h2>
-<div class="openblock slide">
-<div class="content">
-<div class="paragraph"><p>This function depends on a global parameter</p></div>
-<div class="listingblock eval-js">
-<div class="content">
-<pre class="highlight"><code>const N = 1e9
-const rand = () =&gt; Math.round(N*Math.random())
-rand()</code></pre>
-</div>
-</div>
-</div>
-</div>
-<div class="openblock slide">
-<div class="content">
-<div class="paragraph"><p>Let&#8217;s rewrite it as a pure function</p></div>
-<div class="listingblock eval-js">
-<div class="content">
-<pre class="highlight"><code>const rand = (max) =&gt; Math.round(max*Math.random())
-rand(1e9)</code></pre>
-</div>
-</div>
-</div>
-</div>
-</section>
-<section class="slide" id="_pure_functions_no_side_effects">
-<h2>Pure functions - no side effects</h2>
-<div class="openblock slide">
-<div class="content">
-<div class="paragraph"><p>This function writes the error to the console in case of a failure.</p></div>
-<div class="paragraph"><p>How will you test such a function?</p></div>
-<div class="listingblock eval-js">
-<div class="content">
-<pre class="highlight"><code>const trySomething = (x) =&gt; {
-  if (x) {
-    return x*42
-  }
-  console.log(`I cannot do ${x}`)
-}
-trySomething()</code></pre>
-</div>
-</div>
-</div>
-</div>
-<div class="openblock slide">
-<div class="content">
-<div class="paragraph"><p>Let&#8217;s rewrite it as a pure function.<br>
-We will return an array with:</p></div>
-<div class="ulist">
-<ul>
-<li>the status</li>
-<li>the data</li>
-</ul>
-</div>
-<div class="listingblock eval-js">
-<div class="content">
-<pre class="highlight"><code>trySomethingPure = (x) =&gt; {
-  if (x) {
-    return ["ok", x*42]
-  }
-  return ["error", `I cannot do ${x}`]
-}
-trySomethingPure(1)</code></pre>
-</div>
-</div>
-</div>
-</div>
-</section>
-<section class="slide" id="_immutability_the_problem">
-<h2>Immutability - the problem</h2>
-<div class="openblock slide">
-<div class="content">
-<div class="paragraph"><p>In non-functional languages, the default API mutates our objects.<br>
-You modify <code>b</code> and in fact, you modify also <code>a</code>!</p></div>
-</div>
-</div>
-<div class="openblock slide">
-<div class="content">
-<div class="paragraph"><p>In javascript:</p></div>
-<div class="listingblock eval-js">
-<div class="content">
-<pre class="highlight"><code>const a = {size: 42};
-b = a;
-b.size = 43
-a</code></pre>
-</div>
-</div>
-</div>
-</div>
-<div class="openblock slide">
-<div class="content">
-<div class="paragraph"><p>In ruby:</p></div>
-<div class="listingblock ruby">
-<div class="content">
-<pre class="highlight"><code>a = {size: 42}
-b = a
-b['size'] = 33
-a</code></pre>
-</div>
-</div>
-</div>
-</div>
-<div class="openblock slide">
-<div class="content">
-<div class="paragraph"><p>In clojure, no problem: clojure data structures are immutable!</p></div>
-</div>
-</div>
-</section>
-<section class="slide" id="_immutability_the_solution">
-<h2>Immutability - the solution</h2>
-<div class="paragraph"><p>Instead of mutating an object, you create a new version of it.<br>
-Usually, this is not effective.<br>
-But some languages (e.g. clojure) support immutability natively and provide an effective implementation of persistent data structure.</p></div>
-<div class="openblock slide">
-<div class="content">
-<div class="paragraph"><p>Clojure</p></div>
-<div class="listingblock clj">
-<div class="content">
-<pre class="highlight"><code>(let [a {:size 42}
-      b a
-      c (assoc b :size 33)]
-  [a b c])</code></pre>
-</div>
-</div>
-</div>
-</div>
-<div class="openblock slide">
-<div class="content">
-<div class="paragraph"><p>In order to enjoy immutability in Javascript, you have to use a library like <a href="https://facebook.github.io/immutable-js/">immutable.js</a></p></div>
-</div>
-</div>
-<div class="openblock slide">
-<div class="content">
-<div class="listingblock eval-js">
-<div class="content">
-<pre class="highlight"><code>a = Immutable.fromJS({size: {shoes: 42 }})
-b = a.setIn(["size", "shoes"], 43)
-a</code></pre>
-</div>
-</div>
-</div>
-</div>
-<div class="openblock slide">
-<div class="content">
-<div class="paragraph"><p>There is a <a href="https://github.com/hamstergem/hamster">immutable library</a> available for ruby</p></div>
-</div>
-</div>
-</section>
-<section class="slide" id="_laziness">
-<h2>Laziness</h2>
-<div class="paragraph"><p>In functional languages, some sequences are lazy.<br>
-The elements are evaluated only when we really need them.</p></div>
-<div class="paragraph"><p>Let&#8217;s see some examples in <code>clojure</code>:</p></div>
-<div class="openblock slide">
-<div class="content">
-<div class="listingblock clj">
-<div class="content">
-<pre class="highlight"><code>(def lazy-a (map (fn [x] (println "val:" x) x) [1 2 3]))</code></pre>
-</div>
-</div>
-<div class="paragraph"><p>Nothing is printed, until we access the elements&#8230;&#8203;</p></div>
+<div class="paragraph"><p>Data structures are immutable.<br>
+You cannot change an object.<br>
+You can only compute a new version of the object.</p></div>
 </div>
 </div>
 <div class="openblock slide">
 <div class="content">
 <div class="listingblock clj">
 <div class="content">
-<pre class="highlight"><code>(nth lazy-a 0)</code></pre>
+<pre class="highlight"><code>(def a {:hello "React"})
+(assoc a :hello "Reagent")</code></pre>
 </div>
 </div>
-</div>
-</div>
-</section>
-<section class="slide" id="_laziness_infinite_sequences">
-<h2>Laziness - infinite sequences</h2>
-<div class="paragraph"><p>Nothing prevents from lazy sequences to be infinite!</p></div>
-<div class="openblock slide">
-<div class="content">
-<div class="paragraph"><p>All the natural numbers</p></div>
 <div class="listingblock clj">
 <div class="content">
-<pre class="highlight"><code>(def natural-numbers (range))
-(take 10 natural-numbers)</code></pre>
+<pre class="highlight"><code>a</code></pre>
 </div>
 </div>
 </div>
 </div>
 <div class="openblock slide">
 <div class="content">
-<div class="paragraph"><p>Infinite repetition of an element</p></div>
+<div class="paragraph"><p>The cool thing is that it is performant.<br>
+Read <a href="http://hypirion.com/musings/understanding-persistent-vector-pt-1">here</a> if you want to understand this magic.</p></div>
+</div>
+</div>
+</section>
+<section class="slide" id="_immutability_why_is_it_so_good">
+<h2>Immutability - why is it so good</h2>
+<div class="openblock slide">
+<div class="content">
+<div class="paragraph"><p>Simpler to reason.<br>
+Kills lots of bugs before they arise.</p></div>
+</div>
+</div>
+<div class="openblock slide">
+<div class="content">
+<div class="paragraph"><p>Great performance in react-like apps (<code>shouldComponentUpdate</code>).<br>
+With immutable data, comparing two data structures is done via pointer comparison (recursively).<br>
+Actually, in many cases ClojureScript react apps are faster than javascript react apps.</p></div>
+</div>
+</div>
+</section>
+<section class="slide" id="_clojure_atoms_and_mutations">
+<h2>Clojure - atoms and mutations</h2>
+<div class="openblock slide">
+<div class="content">
+<div class="paragraph"><p>Mutations are achieved with a specific mechanism called <code>atom</code>.<br>
+The atom itself is not mutable but the "content" of the atom is mutable.<br>
+In order to get the "content" of an atom, you have to <code>deref</code> it.</p></div>
+</div>
+</div>
+<div class="openblock slide">
+<div class="content">
 <div class="listingblock clj">
 <div class="content">
-<pre class="highlight"><code>(def infinite-hello (repeat :hello))
-(nth infinite-hello 100)</code></pre>
+<pre class="highlight"><code>(def a-atom (atom {:hello "React"}))
+@a-atom</code></pre>
 </div>
 </div>
-<div class="paragraph"><p>Don&#8217;t try to count the elements!</p></div>
 </div>
 </div>
 <div class="openblock slide">
 <div class="content">
-<div class="paragraph"><p>An infinite sequence of random numbers</p></div>
+<div class="paragraph"><p>Two ways to change the content of an atom: <code>reset!</code> and <code>swap!</code>:</p></div>
 <div class="listingblock clj">
 <div class="content">
-<pre class="highlight"><code>(def infinite-random-numbers (repeatedly (partial rand-int 100)))
-(nth infinite-random-numbers 345)</code></pre>
+<pre class="highlight"><code>(reset! a-atom {:hello "Reagent"})
+@a-atom</code></pre>
+</div>
+</div>
+</div>
+</div>
+<div class="openblock slide">
+<div class="content">
+<div class="listingblock clj">
+<div class="content">
+<pre class="highlight"><code>(swap! a-atom assoc :chalom "Next")
+@a-atom</code></pre>
 </div>
 </div>
 </div>
 </div>
 </section>
-<section class="slide" id="_a_brief_history_of_functional_programming">
-<h2>A brief history of Functional Programming</h2>
+<section class="slide" id="_macros_the_language_itself_is_extensible">
+<h2>Macros - the language itself is extensible</h2>
+<div class="paragraph"><p>This is one of the most powerful feature of LISP languages.</p></div>
 <div class="openblock slide">
 <div class="content">
-<h3>1930: λ-calculus</h3>
+<div class="listingblock clj">
+<div class="content">
+<pre class="highlight"><code>(defmacro deflog [name args body]
+  `(defn ~name ~args (println (str "LOG: "'~name " was called")) ~@body))</code></pre>
+</div>
+</div>
+</div>
+</div>
+<div class="openblock slide">
+<div class="content">
+<div class="paragraph"><p>Let&#8217;s see it in action:</p></div>
+<div class="listingblock clj">
+<div class="content">
+<pre class="highlight"><code>(my.m/deflog hello-me [name]
+  (str "hello " name))
+
+(hello-me "React Next")</code></pre>
+</div>
+</div>
+</div>
+</div>
+<div class="paragraph slide"><p>Macros work particularly well in LISP because code is data (homoiconicity).<br>
+Therefore, manipulating code is usually a matter of list manipulation.</p></div>
+<div class="openblock">
+<div class="content">
+
+</div>
+</div>
+<div class="openblock slide">
+<div class="content">
+<div class="paragraph"><p>Let&#8217;s see it how the macro has been expanded:</p></div>
+<div class="listingblock clj">
+<div class="content">
+<pre class="highlight"><code>(macroexpand-1 '(my.m/deflog hello-me [name]
+  (str "hello " name)))</code></pre>
+</div>
+</div>
+</div>
+</div>
+<div class="openblock slide">
+<div class="content">
 <div class="ulist">
 <ul>
-<li>Alonzo Church discovers the  <a href="https://en.wikipedia.org/wiki/Lambda_calculus">λ-calculus</a></li>
-<li>Everything is a (anonymous) function with one argument</li>
-<li>No names in the language - only function argument</li>
-<li>Even numbers are expressed as functions</li>
-<li>0 := λfx.x</li>
-<li>1 := λfx.f x</li>
-<li>2 := λfx.f (f x)</li>
+<li>In fact, many terms of the language are just macros that a developer could have written: <code>for</code>, <code>when</code>, <code>&#8594;</code> &#8230;&#8203;</li>
+<li>If javascript had a macro system, it would have been much simpler to create JSX (or maybe a better solution)</li>
+</ul>
+</div>
+</div>
+</div>
+</section>
+<section class="slide" id="_hiccup_html_as_data">
+<h2>HICCUP - HTML as data</h2>
+<div class="openblock slide">
+<div class="content">
+<div class="paragraph"><p>Representing HTML in Clojure Data Structures:</p></div>
+<div class="ulist">
+<ul>
+<li>vectors to represent elements</li>
+<li>maps to represent an element&#8217;s attributes</li>
 </ul>
 </div>
 </div>
 </div>
 <div class="openblock slide">
 <div class="content">
-<h3>1958: LISP</h3>
-<div class="ulist">
-<ul>
-<li>John McCarthy invents <a href="https://en.wikipedia.org/wiki/Lisp_(programming_language)">LISP</a></li>
-<li>It is the 1st FP language</li>
-<li>Everything is a S-Expression: <code>(+ 1 2 3)</code> instead of <code>1 + 2 + 3</code> or <code>+(1,2,3)</code></li>
-<li>Only 7 terms: CAR, CDR, ATOM, LAMBDA, LABEL, COND, QUOTE</li>
-</ul>
+<div class="listingblock reagent">
+<div class="content">
+<pre class="highlight"><code>[:div "Hello World"]</code></pre>
+</div>
 </div>
 </div>
 </div>
 <div class="openblock slide">
 <div class="content">
-<h3>1995: Javascript the language of the browser</h3>
-<div class="ulist">
-<ul>
-<li>Brendan Eich is recruited by Netscape to do "scheme in the browser"</li>
-<li>Eventually, he invents Javascript</li>
-<li>Functions are 1st class citizens</li>
-</ul>
+<div class="listingblock reagent">
+<div class="content">
+<pre class="highlight"><code>[:p
+ "Hello "
+ [:a {:href "https://en.wikipedia.org/wiki/World"} "World"]
+ "."]</code></pre>
+</div>
 </div>
 </div>
 </div>
 <div class="openblock slide">
 <div class="content">
-<h3>2004: Scala - FP on the JVM</h3>
-<div class="ulist">
-<ul>
-<li>2004 - Martin Odersky invents Scala</li>
-<li>A JVM statically typed language with functional programming support</li>
-<li>It is very complicated!!!</li>
-</ul>
-</div>
-</div>
-</div>
-</section>
-<section class="slide" id="_a_brief_history_of_functional_programming_cont">
-<h2>A brief history of Functional Programming (cont.)</h2>
-<div class="ulist">
-<ul>
-<li class="slide">2007 - Rich Hickey invents Clojure - A practical dialect of LISP on top of JVM</li>
-<li class="slide">2011 - ClojureScript - Clojure rocks, Javascript Reaches!</li>
-<li class="slide">2013 - Facebook creates react.js - A functional javascript frontend framework</li>
-<li class="slide">2015 - Dan Abramov invents <a href="http://redux.js.org/">redux</a> - A javascript library that imposes FP constraints on a frontend app</li>
-<li class="slide">2017, May 23 - A practical introduction to FP</li>
-</ul>
-</div>
-</section>
-<section class="slide" id="_functional_programming_in_practice_frontend">
-<h2>Functional Programming in practice - Frontend</h2>
-<div class="paragraph"><p>Many functional languages are transpiled in Javascript: Clojure, Scala, F#, Ocaml.</p></div>
-</section>
-<section class="slide" id="_functional_programming_in_practice_clojurescript">
-<h2>Functional Programming in practice - ClojureScript</h2>
-<div class="paragraph"><p>The power of Clojure in the browser!</p></div>
-</section>
-<section class="slide" id="_functional_programming_in_practice_react_js">
-<h2>Functional Programming in practice - React.js</h2>
-<h3>Insights</h3>
-<div class="ulist">
-<ul>
-<li>The UI is a (pure) function of the state (virtual DOM).</li>
-<li>Functions compose very well.</li>
-</ul>
-</div>
-<h3>Guidelines</h3>
-<div class="ulist">
-<ul>
-<li>Write functions that create UI components.</li>
-<li>The state is a plain Javascript Object.</li>
-<li>Do not mutate the state, create a new version of it (immutability).</li>
-<li>Write functions that manipulate the state instead of the DOM (reduce the presence of the dirty stuff).</li>
-<li>The framework will update the DOM efficiently.</li>
-<li>Separate UI components from Logic components.</li>
-</ul>
-</div>
-</section>
-<section class="slide" id="_react_js_in_action_a_pure_component">
-<h2>React.js in action - A pure component</h2>
-<div class="openblock slide">
+<div class="paragraph"><p>What about styles?</p></div>
+<div class="listingblock reagent">
 <div class="content">
-<pre><code class="eval-jsx" data-gist-id="viebel/527582f3d3fa2ea28ada99fc63fe2383">
-</code></pre>
+<pre class="highlight"><code>[:p
+ "Hello "
+ [:span {:style {:color "red"}} "World"]
+ "."]</code></pre>
+</div>
+</div>
 </div>
 </div>
 <div class="openblock slide">
 <div class="content">
-<div class="listingblock eval-js">
+<div class="paragraph"><p>Hiccup also supports shorthands for classes, ids and also element squeezing with <code>&gt;</code>:</p></div>
+<div class="listingblock reagent">
 <div class="content">
-<pre class="highlight"><code>ReactDOM.render(React.createElement(Square, {value: 42,
-                                             onClick: () =&gt; alert("clicked")}), klipse_container)</code></pre>
+<pre class="highlight"><code>[:div#foo-12.supercool "My Div"]</code></pre>
 </div>
 </div>
-</div>
-</div>
-<br/>
-<br/>
-<div class="openblock slide">
+<div class="listingblock reagent">
 <div class="content">
-<div class="listingblock render-jsx">
-<div class="content">
-<pre class="highlight"><code>&lt;Square
-value={26}
-  onClick={() =&gt; alert("clicked")}
-/&gt;</code></pre>
-</div>
-</div>
-<br/>
-<br/>
-</div>
-</div>
-<div class="openblock slide">
-<div class="content">
-<div class="paragraph"><p>Exercise: display the value when the square is clicked</p></div>
-</div>
-</div>
-</section>
-<section class="slide" id="_react_js_in_action_modifying_the_state">
-<h2>React.js in action - modifying the state</h2>
-<div class="openblock slide">
-<div class="content">
-<div class="listingblock eval-jsx">
-<div class="content">
-<pre class="highlight"><code>class SquareLogic extends React.Component {
-  constructor(props) {
-    super(props)
-    this.state = {
-      val: 10
-    }
-  }
-  increment() {
-    let state = R.assoc('val', this.state.val + 1, this.state)
-    this.setState(state)
-  }
-  render() {
-    return (
-      &lt;Square value={this.state.val}
-      onClick= {() =&gt; this.increment()}/&gt;
-      )
-  }
-}
-window.SquareLogic = SquareLogic</code></pre>
-</div>
-</div>
-<div class="listingblock render-jsx">
-<div class="content">
-<pre class="highlight"><code>&lt;SquareLogic/&gt;</code></pre>
+<pre class="highlight"><code>[:div&gt;p&gt;s "Nested Element"]</code></pre>
 </div>
 </div>
 </div>
 </div>
 </section>
-<section class="slide" id="_functional_programming_in_practice_redux">
-<h2>Functional Programming in practice - Redux</h2>
-<div class="paragraph"><p><a href="http://redux.js.org/docs/introduction/ThreePrinciples.html">Three principles</a> (constraints):</p></div>
-<div class="ulist">
-<ul>
-<li>Single source of truth</li>
-<li>State is read-only</li>
-<li>Changes are made with pure functions</li>
-</ul>
-</div>
+<section class="slide" id="_hiccup_clean">
+<h2>HICCUP - clean</h2>
+<div class="paragraph"><p>Unlike with JSX,  you can use any construct of the language:</p></div>
 <div class="openblock slide">
 <div class="content">
-<div class="paragraph"><p>Many Positive consequences:</p></div>
-<div class="ulist">
-<ul>
-<li>Easy to test</li>
-<li>Easy to track actions</li>
-<li>Easy to visualize state of the app</li>
-<li>Time travel (undo)</li>
-<li>Send state over the wire</li>
-<li>Store/Retrieve state from localStorage</li>
-</ul>
-</div>
-</div>
-</div>
-</section>
-<section class="slide" id="_redux_in_action">
-<h2>Redux in action</h2>
-<div class="openblock slide">
+<div class="listingblock reagent">
 <div class="content">
-<div class="paragraph"><p>Component</p></div>
-<div class="listingblock eval-js">
-<div class="content">
-<pre class="highlight"><code>const mapDispatchToProps = (dispatch) =&gt; ({
-  onClick() {
-    dispatch(incrementSquareValue())
-  }
-})
-const mapStateToProps = (state) =&gt; ({
-  value: state.square.value
-})
-window.SquareRedux = ReactRedux.connect(mapStateToProps, mapDispatchToProps)(Square)</code></pre>
-</div>
-</div>
-</div>
-</div>
-<div class="openblock slide">
-<div class="content">
-<div class="paragraph"><p>Actions</p></div>
-<div class="listingblock eval-js">
-<div class="content">
-<pre class="highlight"><code>incrementSquareValue = () =&gt; ({
-  type: 'INCREMENT_SQUARE_VALUE'
-})</code></pre>
-</div>
-</div>
-</div>
-</div>
-<div class="openblock slide">
-<div class="content">
-<div class="paragraph"><p>Reducers</p></div>
-<div class="listingblock eval-js">
-<div class="content">
-<pre class="highlight"><code>square = (state={value: 0}, action) =&gt; {
-  switch(action.type) {
-    case 'INCREMENT_SQUARE_VALUE':
-      return R.assoc('value', state.value + 1, state)
-    default:
-      return state
-                    }
-}
-app = Redux.combineReducers({square: square})</code></pre>
-</div>
-</div>
-</div>
-</div>
-<div class="openblock slide">
-<div class="content">
-<div class="paragraph"><p>The store</p></div>
-<div class="listingblock eval-js">
-<div class="content">
-<pre class="highlight"><code>store = Redux.createStore(app)</code></pre>
-</div>
-</div>
-</div>
-</div>
-<div class="openblock slide">
-<div class="content">
-<div class="paragraph"><p>The App</p></div>
-<div class="listingblock render-jsx">
-<div class="content">
-<pre class="highlight"><code>&lt;ReactRedux.Provider store={store}&gt;
-  &lt;SquareRedux/&gt;
-&lt;/ReactRedux.Provider&gt;</code></pre>
-</div>
-</div>
-</div>
-</div>
-<br/>
-<br/>
-<div class="openblock slide">
-<div class="content">
-<div class="paragraph"><p>Playground</p></div>
-<div class="listingblock eval-js">
-<div class="content">
-<pre class="highlight"><code>// store.dispatch(incrementSquareValue())
-// store.getState()</code></pre>
+<pre class="highlight"><code>[:ul
+ (for [i (range 5)]
+  (if (even? i)
+    [:li i]))]</code></pre>
 </div>
 </div>
 </div>
 </div>
 </section>
-<section class="slide" id="_functional_programming_in_practice_backend_web_server_micro_services">
-<h2>Functional Programming in practice - Backend (Web server, micro services)</h2>
-<div class="ulist">
-<ul>
-<li>The development process of a web server is much more effective with languages that support FP</li>
-<li>Examples: ruby, node.js, clojure, Scala.</li>
-<li>Much less boilerplate than Object Oriented: no need to wrap  everything in an object.</li>
-<li>Dynamic type - Much simpler to manipulate data with maps (dictionaries) and arrays.</li>
-<li>Sometimes, you need to leverage the java ecosystem.</li>
-<li>No problem, let&#8217;s build a functional language that is compiled into Java ByteCode and creates a syntax for <strong>interop</strong>: interacting with the hosting language.</li>
-<li>Examples: Scala, Clojure.</li>
-</ul>
+<section class="slide" id="_reagent_basic_components">
+<h2>Reagent - basic components</h2>
+<div class="paragraph slide"><p>Pure components are clojure functions</p></div>
+<div class="openblock slide">
+<div class="content">
+<div class="listingblock clj">
+<div class="content">
+<pre class="highlight"><code>(defn button [text]
+  [:button
+   {:on-click
+    (fn [e]
+      (js/alert "You pressed the button!"))}
+   text])</code></pre>
+</div>
+</div>
+<div class="paragraph"><p>We embed a component, like we embed html tags using the function name instead of a keyword:</p></div>
+</div>
+</div>
+<div class="openblock slide">
+<div class="content">
+<div class="listingblock reagent">
+<div class="content">
+<pre class="highlight"><code>[:div
+ [:div "This is a button"]
+ [button "Click me"]]</code></pre>
+</div>
+</div>
+</div>
 </div>
 </section>
-<section class="slide" id="_functional_programming_in_practice_big_data">
-<h2>Functional Programming in practice - Big Data</h2>
-<div class="paragraph"><p>When we need to write a (relatively small) worker that is part of a computation pipe, we need a language:</p></div>
+<section class="slide" id="_reagent_ratom_and_state">
+<h2>Reagent - ratom and state</h2>
+<div class="paragraph"><p>Ratom stands for reagent atom.<br>
+It has the same interface as a clojure atom: <code>reset!</code>, <code>swap!</code> and <code>@</code>.<br>
+Any component that dereferences a ratom will be automatically re-rendered.</p></div>
+<div class="openblock slide">
+<div class="content">
+<div class="listingblock clj">
+<div class="content">
+<pre class="highlight"><code>(def counter (r/atom 0))
+(defn button-inc [text]
+  [:button
+   {:on-click
+    (fn [e]
+      (swap! counter inc))}
+   text])</code></pre>
+</div>
+</div>
+<div class="paragraph"><p>If we want the ratom to be local to the component, we have to instantiate the <code>ratom</code> inside the component and return a function instead of a hiccup form</p></div>
+</div>
+</div>
+<div class="listingblock clj">
+<div class="content">
+<pre class="highlight"><code>(defn button-and-counter [text]
+  (let [counter (r/atom 0)]
+    (fn [text]
+      [:div
+       [:div "Counter: " @counter]
+       [:button
+        {:on-click
+         (fn [e]
+           (swap! counter inc))}
+        text]])))</code></pre>
+</div>
+</div>
+<div class="openblock">
+<div class="content">
+
+</div>
+</div>
+<div class="openblock slide">
+<div class="content">
+<div class="listingblock reagent">
+<div class="content">
+<pre class="highlight"><code>[button-and-counter "Click here"]</code></pre>
+</div>
+</div>
+</div>
+</div>
+<div class="paragraph"><p>The rationale is:</p></div>
 <div class="ulist">
 <ul>
-<li>lightweight</li>
-<li>easy to manipulate JSON-like data</li>
-<li>combine functions</li>
-<li>immutability is effective</li>
-<li>stateless</li>
+<li>The outer function is called once <strong>per component instance</strong>.</li>
+<li>The inner function is called once <strong>per rendering</strong>.</li>
 </ul>
 </div>
-<div class="paragraph"><p>Examples: Spark (scala), Storm (Clojure), Onyx (Clojure)</p></div>
+<div class="paragraph"><p>More details about reagent components <a href="https://github.com/Day8/re-frame/wiki/Creating-Reagent-Components">here</a>.</p></div>
 </section>
-<section class="slide" id="_functional_programming_more">
-<h2>Functional Programming - more</h2>
+<section class="slide" id="_reagent_reactions">
+<h2>Reagent - reactions</h2>
+<div class="openblock slide">
+<div class="content">
+<div class="paragraph"><p>Reactions allow you to define a <code>ratom</code> as an expression of other `ratom`s.</p></div>
+<div class="paragraph"><p>Let&#8217;s say we have a growing list of numbers and we want 3 components presenting the same list:</p></div>
 <div class="ulist">
 <ul>
-<li>Unit Tests</li>
-<li>The REPL</li>
-<li>Generative testing (a.k.a. Property based testing)</li>
-<li>Macros</li>
-<li>Homoiconicity</li>
-<li>Pattern matching</li>
-<li>Tail-call recursion</li>
+<li>in its original order</li>
+<li>sorted</li>
+<li>reversly sorted</li>
 </ul>
+</div>
+</div>
+</div>
+<div class="paragraph"><p>Let&#8217;s create a <code>ratom</code> and a <code>reaction</code>:</p></div>
+<div class="openblock slide">
+<div class="content">
+<div class="listingblock clj">
+<div class="content">
+<pre class="highlight"><code>(def numbers (r/atom (repeatedly 5 (partial rand-int 100))))
+(def sorted-numbers (reagent.ratom/reaction (sort @numbers)))</code></pre>
+</div>
+</div>
+</div>
+</div>
+<div class="paragraph"><p>And now let&#8217;s display the three components</p></div>
+<div class="openblock slide">
+<div class="content">
+<div class="listingblock reagent">
+<div class="content">
+<pre class="highlight"><code>(defn sorted-d20 []
+  [:div
+   [:button {:on-click (fn [e] (swap! numbers conj (rand-int 20)))} "Roll!"]
+   [:p (str @numbers)]
+    [:p (str @sorted-numbers)]
+    [:p (str (reverse @sorted-numbers))]])</code></pre>
+</div>
+</div>
+</div>
+</div>
+<div class="openblock slide">
+<div class="content">
+<div class="paragraph"><p>How does this magic happen?<br>
+How could the reaction be re-calculated when the atom&#8217;s value changes?</p></div>
+</div>
+</div>
+</section>
+<section class="slide" id="_reagent_cool_stuff">
+<h2>Reagent - cool stuff</h2>
+<div class="openblock slide">
+<div class="content">
+<div class="paragraph"><p>Let&#8217;s draw a small logo in SVG:</p></div>
+<div class="listingblock reagent">
+<div class="content">
+<pre class="highlight"><code>(defn logo []
+  (let [blue "#5881d8"
+        green "#63b132"]
+    [:svg {:style
+           {:width "150px"}}
+     [:circle {:r 50, :cx 75, :cy 75, :fill blue}]
+     [:circle {:r 25, :cx 75, :cy 75, :fill green}]
+     [:path {:stroke-width 12
+             :stroke "white"
+             :fill "none"
+             :d "M 30,40 C 100,40 50,110 120,110"}]]))</code></pre>
+</div>
+</div>
+</div>
+</div>
+<div class="openblock slide">
+<div class="content">
+<div class="paragraph"><p>Now, let&#8217;s duplicate them:</p></div>
+<div class="listingblock reagent">
+<div class="content">
+<pre class="highlight"><code>[:span (repeat 5 [logo])]</code></pre>
+</div>
+</div>
+</div>
 </div>
 </section>
 <section class="slide" id="_going_further">
 <h2>Going further</h2>
 <div class="ulist">
 <ul>
-<li><a href="https://mitpress.mit.edu/sicp/full-text/book/book.html">Structure and Interpretation of Computer Programs (SICP)</a> - The bible of functional programming</li>
-<li><a href="http://blog.klipse.tech/">My Blog</a> - An interactive journey into functional programming with Yehonathan Sharvit</li>
-<li><a href="http://blog.klipse.tech/lambda/2016/08/10/almost-y-combinator-javascript.html">Introducing the Y-combinator</a></li>
-<li><a href="http://www-formal.stanford.edu/jmc/recursive.pdf">The original McCarthy paper about LISP</a></li>
-<li><a href="http://redux.js.org/">Redux</a></li>
-<li><a href="https://facebook.github.io/react/">React.js</a></li>
-<li><a href="https://clojure.org/">Clojure</a></li>
-<li><a href="https://www.youtube.com/watch?v=-6BsiVyC1kM">The Value of Values - by the author of Clojure</a></li>
+<li><a href="https://github.com/Day8/re-frame">re-frame</a>: A Reagent Framework For Writing SPAs, in Clojurescript.</li>
+<li><a href="https://github.com/omcljs/om/wiki/Quick-Start-%28om.next%29">om.next</a>: A  uniform yet extensible approach to building networked interactive applications, in Clojurescript.</li>
+<li><a href="http://ramdajs.com/">Ramda.js</a>: A practical functional library for JavaScript programmers (inspired by Clojure).</li>
+<li><a href="https://facebook.github.io/immutable-js/">Immutable.js</a>: Immutable collections for JavaScript (inspired by Clojure).</li>
+<li><a href="http://redux.js.org/">Redux</a> - inspired by clojurescript and om</li>
+<li><a href="https://www.sweetjs.org/">sweet.js</a> - bringing macros into the javascript world</li>
 </ul>
 </div>
 </section>
-<section class="slide" id="_discussion_and_questions">
-<h2>Discussion and Questions</h2>
+<section class="slide" id="_more_about_clojurescript">
+<h2>More about ClojureScript</h2>
+<div class="ulist">
+<ul>
+<li><a href="http://clojurians.net/">Clojure Slack</a></li>
+<li><a href="http://clojurescriptkoans.com/">ClojureScript koans</a>: the path of enlightenment to learning ClojureScript</li>
+<li><a href="https://clojuredocs.org/">ClojureDocs</a>: community-powered documentation and examples repository for Clojure</li>
+<li><a href="http://app.klipse.tech/">Klipse</a>: a ClojureScript Web REPL</li>
+</ul>
+</div>
+</section>
+<section class="slide" id="_questions">
+<h2>Questions</h2>
 <div class="imageblock">
 <div class="content">
 <img alt="questions" src="images/questions.jpg">
@@ -987,13 +601,6 @@ app = Redux.combineReducers({square: square})</code></pre>
     };
 </script>
 <script src="https://storage.googleapis.com/app.klipse.tech/plugin/js/klipse_plugin.js?v=7.0.6"></script>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/react/15.5.4/react-with-addons.min.js"></script>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/react/15.5.4/react-dom.min.js"></script>
-<script src="https://cdn.jsdelivr.net/ramda/0.23/ramda.min.js"></script>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/immutable/3.8.1/immutable.min.js"></script>
-<link rel="stylesheet" media="screen" href="http://slides.klipse.tech/klipse-meetup-react-2017-jan/game.css">
-<script src="https://cdnjs.cloudflare.com/ajax/libs/redux/3.6.0/redux.min.js"></script>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/react-redux/5.0.5/react-redux.min.js"></script>
 </section>
 <div aria-role="navigation">
 <a class="deck-prev-link" href="#" title="Previous">&#8592;</a>

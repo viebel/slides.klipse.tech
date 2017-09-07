@@ -8,13 +8,22 @@
 :hardbreaks:
 
 
+++++
+<pre class="hidden"><code class="clj">
+(ns my.m$macros)
+(require '[reagent.core :as r])
+(require '[reagent.ratom :as ratom])
+
+</code></pre>
+++++
+
+
 == Agenda
 
 - ClojureScript: a pragmatic LISP
 - Hiccup: HTML as data
-- Reagent: an elegant interface to React
-- More about ClojureScript
-- References
+- Reagent: an elegant ClojureScript interface to React
+- Going further
 
 == The Goal
 
@@ -92,11 +101,12 @@ Function application:
 == Interactivity
 
 You can follow this presentation on your desktop, tablet, phone...
+All the code snippets are interative!
 
 ++++
               <div class="left">
 		<img src='https://chart.googleapis.com/chart?cht=qr&chl=http%3A%2F%2Fslides.klipse.tech%2Fasciidoc%2Freact-steroids-cljs.html&chs=300x300' alt='qr code'></img>
-		<a style="font-size:3em;" href="https://tinyurl.com/introFP"> https://tinyurl.com/introFP </a>
+		<a style="font-size:3em;" href="https://tinyurl.com/introFP"> https://tinyurl.com/recljs </a>
 	      </div>
 ++++
 
@@ -104,768 +114,398 @@ image::images/journey.jpg[journey,900]
 
 
 
-== Functions - passed to variable definitions
+== Clojure - Immutable data structures
 
 [%step]
 --
-Javascript
-[source.eval-js]
-----
-function foo() { return 42}
-var bar = function() { return 43}
-x = [foo(), bar()]
-----
-
---
-[%step]
---
-EcmaScript6
-[source.eval-js]
-----
-baz = () => 42
-baz()
-----
+Data structures are immutable.
+You cannot change an object.
+You can only compute a new version of the object.
 --
 
 [%step]
 --
-Clojure
 [source.clj]
 ----
-(defn foox [] 42)
-(def bax (fn [] 43))
-[(foox) (bax)]
-----
---
-
-[%step]
---
-Ruby
-[source.ruby]
-----
-def foow
-  42
-end
-baw  = ->() { 43 }
-[foow(), baw[]]
-----
---
-
-
-
-== Functions - passed as arguments to functions
-
-In function languages, you can create anonymous functions i.e. functions that don't have a name.
-
-[%step]
---
-Javascript
-[source.eval-js]
-----
-[1,2,3].map(function(x) { return x + 1})
+(def a {:hello "React"})
+(assoc a :hello "Reagent")
 ----
 
---
-[%step]
---
-EcmaScript6
-[source.eval-js]
-----
-[1,2,3].map((x) => x+1)
-----
---
-
-[%step]
---
-Clojure
 [source.clj]
 ----
-(map inc [1 2 3])
-----
---
-
-[%step]
---
-Ruby
-[source.ruby]
-----
-[1,2,3].map {|x|
-  x + 1
-  }
-----
---
-
-== Functions that return functions
-
-An important function in FP is `partial` (or `curry`).
-
-`partial` takes a function and a list of arguments and returns a function where some arguments are fixed.
-
-Let's see it in action!
-
-[%step]
---
-Javascript
-We are going to use http://ramdajs.com/[Ramda].
-[source.eval-js]
-----
-function add(x, y) { return x + y}
-var add10 = R.partial(add, [10])
-add10(19)
-----
-
---
-[%step]
---
-EcmaScript6
-[source.eval-js]
-----
-const add = (x, y) => x + y
-const add10 = R.partial(add, [10])
-add10(19)
-----
---
-
-[%step]
---
-Clojure
-[source.clj]
-----
-(defn add [x y] (+ x y))
-(let [add10 (partial add 10)]
-  (add10 32))
-----
---
-
-[%step]
---
-Ruby
-In ruby, it's called `curry`.
-[source.ruby]
-----
-add  = ->(x,y) do x + y end
-add10 = add.curry.(10)
-add10.(9)
-----
---
-
-== Exercise
-
-Let's write our own version of `partial`:
-
-[%step]
---
-in ES6
-[source.eval-js]
-----
-partial = () => 1
-
-----
-
-If you prefer you can write it in `clojure`:
-[source.clj]
-----
-(defn my-partial [f x])
-----
-
-or in ruby:
-[source.ruby]
-----
-def partial(f, x)
-end
-----
---
-
-[%step]
---
-[source.eval-js]
-----
-partial = (f, x) => (y) => f(x, y)
-partial(add, 10)(9)
-----
---
-
-== Declarative style
-
-Let's compare `map` and `for` in javascript.
-
-With `map`, you don't deal with low-level details
-You only express what to do with each element of the array.
-
-[%step]
---
-[source.eval-js]
-----
-[1,2,3].map(x => x + 1)
-----
---
-
-[%step]
---
-With `for`, you have deal with low-level details.
-
-You have to express:
-
-* how the array is iterated
-* what is the name of the index
-* how the elements are combined in the returned array
-
-[source.eval-js]
-----
-const arr = [1,2,3]
-const f = x => x + 1
-let retArr = []
-for(let i = 0; i < arr.length; i++) {
-  retArr.push(f(arr[i]))
-}
-retArr
-----
---
-
-== Pure functions
-
-[%step]
---
-A pure function
-
-* depends only on its parameters (not on a global state)
-* has no side effects
---
-
-[%step]
---
-Pure functions are much simpler
-
-* to combine
-* to test
-* to debug
-* to understand
-* to refactor
---
-
-== Pure functions - no implicit dependencies
-
-
-[%step]
---
-This function depends on a global parameter
-[source.eval-js]
-----
-const N = 1e9
-const rand = () => Math.round(N*Math.random())
-rand()
-----
---
-
-[%step]
---
-Let's rewrite it as a pure function
-[source.eval-js]
-----
-const rand = (max) => Math.round(max*Math.random())
-rand(1e9)
-----
---
-
-== Pure functions - no side effects
-
-[%step]
---
-This function writes the error to the console in case of a failure.
-
-How will you test such a function?
-[source.eval-js]
-----
-const trySomething = (x) => {
-  if (x) {
-    return x*42
-  }
-  console.log(`I cannot do ${x}`)
-}
-trySomething()
-----
---
-
-[%step]
---
-Let's rewrite it as a pure function.
-We will return an array with:
-
-* the status
-* the data
-
-[source.eval-js]
-----
-trySomethingPure = (x) => {
-  if (x) {
-    return ["ok", x*42]
-  }
-  return ["error", `I cannot do ${x}`]
-}
-trySomethingPure(1)
-----
---
-
-
-
-
-== Immutability - the problem
-
-[%step]
---
-In non-functional languages, the default API mutates our objects.
-You modify `b` and in fact, you modify also `a`!
---
-
-[%step]
---
-In javascript:
-[source.eval-js]
-----
-const a = {size: 42};
-b = a;
-b.size = 43
 a
 ----
 --
 
 [%step]
 --
-In ruby:
-[source.ruby]
-----
-a = {size: 42}
-b = a
-b['size'] = 33
-a
-----
+The cool thing is that it is performant.
+Read http://hypirion.com/musings/understanding-persistent-vector-pt-1[here] if you want to understand this magic.
+--
+
+== Immutability - why is it so good
+
+[%step]
+--
+Simpler to reason.
+Kills lots of bugs before they arise.
 --
 
 [%step]
 --
-In clojure, no problem: clojure data structures are immutable!
+Great performance in react-like apps (`shouldComponentUpdate`).
+With immutable data, comparing two data structures is done via pointer comparison (recursively).
+Actually, in many cases ClojureScript react apps are faster than javascript react apps.
 --
 
 
-
-== Immutability - the solution
-
-Instead of mutating an object, you create a new version of it.
-Usually, this is not effective.
-But some languages (e.g. clojure) support immutability natively and provide an effective implementation of persistent data structure.
+== Clojure - atoms and mutations
 
 [%step]
 --
-Clojure
-[source.clj]
-----
-(let [a {:size 42}
-      b a
-      c (assoc b :size 33)]
-  [a b c])
-----
---
-
-[%step]
---
-In order to enjoy immutability in Javascript, you have to use a library like https://facebook.github.io/immutable-js/[immutable.js]
---
-[%step]
---
-[source.eval-js]
-----
-a = Immutable.fromJS({size: {shoes: 42 }})
-b = a.setIn(["size", "shoes"], 43)
-a
-----
---
-
-[%step]
---
-There is a https://github.com/hamstergem/hamster[immutable library] available for ruby
---
-
-== Laziness
-
-In functional languages, some sequences are lazy.
-The elements are evaluated only when we really need them.
-
-Let's see some examples in `clojure`:
-
-[%step]
---
-[source.clj]
-----
-(def lazy-a (map (fn [x] (println "val:" x) x) [1 2 3]))
-----
-Nothing is printed, until we access the elements...
+Mutations are achieved with a specific mechanism called `atom`.
+The atom itself is not mutable but the "content" of the atom is mutable.
+In order to get the "content" of an atom, you have to `deref` it.
 --
 
 [%step]
 --
 [source.clj]
 ----
-(nth lazy-a 0)
+(def a-atom (atom {:hello "React"}))
+@a-atom
 ----
 --
 
-== Laziness - infinite sequences
 
-Nothing prevents from lazy sequences to be infinite!
+
 [%step]
 --
-All the natural numbers
+Two ways to change the content of an atom: `reset!` and `swap!`:
+
 [source.clj]
 ----
-(def natural-numbers (range))
-(take 10 natural-numbers)
+(reset! a-atom {:hello "Reagent"})
+@a-atom
 ----
 --
 
-
 [%step]
 --
-Infinite repetition of an element
 [source.clj]
 ----
-(def infinite-hello (repeat :hello))
-(nth infinite-hello 100)
+(swap! a-atom assoc :chalom "Next")
+@a-atom
 ----
-Don't try to count the elements!
 --
+
+
+== Macros - the language itself is extensible
+
+This is one of the most powerful feature of LISP languages.
 
 [%step]
 --
-An infinite sequence of random numbers
 [source.clj]
 ----
-(def infinite-random-numbers (repeatedly (partial rand-int 100)))
-(nth infinite-random-numbers 345)
-----
---
-
-
-
-== A brief history of Functional Programming
-
-[%step]
---
-++++
-<h3>1930: λ-calculus</h3>
-++++
-* Alonzo Church discovers the  https://en.wikipedia.org/wiki/Lambda_calculus[λ-calculus]
-* Everything is a (anonymous) function with one argument 
-* No names in the language - only function argument
-* Even numbers are expressed as functions
-* 0 := λfx.x
-* 1 := λfx.f x
-* 2 := λfx.f (f x)
---
-
-[%step]
---
-++++
-<h3>1958: LISP</h3>
-++++
-* John McCarthy invents https://en.wikipedia.org/wiki/Lisp_(programming_language)[LISP]
-* It is the 1st FP language
-* Everything is a S-Expression: `(+ 1 2 3)` instead of `1 + 2 + 3` or `+(1,2,3)`
-* Only 7 terms: CAR, CDR, ATOM, LAMBDA, LABEL, COND, QUOTE
---
-
-[%step]
---
-++++
-<h3>1995: Javascript the language of the browser</h3>
-++++
-* Brendan Eich is recruited by Netscape to do "scheme in the browser"
-* Eventually, he invents Javascript
-* Functions are 1st class citizens
---
-
-[%step]
---
-++++
-<h3>2004: Scala - FP on the JVM</h3>
-++++
-* 2004 - Martin Odersky invents Scala
-* A JVM statically typed language with functional programming support
-* It is very complicated!!!
---
-
-== A brief history of Functional Programming (cont.)
-
-[%step]
-* 2007 - Rich Hickey invents Clojure - A practical dialect of LISP on top of JVM
-* 2011 - ClojureScript - Clojure rocks, Javascript Reaches!
-* 2013 - Facebook creates react.js - A functional javascript frontend framework
-* 2015 - Dan Abramov invents http://redux.js.org/[redux] - A javascript library that imposes FP constraints on a frontend app
-* 2017, May 23 - A practical introduction to FP
- 
-== Functional Programming in practice - Frontend
-
-Many functional languages are transpiled in Javascript: Clojure, Scala, F#, Ocaml.
-
-== Functional Programming in practice - ClojureScript
-
-The power of Clojure in the browser!
-
-== Functional Programming in practice - React.js
-
-
-++++
-<h3>Insights</h3>
-++++
-* The UI is a (pure) function of the state (virtual DOM).
-* Functions compose very well.
-
-
-++++
-<h3>Guidelines</h3>
-++++
-* Write functions that create UI components.
-* The state is a plain Javascript Object.
-* Do not mutate the state, create a new version of it (immutability).
-* Write functions that manipulate the state instead of the DOM (reduce the presence of the dirty stuff).
-* The framework will update the DOM efficiently.
-* Separate UI components from Logic components.
-
-== React.js in action - A pure component
-
-[%step]
---
-++++
-<pre><code class="eval-jsx" data-gist-id="viebel/527582f3d3fa2ea28ada99fc63fe2383">
-</code></pre>
-++++
---
-
-[%step]
---
-[source.eval-js]
-----
-ReactDOM.render(React.createElement(Square, {value: 42,
-                                             onClick: () => alert("clicked")}), klipse_container)
-----
---
-
-++++
-<br/>
-<br/>
-++++
-
-[%step]
---
-[source.render-jsx]
-----
-<Square
-value={26}
-  onClick={() => alert("clicked")}
-/>
-----
-++++
-<br/>
-<br/>
-++++
---
-
-[%step]
---
-Exercise: display the value when the square is clicked
---
-
-== React.js in action - modifying the state
-
-[%step]
---
-[source.eval-jsx]
-----
-class SquareLogic extends React.Component {
-  constructor(props) {
-    super(props)
-    this.state = {
-      val: 10
-    }
-  }
-  increment() {
-    let state = R.assoc('val', this.state.val + 1, this.state)
-    this.setState(state)
-  }
-  render() {
-    return (
-      <Square value={this.state.val}
-      onClick= {() => this.increment()}/>
-      )
-  }
-}
-window.SquareLogic = SquareLogic
-----
-
-
-[source.render-jsx]
-----
-<SquareLogic/>
-----
---
-== Functional Programming in practice - Redux
-
-http://redux.js.org/docs/introduction/ThreePrinciples.html[Three principles] (constraints):
-
-* Single source of truth
-* State is read-only
-* Changes are made with pure functions
-
-[%step]
---
-Many Positive consequences:
-
-* Easy to test
-* Easy to track actions
-* Easy to visualize state of the app
-* Time travel (undo)
-* Send state over the wire
-* Store/Retrieve state from localStorage
---
-
-== Redux in action
-
-[%step]
---
-Component
-[source.eval-js]
-----
-const mapDispatchToProps = (dispatch) => ({
-  onClick() {
-    dispatch(incrementSquareValue())
-  }
-})
-const mapStateToProps = (state) => ({
-  value: state.square.value
-})
-window.SquareRedux = ReactRedux.connect(mapStateToProps, mapDispatchToProps)(Square)
+(defmacro deflog [name args body]
+  `(defn ~name ~args (println (str "LOG: "'~name " was called")) ~@body))
 ----
 --
 
 [%step]
 --
-Actions
-[source.eval-js]
+Let's see it in action:
+[source.clj]
 ----
-incrementSquareValue = () => ({
-  type: 'INCREMENT_SQUARE_VALUE'
-})
+(my.m/deflog hello-me [name]
+  (str "hello " name))
+
+(hello-me "React Next")
+----
+
+--
+[%step]
+Macros work particularly well in LISP because code is data (homoiconicity).
+Therefore, manipulating code is usually a matter of list manipulation.
+--
+--
+[%step]
+--
+Let's see it how the macro has been expanded:
+[source.clj]
+----
+(macroexpand-1 '(my.m/deflog hello-me [name]
+  (str "hello " name))) 
 ----
 --
 
 [%step]
 --
-Reducers
-[source.eval-js]
-----
-square = (state={value: 0}, action) => {
-  switch(action.type) {
-    case 'INCREMENT_SQUARE_VALUE':
-      return R.assoc('value', state.value + 1, state)
-    default:
-      return state
-                    }
-}
-app = Redux.combineReducers({square: square})
-----
+- In fact, many terms of the language are just macros that a developer could have written: `for`, `when`, `->` ...
+- If javascript had a macro system, it would have been much simpler to create JSX (or maybe a better solution)
 --
+
+== HICCUP - HTML as data
+
 [%step]
 --
-The store
-[source.eval-js]
-----
-store = Redux.createStore(app)
-----
+Representing HTML in Clojure Data Structures:
+
+- vectors to represent elements
+- maps to represent an element's attributes
 --
 
 [%step]
 --
-The App
-[source.render-jsx]
+[source.reagent]
 ----
-<ReactRedux.Provider store={store}>
-  <SquareRedux/>
-</ReactRedux.Provider> 
+[:div "Hello World"]
 ----
 --
-++++
-<br/>
-<br/>
-++++
 
 [%step]
 --
-Playground
-[source.eval-js]
+[source.reagent]
 ----
-// store.dispatch(incrementSquareValue())
-// store.getState()
+[:p
+ "Hello "
+ [:a {:href "https://en.wikipedia.org/wiki/World"} "World"]
+ "."]
+----
+--
+
+[%step]
+--
+What about styles?
+[source.reagent]
+----
+[:p 
+ "Hello " 
+ [:span {:style {:color "red"}} "World"]
+ "."]
+----
+--
+
+[%step]
+--
+Hiccup also supports shorthands for classes, ids and also element squeezing with `>`:
+[source.reagent]
+----
+[:div#foo-12.supercool "My Div"]
+----
+[source.reagent]
+----
+[:div>p>s "Nested Element"]
 ----
 --
 
 
-== Functional Programming in practice - Backend (Web server, micro services)
+== HICCUP - clean
 
-* The development process of a web server is much more effective with languages that support FP
-* Examples: ruby, node.js, clojure, Scala.
-* Much less boilerplate than Object Oriented: no need to wrap  everything in an object.
-* Dynamic type - Much simpler to manipulate data with maps (dictionaries) and arrays.
+Unlike with JSX,  you can use any construct of the language:
 
-* Sometimes, you need to leverage the java ecosystem.
-* No problem, let's build a functional language that is compiled into Java ByteCode and creates a syntax for *interop*: interacting with the hosting language.
-* Examples: Scala, Clojure.
+[%step]
+--
+[source.reagent]
+----
+[:ul
+ (for [i (range 5)]
+  (if (even? i)
+    [:li i]))]
+----
+--
 
-== Functional Programming in practice - Big Data
 
-When we need to write a (relatively small) worker that is part of a computation pipe, we need a language:
+== Reagent - basic components
 
-- lightweight
-- easy to manipulate JSON-like data
-- combine functions
-- immutability is effective
-- stateless
+[%step]
+Pure components are clojure functions
 
-Examples: Spark (scala), Storm (Clojure), Onyx (Clojure)
 
-== Functional Programming - more
+[%step]
+--
+[source.clj]
+----
+ (defn button [text]
+  [:button
+   {:on-click
+    (fn [e]
+      (js/alert "You pressed the button!"))}
+   text])
+----
 
-* Unit Tests
-* The REPL
-* Generative testing (a.k.a. Property based testing)
-* Macros
-* Homoiconicity
-* Pattern matching
-* Tail-call recursion
+We embed a component, like we embed html tags using the function name instead of a keyword:
 
+--
+[%step]   
+--
+[source.reagent]
+----
+[:div
+ [:div "This is a button"]
+ [button "Click me"]]
+----
+--
+
+== Reagent - ratom and state
+
+Ratom stands for reagent atom.
+It has the same interface as a clojure atom: `reset!`, `swap!` and `@`.
+Any component that dereferences a ratom will be automatically re-rendered.
+
+
+[%step]
+--
+[source.clj]
+----
+(def counter (r/atom 0))
+(defn button-inc [text]
+  [:button
+   {:on-click 
+    (fn [e]
+      (swap! counter inc))}
+   text])
+----
+
+
+If we want the ratom to be local to the component, we have to instantiate the `ratom` inside the component and return a function instead of a hiccup form
+
+[%step]
+--
+[source.clj]
+----
+(defn button-and-counter [text]
+  (let [counter (r/atom 0)]
+    (fn [text]
+      [:div
+       [:div "Counter: " @counter]
+       [:button
+        {:on-click
+         (fn [e]
+           (swap! counter inc))}
+        text]])))
+----
+--
+
+--
+[%step]   
+--
+[source.reagent]
+----
+[button-and-counter "Click here"]
+----
+--
+
+The rationale is:
+
+- The outer function is called once *per component instance*.
+- The inner function is called once *per rendering*.
+
+
+More details about reagent components https://github.com/Day8/re-frame/wiki/Creating-Reagent-Components[here].
+
+== Reagent - reactions
+
+[%step]
+--
+Reactions allow you to define a `ratom` as an expression of other `ratom`s.
+
+Let's say we have a growing list of numbers and we want 3 components presenting the same list:
+
+- in its original order
+- sorted
+- reversly sorted
+--
+
+Let's create a `ratom` and a `reaction`:
+
+[%step]
+--
+[source.clj]
+----
+(def numbers (r/atom (repeatedly 5 (partial rand-int 100))))
+(def sorted-numbers (reagent.ratom/reaction (sort @numbers))) 
+----
+--
+
+And now let's display the three components
+[%step]
+--
+[source.reagent]
+----
+(defn sorted-d20 []
+  [:div
+   [:button {:on-click (fn [e] (swap! numbers conj (rand-int 20)))} "Roll!"]
+   [:p (str @numbers)]
+    [:p (str @sorted-numbers)]
+    [:p (str (reverse @sorted-numbers))]])  
+----
+--
+
+[%step]
+--
+How does this magic happen?
+How could the reaction be re-calculated when the atom's value changes?
+--
+
+
+== Reagent - cool stuff
+
+
+[%step]   
+--
+Let's draw a small logo in SVG:
+[source.reagent]
+----
+(defn logo []
+  (let [blue "#5881d8"
+        green "#63b132"]
+    [:svg {:style
+           {:width "150px"}}
+     [:circle {:r 50, :cx 75, :cy 75, :fill blue}]
+     [:circle {:r 25, :cx 75, :cy 75, :fill green}]
+     [:path {:stroke-width 12
+             :stroke "white"
+             :fill "none"
+             :d "M 30,40 C 100,40 50,110 120,110"}]]))
+
+----
+--
+
+
+[%step]   
+--
+Now, let's duplicate them:
+[source.reagent]
+----
+[:span (repeat 5 [logo])]
+----
+--
 
 == Going further
 
-* https://mitpress.mit.edu/sicp/full-text/book/book.html[Structure and Interpretation of Computer Programs (SICP)] - The bible of functional programming
-* http://blog.klipse.tech/[My Blog] - An interactive journey into functional programming with Yehonathan Sharvit
-* http://blog.klipse.tech/lambda/2016/08/10/almost-y-combinator-javascript.html[Introducing the Y-combinator]
-* http://www-formal.stanford.edu/jmc/recursive.pdf[The original McCarthy paper about LISP]
-* http://redux.js.org/[Redux]
-* https://facebook.github.io/react/[React.js]
-* https://clojure.org/[Clojure]
-* https://www.youtube.com/watch?v=-6BsiVyC1kM[The Value of Values - by the author of Clojure]
+- https://github.com/Day8/re-frame[re-frame]: A Reagent Framework For Writing SPAs, in Clojurescript.
+- https://github.com/omcljs/om/wiki/Quick-Start-%28om.next%29[om.next]: A  uniform yet extensible approach to building networked interactive applications, in Clojurescript.
+- http://ramdajs.com/[Ramda.js]: A practical functional library for JavaScript programmers (inspired by Clojure).
+- https://facebook.github.io/immutable-js/[Immutable.js]: Immutable collections for JavaScript (inspired by Clojure).
+- http://redux.js.org/[Redux] - inspired by clojurescript and om
+- https://www.sweetjs.org/[sweet.js] - bringing macros into the javascript world 
 
-== Discussion and Questions
+
+== More about ClojureScript
+
+- http://clojurians.net/[Clojure Slack]
+- http://clojurescriptkoans.com/[ClojureScript koans]: the path of enlightenment to learning ClojureScript
+- https://clojuredocs.org/[ClojureDocs]: community-powered documentation and examples repository for Clojure
+- http://app.klipse.tech/[Klipse]: a ClojureScript Web REPL
+
+
+
+== Questions
 
 image::images/questions.jpg[questions]
 
 
 
 include::klipse.adoc[]
-++++
-<script src="https://cdnjs.cloudflare.com/ajax/libs/react/15.5.4/react-with-addons.min.js"></script>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/react/15.5.4/react-dom.min.js"></script>
-<script src="https://cdn.jsdelivr.net/ramda/0.23/ramda.min.js"></script>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/immutable/3.8.1/immutable.min.js"></script>
-<link rel="stylesheet" media="screen" href="http://slides.klipse.tech/klipse-meetup-react-2017-jan/game.css">
-<script src="https://cdnjs.cloudflare.com/ajax/libs/redux/3.6.0/redux.min.js"></script>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/react-redux/5.0.5/react-redux.min.js"></script>
-++++
