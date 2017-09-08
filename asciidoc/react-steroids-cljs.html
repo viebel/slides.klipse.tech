@@ -582,7 +582,7 @@ Any component that dereferences a ratom will be automatically re-rendered.</p></
 <h2>Reagent - reactions</h2>
 <div class="openblock slide">
 <div class="content">
-<div class="paragraph"><p>Reactions allow you to define a <code>ratom</code> as an expression of other `ratom`s.</p></div>
+<div class="paragraph"><p>Reactions allow you to define a ratom as an expression of other ratoms.</p></div>
 <div class="paragraph"><p>Let&#8217;s say we have a growing list of numbers and we want 3 components presenting the same list:</p></div>
 <div class="ulist">
 <ul>
@@ -593,9 +593,9 @@ Any component that dereferences a ratom will be automatically re-rendered.</p></
 </div>
 </div>
 </div>
-<div class="paragraph"><p>Let&#8217;s create a <code>ratom</code> and a <code>reaction</code>:</p></div>
 <div class="openblock slide">
 <div class="content">
+<div class="paragraph"><p>Let&#8217;s create a <code>ratom</code> and a <code>reaction</code>:</p></div>
 <div class="listingblock clj">
 <div class="content">
 <pre class="highlight"><code>(def numbers (r/atom (repeatedly 5 (partial rand-int 100))))
@@ -604,9 +604,9 @@ Any component that dereferences a ratom will be automatically re-rendered.</p></
 </div>
 </div>
 </div>
-<div class="paragraph"><p>And now let&#8217;s display the three components</p></div>
 <div class="openblock slide">
 <div class="content">
+<div class="paragraph"><p>And now let&#8217;s display the three components</p></div>
 <div class="listingblock reagent">
 <div class="content">
 <pre class="highlight"><code>(defn sorted-d20 []
@@ -625,6 +625,22 @@ Any component that dereferences a ratom will be automatically re-rendered.</p></
 How could the reaction be re-calculated when the atom&#8217;s value changes?</p></div>
 </div>
 </div>
+<div class="openblock slide">
+<div class="content">
+<div class="listingblock clj">
+<div class="content">
+<pre class="highlight"><code>(defmacro reaction [&amp; body]
+  `(reagent.ratom/make-reaction
+    (fn [] ~@body)))</code></pre>
+</div>
+</div>
+</div>
+</div>
+</section>
+<section class="slide" id="_reagent_fully_configurable_components">
+<h2>Reagent - fully configurable components</h2>
+<div class="paragraph"><p>Sometimes, you need to get access to the React lifecycle methods: <code>componentWillMount</code>, <code>shouldComponentUpdate</code> etc&#8230;&#8203;</p></div>
+<div class="paragraph"><p>Read <a href="https://github.com/Day8/re-frame/wiki/Creating-Reagent-Components#form-3-a-class-with-life-cycle-methods">Form-3 Reagent components</a> to learn how to do that.</p></div>
 </section>
 <section class="slide" id="_reagent_cool_stuff">
 <h2>Reagent - cool stuff</h2>
@@ -659,22 +675,60 @@ How could the reaction be re-calculated when the atom&#8217;s value changes?</p>
 </div>
 </div>
 </section>
+<section class="slide" id="_reagent_cool_stuff_cont">
+<h2>Reagent - cool stuff (cont.)</h2>
+<div class="paragraph"><p>Let&#8217;s arrange the logos in a circle&#8230;&#8203;</p></div>
+<div class="openblock slide">
+<div class="content">
+<div class="listingblock clj">
+<div class="content">
+<pre class="highlight"><code>(defn circle-of [num comp]
+  (into
+    [:svg {:style {:border "1px solid"
+                   :background "white"
+                   :width "500px"
+                   :height "500px"}}]
+    (for [i (range num)]
+      [:g
+       {:transform (str
+                     "translate(250,250) "
+                     "rotate(" (* i (/ 360 num)) ") "
+                     "translate(100)")}
+       [comp]])))</code></pre>
+</div>
+</div>
+<div class="listingblock reagent">
+<div class="content">
+<pre class="highlight"><code>[:div
+ [circle-of 12 logo]
+ ;[circle-of 10 (fn [] [:circle {:r 50, :cx 75, :cy 75, :fill "blue"}])]
+]</code></pre>
+</div>
+</div>
+</div>
+</div>
+</section>
 <section class="slide" id="_going_further">
 <h2>Going further</h2>
-<div class="paragraph"><p>-http://timothypratley.blogspot.co.il/2017/01/reagent-deep-dive-part-1.html[Reagent deep dive].<br>
-- <a href="https://github.com/Day8/re-frame">re-frame</a>: A Reagent Framework For Writing SPAs, in Clojurescript.<br>
-- <a href="https://github.com/omcljs/om/wiki/Quick-Start-%28om.next%29">om.next</a>: A  uniform yet extensible approach to building networked interactive applications, in Clojurescript.<br>
-- <a href="http://ramdajs.com/">Ramda.js</a>: A practical functional library for JavaScript programmers (inspired by Clojure).<br>
-- <a href="https://facebook.github.io/immutable-js/">Immutable.js</a>: Immutable collections for JavaScript (inspired by Clojure).<br>
-- <a href="http://redux.js.org/">Redux</a> - inspired by clojurescript and om<br>
-- <a href="https://www.sweetjs.org/">sweet.js</a> - bringing macros into the javascript world<br>
-- <a href="http://blog.klipse.tech/javascript/2016/12/14/jsx.html">JSX interactive tutorial</a> powered by Klipse.</p></div>
+<div class="ulist">
+<ul>
+<li><a href="http://timothypratley.blogspot.co.il/2017/01/reagent-deep-dive-part-1.html">Reagent deep dive</a>.</li>
+<li><a href="https://github.com/Day8/re-frame">re-frame</a>: A Reagent Framework For Writing SPAs, in Clojurescript.</li>
+<li><a href="https://github.com/omcljs/om/wiki/Quick-Start-%28om.next%29">om.next</a>: A  uniform yet extensible approach to building networked interactive applications, in Clojurescript.</li>
+<li><a href="https://github.com/reagent-project/reagent-cookbook/tree/master/recipes/reagent-server-rendering">Reagent server rendering</a></li>
+<li><a href="http://ramdajs.com/">Ramda.js</a>: A practical functional library for JavaScript programmers (inspired by Clojure).</li>
+<li><a href="https://facebook.github.io/immutable-js/">Immutable.js</a>: Immutable collections for JavaScript (inspired by Clojure).</li>
+<li><a href="http://redux.js.org/">Redux</a> - inspired by clojurescript and om</li>
+<li><a href="https://www.sweetjs.org/">sweet.js</a> - bringing macros into the javascript world</li>
+<li><a href="http://blog.klipse.tech/javascript/2016/12/14/jsx.html">JSX interactive tutorial</a> powered by Klipse.</li>
+</ul>
+</div>
 </section>
 <section class="slide" id="_more_about_clojurescript">
 <h2>More about ClojureScript</h2>
 <div class="ulist">
 <ul>
-<li><a href="http://clojurians.net/">Clojure Slack</a></li>
+<li><a href="http://clojurians.net/">Clojurians</a>: The Clojure and ClojureScript Slack</li>
 <li><a href="http://clojurescriptkoans.com/">ClojureScript koans</a>: the path of enlightenment to learning ClojureScript</li>
 <li><a href="https://clojuredocs.org/">ClojureDocs</a>: community-powered documentation and examples repository for Clojure</li>
 <li><a href="http://app.klipse.tech/">Klipse</a>: a ClojureScript Web REPL</li>
