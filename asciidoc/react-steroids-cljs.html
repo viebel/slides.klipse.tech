@@ -349,17 +349,124 @@ Therefore, manipulating code is usually a matter of list manipulation.</p></div>
 </div>
 </div>
 </section>
-<section class="slide" id="_hiccup_clean">
-<h2>HICCUP - clean</h2>
-<div class="paragraph"><p>Unlike with JSX,  you can use any construct of the language:</p></div>
+<section class="slide" id="_hiccup_vs_jsx">
+<h2>HICCUP vs JSX</h2>
+<div class="paragraph"><p>Hiccup forms are plain Clojure vectors:</p></div>
+<div class="ulist">
+<ul>
+<li>you don&#8217;t need to learn the Hiccup syntax</li>
+<li>you don&#8217;t need to write a preprocessor</li>
+<li>you don&#8217;t need to write IDE plugins</li>
+<li>there are no edge cases</li>
+</ul>
+</div>
+</section>
+<section class="slide" id="_hiccup_vs_jsx_runtime_components">
+<h2>HICCUP vs JSX - runtime components</h2>
 <div class="openblock slide">
 <div class="content">
+<h3>JSX</h3>
+<div class="paragraph"><p>In JSX, when you want to chose the component at runtime,</p></div>
+<div class="paragraph"><p>you have to assign a capitalized variable</p></div>
+</div>
+</div>
+<div class="openblock slide">
+<div class="content">
+<div class="listingblock eval-jsx">
+<div class="content">
+<pre class="highlight"><code>function HelloLang({name}){
+  const components = {
+    "javascript": "div",
+    "clojurescript": "p"
+  }
+  const Component = components[name] || "s";
+  return &lt;Component&gt; {name} &lt;/Component&gt;;
+}</code></pre>
+</div>
+</div>
+<div class="listingblock render-jsx">
+<div class="content">
+<pre class="highlight"><code>&lt;div&gt;
+  &lt;HelloLang name={'javascript'}/&gt;
+  &lt;HelloLang name={'clojurescript'}/&gt;
+  &lt;HelloLang name={'rubyscript'}/&gt;
+&lt;/div&gt;</code></pre>
+</div>
+</div>
+</div>
+</div>
+<div class="openblock slide">
+<div class="content">
+<h3>Hiccup</h3>
+<div class="paragraph"><p>In Hiccup, you are free!</p></div>
+<div class="listingblock reagent">
+<div class="content">
+<pre class="highlight"><code>(defn hello-lang [name] ;; doesn't have to be capitalized!!!
+  (let [components {"javascript" "div"
+                    "clojurescript" "p"}]
+    [(components name "s") name]))
+
+[:div
+ [hello-lang "javascript"]
+ [hello-lang "clojurescript"]
+ [hello-lang "scalascript"]]</code></pre>
+</div>
+</div>
+</div>
+</div>
+</section>
+<section class="slide" id="_hiccup_vs_jsx_if_and_for">
+<h2>HICCUP vs JSX - if and for</h2>
+<div class="openblock slide">
+<div class="content">
+<h3>JSX</h3>
+<div class="paragraph"><p>In JSX, you cannot use <code>if</code> and <code>for</code>.</p></div>
+<div class="paragraph"><p>The reason: <code>if</code> and <code>for</code> are not expressions in javascript</p></div>
+</div>
+</div>
+<div class="openblock slide">
+<div class="content">
+<div class="listingblock render-jsx">
+<div class="content">
+<pre class="highlight"><code>&lt;ul&gt;
+  {[...Array(5).keys()].map(i =&gt; i % 2 === 0 &amp;&amp; &lt;li&gt; {i} &lt;/li&gt;)}
+&lt;/ul&gt;</code></pre>
+</div>
+</div>
+</div>
+</div>
+<div class="openblock slide">
+<div class="content">
+<h3>Hiccup</h3>
+<div class="paragraph"><p>In Hiccup, you are free!</p></div>
 <div class="listingblock reagent">
 <div class="content">
 <pre class="highlight"><code>[:ul
  (for [i (range 5)]
   (if (even? i)
     [:li i]))]</code></pre>
+</div>
+</div>
+</div>
+</div>
+</section>
+<section class="slide" id="_hiccup_vs_jsx_comments">
+<h2>HICCUP vs JSX - comments</h2>
+<div class="paragraph"><p>In Hiccup, you can comment out any part of the expression.</p></div>
+<div class="openblock slide">
+<div class="content">
+<div class="paragraph"><p>No comments.</p></div>
+</div>
+</div>
+<div class="openblock slide">
+<div class="content">
+<div class="listingblock reagent">
+<div class="content">
+<pre class="highlight"><code>[:div
+ [:strong "Hello "]
+ ;[:em "World"]
+ #_[:p [:em "This is "]
+     [:strong "not so funny"]]]</code></pre>
 </div>
 </div>
 </div>
@@ -397,8 +504,7 @@ Therefore, manipulating code is usually a matter of list manipulation.</p></div>
 </section>
 <section class="slide" id="_reagent_ratom_and_state">
 <h2>Reagent - ratom and state</h2>
-<div class="paragraph"><p>Ratom stands for reagent atom.<br>
-It has the same interface as a clojure atom: <code>reset!</code>, <code>swap!</code> and <code>@</code>.<br>
+<div class="paragraph"><p>Ratom (reagent atom) has the same interface as a clojure atom: <code>reset!</code>, <code>swap!</code> and <code>@</code>.<br>
 Any component that dereferences a ratom will be automatically re-rendered.</p></div>
 <div class="openblock slide">
 <div class="content">
@@ -413,9 +519,25 @@ Any component that dereferences a ratom will be automatically re-rendered.</p></
    text])</code></pre>
 </div>
 </div>
-<div class="paragraph"><p>If we want the ratom to be local to the component, we have to instantiate the <code>ratom</code> inside the component and return a function instead of a hiccup form</p></div>
 </div>
 </div>
+<div class="openblock slide">
+<div class="content">
+<div class="listingblock reagent">
+<div class="content">
+<pre class="highlight"><code>[button-inc "Click me"]</code></pre>
+</div>
+</div>
+</div>
+</div>
+</section>
+<section class="slide" id="_reagent_local_ratom">
+<h2>Reagent - local ratom</h2>
+<div class="openblock slide">
+<div class="content">
+<div class="paragraph"><p>If we want the ratom to be local to the component,</p></div>
+<div class="paragraph"><p>we have to instantiate the <code>ratom</code> inside the component</p></div>
+<div class="paragraph"><p>and return a function instead of a hiccup form</p></div>
 <div class="listingblock clj">
 <div class="content">
 <pre class="highlight"><code>(defn button-and-counter [text]
@@ -430,20 +552,21 @@ Any component that dereferences a ratom will be automatically re-rendered.</p></
         text]])))</code></pre>
 </div>
 </div>
-<div class="openblock">
-<div class="content">
-
 </div>
 </div>
 <div class="openblock slide">
 <div class="content">
 <div class="listingblock reagent">
 <div class="content">
-<pre class="highlight"><code>[button-and-counter "Click here"]</code></pre>
+<pre class="highlight"><code>[:div
+ [button-and-counter "Click here"]
+ [button-and-counter "Click also here"]]</code></pre>
 </div>
 </div>
 </div>
 </div>
+<div class="openblock slide">
+<div class="content">
 <div class="paragraph"><p>The rationale is:</p></div>
 <div class="ulist">
 <ul>
@@ -452,6 +575,8 @@ Any component that dereferences a ratom will be automatically re-rendered.</p></
 </ul>
 </div>
 <div class="paragraph"><p>More details about reagent components <a href="https://github.com/Day8/re-frame/wiki/Creating-Reagent-Components">here</a>.</p></div>
+</div>
+</div>
 </section>
 <section class="slide" id="_reagent_reactions">
 <h2>Reagent - reactions</h2>
@@ -536,16 +661,14 @@ How could the reaction be re-calculated when the atom&#8217;s value changes?</p>
 </section>
 <section class="slide" id="_going_further">
 <h2>Going further</h2>
-<div class="ulist">
-<ul>
-<li><a href="https://github.com/Day8/re-frame">re-frame</a>: A Reagent Framework For Writing SPAs, in Clojurescript.</li>
-<li><a href="https://github.com/omcljs/om/wiki/Quick-Start-%28om.next%29">om.next</a>: A  uniform yet extensible approach to building networked interactive applications, in Clojurescript.</li>
-<li><a href="http://ramdajs.com/">Ramda.js</a>: A practical functional library for JavaScript programmers (inspired by Clojure).</li>
-<li><a href="https://facebook.github.io/immutable-js/">Immutable.js</a>: Immutable collections for JavaScript (inspired by Clojure).</li>
-<li><a href="http://redux.js.org/">Redux</a> - inspired by clojurescript and om</li>
-<li><a href="https://www.sweetjs.org/">sweet.js</a> - bringing macros into the javascript world</li>
-</ul>
-</div>
+<div class="paragraph"><p>-http://timothypratley.blogspot.co.il/2017/01/reagent-deep-dive-part-1.html[Reagent deep dive].<br>
+- <a href="https://github.com/Day8/re-frame">re-frame</a>: A Reagent Framework For Writing SPAs, in Clojurescript.<br>
+- <a href="https://github.com/omcljs/om/wiki/Quick-Start-%28om.next%29">om.next</a>: A  uniform yet extensible approach to building networked interactive applications, in Clojurescript.<br>
+- <a href="http://ramdajs.com/">Ramda.js</a>: A practical functional library for JavaScript programmers (inspired by Clojure).<br>
+- <a href="https://facebook.github.io/immutable-js/">Immutable.js</a>: Immutable collections for JavaScript (inspired by Clojure).<br>
+- <a href="http://redux.js.org/">Redux</a> - inspired by clojurescript and om<br>
+- <a href="https://www.sweetjs.org/">sweet.js</a> - bringing macros into the javascript world<br>
+- <a href="http://blog.klipse.tech/javascript/2016/12/14/jsx.html">JSX interactive tutorial</a> powered by Klipse.</p></div>
 </section>
 <section class="slide" id="_more_about_clojurescript">
 <h2>More about ClojureScript</h2>
@@ -555,6 +678,7 @@ How could the reaction be re-calculated when the atom&#8217;s value changes?</p>
 <li><a href="http://clojurescriptkoans.com/">ClojureScript koans</a>: the path of enlightenment to learning ClojureScript</li>
 <li><a href="https://clojuredocs.org/">ClojureDocs</a>: community-powered documentation and examples repository for Clojure</li>
 <li><a href="http://app.klipse.tech/">Klipse</a>: a ClojureScript Web REPL</li>
+<li><a href="http://blog.klipse.tech/">blog.klipse.tech</a>: Articles about Clojure and ClojureScript</li>
 </ul>
 </div>
 </section>

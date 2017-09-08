@@ -301,12 +301,102 @@ Hiccup also supports shorthands for classes, ids and also element squeezing with
 --
 
 
-== HICCUP - clean
+== HICCUP vs JSX
 
-Unlike with JSX,  you can use any construct of the language:
+Hiccup forms are plain Clojure vectors:
+
+- you don't need to learn the Hiccup syntax
+- you don't need to write a preprocessor
+- you don't need to write IDE plugins
+- there are no edge cases
+
+== HICCUP vs JSX - runtime components
 
 [%step]
 --
+++++
+<h3>JSX</h3>
+++++
+In JSX, when you want to chose the component at runtime,
+
+you have to assign a capitalized variable
+
+--
+[%step]
+--
+[source.eval-jsx]
+----
+function HelloLang({name}){
+  const components = {
+    "javascript": "div",
+    "clojurescript": "p"
+  }
+  const Component = components[name] || "s";
+  return <Component> {name} </Component>;
+}
+----
+
+[source.render-jsx]
+----
+<div>
+  <HelloLang name={'javascript'}/>
+  <HelloLang name={'clojurescript'}/>
+  <HelloLang name={'rubyscript'}/>
+</div> 
+----
+--
+
+[%step]
+--
+++++
+<h3>Hiccup</h3>
+++++
+In Hiccup, you are free!
+[source.reagent]
+----
+(defn hello-lang [name] ;; doesn't have to be capitalized!!!
+  (let [components {"javascript" "div"
+                    "clojurescript" "p"}]
+    [(components name "s") name]))
+
+[:div
+ [hello-lang "javascript"]
+ [hello-lang "clojurescript"]
+ [hello-lang "scalascript"]]
+----
+--
+
+
+
+== HICCUP vs JSX - if and for 
+
+[%step]
+--
+++++
+<h3>JSX</h3>
+++++
+In JSX, you cannot use `if` and `for`.
+
+The reason: `if` and `for` are not expressions in javascript
+
+--
+[%step]
+--
+[source.render-jsx]
+----
+<ul>
+  {[...Array(5).keys()].map(i => i % 2 === 0 && <li> {i} </li>)}
+</ul>
+----
+--
+
+[%step]
+--
+++++
+<h3>Hiccup</h3>
+++++
+In Hiccup, you are free!
+ 
 [source.reagent]
 ----
 [:ul
@@ -316,6 +406,26 @@ Unlike with JSX,  you can use any construct of the language:
 ----
 --
 
+== HICCUP vs JSX - comments
+
+In Hiccup, you can comment out any part of the expression.
+
+[%step]
+--
+No comments.
+--
+
+[%step]
+--
+[source.reagent]
+----
+[:div
+ [:strong "Hello "]
+ ;[:em "World"]
+ #_[:p [:em "This is "]
+     [:strong "not so funny"]]]
+----
+--
 
 == Reagent - basic components
 
@@ -350,8 +460,7 @@ We embed a component, like we embed html tags using the function name instead of
 
 == Reagent - ratom and state
 
-Ratom stands for reagent atom.
-It has the same interface as a clojure atom: `reset!`, `swap!` and `@`.
+Ratom (reagent atom) has the same interface as a clojure atom: `reset!`, `swap!` and `@`.
 Any component that dereferences a ratom will be automatically re-rendered.
 
 
@@ -367,12 +476,26 @@ Any component that dereferences a ratom will be automatically re-rendered.
       (swap! counter inc))}
    text])
 ----
-
-
-If we want the ratom to be local to the component, we have to instantiate the `ratom` inside the component and return a function instead of a hiccup form
+--
 
 [%step]
 --
+[source.reagent]
+----
+[button-inc "Click me"]
+----
+--
+
+== Reagent - local ratom
+
+[%step]
+--
+If we want the ratom to be local to the component,
+
+we have to instantiate the `ratom` inside the component
+
+and return a function instead of a hiccup form
+
 [source.clj]
 ----
 (defn button-and-counter [text]
@@ -388,15 +511,18 @@ If we want the ratom to be local to the component, we have to instantiate the `r
 ----
 --
 
---
 [%step]   
 --
 [source.reagent]
 ----
-[button-and-counter "Click here"]
+[:div
+ [button-and-counter "Click here"]
+ [button-and-counter "Click also here"]]
 ----
 --
 
+[%step]
+--
 The rationale is:
 
 - The outer function is called once *per component instance*.
@@ -404,6 +530,7 @@ The rationale is:
 
 
 More details about reagent components https://github.com/Day8/re-frame/wiki/Creating-Reagent-Components[here].
+--
 
 == Reagent - reactions
 
@@ -485,12 +612,14 @@ Now, let's duplicate them:
 
 == Going further
 
+-http://timothypratley.blogspot.co.il/2017/01/reagent-deep-dive-part-1.html[Reagent deep dive].
 - https://github.com/Day8/re-frame[re-frame]: A Reagent Framework For Writing SPAs, in Clojurescript.
 - https://github.com/omcljs/om/wiki/Quick-Start-%28om.next%29[om.next]: A  uniform yet extensible approach to building networked interactive applications, in Clojurescript.
 - http://ramdajs.com/[Ramda.js]: A practical functional library for JavaScript programmers (inspired by Clojure).
 - https://facebook.github.io/immutable-js/[Immutable.js]: Immutable collections for JavaScript (inspired by Clojure).
 - http://redux.js.org/[Redux] - inspired by clojurescript and om
-- https://www.sweetjs.org/[sweet.js] - bringing macros into the javascript world 
+- https://www.sweetjs.org/[sweet.js] - bringing macros into the javascript world
+- http://blog.klipse.tech/javascript/2016/12/14/jsx.html[JSX interactive tutorial] powered by Klipse.
 
 
 == More about ClojureScript
@@ -499,6 +628,7 @@ Now, let's duplicate them:
 - http://clojurescriptkoans.com/[ClojureScript koans]: the path of enlightenment to learning ClojureScript
 - https://clojuredocs.org/[ClojureDocs]: community-powered documentation and examples repository for Clojure
 - http://app.klipse.tech/[Klipse]: a ClojureScript Web REPL
+- http://blog.klipse.tech/[blog.klipse.tech]: Articles about Clojure and ClojureScript
 
 
 
