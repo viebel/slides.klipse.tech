@@ -29,24 +29,63 @@
 </code></pre>
 </div>
 </div>
+<section class="slide" id="_react_on_steroids_with_clojurescript">
+<h2>React on steroids with ClojureScript</h2>
+<section class="slide">
+        <div class="text-centered">
+            <div class="centered" style="font-size:1.9em;">
+              <div class="left" style="width:50%;">
+	      <img src='https://chart.googleapis.com/chart?cht=qr&chl=http%3A%2F%2Fslides.klipse.tech%2Fasciidoc%2Freact-steroids-cljs.html&chs=300x300' alt='qr code'></img>
+	      </div>
+              <div class="left" style="width:50%;">
+		<div>
+                  <div>
+                    <img class="fullscreen" src="./images/klipse.png" alt="" width="150">
+                  </div>
+                  <div>
+		  <div>React Next</div>
+		  <div>Tel Aviv - Sep 10, 2017</div>
+                  </div>
+                  <div class="clear">
+                    <div style="margin-top:14px;">
+                      <a class="github-button" href="https://github.com/viebel/klipse" data-count-href="/viebel/klipse/stargazers" data-count-api="/repos/viebel/klipse#stargazers_count" data-count-aria-label="# stargazers on GitHub" aria-label="Star viebel/klipse on GitHub">KLIPSE</a>
+                    </div>
+                    <script async defer id="github-bjs" src="https://buttons.github.io/buttons.js"></script>
+                  </div>
+                  <div>
+		  <a href="https://tinyurl.com/recljs"> https://tinyurl.com/recljs </a>
+                  </div>
+		</div>
+              </div>
+            </div>
+            <div class="clear centered">
+	    <br><br><br>
+	      <div style="padding-top: 20px;">
+	      <p>Hiccup</p>
+		<pre><code class="reagent" data-loop-msec="1000" data-beautify-strings="true">
+		[:h3 (str (js/Date.))]
+		</code></pre>
+		<br>
+		<p> JSX </p>
+		<pre><code class="render-jsx" data-loop-msec="1000" data-beautify-strings="true">
+&lt;h3&gt;{(new Date()).toString()}&lt;/h3&gt;
+		</code></pre>
+	      </div>
+            </div>
+	    <br><br>
+	    <div style="font-size: 2em;">Yehonathan Sharvit</div>
+	    <div style="font-size: 2em;"> <a href="https://twitter.com/viebel">@viebel</a>, viebel@gmail.com</div></p>
+        </div>
+      </section>
+</section>
 <section class="slide" id="_agenda">
 <h2>Agenda</h2>
 <div class="ulist">
 <ul>
-<li>ClojureScript: a pragmatic LISP</li>
+<li>ClojureScript: a pragmatic LISP transpiled into javascript</li>
 <li>Hiccup: HTML as data</li>
 <li>Reagent: an elegant ClojureScript interface to React</li>
 <li>Going further</li>
-</ul>
-</div>
-</section>
-<section class="slide" id="_the_goal">
-<h2>The Goal</h2>
-<div class="ulist">
-<ul>
-<li>LISP is cool</li>
-<li>Power of expression</li>
-<li>Pragmatic Theoretic stuff</li>
 </ul>
 </div>
 </section>
@@ -56,7 +95,7 @@
 <div class="content">
 <div class="ulist">
 <ul>
-<li>Yehonathan Sharvit <a href="https://twitter.com/viebel">@viebel</a></li>
+<li>Yehonathan Sharvit <a href="https://twitter.com/viebel">@viebel</a>, <a href="mailto:viebel@gmail.com">viebel@gmail.com</a>, <a href="https://www.linkedin.com/in/viebel/">LinkedIn</a></li>
 <li>A mathematician</li>
 <li>A coder</li>
 <li>A pragmatic theorist</li>
@@ -85,25 +124,50 @@
 <h2>ClojureScript - historical perspective</h2>
 <div class="ulist">
 <ul>
-<li>1930: Alonzo Church discovers the  <a href="https://en.wikipedia.org/wiki/Lambda_calculus">λ-calculus</a></li>
-<li>1958: John McCarthy invents <a href="https://en.wikipedia.org/wiki/Lisp_(programming_language)">LISP</a></li>
-<li>1995: Brendan Eich is recruited by Netscape to do "scheme in the browser"</li>
+<li>1930: Alonzo Church discovers the  <a href="https://en.wikipedia.org/wiki/Lambda_calculus">λ-calculus</a> - the mathematical foundation for functional programming</li>
+<li>1958: John McCarthy invents <a href="https://en.wikipedia.org/wiki/Lisp_(programming_language)">LISP</a> - the first Functional Programming language</li>
+<li>1995: Brendan Eich is recruited by Netscape to do "scheme (a LISP dialect) in the browser"</li>
 <li>Eventually, he invents Javascript</li>
-<li>2007 - Rich Hickey invents Clojure - A practical dialect of LISP on top of JVM</li>
-<li>2011 - ClojureScript - Clojure rocks, Javascript reaches!</li>
+<li>2007 - Rich Hickey invents Clojure - A <strong>pragmatic</strong> dialect of LISP on top of the JVM</li>
+<li>2011 - ClojureScript - Clojure transpiled to javascript because "Clojure rocks, Javascript reaches!"</li>
 <li>2013 - Facebook creates react.js - A functional javascript frontend framework</li>
 <li>Dec 2013 - First release of reagent - A react cljs interface that is faster than react!</li>
 </ul>
 </div>
 </section>
-<section class="slide" id="_lisp">
-<h2>LISP</h2>
+<section class="slide" id="_clojure_a_dialect_of_lisp">
+<h2>Clojure: a dialect of LISP</h2>
 <div class="paragraph"><p>LISP is homoiconic: the syntax of the code is the same as the syntax of the data - lists.<br>
-LISP stands for LIst Processing.</p></div>
-<div class="paragraph"><p>Code is expressed as lists where:<br>
-- the first element of the list is the function<br>
-- rest of the list are the arguments to the function</p></div>
-<div class="paragraph"><p>Unlike in javacsript, every piece of LISP code is an expression (including <code>if</code>, <code>for</code> etc&#8230;&#8203;).</p></div>
+LISP stands for LIst Processor.</p></div>
+<div class="openblock slide">
+<div class="content">
+<div class="paragraph"><p>Code is expressed as lists where:</p></div>
+<div class="ulist">
+<ul>
+<li>the first element of the list is the function</li>
+<li>rest of the list are the arguments to the function</li>
+</ul>
+</div>
+<div class="listingblock clj">
+<div class="content">
+<pre class="highlight"><code>(+ 1 2 3 40)</code></pre>
+</div>
+</div>
+</div>
+</div>
+<div class="openblock slide">
+<div class="content">
+<div class="paragraph"><p>Unlike in javascript, every piece of LISP code is an expression (including <code>if</code>, <code>for</code> etc&#8230;&#8203;).</p></div>
+<div class="listingblock clj">
+<div class="content">
+<pre class="highlight"><code>(for [i [1 2 3 4]]
+  (if (odd? i)
+    i
+    (* i 10)))</code></pre>
+</div>
+</div>
+</div>
+</div>
 </section>
 <section class="slide" id="_clojure_functions">
 <h2>Clojure - functions</h2>
@@ -132,10 +196,10 @@ LISP stands for LIst Processing.</p></div>
 <section class="slide" id="_interactivity">
 <h2>Interactivity</h2>
 <div class="paragraph"><p>You can follow this presentation on your desktop, tablet, phone&#8230;&#8203;<br>
-All the code snippets are interative!</p></div>
+All the code snippets are interactive!</p></div>
               <div class="left">
 		<img src='https://chart.googleapis.com/chart?cht=qr&chl=http%3A%2F%2Fslides.klipse.tech%2Fasciidoc%2Freact-steroids-cljs.html&chs=300x300' alt='qr code'></img>
-		<a style="font-size:3em;" href="https://tinyurl.com/introFP"> https://tinyurl.com/recljs </a>
+		<a style="font-size:3em;" href="https://tinyurl.com/recljs"> https://tinyurl.com/recljs </a>
 	      </div>
 <div class="imageblock">
 <div class="content">
@@ -169,7 +233,7 @@ You can only compute a new version of the object.</p></div>
 </div>
 <div class="openblock slide">
 <div class="content">
-<div class="paragraph"><p>The cool thing is that it is performant.<br>
+<div class="paragraph"><p>The cool thing is that in Clojure, Immutable data structures are performant.<br>
 Read <a href="http://hypirion.com/musings/understanding-persistent-vector-pt-1">here</a> if you want to understand this magic.</p></div>
 </div>
 </div>
@@ -186,7 +250,7 @@ Kills lots of bugs before they arise.</p></div>
 <div class="content">
 <div class="paragraph"><p>Great performance in react-like apps (<code>shouldComponentUpdate</code>).<br>
 With immutable data, comparing two data structures is done via pointer comparison (recursively).<br>
-Actually, in many cases ClojureScript react apps are faster than javascript react apps.</p></div>
+In many cases, ClojureScript react apps are faster than javascript react apps.</p></div>
 </div>
 </div>
 </section>
@@ -214,8 +278,7 @@ In order to get the "content" of an atom, you have to <code>deref</code> it.</p>
 <div class="paragraph"><p>Two ways to change the content of an atom: <code>reset!</code> and <code>swap!</code>:</p></div>
 <div class="listingblock clj">
 <div class="content">
-<pre class="highlight"><code>(reset! a-atom {:hello "Reagent"})
-@a-atom</code></pre>
+<pre class="highlight"><code>(reset! a-atom {:hello "Reagent"})</code></pre>
 </div>
 </div>
 </div>
@@ -224,8 +287,33 @@ In order to get the "content" of an atom, you have to <code>deref</code> it.</p>
 <div class="content">
 <div class="listingblock clj">
 <div class="content">
-<pre class="highlight"><code>(swap! a-atom assoc :chalom "Next")
-@a-atom</code></pre>
+<pre class="highlight"><code>(swap! a-atom assoc :chalom "Next")</code></pre>
+</div>
+</div>
+</div>
+</div>
+<div class="openblock slide">
+<div class="content">
+<div class="paragraph"><p>We can add a watcher to an atom:</p></div>
+<div class="listingblock clj">
+<div class="content">
+<pre class="highlight"><code>(add-watch a-atom :watcher
+  (fn [key atom old-state new-state]
+    (prn "-- Atom Changed --")
+    (prn "key" key)
+    (prn "atom" atom)
+    (prn "old-state" old-state)
+    (prn "new-state" new-state)))</code></pre>
+</div>
+</div>
+</div>
+</div>
+<div class="openblock slide">
+<div class="content">
+<div class="paragraph"><p>Let&#8217;s <code>swap!</code> again:</p></div>
+<div class="listingblock clj">
+<div class="content">
+<pre class="highlight"><code>(swap! a-atom assoc :bonjour "Tomorrow")</code></pre>
 </div>
 </div>
 </div>
@@ -349,18 +437,6 @@ Therefore, manipulating code is usually a matter of list manipulation.</p></div>
 </div>
 </div>
 </section>
-<section class="slide" id="_hiccup_vs_jsx">
-<h2>HICCUP vs JSX</h2>
-<div class="paragraph"><p>Hiccup forms are plain Clojure vectors:</p></div>
-<div class="ulist">
-<ul>
-<li>you don&#8217;t need to learn the Hiccup syntax</li>
-<li>you don&#8217;t need to write a preprocessor</li>
-<li>you don&#8217;t need to write IDE plugins</li>
-<li>there are no edge cases</li>
-</ul>
-</div>
-</section>
 <section class="slide" id="_hiccup_vs_jsx_runtime_components">
 <h2>HICCUP vs JSX - runtime components</h2>
 <div class="openblock slide">
@@ -452,7 +528,8 @@ Therefore, manipulating code is usually a matter of list manipulation.</p></div>
 </section>
 <section class="slide" id="_hiccup_vs_jsx_comments">
 <h2>HICCUP vs JSX - comments</h2>
-<div class="paragraph"><p>In Hiccup, you can comment out any part of the expression.</p></div>
+<div class="paragraph"><p>Have you ever tried to comment out part of your JSX form?<br>
+In Hiccup, you can comment out any part of the expression.</p></div>
 <div class="openblock slide">
 <div class="content">
 <div class="paragraph"><p>No comments.</p></div>
@@ -472,9 +549,49 @@ Therefore, manipulating code is usually a matter of list manipulation.</p></div>
 </div>
 </div>
 </section>
+<section class="slide" id="_hiccup_vs_jsx_summary">
+<h2>HICCUP vs JSX: Summary</h2>
+<div class="openblock slide">
+<div class="content">
+<div class="paragraph"><p>Hiccup forms are plain Clojure vectors:</p></div>
+<div class="ulist">
+<ul>
+<li>you don&#8217;t need to learn the Hiccup syntax</li>
+<li>you don&#8217;t need to write a preprocessor</li>
+<li>you don&#8217;t need to write IDE plugins</li>
+<li>there are no edge cases</li>
+<li>you can test part of your components as plain clojure functions</li>
+<li>you can parse your hiccup code</li>
+</ul>
+</div>
+</div>
+</div>
+<div class="openblock slide">
+<div class="content">
+<div class="listingblock reagent">
+<div class="content">
+<pre class="highlight"><code>(def a "hello")
+[:h3 a " world"]</code></pre>
+</div>
+</div>
+</div>
+</div>
+<div class="openblock slide">
+<div class="content">
+<div class="paragraph"><p>is translated by Klipse into:</p></div>
+<div class="listingblock clj">
+<div class="content">
+<pre class="highlight"><code>(def a "hello")
+(r/render-component [:h3 a " world"] js/klipse-container)
+;</code></pre>
+</div>
+</div>
+</div>
+</div>
+</section>
 <section class="slide" id="_reagent_basic_components">
 <h2>Reagent - basic components</h2>
-<div class="paragraph slide"><p>Pure components are clojure functions</p></div>
+<div class="paragraph slide"><p>Pure components are created with clojure functions</p></div>
 <div class="openblock slide">
 <div class="content">
 <div class="listingblock clj">
@@ -487,11 +604,11 @@ Therefore, manipulating code is usually a matter of list manipulation.</p></div>
    text])</code></pre>
 </div>
 </div>
-<div class="paragraph"><p>We embed a component, like we embed html tags using the function name instead of a keyword:</p></div>
 </div>
 </div>
 <div class="openblock slide">
 <div class="content">
+<div class="paragraph"><p>We embed a component, like we embed html tags using the function name instead of a keyword:</p></div>
 <div class="listingblock reagent">
 <div class="content">
 <pre class="highlight"><code>[:div
@@ -516,7 +633,9 @@ Any component that dereferences a ratom will be automatically re-rendered.</p></
    {:on-click
     (fn [e]
       (swap! counter inc))}
-   text])</code></pre>
+   text])
+(defn counter-display []
+  [:h3 "cnt: " @counter])</code></pre>
 </div>
 </div>
 </div>
@@ -525,7 +644,9 @@ Any component that dereferences a ratom will be automatically re-rendered.</p></
 <div class="content">
 <div class="listingblock reagent">
 <div class="content">
-<pre class="highlight"><code>[button-inc "Click me"]</code></pre>
+<pre class="highlight"><code>[:div
+ [counter-display]
+ [button-inc "Click me"]]</code></pre>
 </div>
 </div>
 </div>
@@ -540,8 +661,8 @@ Any component that dereferences a ratom will be automatically re-rendered.</p></
 <div class="paragraph"><p>and return a function instead of a hiccup form</p></div>
 <div class="listingblock clj">
 <div class="content">
-<pre class="highlight"><code>(defn button-and-counter [text]
-  (let [counter (r/atom 0)]
+<pre class="highlight"><code>(defn button-and-counter [text val]
+  (let [counter (r/atom val)]
     (fn [text]
       [:div
        [:div "Counter: " @counter]
@@ -559,8 +680,8 @@ Any component that dereferences a ratom will be automatically re-rendered.</p></
 <div class="listingblock reagent">
 <div class="content">
 <pre class="highlight"><code>[:div
- [button-and-counter "Click here"]
- [button-and-counter "Click also here"]]</code></pre>
+ [button-and-counter "Click here" 42]
+ [button-and-counter "Click also here" 64]]</code></pre>
 </div>
 </div>
 </div>
@@ -627,6 +748,7 @@ How could the reaction be re-calculated when the atom&#8217;s value changes?</p>
 </div>
 <div class="openblock slide">
 <div class="content">
+<div class="paragraph"><p><strong>Macros!</strong></p></div>
 <div class="listingblock clj">
 <div class="content">
 <pre class="highlight"><code>(defmacro reaction [&amp; body]
@@ -708,10 +830,20 @@ How could the reaction be re-calculated when the atom&#8217;s value changes?</p>
 </div>
 </div>
 </section>
+<section class="slide" id="_appendix_clojurescript_javsacript_interop">
+<h2>Appendix - ClojureScript Javsacript Interop</h2>
+<div class="imageblock">
+<div class="content">
+<img alt="interop" src="images/interop.png">
+</div>
+</div>
+</section>
 <section class="slide" id="_going_further">
 <h2>Going further</h2>
 <div class="ulist">
 <ul>
+<li>ClojureScript advanced compilation (Google Closure Compiler) and <a href="https://clojurescript.org/guides/externs#externs-inference">Externs inference</a></li>
+<li><a href="https://clojurescript.org/news/2017-07-12-clojurescript-is-not-an-island-integrating-node-modules">ClojureScript integration with npm</a></li>
 <li><a href="http://timothypratley.blogspot.co.il/2017/01/reagent-deep-dive-part-1.html">Reagent deep dive</a>.</li>
 <li><a href="https://github.com/Day8/re-frame">re-frame</a>: A Reagent Framework For Writing SPAs, in Clojurescript.</li>
 <li><a href="https://github.com/omcljs/om/wiki/Quick-Start-%28om.next%29">om.next</a>: A  uniform yet extensible approach to building networked interactive applications, in Clojurescript.</li>
@@ -724,8 +856,8 @@ How could the reaction be re-calculated when the atom&#8217;s value changes?</p>
 </ul>
 </div>
 </section>
-<section class="slide" id="_more_about_clojurescript">
-<h2>More about ClojureScript</h2>
+<section class="slide" id="_clojurescript_learning_tools">
+<h2>ClojureScript: Learning tools</h2>
 <div class="ulist">
 <ul>
 <li><a href="http://clojurians.net/">Clojurians</a>: The Clojure and ClojureScript Slack</li>
@@ -743,6 +875,7 @@ How could the reaction be re-calculated when the atom&#8217;s value changes?</p>
 <img alt="questions" src="images/questions.jpg">
 </div>
 </div>
+<h3>Meanwhile, you can give a github star to <a href="https://github.com/viebel/klipse">Klipse</a>... </h3>
 <link rel="shortcut icon" href="./favicon.png">
 <link rel="stylesheet" media="screen" href="http://slides.klipse.tech/includes/deckjs/themes/style/klipse.css">
 <link rel="stylesheet" media="screen" href="http://slides.klipse.tech/asciidoc/klipse.css">
