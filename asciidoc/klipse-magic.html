@@ -1,0 +1,539 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta content="text/html; charset=utf-8" http-equiv="Content-Type">
+<meta content="IE=edge,chrome=1" http-equiv="X-UA-Compatible">
+<meta content="Asciidoctor 1.5.5" name="generator">
+<title>Klipse - The Magic of Self-Host ClojureScript in Any Web Page</title>
+<link href="deck.js/core/deck.core.css" rel="stylesheet">
+<link href="deck.js/extensions/menu/deck.menu.css" media="screen" rel="stylesheet">
+<link href="deck.js/extensions/navigation/deck.navigation.css" media="screen" rel="stylesheet">
+<link href="deck.js/extensions/status/deck.status.css" media="screen" rel="stylesheet">
+<link href="deck.js/themes/style/none.css" media="screen" rel="stylesheet">
+<link href="deck.js/themes/transition/horizontal-slide.css" media="screen" rel="stylesheet">
+<link href="deck.js/core/print.css" media="print" rel="stylesheet">
+<script src="deck.js/modernizr.custom.js"></script>
+</head>
+<body class="article">
+<div class="deck-container">
+<section class="slide" id="title-slide">
+<h1>Klipse - The Magic of Self-Host ClojureScript in Any Web Page</h1>
+</section>
+<div id="preamble">
+<div class="sectionbody">
+<pre class="hidden"><code class="clj">
+(ns my.m$macros)
+(require '[reagent.core :as r])
+(require '[reagent.ratom :as ratom])
+
+</code></pre>
+</div>
+</div>
+<section class="slide" id="_the_magic_of_self_host_clojurescript_in_any_web_page">
+<h2>The Magic of Self-Host ClojureScript in Any Web Page</h2>
+<section class="slide">
+        <div class="text-centered">
+            <div class="centered" style="font-size:1.9em;">
+              <div class="left" style="width:50%;">
+	      <img src='https://chart.googleapis.com/chart?cht=qr&chl=http%3A%2F%2Fslides.klipse.tech%2Fasciidoc%2Fklipse-magic.html&chs=300x300' alt='qr code'></img>
+	      </div>
+              <div class="left" style="width:50%;">
+		<div>
+                  <div>
+                    <img class="fullscreen" src="./images/klipse.png" alt="" width="150">
+                  </div>
+                  <div>
+		  <div>ClojureX 2017</div>
+		  <div>London - Dec 4, 2017</div>
+                  </div>
+                  <div class="clear">
+                    <div style="margin-top:14px;">
+                      <a class="github-button" href="https://github.com/viebel/klipse" data-count-href="/viebel/klipse/stargazers" data-count-api="/repos/viebel/klipse#stargazers_count" data-count-aria-label="# stargazers on GitHub" aria-label="Star viebel/klipse on GitHub">KLIPSE</a>
+                    </div>
+                    <script async defer id="github-bjs" src="https://buttons.github.io/buttons.js"></script>
+                  </div>
+                  <div>
+		  <a href="https://tinyurl.com/klipse-magic"> https://tinyurl.com/klipse-magic </a>
+                  </div>
+		</div>
+              </div>
+            </div>
+            <div class="clear centered">
+	    <br><br><br>
+	      <div style="padding-top: 20px;">
+		<pre><code class="clj" data-loop-msec="1000" data-beautify-strings="true">
+		(str (js/Date.))
+		</code></pre>
+		<br>
+	      </div>
+            </div>
+	    <br><br>
+	    <div style="font-size: 2em;">Yehonathan Sharvit</div>
+	    <div style="font-size: 2em;"> <a href="https://twitter.com/viebel">@viebel</a>, viebel@gmail.com</div></p>
+        </div>
+      </section>
+</section>
+<section class="slide" id="_agenda">
+<h2>Agenda</h2>
+<div class="ulist">
+<ul>
+<li>What is Klipse?</li>
+<li>Getting familiar with Self-Hosted ClojureScript</li>
+<li>The internals of Klipse?</li>
+<li>How I can contribute</li>
+</ul>
+</div>
+</section>
+<section class="slide" id="_who_am_i">
+<h2>Who am I?</h2>
+<div class="openblock left">
+<div class="content">
+<div class="ulist">
+<ul>
+<li>Yehonathan Sharvit <a href="https://twitter.com/viebel">@viebel</a>, <a href="mailto:viebel@gmail.com">viebel@gmail.com</a>, <a href="https://www.linkedin.com/in/viebel/">LinkedIn</a></li>
+<li>A mathematician</li>
+<li>A coder</li>
+<li>A pragmatic theorist</li>
+<li>A freak of interactivity</li>
+<li>Founded Audyx in 2013 - an Audiology Startup with 30K LOCs in Clojurescript</li>
+<li>Author of <a href="https://github.com/viebel/klipse">Klipse</a> - a simple client-side code evaluator pluggable on any web page</li>
+</ul>
+</div>
+                      <a class="github-button" href="https://github.com/viebel/klipse" data-count-href="/viebel/klipse/stargazers" data-count-api="/repos/viebel/klipse#stargazers_count" data-count-aria-label="# stargazers on GitHub" aria-label="Star viebel/klipse on GitHub">KLIPSE</a>
+                    <script async defer id="github-bjs" src="https://buttons.github.io/buttons.js"></script>
+<div class="ulist">
+<ul>
+<li>A Web consultant: Full-Stack, clojure, clojurescript, javascript, node.js, react</li>
+<li>Blogger about functional programming at <a href="http://blog.klipse.tech/">blog.klipse.tech</a></li>
+</ul>
+</div>
+</div>
+</div>
+<div class="imageblock">
+<div class="content">
+<img alt="me" src="https://pbs.twimg.com/profile_images/713278171353911296/1a2useM2.jpg">
+</div>
+</div>
+</section>
+<section class="slide" id="_klipse_evaluating_data">
+<h2>Klipse - Evaluating data</h2>
+<div class="listingblock clj">
+<div class="content">
+<pre class="highlight"><code>(map inc [1 2 3])</code></pre>
+</div>
+</div>
+</section>
+<section class="slide" id="_klipse_printing_data">
+<h2>Klipse - Printing data</h2>
+<div class="listingblock clj">
+<div class="content">
+<pre class="highlight"><code>(println "Hello ClojureX")
+(+ 1 2 3)</code></pre>
+</div>
+</div>
+</section>
+<section class="slide" id="_klipse_interactive_ui_dom_manipulations">
+<h2>Klipse - Interactive UI (DOM) manipulations</h2>
+<div class="listingblock clj">
+<div class="content">
+<pre class="highlight"><code>(set! (.-innerHTML js/klipse-container)
+      "&lt;div style='color:blue;'&gt;
+          Hello &lt;strong&gt;World&lt;/strong&gt;!
+      &lt;/div&gt;")
+nil</code></pre>
+</div>
+</div>
+</section>
+<section class="slide" id="_klipse_interactive_ui_à_la_clojure">
+<h2>Klipse - Interactive UI à la Clojure</h2>
+<div class="listingblock reagent">
+<div class="content">
+<pre class="highlight"><code>[:div {:style {:color "blue"}}
+"Hello " [:strong "World"] "!"]</code></pre>
+</div>
+</div>
+</section>
+<section class="slide" id="_klipse_macros">
+<h2>Klipse - macros</h2>
+<div class="listingblock clj">
+<div class="content">
+<pre class="highlight"><code>(ns my.m$macros)
+
+(defmacro dbg [x]
+  `(let [x# ~x]
+     (println (str '~x " =&gt; " x#))
+     x#))
+
+
+(my.m/dbg (map inc [1 2 3]))</code></pre>
+</div>
+</div>
+<br>
+<br>
+<div class="paragraph"><p>Here is a <a href="http://blog.klipse.tech/clojure/2016/03/26/messing-with-macros.html">detailed explanation</a> why we need the extra <code>$macros</code> suffix.</p></div>
+</section>
+<section class="slide" id="_self_hosted_clojurescript">
+<h2>Self-Hosted ClojureScript</h2>
+<div class="paragraph"><p>TODO: add Inspection picture<br>
+TODO: definition of self hosted / bootstrapped</p></div>
+<div class="openblock slide">
+<div class="content">
+<div class="listingblock clj">
+<div class="content">
+<pre class="highlight"><code>(require '[cljs.js :as cljs])</code></pre>
+</div>
+</div>
+</div>
+</div>
+<div class="openblock slide">
+<div class="content">
+<div class="listingblock clj">
+<div class="content">
+<pre class="highlight"><code>(cljs/eval-str (cljs/empty-state)
+               "(map inc [1 2 3])"
+               ""
+               {:eval cljs/js-eval}
+               identity)</code></pre>
+</div>
+</div>
+<div class="paragraph"><p>Explain the args of eval-str</p></div>
+</div>
+</div>
+<div class="openblock slide">
+<div class="content">
+<div class="listingblock clj">
+<div class="content">
+<pre class="highlight"><code>(cljs/compile-str (cljs/empty-state)
+               "(map inc [1 2 3])"
+               ""
+               {}
+               identity)</code></pre>
+</div>
+</div>
+<div class="paragraph"><p>Explain the args of compile-str</p></div>
+</div>
+</div>
+</section>
+<section class="slide" id="_the_proper_way_of_evaluating_several_expressions">
+<h2>The proper way of evaluating several expressions</h2>
+<div class="ulist">
+<ul>
+<li>Split the code into S-expressions</li>
+<li>Evaluate each S-expression</li>
+</ul>
+</div>
+<div class="openblock slide">
+<div class="content">
+<div class="listingblock clj">
+<div class="content">
+<pre class="highlight"><code>(defn eval [exp]
+  (cljs/eval-str (cljs/empty-state)
+                 exp
+                 ""
+                 {:eval cljs/js-eval
+                  :context :expr
+                  }
+                 identity))</code></pre>
+</div>
+</div>
+</div>
+</div>
+<div class="openblock slide">
+<div class="content">
+<div class="listingblock clj">
+<div class="content">
+<pre class="highlight"><code>(defn unsafe-eval-several-expressions [code]
+  (loop [exps (klipse.lang.clojure.split-expressions code)]
+    (let [res (eval (first exps))]
+      (if (= 1 (count exps))
+        res
+        (recur (rest exps))))))</code></pre>
+</div>
+</div>
+</div>
+</div>
+<div class="openblock slide">
+<div class="content">
+<div class="listingblock clj">
+<div class="content">
+<pre class="highlight"><code>(unsafe-eval-several-expressions "(def a 4) (map inc [1 2 3 a])")</code></pre>
+</div>
+</div>
+</div>
+</div>
+</section>
+<section class="slide" id="_namespace_resolution">
+<h2>Namespace resolution</h2>
+<div class="openblock slide">
+<div class="content">
+<div class="paragraph"><p>The implementor needs to provide a custom mechanism for namespace resolution</p></div>
+<div class="listingblock clj">
+<div class="content">
+<pre class="highlight"><code>(cljs/eval-str (cljs/empty-state)
+               "(require 'my.ns)"
+               ""
+               {:eval cljs/js-eval}
+               identity)</code></pre>
+</div>
+</div>
+</div>
+</div>
+<div class="openblock slide">
+<div class="content">
+<div class="paragraph"><p>The <code>load</code> function is called with two arguments - a map and a callback function:<br>
+The map has the following keys:</p></div>
+<div class="ulist">
+<ul>
+<li><code>:name</code>   - the name of the library (a symbol)</li>
+<li><code>:macros</code> - modifier signaling a macros namespace load</li>
+<li><code>:path</code>   - munged relative library path (a string)</li>
+</ul>
+</div>
+<div class="listingblock clj">
+<div class="content">
+<pre class="highlight"><code>(cljs/eval-str (cljs/empty-state)
+               "(require 'my.ns)"
+               ""
+               {:eval cljs/js-eval
+                :load (fn [data callback] (println data))}
+               identity)</code></pre>
+</div>
+</div>
+</div>
+</div>
+</section>
+<section class="slide" id="_namespace_resolution_cont">
+<h2>Namespace resolution (cont.)</h2>
+<div class="openblock slide">
+<div class="content">
+<div class="paragraph"><p>It is up to the implementor to correctly resolve the corresponding <code>.cljs</code>, <code>.cljc</code>, or <code>.js</code> resource (the order must be respected).</p></div>
+<div class="paragraph"><p>Upon resolution, the callback should be invoked with a map containing the following keys:</p></div>
+<div class="ulist">
+<ul>
+<li><code>:lang</code>       - the language, <code>:clj</code> for clojurescript or <code>:js</code> for <code>javascript</code></li>
+<li><code>:source</code>     - the source of the library (a string)</li>
+</ul>
+</div>
+<div class="paragraph"><p>If the resource could not be resolved, the callback should be invoked with <code>nil</code>.</p></div>
+<div class="listingblock clj">
+<div class="content">
+<pre class="highlight"><code>(cljs/eval-str (cljs/empty-state)
+               "(require 'my.ns) (+ foo 10)"
+               ""
+               {:eval cljs/js-eval
+                :load (fn [data callback] (callback {:lang :clj
+                                           :source "(def foo 12)"}))}
+               identity)</code></pre>
+</div>
+</div>
+</div>
+</div>
+</section>
+<section class="slide" id="_klipse_internals_1_3_namespace_resolution">
+<h2>Klipse internals (1/3) - namespace resolution</h2>
+<div class="olist arabic">
+<ol class="arabic">
+<li>
+Clojure libs from any hosted repository (e.g. Github)
+</li>
+<li>
+Clojure libs from analysis cache hosted by Klipse
+</li>
+<li>
+Code from a gist
+</li>
+</ol>
+</div>
+<div class="paragraph"><p>All the details are in Github <a href="https://github.com/viebel/klipse/blob/master/src/klipse/lang/clojure/io.cljs">io.cljs</a>.</p></div>
+</section>
+<section class="slide" id="_klipse_internals_1_3_clojure_libs_from_github">
+<h2>Klipse internals (1/3) - Clojure libs from Github</h2>
+<div class="paragraph"><p>Super cool String manipulation library: <a href="https://github.com/expez/superstring">superstring</a>.</p></div>
+<pre><code class="clj" data-external-libs="https://raw.githubusercontent.com/expez/superstring/279f722e5e61167ac11b27d6017c2d9d239f8343/src">
+(require '[superstring.core :as str])
+(str/swap-case "Hello ClojureX!")
+</code></pre>
+<br>
+<br>
+<div style="font-size:20px;">
+data-external-libs="https://raw.githubusercontent.com/expez/superstring/279f722e5e61167ac11b27d6017c2d9d239f8343/src"
+</div>
+</section>
+<section class="slide" id="_questions">
+<h2>Questions</h2>
+<div class="imageblock">
+<div class="content">
+<img alt="questions" src="images/questions.jpg">
+</div>
+</div>
+<h3>Meanwhile, you can give a github star to <a href="https://github.com/viebel/klipse">Klipse</a>... </h3>
+<style>
+.CodeMirror {
+    border: solid 2px #90B4FE !important;
+    width: 80%;
+    left: 10%;
+    font-size: 24px;
+}
+
+.klipse-container {
+    margin-bottom: 10px;
+    left: 12%;
+    position: absolute;
+}
+</style>
+<link rel="shortcut icon" href="./favicon.png">
+<link rel="stylesheet" media="screen" href="http://slides.klipse.tech/includes/deckjs/themes/style/klipse.css">
+<link rel="stylesheet" media="screen" href="http://slides.klipse.tech/asciidoc/klipse.css">
+
+<link rel="stylesheet" type="text/css" href="https://storage.googleapis.com/app.klipse.tech/css/codemirror.css">
+
+<script>
+    window.klipse_settings = {
+     codemirror_options_in: {
+            lineWrapping: true,
+            autoCloseBrackets: true
+        },
+        codemirror_options_out: {
+            lineWrapping: true
+        },
+        beautify_strings: true,
+        selector: '.clj',
+        selector_js: '.transpile-cljs',
+        selector_reagent: '.reagent',
+        selector_eval_js: '.eval-js',
+    	selector_render_jsx: '.render-jsx',
+        selector_jsx: '.eval-jsx',
+        selector_es2017: '.es2017',
+        selector_brainfuck: '.brainfuck',
+        selector_transpile_jsx: '.transpile-jsx',
+        selector_eval_php: '.php',
+        selector_eval_python_client: '.python',
+        selector_eval_html: '.html',
+        selector_sql: '.sql',
+        selector_eval_ruby: '.ruby',
+        selector_eval_scheme: '.scheme',
+    selector_eval_cpp: '.cpp',
+    selector_lua: '.lua',
+    };
+</script>
+<script src="https://storage.googleapis.com/app.klipse.tech/plugin/js/klipse_plugin.js?v=7.0.6"></script>
+</section>
+<div aria-role="navigation">
+<a class="deck-prev-link" href="#" title="Previous">&#8592;</a>
+<a class="deck-next-link" href="#" title="Next">&#8594;</a>
+</div>
+<p aria-role="status" class="deck-status">
+<span></span>
+powered by
+<a href="https://github.com/viebel/klipse" target="_new">Klipse</a>
+<span class="deck-status-current"></span>
+/
+<span class="deck-status-total"></span>
+</p>
+</div>
+<script src="deck.js/jquery.min.js"></script>
+<script src="deck.js/core/deck.core.js"></script>
+<script src="deck.js/extensions/menu/deck.menu.js"></script>
+<script src="deck.js/extensions/navigation/deck.navigation.js"></script>
+<script src="deck.js/extensions/status/deck.status.js"></script>
+<script>
+  (function($, deck, undefined) {
+    $.deck.defaults.keys['previous'] = [8, 33, 37, 39];
+    $.deck.defaults.keys['next'] = [13, 32, 34, 39];
+  
+    $.extend(true, $[deck].defaults, {
+        countNested: false
+    });
+  
+    $.deck('.slide');
+  })(jQuery, 'deck');
+</script>
+<style>
+  .slide.canvas-image {
+  -moz-background-size: cover;
+  -webkit-background-size: cover;
+  -o-background-size: cover;
+  background-size: cover;
+  display: -moz-box;
+  display: -webkit-box;
+  display: -ms-box;
+  display: box;
+  -moz-box-orient: vertical;
+  -webkit-box-orient: vertical;
+  -ms-box-orient: vertical;
+  box-orient: vertical;
+  -moz-box-align: start;
+  -webkit-box-align: start;
+  -ms-box-align: start;
+  box-align: start;
+  -moz-box-pack: start;
+  -webkit-box-pack: start;
+  -ms-box-pack: start;
+  box-pack: start;}
+  
+  .bottom-left {
+    left: 1%;
+    bottom: 20%; }
+  
+  .top-left {
+    left: 1%;
+    top: 20%; }
+  
+  .bottom-right {
+    right: 1%;
+    bottom: 20%; }
+  
+  .top-right {
+    right: 1%;
+    top: 20%; }
+  
+  .center-up {
+    right: 50%;
+    top: 1%;
+  }
+  
+  .center-down {
+    right: 50%;
+    bottom: 1%;
+  }
+  .canvas-image .canvas-caption p {
+    text-align: center;
+    padding-top: 0;
+    padding: 0;
+    -moz-transform: none;
+    -webkit-transform: none;
+    -o-transform: none;
+    -ms-transform: none;
+    transform: none;
+    display: inline;
+    position: absolute;
+    background-color: rgba(0, 0, 0, 0.7);
+    font-weight: bold;
+    font-size: 58px;
+    -webkit-box-shadow: 2px 2px 2px #000;
+    -moz-box-shadow: 2px 2px 2px #000;
+    box-shadow: 2px 2px 2px #000;
+    padding: 1rem;
+    color: white; }
+  kbd.keyseq { color: #555555; }
+  kbd:not(.keyseq) {
+    display: inline-block;
+    color: #222222;
+    font-size: 0.7em;
+    line-height: 1.4;
+    background-color: #F7F7F7;
+    border: 1px solid #ccc;
+    -webkit-border-radius: 3px;
+    border-radius: 3px;
+    -webkit-box-shadow: 0 1px 0 rgba(0, 0, 0, 0.2), 0 0 0 2px white inset;
+    box-shadow: 0 1px 0 rgba(0, 0, 0, 0.2), 0 0 0 2px white inset;
+    margin: -0.15em 0.15em 0 0.15em;
+    padding: 0.2em 0.6em;
+    vertical-align: middle;
+    white-space: nowrap;
+  }
+  kbd kbd:first-child { margin-left: 0; }
+  kbd kbd:last-child { margin-right: 0; }
+</style>
+</body>
+</html>

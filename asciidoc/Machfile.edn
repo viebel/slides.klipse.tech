@@ -13,4 +13,5 @@
  klipse-clojure.html #import [asciidoc/create {name "klipse-clojure"}]
  react-guidelines.html #import [asciidoc/create {name "react-guidelines"}]
  react-steroids-cljs.html #import [asciidoc/create {name "react-steroids-cljs"}]
+ klipse-magic.html #import [asciidoc/create {name "klipse-magic"}]
  polymorphism.html #import [asciidoc/create {name "polymorphism"}]}
