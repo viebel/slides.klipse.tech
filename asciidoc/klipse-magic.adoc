@@ -91,6 +91,10 @@
 image::https://pbs.twimg.com/profile_images/713278171353911296/1a2useM2.jpg[me]
 
 
+== Klipse - it's all about Code interactivity
+
+image::images/interactivity.jpg[interactivity]
+
 == Klipse - Evaluating data
 
 
@@ -153,7 +157,9 @@ Here is a http://blog.klipse.tech/clojure/2016/03/26/messing-with-macros.html[de
 
 == Self-Hosted ClojureScript
 
-TODO: add Inspection picture
+image::images/inception.jpg[inception]
+
+== Self hosted ClojureScript
 TODO: definition of self hosted / bootstrapped
 [%step]
 --
@@ -323,6 +329,127 @@ data-external-libs="https://raw.githubusercontent.com/expez/superstring/279f722e
 </div>
 ++++
 
+== Klipse internals (1/3) - Clojure libs from analysis cache
+
+Many popular clojure libs are available out-of-the box in Klipse:
+
+* clojure: clojure.spec, core.match, math.combinatorics, core.async, test.check
+
+* clojurescript: reagent, reframe, om.next
+
+[source.clj]
+----
+(require '[clojure.math.combinatorics :refer [permutations]])
+
+(permutations [1 2 3])
+----
+
+If you want to add a lib to Klipse analysis cache, follow this https://github.com/viebel/klipse/blob/master/contributing.md#update-clojurescript-analysis-cache[guide].
+
+
+== Klipse internals (1/3) - Clojure code from a gist
+
+[source.clj]
+----
+(ns my.color
+  (:require
+    [goog.dom :as dom]
+    [viebel.gist-3800b8ebae5292921c7d6fcb6c995c1f.raw.body-color :refer [set-bg-color-element]]))
+
+(let [colors ["blue" "red" "yellow" "magenta" "cyan" "green" "purple" "coral" "dodgerblue" "pink"]]
+   (set-bg-color-element (dom/getElement "klipse-color-me") (rand-nth colors)))
+----
+
+++++
+<br>
+<br>
+<br>
+<div id="klipse-color-me" style="width: 100px; height: 100px; left:30%; position: absolute;"></div>
+++++
+
+== Klipse internals (2/3) - infinite loop prevention
+
+[source.clj]
+----
+(map inc (range))
+----
+
+== Klipse internals (2/3) - infinite loop prevention
+
+[%step]
+--
+++++
+<pre><code class="transpile-cljs" data-compile-display-guard="true">
+(defn foo [x] (if x 1 2))
+</code></pre>
+++++
+--
+
+++++
+<br>
+<br>
+++++
+[%step]
+--
+[source.clj]
+----
+(defn foo [x] (if x 1 2))
+
+(loop []
+  (foo 9)
+  (recur
+----
+--
+
+== Joining the party
+
+image::images/party.jpg[party]
+
+== Write an interactive blog post
+
+It's super simple: it's nothing more than adding a javacript tag!
+
+Get inspired by the best blog posts out there:
+
+* http://blog.jrheard.com/procedural-dungeon-generation-dr%20unkards-walk-in-clojurescript[Procedural
+Dungeon Generation: A Drunkard’s Walk in ClojureScript]
+* http://exupero.org/hazard/post/islands/[Island Generator]
+* http://blog.ducky.io/clojurescript/2016/06/08/more-%20defprotocol/[About protocols in ClojureScript]
+* http://z.caudate.me/klipse-demo/[z.caudate.me - live documentation with klipse]
+* http://clojurebridge.github.io/community-docs/docs/clojure/anonymous-function%20/[Anonymous
+functions in clojure]
+* http://kids.klipse.tech/[Klipse for Kids: A fun way to learn computer programming]
+* http://liujiacai.net/scheme.clj/[Yet another scheme dialect written in Clojure and ClojureScript]
+* Reagent deep dive http://timothypratley.blogspot.com/2017/01/reagent-deep-dive-part-1.html[1] http://timothypratl%20ey.blogspot.com/2017/01/reagent-deep-dive-part-1.html[2] http://timothypratley.blogspot.com/2017/01/reagent-deep-dive-part-3-sequence%20s.html[3] http://timothypratley.blogspot.com/2017/01/reagent-deep-dive-part-4-application.html[4]
+* https://040code.github.io/2017/07/12/bezier-in-clojurescript/[Visualising Bézier Curves]
+* http://abhirag.in/articles/batman_clojure.html[core.async fun tutorial]
+* https://day8.github.io/re-playground/[reagent and reframe playground]
+* http://markbastian.github.io/posts-output/2017-07-10-polymacro/[polynomial macro]
+
+
+== Use Klipse for the slides of your next talk
+
+
+== Write interactive docs of your Clojure library
+
+https://github.com/viebel/codox-klipse-theme[Klipse Codox Theme]
+
+++++
+<iframe width="100%" height="1000px" src="http://viebel.github.io/gadjett/gadjett.collections.html">
+</iframe>
+++++
+
+== Pull Requests are more than welcome!!!
+
+- Evaluate Code inside a web worker (Solve security issues + make the evaluation interruptible)
+- Upgrade to latest clojurescipt (deal with clojure.spec.alpha)
+- Connect with npm hosted repository
+- `source` special form
+- `doc` special form
+- autocomplete
+- add a button to trigger evaluation
+- Solve CSS issues on reveal.js
+- etc... See https://github.com/viebel/klipse/issues[Klipse issues]
 
 == Questions
 

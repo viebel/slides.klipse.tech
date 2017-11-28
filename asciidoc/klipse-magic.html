@@ -115,6 +115,14 @@
 </div>
 </div>
 </section>
+<section class="slide" id="_klipse_it_s_all_about_code_interactivity">
+<h2>Klipse - it&#8217;s all about Code interactivity</h2>
+<div class="imageblock">
+<div class="content">
+<img alt="interactivity" src="images/interactivity.jpg">
+</div>
+</div>
+</section>
 <section class="slide" id="_klipse_evaluating_data">
 <h2>Klipse - Evaluating data</h2>
 <div class="listingblock clj">
@@ -174,8 +182,15 @@ nil</code></pre>
 </section>
 <section class="slide" id="_self_hosted_clojurescript">
 <h2>Self-Hosted ClojureScript</h2>
-<div class="paragraph"><p>TODO: add Inspection picture<br>
-TODO: definition of self hosted / bootstrapped</p></div>
+<div class="imageblock">
+<div class="content">
+<img alt="inception" src="images/inception.jpg">
+</div>
+</div>
+</section>
+<section class="slide" id="_self_hosted_clojurescript_2">
+<h2>Self hosted ClojureScript</h2>
+<div class="paragraph"><p>TODO: definition of self hosted / bootstrapped</p></div>
 <div class="openblock slide">
 <div class="content">
 <div class="listingblock clj">
@@ -357,6 +372,132 @@ Code from a gist
 <br>
 <div style="font-size:20px;">
 data-external-libs="https://raw.githubusercontent.com/expez/superstring/279f722e5e61167ac11b27d6017c2d9d239f8343/src"
+</div>
+</section>
+<section class="slide" id="_klipse_internals_1_3_clojure_libs_from_analysis_cache">
+<h2>Klipse internals (1/3) - Clojure libs from analysis cache</h2>
+<div class="paragraph"><p>Many popular clojure libs are available out-of-the box in Klipse:</p></div>
+<div class="ulist">
+<ul>
+<li>clojure: clojure.spec, core.match, math.combinatorics, core.async, test.check</li>
+<li>clojurescript: reagent, reframe, om.next</li>
+</ul>
+</div>
+<div class="listingblock clj">
+<div class="content">
+<pre class="highlight"><code>(require '[clojure.math.combinatorics :refer [permutations]])
+
+(permutations [1 2 3])</code></pre>
+</div>
+</div>
+<div class="paragraph"><p>If you want to add a lib to Klipse analysis cache, follow this <a href="https://github.com/viebel/klipse/blob/master/contributing.md#update-clojurescript-analysis-cache">guide</a>.</p></div>
+</section>
+<section class="slide" id="_klipse_internals_1_3_clojure_code_from_a_gist">
+<h2>Klipse internals (1/3) - Clojure code from a gist</h2>
+<div class="listingblock clj">
+<div class="content">
+<pre class="highlight"><code>(ns my.color
+  (:require
+    [goog.dom :as dom]
+    [viebel.gist-3800b8ebae5292921c7d6fcb6c995c1f.raw.body-color :refer [set-bg-color-element]]))
+
+(let [colors ["blue" "red" "yellow" "magenta" "cyan" "green" "purple" "coral" "dodgerblue" "pink"]]
+   (set-bg-color-element (dom/getElement "klipse-color-me") (rand-nth colors)))</code></pre>
+</div>
+</div>
+<br>
+<br>
+<br>
+<div id="klipse-color-me" style="width: 100px; height: 100px; left:30%; position: absolute;"></div>
+</section>
+<section class="slide" id="_klipse_internals_2_3_infinite_loop_prevention">
+<h2>Klipse internals (2/3) - infinite loop prevention</h2>
+<div class="listingblock clj">
+<div class="content">
+<pre class="highlight"><code>(map inc (range))</code></pre>
+</div>
+</div>
+</section>
+<section class="slide" id="_klipse_internals_2_3_infinite_loop_prevention_2">
+<h2>Klipse internals (2/3) - infinite loop prevention</h2>
+<div class="openblock slide">
+<div class="content">
+<pre><code class="transpile-cljs" data-compile-display-guard="true">
+(defn foo [x] (if x 1 2))
+</code></pre>
+</div>
+</div>
+<br>
+<br>
+<div class="openblock slide">
+<div class="content">
+<div class="listingblock clj">
+<div class="content">
+<pre class="highlight"><code>(defn foo [x] (if x 1 2))
+
+(loop []
+  (foo 9)
+  (recur</code></pre>
+</div>
+</div>
+</div>
+</div>
+</section>
+<section class="slide" id="_joining_the_party">
+<h2>Joining the party</h2>
+<div class="imageblock">
+<div class="content">
+<img alt="party" src="images/party.jpg">
+</div>
+</div>
+</section>
+<section class="slide" id="_write_an_interactive_blog_post">
+<h2>Write an interactive blog post</h2>
+<div class="paragraph"><p>It&#8217;s super simple: it&#8217;s nothing more than adding a javacript tag!</p></div>
+<div class="paragraph"><p>Get inspired by the best blog posts out there:</p></div>
+<div class="ulist">
+<ul>
+<li><a href="http://blog.jrheard.com/procedural-dungeon-generation-dr%20unkards-walk-in-clojurescript">Procedural<br>
+Dungeon Generation: A Drunkard’s Walk in ClojureScript</a></li>
+<li><a href="http://exupero.org/hazard/post/islands/">Island Generator</a></li>
+<li><a href="http://blog.ducky.io/clojurescript/2016/06/08/more-%20defprotocol/">About protocols in ClojureScript</a></li>
+<li><a href="http://z.caudate.me/klipse-demo/">z.caudate.me - live documentation with klipse</a></li>
+<li><a href="http://clojurebridge.github.io/community-docs/docs/clojure/anonymous-function%20/">Anonymous<br>
+functions in clojure</a></li>
+<li><a href="http://kids.klipse.tech/">Klipse for Kids: A fun way to learn computer programming</a></li>
+<li><a href="http://liujiacai.net/scheme.clj/">Yet another scheme dialect written in Clojure and ClojureScript</a></li>
+<li>Reagent deep dive <a href="http://timothypratley.blogspot.com/2017/01/reagent-deep-dive-part-1.html">1</a> <a href="http://timothypratl%20ey.blogspot.com/2017/01/reagent-deep-dive-part-1.html">2</a> <a href="http://timothypratley.blogspot.com/2017/01/reagent-deep-dive-part-3-sequence%20s.html">3</a> <a href="http://timothypratley.blogspot.com/2017/01/reagent-deep-dive-part-4-application.html">4</a></li>
+<li><a href="https://040code.github.io/2017/07/12/bezier-in-clojurescript/">Visualising Bézier Curves</a></li>
+<li><a href="http://abhirag.in/articles/batman_clojure.html">core.async fun tutorial</a></li>
+<li><a href="https://day8.github.io/re-playground/">reagent and reframe playground</a></li>
+<li><a href="http://markbastian.github.io/posts-output/2017-07-10-polymacro/">polynomial macro</a></li>
+</ul>
+</div>
+</section>
+<section class="slide" id="_use_klipse_for_the_slides_of_your_next_talk">
+<h2>Use Klipse for the slides of your next talk</h2>
+
+</section>
+<section class="slide" id="_write_interactive_docs_of_your_clojure_library">
+<h2>Write interactive docs of your Clojure library</h2>
+<div class="paragraph"><p><a href="https://github.com/viebel/codox-klipse-theme">Klipse Codox Theme</a></p></div>
+<iframe width="100%" height="1000px" src="http://viebel.github.io/gadjett/gadjett.collections.html">
+</iframe>
+</section>
+<section class="slide" id="_pull_requests_are_more_than_welcome">
+<h2>Pull Requests are more than welcome!!!</h2>
+<div class="ulist">
+<ul>
+<li>Evaluate Code inside a web worker (Solve security issues + make the evaluation interruptible)</li>
+<li>Upgrade to latest clojurescipt (deal with clojure.spec.alpha)</li>
+<li>Connect with npm hosted repository</li>
+<li><code>source</code> special form</li>
+<li><code>doc</code> special form</li>
+<li>autocomplete</li>
+<li>add a button to trigger evaluation</li>
+<li>Solve CSS issues on reveal.js</li>
+<li>etc&#8230;&#8203; See <a href="https://github.com/viebel/klipse/issues">Klipse issues</a></li>
+</ul>
 </div>
 </section>
 <section class="slide" id="_questions">
