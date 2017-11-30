@@ -77,10 +77,10 @@
 <h2>Agenda</h2>
 <div class="ulist">
 <ul>
-<li>What is Klipse?</li>
+<li>Klipse: why and what</li>
 <li>Getting familiar with Self-Hosted ClojureScript</li>
-<li>The internals of Klipse?</li>
-<li>How I can contribute</li>
+<li>The internals of Klipse</li>
+<li>How you can contribute</li>
 </ul>
 </div>
 </section>
@@ -111,7 +111,7 @@
 </div>
 <div class="imageblock">
 <div class="content">
-<img alt="me" src="https://pbs.twimg.com/profile_images/713278171353911296/1a2useM2.jpg">
+<img alt="me" src="images/me.jpg">
 </div>
 </div>
 </section>
@@ -170,10 +170,16 @@ nil</code></pre>
 (defmacro dbg [x]
   `(let [x# ~x]
      (println (str '~x " =&gt; " x#))
-     x#))
-
-
-(my.m/dbg (map inc [1 2 3]))</code></pre>
+     x#))</code></pre>
+</div>
+</div>
+<div class="paragraph"><p>(def jjj "{\"description\":\"A spring-summer and vacay-ready top in a cheery (not to mention colorful!) floral print we're obsessed with this season. Way-cool outfit idea: Pair it with its matching Frankie shorts. Cotton.Machine wash.Import.Select stores.\",\"g:age_group\":\"kids\",\"g:brand\":\"J.Crew\",\"g:color\":\"Emerald Multi\",\"g:gender\":\"female\",\"g:google_product_category\":\"Apparel &amp; Accessories &gt; Clothing\",\"g:item_group_id\":\"G4327\",\"g:mpn\":[\"1689949373816898\",\"1689949373816746\"],\"g:product_type\":\"Apparel &amp; Accessories &gt; girls_category &gt; shirts &gt; noveltyshirts &gt; girls-spaghetti-strap-top-in-seaside-floral\",\"g:size\":[\"14\",\"8\"],\"id\":[\"99104608715\",\"99104608723\"],\"title\":\"Girls\' spaghetti strap top in seaside floral\",\"url\":\"https://i.s-jcrew.com/is/image/jcrew/G4327_WU9613?$pdp_fs418_3x_zoom$\"}")</p></div>
+<br>
+<br>
+<br>
+<div class="listingblock clj">
+<div class="content">
+<pre class="highlight"><code>(my.m/dbg (map inc [1 2 3]))</code></pre>
 </div>
 </div>
 <br>
@@ -190,42 +196,147 @@ nil</code></pre>
 </section>
 <section class="slide" id="_self_hosted_clojurescript_2">
 <h2>Self hosted ClojureScript</h2>
-<div class="paragraph"><p>TODO: definition of self hosted / bootstrapped</p></div>
+<div class="paragraph"><p><strong>Definition</strong>: In computer science, bootstrapping is the process of writing a compiler in the source programming language that it intends to compile. Applying this technique leads to a self-hosting compiler (<a href="https://en.wikipedia.org/wiki/Bootstrapping_(compilers)">Wikipedia</a>).</p></div>
+<div class="paragraph"><p><strong>Application</strong>: In the context of the Web, once a language is bootstrapped it can run on a web page.</p></div>
+<div class="paragraph"><p><strong>Example</strong>: Eval written in LISP</p></div>
+<div class="imageblock">
+<div class="content">
+<img alt="sicp" src="images/sicp.jpg">
+</div>
+</div>
+</section>
+<section class="slide" id="_self_hosted_clojurescript_3">
+<h2>Self hosted ClojureScript</h2>
 <div class="openblock slide">
 <div class="content">
 <div class="listingblock clj">
 <div class="content">
-<pre class="highlight"><code>(require '[cljs.js :as cljs])</code></pre>
+<pre class="highlight"><code>(require '[cljs.js :as cljsjs])</code></pre>
 </div>
 </div>
 </div>
 </div>
+<br>
+<br>
+<br>
 <div class="openblock slide">
 <div class="content">
 <div class="listingblock clj">
 <div class="content">
-<pre class="highlight"><code>(cljs/eval-str (cljs/empty-state)
+<pre class="highlight"><code>(cljsjs/eval-str (cljsjs/empty-state)
                "(map inc [1 2 3])"
                ""
-               {:eval cljs/js-eval}
+               {:eval cljsjs/js-eval
+	       :def-emits-var false}
                identity)</code></pre>
 </div>
 </div>
-<div class="paragraph"><p>Explain the args of eval-str</p></div>
 </div>
 </div>
+<div class="olist arabic">
+<ol class="arabic">
+<li>
+<strong>state</strong> (atom) - the compiler state
+</li>
+<li>
+<strong>source</strong> (string) - the ClojureScript source
+</li>
+<li>
+<strong>name</strong> (symbol or string) - optional, the name of the source
+</li>
+<li>
+<strong>opts</strong> (map)&#8201;&#8212;&#8201;compilation options.
+</li>
+</ol>
+</div>
+<div class="openblock">
+<div class="content">
+<div class="ulist">
+<ul>
+<li><strong>:def-emits-var</strong>    - sets whether def (and derived) forms return either a Var (if set to true) or the def init value (if false). Default is false.</li>
+<li><strong>:eval</strong>             - eval function to invoke, see .eval-fn.</li>
+<li><strong>:load</strong>             - library resolution function, see .load-fn.</li>
+<li><strong>:static-fns</strong>       - employ static dispatch to specific function arities in emitted JavaScript, as opposed to making use of the <code>call</code> construct. Defaults to false.</li>
+</ul>
+</div>
+</div>
+</div>
+</section>
+<section class="slide" id="_javascript_transpilation">
+<h2>Javascript Transpilation</h2>
 <div class="openblock slide">
 <div class="content">
 <div class="listingblock clj">
 <div class="content">
-<pre class="highlight"><code>(cljs/compile-str (cljs/empty-state)
-               "(map inc [1 2 3])"
+<pre class="highlight"><code>(cljsjs/compile-str (cljsjs/empty-state)
+                  "(let [a 1]
+                      (+ a 2))"
+                  ""
+                  {:static-fns false}
+                  identity)</code></pre>
+</div>
+</div>
+</div>
+</div>
+<div class="olist arabic">
+<ol class="arabic">
+<li>
+<strong>state</strong> (atom) - the compiler state
+</li>
+<li>
+<strong>source</strong> (string) - the ClojureScript source
+</li>
+<li>
+<strong>name</strong> (symbol or string) - optional, the name of the source
+</li>
+<li>
+<strong>opts</strong> (map)&#8201;&#8212;&#8201;compilation options.
+</li>
+</ol>
+</div>
+<div class="openblock">
+<div class="content">
+<div class="ulist">
+<ul>
+<li><strong>:def-emits-var</strong>    - sets whether def (and derived) forms return either a Var (if set to true) or the def init value (if false). Default is false.</li>
+<li><strong>:eval</strong>             - eval function to invoke, see .eval-fn.</li>
+<li><strong>:load</strong>             - library resolution function, see .load-fn.</li>
+<li><strong>:static-fns</strong>       - employ static dispatch to specific function arities in emitted JavaScript, as opposed to making use of the <code>call</code> construct. Defaults to false. See <a href="http://blog.klipse.tech/clojurescript/2016/04/14/static-fns.html">Deep into clojurescript function call mechanisms: static vs. dynamic dispatch</a></li>
+</ul>
+</div>
+</div>
+</div>
+</section>
+<section class="slide" id="_pitfalls">
+<h2>Pitfalls</h2>
+<div class="openblock slide">
+<div class="content">
+<div class="paragraph"><p>With <code>:statement</code> context (default)</p></div>
+<div class="listingblock clj">
+<div class="content">
+<pre class="highlight"><code>(cljsjs/eval-str (cljsjs/empty-state)
+               "(if 1 2 3)"
                ""
-               {}
+               {:eval cljsjs/js-eval
+	        :context :statement}
                identity)</code></pre>
 </div>
 </div>
-<div class="paragraph"><p>Explain the args of compile-str</p></div>
+</div>
+</div>
+<div class="openblock slide">
+<div class="content">
+<div class="paragraph"><p>With <code>:expr</code> context (default)</p></div>
+<div class="listingblock clj">
+<div class="content">
+<pre class="highlight"><code>(cljsjs/eval-str (cljsjs/empty-state)
+               "(if 1 2 3)"
+               ""
+               {:eval cljsjs/js-eval
+	        :context :expr}
+               identity)</code></pre>
+</div>
+</div>
 </div>
 </div>
 </section>
@@ -241,14 +352,14 @@ nil</code></pre>
 <div class="content">
 <div class="listingblock clj">
 <div class="content">
-<pre class="highlight"><code>(defn eval [exp]
-  (cljs/eval-str (cljs/empty-state)
-                 exp
-                 ""
-                 {:eval cljs/js-eval
-                  :context :expr
-                  }
-                 identity))</code></pre>
+<pre class="highlight"><code>(def compiler-empty-state (cljsjs/empty-state))
+(defn eval [exp]
+  (cljsjs/eval-str compiler-empty-state
+                   exp
+                   ""
+                   {:eval cljsjs/js-eval
+                    :context :expr}
+                   identity))</code></pre>
 </div>
 </div>
 </div>
@@ -257,12 +368,12 @@ nil</code></pre>
 <div class="content">
 <div class="listingblock clj">
 <div class="content">
-<pre class="highlight"><code>(defn unsafe-eval-several-expressions [code]
-  (loop [exps (klipse.lang.clojure.split-expressions code)]
-    (let [res (eval (first exps))]
-      (if (= 1 (count exps))
-        res
-        (recur (rest exps))))))</code></pre>
+<pre class="highlight"><code>(defn eval-several-expressions [code]
+  (loop [exps (klipse.lang.clojure.split-expressions code)
+         res nil]
+    (if (seq exps)
+      (recur (rest exps) (eval (first exps)))
+      res)))</code></pre>
 </div>
 </div>
 </div>
@@ -271,7 +382,7 @@ nil</code></pre>
 <div class="content">
 <div class="listingblock clj">
 <div class="content">
-<pre class="highlight"><code>(unsafe-eval-several-expressions "(def a 4) (map inc [1 2 3 a])")</code></pre>
+<pre class="highlight"><code>(eval-several-expressions "(def a 4) (if a 1 2)")</code></pre>
 </div>
 </div>
 </div>
@@ -282,12 +393,16 @@ nil</code></pre>
 <div class="openblock slide">
 <div class="content">
 <div class="paragraph"><p>The implementor needs to provide a custom mechanism for namespace resolution</p></div>
+</div>
+</div>
+<div class="openblock slide">
+<div class="content">
 <div class="listingblock clj">
 <div class="content">
-<pre class="highlight"><code>(cljs/eval-str (cljs/empty-state)
+<pre class="highlight"><code>(cljsjs/eval-str (cljsjs/empty-state)
                "(require 'my.ns)"
                ""
-               {:eval cljs/js-eval}
+               {:eval cljsjs/js-eval}
                identity)</code></pre>
 </div>
 </div>
@@ -304,12 +419,16 @@ The map has the following keys:</p></div>
 <li><code>:path</code>   - munged relative library path (a string)</li>
 </ul>
 </div>
+</div>
+</div>
+<div class="openblock slide">
+<div class="content">
 <div class="listingblock clj">
 <div class="content">
-<pre class="highlight"><code>(cljs/eval-str (cljs/empty-state)
+<pre class="highlight"><code>(cljsjs/eval-str (cljsjs/empty-state)
                "(require 'my.ns)"
                ""
-               {:eval cljs/js-eval
+               {:eval cljsjs/js-eval
                 :load (fn [data callback] (println data))}
                identity)</code></pre>
 </div>
@@ -330,18 +449,46 @@ The map has the following keys:</p></div>
 </ul>
 </div>
 <div class="paragraph"><p>If the resource could not be resolved, the callback should be invoked with <code>nil</code>.</p></div>
+</div>
+</div>
+<div class="openblock slide">
+<div class="content">
 <div class="listingblock clj">
 <div class="content">
-<pre class="highlight"><code>(cljs/eval-str (cljs/empty-state)
+<pre class="highlight"><code>(cljsjs/eval-str (cljsjs/empty-state)
                "(require 'my.ns) (+ foo 10)"
                ""
-               {:eval cljs/js-eval
+               {:eval cljsjs/js-eval
                 :load (fn [data callback] (callback {:lang :clj
                                            :source "(def foo 12)"}))}
                identity)</code></pre>
 </div>
 </div>
 </div>
+</div>
+</section>
+<section class="slide" id="_klipse_internals">
+<h2>Klipse internals</h2>
+<div class="imageblock">
+<div class="content">
+<img alt="internals" src="images/internals.jpg">
+</div>
+</div>
+</section>
+<section class="slide" id="_klipse_internals_2">
+<h2>Klipse internals</h2>
+<div class="olist arabic">
+<ol class="arabic">
+<li>
+Namespace resolution
+</li>
+<li>
+Infinite loop prevention
+</li>
+<li>
+Reagent
+</li>
+</ol>
 </div>
 </section>
 <section class="slide" id="_klipse_internals_1_3_namespace_resolution">
@@ -365,7 +512,7 @@ Code from a gist
 <h2>Klipse internals (1/3) - Clojure libs from Github</h2>
 <div class="paragraph"><p>Super cool String manipulation library: <a href="https://github.com/expez/superstring">superstring</a>.</p></div>
 <pre><code class="clj" data-external-libs="https://raw.githubusercontent.com/expez/superstring/279f722e5e61167ac11b27d6017c2d9d239f8343/src">
-(require '[superstring.core :as str])
+(require '[superstring.core :as str]
 (str/swap-case "Hello ClojureX!")
 </code></pre>
 <br>
@@ -379,8 +526,8 @@ data-external-libs="https://raw.githubusercontent.com/expez/superstring/279f722e
 <div class="paragraph"><p>Many popular clojure libs are available out-of-the box in Klipse:</p></div>
 <div class="ulist">
 <ul>
-<li>clojure: clojure.spec, core.match, math.combinatorics, core.async, test.check</li>
-<li>clojurescript: reagent, reframe, om.next</li>
+<li>clojure: clojure.spec, core.match, math.combinatorics, core.async, test.check, clojure.data</li>
+<li>clojurescript: reagent, re-frame, om.next, cljs-time, re-frisk, cljs.tools.reader, cljs.test</li>
 </ul>
 </div>
 <div class="listingblock clj">
@@ -394,31 +541,42 @@ data-external-libs="https://raw.githubusercontent.com/expez/superstring/279f722e
 </section>
 <section class="slide" id="_klipse_internals_1_3_clojure_code_from_a_gist">
 <h2>Klipse internals (1/3) - Clojure code from a gist</h2>
+<div class="openblock slide">
+<div class="content">
+<div class=centered>
+<script src="https://gist.github.com/viebel/3800b8ebae5292921c7d6fcb6c995c1f.js"></script>
+</div>
+</div>
+</div>
+<div class="openblock slide">
+<div class="content">
 <div class="listingblock clj">
 <div class="content">
-<pre class="highlight"><code>(ns my.color
-  (:require
-    [goog.dom :as dom]
-    [viebel.gist-3800b8ebae5292921c7d6fcb6c995c1f.raw.body-color :refer [set-bg-color-element]]))
+<pre class="highlight"><code>(require
+  '[goog.dom :as dom])
+(require
+  '[viebel.gist-3800b8ebae5292921c7d6fcb6c995c1f.raw.body-color :refer [set-bg-color-element]])
 
 (let [colors ["blue" "red" "yellow" "magenta" "cyan" "green" "purple" "coral" "dodgerblue" "pink"]]
-   (set-bg-color-element (dom/getElement "klipse-color-me") (rand-nth colors)))</code></pre>
+  (set-bg-color-element (dom/getElement "klipse-color-me") (rand-nth colors)))</code></pre>
 </div>
 </div>
 <br>
 <br>
 <br>
 <div id="klipse-color-me" style="width: 100px; height: 100px; left:30%; position: absolute;"></div>
+</div>
+</div>
 </section>
-<section class="slide" id="_klipse_internals_2_3_infinite_loop_prevention">
-<h2>Klipse internals (2/3) - infinite loop prevention</h2>
+<section class="slide" id="_klipse_internals_2_3_infinite_loop_prevention_trivial">
+<h2>Klipse internals (2/3) - infinite loop prevention (trivial)</h2>
 <div class="listingblock clj">
 <div class="content">
 <pre class="highlight"><code>(map inc (range))</code></pre>
 </div>
 </div>
 </section>
-<section class="slide" id="_klipse_internals_2_3_infinite_loop_prevention_2">
+<section class="slide" id="_klipse_internals_2_3_infinite_loop_prevention">
 <h2>Klipse internals (2/3) - infinite loop prevention</h2>
 <div class="openblock slide">
 <div class="content">
@@ -443,6 +601,127 @@ data-external-libs="https://raw.githubusercontent.com/expez/superstring/279f722e
 </div>
 </div>
 </section>
+<section class="slide" id="_klipse_internals_3_3_reagent">
+<h2>Klipse internals (3/3) - Reagent</h2>
+<div class="imageblock">
+<div class="content">
+<img alt="party" src="images/effort.jpg">
+</div>
+</div>
+</section>
+<section class="slide" id="_klipse_internals_3_3_reagent_2">
+<h2>Klipse internals (3/3) - Reagent</h2>
+<div class="paragraph"><p>Can you see the differences?<br>
+How do we get from the 1st code snippet to the second?</p></div>
+<div class="listingblock reagent">
+<div class="content">
+<pre class="highlight"><code>(defn hello [name]
+  [:span "Hello "
+   [:strong name]])
+
+[hello "ClojureX"]</code></pre>
+</div>
+</div>
+<br>
+<br>
+<br>
+<div class="listingblock clj">
+<div class="content">
+<pre class="highlight"><code>(defn hello [name]
+  [:span "Hello "
+   [:strong name]])
+
+(reagent.core/render [hello "ClojureX"] js/klipse-container)</code></pre>
+</div>
+</div>
+<br>
+<br>
+<div class="openblock slide">
+<div class="content">
+<div class="olist arabic">
+<ol class="arabic">
+<li>
+We split the expressions
+</li>
+<li>
+We take all but the last expression
+</li>
+<li>
+We read the last expression
+</li>
+<li>
+We wrap the read last expression into a <code>reagent.core/render</code> call
+</li>
+</ol>
+</div>
+<div class="paragraph"><p>Thank you <a href="http://timothypratley.blogspot.co.il/2017/01/reagent-deep-dive-part-1.html">Timothy Pratley</a>!</p></div>
+</div>
+</div>
+</section>
+<section class="slide" id="_reagent_let_s_do_it">
+<h2>Reagent - Let&#8217;s do it!</h2>
+<div class="openblock slide">
+<div class="content">
+<div class="paragraph"><p>The eval function</p></div>
+<div class="listingblock clj">
+<div class="content">
+<pre class="highlight"><code>(defn eval-code [exp]
+  (cljsjs/eval-str (cljsjs/empty-state)
+                   exp
+                   ""
+                   {:eval cljsjs/js-eval}
+                   identity))</code></pre>
+</div>
+</div>
+</div>
+</div>
+<div class="openblock slide">
+<div class="content">
+<div class="paragraph"><p>The code as a string</p></div>
+<div class="listingblock clj">
+<div class="content">
+<pre class="highlight"><code>(def code "(defn hello [name]
+  [:span \"Hello \"
+  [:strong name]])
+  [hello \"ClojureX\"]")</code></pre>
+</div>
+</div>
+</div>
+</div>
+<div class="openblock slide">
+<div class="content">
+<div class="paragraph"><p>Separate the component from the rest of the code</p></div>
+<div class="listingblock clj">
+<div class="content">
+<pre class="highlight"><code>(def expressions (klipse.lang.clojure/split-expressions code))
+(def component (cljs.reader/read-string (last expressions)))</code></pre>
+</div>
+</div>
+</div>
+</div>
+<div class="openblock slide">
+<div class="content">
+<div class="paragraph"><p>Rewrite the code</p></div>
+<div class="listingblock clj">
+<div class="content">
+<pre class="highlight"><code>(def rewritten-code (str (first expressions) "\n"
+                         `(reagent.core/render ~component js/klipse-container)))
+rewritten-code</code></pre>
+</div>
+</div>
+</div>
+</div>
+<div class="openblock slide">
+<div class="content">
+<div class="paragraph"><p>Evaluate the rewritten code</p></div>
+<div class="listingblock clj">
+<div class="content">
+<pre class="highlight"><code>(eval-code rewritten-code)</code></pre>
+</div>
+</div>
+</div>
+</div>
+</section>
 <section class="slide" id="_joining_the_party">
 <h2>Joining the party</h2>
 <div class="imageblock">
@@ -457,13 +736,11 @@ data-external-libs="https://raw.githubusercontent.com/expez/superstring/279f722e
 <div class="paragraph"><p>Get inspired by the best blog posts out there:</p></div>
 <div class="ulist">
 <ul>
-<li><a href="http://blog.jrheard.com/procedural-dungeon-generation-dr%20unkards-walk-in-clojurescript">Procedural<br>
-Dungeon Generation: A Drunkard’s Walk in ClojureScript</a></li>
+<li><a href="http://blog.jrheard.com/procedural-dungeon-generation-dr%20unkards-walk-in-clojurescript">Procedural Dungeon Generation: A Drunkard’s Walk in ClojureScript</a></li>
 <li><a href="http://exupero.org/hazard/post/islands/">Island Generator</a></li>
 <li><a href="http://blog.ducky.io/clojurescript/2016/06/08/more-%20defprotocol/">About protocols in ClojureScript</a></li>
 <li><a href="http://z.caudate.me/klipse-demo/">z.caudate.me - live documentation with klipse</a></li>
-<li><a href="http://clojurebridge.github.io/community-docs/docs/clojure/anonymous-function%20/">Anonymous<br>
-functions in clojure</a></li>
+<li><a href="http://clojurebridge.github.io/community-docs/docs/clojure/anonymous-function%20/">Anonymous functions in clojure</a></li>
 <li><a href="http://kids.klipse.tech/">Klipse for Kids: A fun way to learn computer programming</a></li>
 <li><a href="http://liujiacai.net/scheme.clj/">Yet another scheme dialect written in Clojure and ClojureScript</a></li>
 <li>Reagent deep dive <a href="http://timothypratley.blogspot.com/2017/01/reagent-deep-dive-part-1.html">1</a> <a href="http://timothypratl%20ey.blogspot.com/2017/01/reagent-deep-dive-part-1.html">2</a> <a href="http://timothypratley.blogspot.com/2017/01/reagent-deep-dive-part-3-sequence%20s.html">3</a> <a href="http://timothypratley.blogspot.com/2017/01/reagent-deep-dive-part-4-application.html">4</a></li>
@@ -476,7 +753,11 @@ functions in clojure</a></li>
 </section>
 <section class="slide" id="_use_klipse_for_the_slides_of_your_next_talk">
 <h2>Use Klipse for the slides of your next talk</h2>
-
+<div class="imageblock">
+<div class="content">
+<img alt="ted" src="images/tedtalk.jpg">
+</div>
+</div>
 </section>
 <section class="slide" id="_write_interactive_docs_of_your_clojure_library">
 <h2>Write interactive docs of your Clojure library</h2>
@@ -484,12 +765,23 @@ functions in clojure</a></li>
 <iframe width="100%" height="1000px" src="http://viebel.github.io/gadjett/gadjett.collections.html">
 </iframe>
 </section>
+<section class="slide" id="_add_new_languages_to_klipse">
+<h2>Add new languages to Klipse</h2>
+<div class="paragraph"><p>As of December 2017, Klipse supports 11 languages: clojure, ruby, javascript, python, scheme, php, brainfuck, c++, lua, ocaml, reasonml.</p></div>
+<br>
+<div class="paragraph"><p>It takes less than 10 lines of code to add a new language. See <a href="https://github.com/viebel/klipse/wiki/How-to-add-a-language-to-klipse">the guide</a>.</p></div>
+<div class="imageblock">
+<div class="content">
+<img alt="questions" src="images/poplanguages.jpg">
+</div>
+</div>
+</section>
 <section class="slide" id="_pull_requests_are_more_than_welcome">
 <h2>Pull Requests are more than welcome!!!</h2>
 <div class="ulist">
 <ul>
 <li>Evaluate Code inside a web worker (Solve security issues + make the evaluation interruptible)</li>
-<li>Upgrade to latest clojurescipt (deal with clojure.spec.alpha)</li>
+<li>Upgrade to latest clojurescript (deal with clojure.spec.alpha)</li>
 <li>Connect with npm hosted repository</li>
 <li><code>source</code> special form</li>
 <li><code>doc</code> special form</li>

@@ -65,10 +65,10 @@
 
 == Agenda
 
-- What is Klipse?
+- Klipse: why and what
 - Getting familiar with Self-Hosted ClojureScript
-- The internals of Klipse?
-- How I can contribute
+- The internals of Klipse
+- How you can contribute
 
 == Who am I?
 [.left]
@@ -88,7 +88,7 @@
 - Blogger about functional programming at http://blog.klipse.tech/[blog.klipse.tech]
 --
 
-image::https://pbs.twimg.com/profile_images/713278171353911296/1a2useM2.jpg[me]
+image::images/me.jpg[me]
 
 
 == Klipse - it's all about Code interactivity
@@ -135,17 +135,26 @@ nil
 
 
 [source.clj]
---
+-----
 (ns my.m$macros)
 
 (defmacro dbg [x]
   `(let [x# ~x]
      (println (str '~x " => " x#))
      x#))
+-----
 
+(def jjj "{\"description\":\"A spring-summer and vacay-ready top in a cheery (not to mention colorful!) floral print we\'re obsessed with this season. Way-cool outfit idea: Pair it with its matching Frankie shorts. Cotton.Machine wash.Import.Select stores.\",\"g:age_group\":\"kids\",\"g:brand\":\"J.Crew\",\"g:color\":\"Emerald Multi\",\"g:gender\":\"female\",\"g:google_product_category\":\"Apparel & Accessories > Clothing\",\"g:item_group_id\":\"G4327\",\"g:mpn\":[\"1689949373816898\",\"1689949373816746\"],\"g:product_type\":\"Apparel & Accessories > girls_category > shirts > noveltyshirts > girls-spaghetti-strap-top-in-seaside-floral\",\"g:size\":[\"14\",\"8\"],\"id\":[\"99104608715\",\"99104608723\"],\"title\":\"Girls\' spaghetti strap top in seaside floral\",\"url\":\"https://i.s-jcrew.com/is/image/jcrew/G4327_WU9613?$pdp_fs418_3x_zoom$\"}")
 
+++++
+<br>
+<br>
+<br>
+++++
+[source.clj]
+----
 (my.m/dbg (map inc [1 2 3]))
---
+----
 
 ++++
 <br>
@@ -160,40 +169,114 @@ Here is a http://blog.klipse.tech/clojure/2016/03/26/messing-with-macros.html[de
 image::images/inception.jpg[inception]
 
 == Self hosted ClojureScript
-TODO: definition of self hosted / bootstrapped
-[%step]
---
-[source.clj]
-----
-(require '[cljs.js :as cljs])
-----
---
+
+*Definition*: In computer science, bootstrapping is the process of writing a compiler in the source programming language that it intends to compile. Applying this technique leads to a self-hosting compiler (https://en.wikipedia.org/wiki/Bootstrapping_(compilers)[Wikipedia]).
+
+*Application*: In the context of the Web, once a language is bootstrapped it can run on a web page.
+
+*Example*: Eval written in LISP
+
+image::images/sicp.jpg[sicp]
+
+== Self hosted ClojureScript
+
 
 [%step]
 --
 [source.clj]
 ----
-(cljs/eval-str (cljs/empty-state)
+(require '[cljs.js :as cljsjs])
+----
+--
+++++
+<br>
+<br>
+<br>
+++++
+[%step]
+--
+[source.clj]
+----
+(cljsjs/eval-str (cljsjs/empty-state)
                "(map inc [1 2 3])"
                ""
-               {:eval cljs/js-eval}
+               {:eval cljsjs/js-eval
+	       :def-emits-var false}
                identity)
 ----
-Explain the args of eval-str
+
+--
+. *state* (atom) - the compiler state
+. *source* (string) - the ClojureScript source
+. *name* (symbol or string) - optional, the name of the source
+. *opts* (map) -- compilation options.
+
+--
+* *:def-emits-var*    - sets whether def (and derived) forms return either a Var (if set to true) or the def init value (if false). Default is false.
+* *:eval*             - eval function to invoke, see .eval-fn.
+* *:load*             - library resolution function, see .load-fn.
+* *:static-fns*       - employ static dispatch to specific function arities in emitted JavaScript, as opposed to making use of the `call` construct. Defaults to false.
+
 --
 
+== Javascript Transpilation
 
 [%step]
 --
 [source.clj]
 ----
-(cljs/compile-str (cljs/empty-state)
-               "(map inc [1 2 3])"
+(cljsjs/compile-str (cljsjs/empty-state)
+                  "(let [a 1]
+                      (+ a 2))"
+                  ""
+                  {:static-fns false}
+                  identity)
+----
+--
+. *state* (atom) - the compiler state
+. *source* (string) - the ClojureScript source
+. *name* (symbol or string) - optional, the name of the source
+. *opts* (map) -- compilation options.
+
+--
+* *:def-emits-var*    - sets whether def (and derived) forms return either a Var (if set to true) or the def init value (if false). Default is false.
+* *:eval*             - eval function to invoke, see .eval-fn.
+* *:load*             - library resolution function, see .load-fn.
+* *:static-fns*       - employ static dispatch to specific function arities in emitted JavaScript, as opposed to making use of the `call` construct. Defaults to false. See http://blog.klipse.tech/clojurescript/2016/04/14/static-fns.html[Deep into clojurescript function call mechanisms: static vs. dynamic dispatch]
+
+--
+
+== Pitfalls
+
+[%step]
+--
+With `:statement` context (default)
+
+[source.clj]
+----
+(cljsjs/eval-str (cljsjs/empty-state)
+               "(if 1 2 3)"
                ""
-               {}
+               {:eval cljsjs/js-eval
+	        :context :statement}
                identity)
 ----
-Explain the args of compile-str
+--
+
+
+[%step]
+--
+With `:expr` context (default)
+
+[source.clj]
+----
+(cljsjs/eval-str (cljsjs/empty-state)
+               "(if 1 2 3)"
+               ""
+               {:eval cljsjs/js-eval
+	        :context :expr}
+               identity)
+----
 --
 
 
@@ -207,14 +290,14 @@ Explain the args of compile-str
 --
 [source.clj]
 ----
+(def compiler-empty-state (cljsjs/empty-state))
 (defn eval [exp]
-  (cljs/eval-str (cljs/empty-state)
-                 exp
-                 ""
-                 {:eval cljs/js-eval
-                  :context :expr
-                  }
-                 identity))
+  (cljsjs/eval-str compiler-empty-state
+                   exp
+                   ""
+                   {:eval cljsjs/js-eval
+                    :context :expr}
+                   identity))
 ----
 --
 
@@ -222,12 +305,12 @@ Explain the args of compile-str
 --
 [source.clj]
 ----
-(defn unsafe-eval-several-expressions [code]
-  (loop [exps (klipse.lang.clojure.split-expressions code)]
-    (let [res (eval (first exps))]
-      (if (= 1 (count exps))
-        res
-        (recur (rest exps))))))
+(defn eval-several-expressions [code]
+  (loop [exps (klipse.lang.clojure.split-expressions code)
+         res nil]
+    (if (seq exps)
+      (recur (rest exps) (eval (first exps)))
+      res)))
 ----
 --
 
@@ -235,7 +318,7 @@ Explain the args of compile-str
 --
 [source.clj]
 ----
-(unsafe-eval-several-expressions "(def a 4) (map inc [1 2 3 a])")
+(eval-several-expressions "(def a 4) (if a 1 2)")
 ----
 --
 
@@ -244,12 +327,15 @@ Explain the args of compile-str
 [%step]
 --
 The implementor needs to provide a custom mechanism for namespace resolution
+--
+[%step]
+--
 [source.clj]
 ----
-(cljs/eval-str (cljs/empty-state)
+(cljsjs/eval-str (cljsjs/empty-state)
                "(require 'my.ns)"
                ""
-               {:eval cljs/js-eval}
+               {:eval cljsjs/js-eval}
                identity)
 ----
 --
@@ -263,13 +349,15 @@ The map has the following keys:
 * `:name`   - the name of the library (a symbol)
 * `:macros` - modifier signaling a macros namespace load
 * `:path`   - munged relative library path (a string)
-
+--
+[%step]
+--
 [source.clj]
 ----
-(cljs/eval-str (cljs/empty-state)
+(cljsjs/eval-str (cljsjs/empty-state)
                "(require 'my.ns)"
                ""
-               {:eval cljs/js-eval
+               {:eval cljsjs/js-eval
                 :load (fn [data callback] (println data))}
                identity)
 ----
@@ -287,19 +375,31 @@ Upon resolution, the callback should be invoked with a map containing the follow
 * `:source`     - the source of the library (a string)
 
 If the resource could not be resolved, the callback should be invoked with `nil`.
-
+--
+[%step]
+--
 
 [source.clj]
 ----
-(cljs/eval-str (cljs/empty-state)
+(cljsjs/eval-str (cljsjs/empty-state)
                "(require 'my.ns) (+ foo 10)"
                ""
-               {:eval cljs/js-eval
+               {:eval cljsjs/js-eval
                 :load (fn [data callback] (callback {:lang :clj
                                            :source "(def foo 12)"}))}
                identity)
 ----
 --
+== Klipse internals
+
+image::images/internals.jpg[internals]
+
+== Klipse internals
+
+1. Namespace resolution
+2. Infinite loop prevention
+3. Reagent
+
 
 == Klipse internals (1/3) - namespace resolution
 
@@ -316,7 +416,7 @@ Super cool String manipulation library: https://github.com/expez/superstring[sup
 
 ++++
 <pre><code class="clj" data-external-libs="https://raw.githubusercontent.com/expez/superstring/279f722e5e61167ac11b27d6017c2d9d239f8343/src">
-(require '[superstring.core :as str])
+(require '[superstring.core :as str]
 (str/swap-case "Hello ClojureX!")
 </code></pre>
 ++++
@@ -333,9 +433,9 @@ data-external-libs="https://raw.githubusercontent.com/expez/superstring/279f722e
 
 Many popular clojure libs are available out-of-the box in Klipse:
 
-* clojure: clojure.spec, core.match, math.combinatorics, core.async, test.check
+* clojure: clojure.spec, core.match, math.combinatorics, core.async, test.check, clojure.data
 
-* clojurescript: reagent, reframe, om.next
+* clojurescript: reagent, re-frame, om.next, cljs-time, re-frisk, cljs.tools.reader, cljs.test
 
 [source.clj]
 ----
@@ -349,15 +449,25 @@ If you want to add a lib to Klipse analysis cache, follow this https://github.co
 
 == Klipse internals (1/3) - Clojure code from a gist
 
+[%step]
+--
+++++
+<div class=centered>
+<script src="https://gist.github.com/viebel/3800b8ebae5292921c7d6fcb6c995c1f.js"></script>
+</div>
+++++
+--
+[%step]
+--
 [source.clj]
 ----
-(ns my.color
-  (:require
-    [goog.dom :as dom]
-    [viebel.gist-3800b8ebae5292921c7d6fcb6c995c1f.raw.body-color :refer [set-bg-color-element]]))
+(require
+  '[goog.dom :as dom])
+(require
+  '[viebel.gist-3800b8ebae5292921c7d6fcb6c995c1f.raw.body-color :refer [set-bg-color-element]])
 
 (let [colors ["blue" "red" "yellow" "magenta" "cyan" "green" "purple" "coral" "dodgerblue" "pink"]]
-   (set-bg-color-element (dom/getElement "klipse-color-me") (rand-nth colors)))
+  (set-bg-color-element (dom/getElement "klipse-color-me") (rand-nth colors)))
 ----
 
 ++++
@@ -366,8 +476,9 @@ If you want to add a lib to Klipse analysis cache, follow this https://github.co
 <br>
 <div id="klipse-color-me" style="width: 100px; height: 100px; left:30%; position: absolute;"></div>
 ++++
-
-== Klipse internals (2/3) - infinite loop prevention
+--
+ 
+== Klipse internals (2/3) - infinite loop prevention (trivial)
 
 [source.clj]
 ----
@@ -401,6 +512,113 @@ If you want to add a lib to Klipse analysis cache, follow this https://github.co
 ----
 --
 
+== Klipse internals (3/3) - Reagent
+
+image::images/effort.jpg[party]
+
+== Klipse internals (3/3) - Reagent
+
+Can you see the differences?
+How do we get from the 1st code snippet to the second?
+
+[source.reagent]
+--
+(defn hello [name]
+  [:span "Hello "
+   [:strong name]])
+
+[hello "ClojureX"]
+--
+++++
+<br>
+<br>
+<br>
+++++
+
+[source.clj]
+--
+(defn hello [name]
+  [:span "Hello "
+   [:strong name]])
+
+(reagent.core/render [hello "ClojureX"] js/klipse-container)
+--
+
+++++
+<br>
+<br>
+++++
+
+[%step]
+--
+. We split the expressions
+. We take all but the last expression
+. We read the last expression
+. We wrap the read last expression into a `reagent.core/render` call
+
+Thank you http://timothypratley.blogspot.co.il/2017/01/reagent-deep-dive-part-1.html[Timothy Pratley]!
+--
+
+== Reagent - Let's do it!
+
+[%step]
+--
+The eval function
+[source.clj]
+----
+(defn eval-code [exp]
+  (cljsjs/eval-str (cljsjs/empty-state)
+                   exp
+                   ""
+                   {:eval cljsjs/js-eval}
+                   identity))
+----
+--
+
+
+[%step]
+--
+The code as a string
+[source.clj]
+----
+(def code "(defn hello [name]
+  [:span \"Hello \"
+  [:strong name]])
+  [hello \"ClojureX\"]")
+----
+--
+
+
+[%step]
+--
+Separate the component from the rest of the code
+[source.clj]
+----
+(def expressions (klipse.lang.clojure/split-expressions code))
+(def component (cljs.reader/read-string (last expressions)))
+----
+--
+[%step]
+--
+Rewrite the code
+[source.clj]
+----
+(def rewritten-code (str (first expressions) "\n"
+                         `(reagent.core/render ~component js/klipse-container)))
+rewritten-code
+----
+--
+
+[%step]
+--
+Evaluate the rewritten code
+[source.clj]
+----
+(eval-code rewritten-code)
+----
+--
+
+ 
 == Joining the party
 
 image::images/party.jpg[party]
@@ -411,13 +629,11 @@ It's super simple: it's nothing more than adding a javacript tag!
 
 Get inspired by the best blog posts out there:
 
-* http://blog.jrheard.com/procedural-dungeon-generation-dr%20unkards-walk-in-clojurescript[Procedural
-Dungeon Generation: A Drunkard’s Walk in ClojureScript]
+* http://blog.jrheard.com/procedural-dungeon-generation-dr%20unkards-walk-in-clojurescript[Procedural Dungeon Generation: A Drunkard’s Walk in ClojureScript]
 * http://exupero.org/hazard/post/islands/[Island Generator]
 * http://blog.ducky.io/clojurescript/2016/06/08/more-%20defprotocol/[About protocols in ClojureScript]
 * http://z.caudate.me/klipse-demo/[z.caudate.me - live documentation with klipse]
-* http://clojurebridge.github.io/community-docs/docs/clojure/anonymous-function%20/[Anonymous
-functions in clojure]
+* http://clojurebridge.github.io/community-docs/docs/clojure/anonymous-function%20/[Anonymous functions in clojure]
 * http://kids.klipse.tech/[Klipse for Kids: A fun way to learn computer programming]
 * http://liujiacai.net/scheme.clj/[Yet another scheme dialect written in Clojure and ClojureScript]
 * Reagent deep dive http://timothypratley.blogspot.com/2017/01/reagent-deep-dive-part-1.html[1] http://timothypratl%20ey.blogspot.com/2017/01/reagent-deep-dive-part-1.html[2] http://timothypratley.blogspot.com/2017/01/reagent-deep-dive-part-3-sequence%20s.html[3] http://timothypratley.blogspot.com/2017/01/reagent-deep-dive-part-4-application.html[4]
@@ -429,6 +645,8 @@ functions in clojure]
 
 == Use Klipse for the slides of your next talk
 
+image::images/tedtalk.jpg[ted]
+
 
 == Write interactive docs of your Clojure library
 
@@ -439,10 +657,22 @@ https://github.com/viebel/codox-klipse-theme[Klipse Codox Theme]
 </iframe>
 ++++
 
+== Add new languages to Klipse
+
+As of December 2017, Klipse supports 11 languages: clojure, ruby, javascript, python, scheme, php, brainfuck, c++, lua, ocaml, reasonml.
+
+++++
+<br>
+++++
+
+It takes less than 10 lines of code to add a new language. See https://github.com/viebel/klipse/wiki/How-to-add-a-language-to-klipse[the guide].
+
+image::images/poplanguages.jpg[questions]
+
 == Pull Requests are more than welcome!!!
 
 - Evaluate Code inside a web worker (Solve security issues + make the evaluation interruptible)
-- Upgrade to latest clojurescipt (deal with clojure.spec.alpha)
+- Upgrade to latest clojurescript (deal with clojure.spec.alpha)
 - Connect with npm hosted repository
 - `source` special form
 - `doc` special form
