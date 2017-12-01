@@ -48,9 +48,8 @@
                   </div>
                   <div class="clear">
                     <div style="margin-top:14px;">
-                      <a class="github-button" href="https://github.com/viebel/klipse" data-count-href="/viebel/klipse/stargazers" data-count-api="/repos/viebel/klipse#stargazers_count" data-count-aria-label="# stargazers on GitHub" aria-label="Star viebel/klipse on GitHub">KLIPSE</a>
+		    <a class="github-button" href="https://github.com/viebel/klipse" data-size="large" data-show-count="true" aria-label="Star viebel/klipse on GitHub">Klipse</a>
                     </div>
-                    <script async defer id="github-bjs" src="https://buttons.github.io/buttons.js"></script>
                   </div>
                   <div>
 		  <a href="https://tinyurl.com/klipse-magic"> https://tinyurl.com/klipse-magic </a>
@@ -99,8 +98,7 @@
 <li>Author of <a href="https://github.com/viebel/klipse">Klipse</a> - a simple client-side code evaluator pluggable on any web page</li>
 </ul>
 </div>
-                      <a class="github-button" href="https://github.com/viebel/klipse" data-count-href="/viebel/klipse/stargazers" data-count-api="/repos/viebel/klipse#stargazers_count" data-count-aria-label="# stargazers on GitHub" aria-label="Star viebel/klipse on GitHub">KLIPSE</a>
-                    <script async defer id="github-bjs" src="https://buttons.github.io/buttons.js"></script>
+ <a class="github-button" href="https://github.com/viebel/klipse" data-count-href="/viebel/klipse/stargazers" data-count-api="/repos/viebel/klipse#stargazers_count" data-count-aria-label="# stargazers on GitHub" aria-label="Star viebel/klipse on GitHub">KLIPSE</a>
 <div class="ulist">
 <ul>
 <li>A Web consultant: Full-Stack, clojure, clojurescript, javascript, node.js, react</li>
@@ -125,6 +123,11 @@
 </section>
 <section class="slide" id="_klipse_evaluating_data">
 <h2>Klipse - Evaluating data</h2>
+<div class="openblock vertical-padder">
+<div class="content">
+
+</div>
+</div>
 <div class="listingblock clj">
 <div class="content">
 <pre class="highlight"><code>(map inc [1 2 3])</code></pre>
@@ -133,6 +136,11 @@
 </section>
 <section class="slide" id="_klipse_printing_data">
 <h2>Klipse - Printing data</h2>
+<div class="openblock vertical-padder">
+<div class="content">
+
+</div>
+</div>
 <div class="listingblock clj">
 <div class="content">
 <pre class="highlight"><code>(println "Hello ClojureX")
@@ -142,6 +150,11 @@
 </section>
 <section class="slide" id="_klipse_interactive_ui_dom_manipulations">
 <h2>Klipse - Interactive UI (DOM) manipulations</h2>
+<div class="openblock vertical-padder">
+<div class="content">
+
+</div>
+</div>
 <div class="listingblock clj">
 <div class="content">
 <pre class="highlight"><code>(set! (.-innerHTML js/klipse-container)
@@ -154,6 +167,11 @@ nil</code></pre>
 </section>
 <section class="slide" id="_klipse_interactive_ui_à_la_clojure">
 <h2>Klipse - Interactive UI à la Clojure</h2>
+<div class="openblock vertical-padder">
+<div class="content">
+
+</div>
+</div>
 <div class="listingblock reagent">
 <div class="content">
 <pre class="highlight"><code>[:div {:style {:color "blue"}}
@@ -163,6 +181,8 @@ nil</code></pre>
 </section>
 <section class="slide" id="_klipse_macros">
 <h2>Klipse - macros</h2>
+<div class="openblock slide">
+<div class="content">
 <div class="listingblock clj">
 <div class="content">
 <pre class="highlight"><code>(ns my.m$macros)
@@ -173,7 +193,10 @@ nil</code></pre>
      x#))</code></pre>
 </div>
 </div>
-<div class="paragraph"><p>(def jjj "{\"description\":\"A spring-summer and vacay-ready top in a cheery (not to mention colorful!) floral print we're obsessed with this season. Way-cool outfit idea: Pair it with its matching Frankie shorts. Cotton.Machine wash.Import.Select stores.\",\"g:age_group\":\"kids\",\"g:brand\":\"J.Crew\",\"g:color\":\"Emerald Multi\",\"g:gender\":\"female\",\"g:google_product_category\":\"Apparel &amp; Accessories &gt; Clothing\",\"g:item_group_id\":\"G4327\",\"g:mpn\":[\"1689949373816898\",\"1689949373816746\"],\"g:product_type\":\"Apparel &amp; Accessories &gt; girls_category &gt; shirts &gt; noveltyshirts &gt; girls-spaghetti-strap-top-in-seaside-floral\",\"g:size\":[\"14\",\"8\"],\"id\":[\"99104608715\",\"99104608723\"],\"title\":\"Girls\' spaghetti strap top in seaside floral\",\"url\":\"https://i.s-jcrew.com/is/image/jcrew/G4327_WU9613?$pdp_fs418_3x_zoom$\"}")</p></div>
+</div>
+</div>
+<div class="openblock slide">
+<div class="content">
 <br>
 <br>
 <br>
@@ -182,9 +205,15 @@ nil</code></pre>
 <pre class="highlight"><code>(my.m/dbg (map inc [1 2 3]))</code></pre>
 </div>
 </div>
+</div>
+</div>
+<div class="openblock slide">
+<div class="content">
 <br>
 <br>
 <div class="paragraph"><p>Here is a <a href="http://blog.klipse.tech/clojure/2016/03/26/messing-with-macros.html">detailed explanation</a> why we need the extra <code>$macros</code> suffix.</p></div>
+</div>
+</div>
 </section>
 <section class="slide" id="_self_hosted_clojurescript">
 <h2>Self-Hosted ClojureScript</h2>
@@ -195,7 +224,7 @@ nil</code></pre>
 </div>
 </section>
 <section class="slide" id="_self_hosted_clojurescript_2">
-<h2>Self hosted ClojureScript</h2>
+<h2>Self-Hosted ClojureScript</h2>
 <div class="paragraph"><p><strong>Definition</strong>: In computer science, bootstrapping is the process of writing a compiler in the source programming language that it intends to compile. Applying this technique leads to a self-hosting compiler (<a href="https://en.wikipedia.org/wiki/Bootstrapping_(compilers)">Wikipedia</a>).</p></div>
 <div class="paragraph"><p><strong>Application</strong>: In the context of the Web, once a language is bootstrapped it can run on a web page.</p></div>
 <div class="paragraph"><p><strong>Example</strong>: Eval written in LISP</p></div>
@@ -205,8 +234,8 @@ nil</code></pre>
 </div>
 </div>
 </section>
-<section class="slide" id="_self_hosted_clojurescript_3">
-<h2>Self hosted ClojureScript</h2>
+<section class="slide" id="_self_hosted_clojurescript_evaluation">
+<h2>Self-Hosted ClojureScript: Evaluation</h2>
 <div class="openblock slide">
 <div class="content">
 <div class="listingblock clj">
@@ -226,13 +255,14 @@ nil</code></pre>
 <pre class="highlight"><code>(cljsjs/eval-str (cljsjs/empty-state)
                "(map inc [1 2 3])"
                ""
-               {:eval cljsjs/js-eval
-	       :def-emits-var false}
+               {:eval cljsjs/js-eval}
                identity)</code></pre>
 </div>
 </div>
 </div>
 </div>
+<div class="openblock slide">
+<div class="content">
 <div class="olist arabic">
 <ol class="arabic">
 <li>
@@ -245,25 +275,31 @@ nil</code></pre>
 <strong>name</strong> (symbol or string) - optional, the name of the source
 </li>
 <li>
-<strong>opts</strong> (map)&#8201;&#8212;&#8201;compilation options.
+<strong>opts</strong> (map) - compilation options.
+</li>
+<li>
+<strong>cb</strong> (function) - callback, will be invoked with a map. If succesful the map will contain a :value key with the result of evaluation and :ns the current namespace. If unsuccessful will contain a :error key with an ex-info instance describing the cause of failure.
 </li>
 </ol>
 </div>
-<div class="openblock">
+</div>
+</div>
+<div class="openblock slide">
 <div class="content">
+<div class="paragraph"><p>options details:</p></div>
 <div class="ulist">
 <ul>
 <li><strong>:def-emits-var</strong>    - sets whether def (and derived) forms return either a Var (if set to true) or the def init value (if false). Default is false.</li>
-<li><strong>:eval</strong>             - eval function to invoke, see .eval-fn.</li>
-<li><strong>:load</strong>             - library resolution function, see .load-fn.</li>
+<li><strong>:eval</strong>             - eval function to invoke.</li>
+<li><strong>:load</strong>             - library resolution function.</li>
 <li><strong>:static-fns</strong>       - employ static dispatch to specific function arities in emitted JavaScript, as opposed to making use of the <code>call</code> construct. Defaults to false.</li>
 </ul>
 </div>
 </div>
 </div>
 </section>
-<section class="slide" id="_javascript_transpilation">
-<h2>Javascript Transpilation</h2>
+<section class="slide" id="_self_hosted_clojurescript_transpilation">
+<h2>Self-Hosted ClojureScript: Transpilation</h2>
 <div class="openblock slide">
 <div class="content">
 <div class="listingblock clj">
@@ -272,12 +308,14 @@ nil</code></pre>
                   "(let [a 1]
                       (+ a 2))"
                   ""
-                  {:static-fns false}
+                  { }
                   identity)</code></pre>
 </div>
 </div>
 </div>
 </div>
+<div class="openblock slide">
+<div class="content">
 <div class="olist arabic">
 <ol class="arabic">
 <li>
@@ -290,18 +328,24 @@ nil</code></pre>
 <strong>name</strong> (symbol or string) - optional, the name of the source
 </li>
 <li>
-<strong>opts</strong> (map)&#8201;&#8212;&#8201;compilation options.
+<strong>opts</strong> (map) - compilation options.
+</li>
+<li>
+<strong>cb</strong> (function) - callback, will be invoked with a map. If succesful the map will contain a :value key with the result of evaluation and :ns the current namespace. If unsuccessful will contain a :error key with an ex-info instance describing the cause of failure.
 </li>
 </ol>
 </div>
-<div class="openblock">
+</div>
+</div>
+<div class="openblock slide">
 <div class="content">
+<div class="paragraph"><p>options details:</p></div>
 <div class="ulist">
 <ul>
 <li><strong>:def-emits-var</strong>    - sets whether def (and derived) forms return either a Var (if set to true) or the def init value (if false). Default is false.</li>
-<li><strong>:eval</strong>             - eval function to invoke, see .eval-fn.</li>
-<li><strong>:load</strong>             - library resolution function, see .load-fn.</li>
-<li><strong>:static-fns</strong>       - employ static dispatch to specific function arities in emitted JavaScript, as opposed to making use of the <code>call</code> construct. Defaults to false. See <a href="http://blog.klipse.tech/clojurescript/2016/04/14/static-fns.html">Deep into clojurescript function call mechanisms: static vs. dynamic dispatch</a></li>
+<li><strong>:eval</strong>             - eval function to invoke.</li>
+<li><strong>:load</strong>             - library resolution function.</li>
+<li><strong>:static-fns</strong>       - employ static dispatch to specific function arities in emitted JavaScript, as opposed to making use of the <code>call</code> construct. Defaults to false.</li>
 </ul>
 </div>
 </div>
@@ -389,6 +433,14 @@ nil</code></pre>
 </div>
 </section>
 <section class="slide" id="_namespace_resolution">
+<h2>Namespace resolution</h2>
+<div class="imageblock">
+<div class="content">
+<img alt="internals" src="images/alone.png">
+</div>
+</div>
+</section>
+<section class="slide" id="_namespace_resolution_2">
 <h2>Namespace resolution</h2>
 <div class="openblock slide">
 <div class="content">
@@ -506,14 +558,14 @@ Code from a gist
 </li>
 </ol>
 </div>
-<div class="paragraph"><p>All the details are in Github <a href="https://github.com/viebel/klipse/blob/master/src/klipse/lang/clojure/io.cljs">io.cljs</a>.</p></div>
+<div class="paragraph"><p>All the details are in Github <a href="https://github.com/viebel/klipse/blob/master/src/klipse/lang/clojure/io.cljs">klipse/lang/clojure/io.cljs</a>.</p></div>
 </section>
 <section class="slide" id="_klipse_internals_1_3_clojure_libs_from_github">
 <h2>Klipse internals (1/3) - Clojure libs from Github</h2>
 <div class="paragraph"><p>Super cool String manipulation library: <a href="https://github.com/expez/superstring">superstring</a>.</p></div>
 <pre><code class="clj" data-external-libs="https://raw.githubusercontent.com/expez/superstring/279f722e5e61167ac11b27d6017c2d9d239f8343/src">
-(require '[superstring.core :as str]
-(str/swap-case "Hello ClojureX!")
+(require '[superstring.core :as superstring])
+(superstring/swap-case "Hello ClojureX!")
 </code></pre>
 <br>
 <br>
@@ -593,9 +645,9 @@ data-external-libs="https://raw.githubusercontent.com/expez/superstring/279f722e
 <div class="content">
 <pre class="highlight"><code>(defn foo [x] (if x 1 2))
 
-(loop []
+#_(loop []
   (foo 9)
-  (recur</code></pre>
+  (recur))</code></pre>
 </div>
 </div>
 </div>
@@ -799,7 +851,9 @@ rewritten-code</code></pre>
 <img alt="questions" src="images/questions.jpg">
 </div>
 </div>
-<h3>Meanwhile, you can give a github star to <a href="https://github.com/viebel/klipse">Klipse</a>... </h3>
+<h3>Meanwhile, you can give a github star to <a href="https://github.com/viebel/klipse">Klipse</a>...
+<span><a class="github-button" href="https://github.com/viebel/klipse" data-size="large" data-show-count="true" aria-label="Star viebel/klipse on GitHub"></a></span>
+</h3>
 <style>
 .CodeMirror {
     border: solid 2px #90B4FE !important;
@@ -812,6 +866,10 @@ rewritten-code</code></pre>
     margin-bottom: 10px;
     left: 12%;
     position: absolute;
+}
+
+.vertical-padder {
+height: 40vh;
 }
 </style>
 <link rel="shortcut icon" href="./favicon.png">
@@ -850,6 +908,8 @@ rewritten-code</code></pre>
     };
 </script>
 <script src="https://storage.googleapis.com/app.klipse.tech/plugin/js/klipse_plugin.js?v=7.0.6"></script>
+<!-- Place this tag in your head or just before your close body tag. -->
+<script async defer src="https://buttons.github.io/buttons.js"></script>
 </section>
 <div aria-role="navigation">
 <a class="deck-prev-link" href="#" title="Previous">&#8592;</a>

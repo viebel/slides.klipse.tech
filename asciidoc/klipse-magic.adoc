@@ -37,9 +37,8 @@
                   </div>
                   <div class="clear">
                     <div style="margin-top:14px;">
-                      <a class="github-button" href="https://github.com/viebel/klipse" data-count-href="/viebel/klipse/stargazers" data-count-api="/repos/viebel/klipse#stargazers_count" data-count-aria-label="# stargazers on GitHub" aria-label="Star viebel/klipse on GitHub">KLIPSE</a>
+		    <a class="github-button" href="https://github.com/viebel/klipse" data-size="large" data-show-count="true" aria-label="Star viebel/klipse on GitHub">Klipse</a>
                     </div>
-                    <script async defer id="github-bjs" src="https://buttons.github.io/buttons.js"></script>
                   </div>
                   <div>
 		  <a href="https://tinyurl.com/klipse-magic"> https://tinyurl.com/klipse-magic </a>
@@ -81,8 +80,7 @@
 - Founded Audyx in 2013 - an Audiology Startup with 30K LOCs in Clojurescript
 - Author of https://github.com/viebel/klipse[Klipse] - a simple client-side code evaluator pluggable on any web page 
 ++++
-                      <a class="github-button" href="https://github.com/viebel/klipse" data-count-href="/viebel/klipse/stargazers" data-count-api="/repos/viebel/klipse#stargazers_count" data-count-aria-label="# stargazers on GitHub" aria-label="Star viebel/klipse on GitHub">KLIPSE</a>
-                    <script async defer id="github-bjs" src="https://buttons.github.io/buttons.js"></script>
+ <a class="github-button" href="https://github.com/viebel/klipse" data-count-href="/viebel/klipse/stargazers" data-count-api="/repos/viebel/klipse#stargazers_count" data-count-aria-label="# stargazers on GitHub" aria-label="Star viebel/klipse on GitHub">KLIPSE</a>
 ++++
 - A Web consultant: Full-Stack, clojure, clojurescript, javascript, node.js, react
 - Blogger about functional programming at http://blog.klipse.tech/[blog.klipse.tech]
@@ -98,6 +96,9 @@ image::images/interactivity.jpg[interactivity]
 == Klipse - Evaluating data
 
 
+[.vertical-padder]
+--
+--
 [source.clj]
 --
 (map inc [1 2 3])
@@ -105,6 +106,9 @@ image::images/interactivity.jpg[interactivity]
 
 == Klipse - Printing data
 
+[.vertical-padder]
+--
+--
 [source.clj]
 --
 (println "Hello ClojureX")
@@ -114,6 +118,9 @@ image::images/interactivity.jpg[interactivity]
 
 == Klipse - Interactive UI (DOM) manipulations
 
+[.vertical-padder]
+--
+--
 [source.clj]
 --
 (set! (.-innerHTML js/klipse-container)
@@ -125,6 +132,9 @@ nil
 
 == Klipse - Interactive UI à la Clojure
 
+[.vertical-padder]
+--
+--
 [source.reagent]
 --
 [:div {:style {:color "blue"}}
@@ -133,7 +143,8 @@ nil
 
 == Klipse - macros
 
-
+[%step]
+--
 [source.clj]
 -----
 (ns my.m$macros)
@@ -143,9 +154,9 @@ nil
      (println (str '~x " => " x#))
      x#))
 -----
-
-(def jjj "{\"description\":\"A spring-summer and vacay-ready top in a cheery (not to mention colorful!) floral print we\'re obsessed with this season. Way-cool outfit idea: Pair it with its matching Frankie shorts. Cotton.Machine wash.Import.Select stores.\",\"g:age_group\":\"kids\",\"g:brand\":\"J.Crew\",\"g:color\":\"Emerald Multi\",\"g:gender\":\"female\",\"g:google_product_category\":\"Apparel & Accessories > Clothing\",\"g:item_group_id\":\"G4327\",\"g:mpn\":[\"1689949373816898\",\"1689949373816746\"],\"g:product_type\":\"Apparel & Accessories > girls_category > shirts > noveltyshirts > girls-spaghetti-strap-top-in-seaside-floral\",\"g:size\":[\"14\",\"8\"],\"id\":[\"99104608715\",\"99104608723\"],\"title\":\"Girls\' spaghetti strap top in seaside floral\",\"url\":\"https://i.s-jcrew.com/is/image/jcrew/G4327_WU9613?$pdp_fs418_3x_zoom$\"}")
-
+--
+[%step]
+--
 ++++
 <br>
 <br>
@@ -155,20 +166,22 @@ nil
 ----
 (my.m/dbg (map inc [1 2 3]))
 ----
-
+--
+[%step]
+--
 ++++
 <br>
 <br>
 ++++
 Here is a http://blog.klipse.tech/clojure/2016/03/26/messing-with-macros.html[detailed explanation] why we need the extra `$macros` suffix.
-
+--
 
 
 == Self-Hosted ClojureScript
 
 image::images/inception.jpg[inception]
 
-== Self hosted ClojureScript
+== Self-Hosted ClojureScript
 
 *Definition*: In computer science, bootstrapping is the process of writing a compiler in the source programming language that it intends to compile. Applying this technique leads to a self-hosting compiler (https://en.wikipedia.org/wiki/Bootstrapping_(compilers)[Wikipedia]).
 
@@ -178,7 +191,7 @@ image::images/inception.jpg[inception]
 
 image::images/sicp.jpg[sicp]
 
-== Self hosted ClojureScript
+== Self-Hosted ClojureScript: Evaluation
 
 
 [%step]
@@ -200,26 +213,30 @@ image::images/sicp.jpg[sicp]
 (cljsjs/eval-str (cljsjs/empty-state)
                "(map inc [1 2 3])"
                ""
-               {:eval cljsjs/js-eval
-	       :def-emits-var false}
+               {:eval cljsjs/js-eval}
                identity)
 ----
+--
 
+[%step]
 --
 . *state* (atom) - the compiler state
 . *source* (string) - the ClojureScript source
 . *name* (symbol or string) - optional, the name of the source
-. *opts* (map) -- compilation options.
-
+. *opts* (map) - compilation options.
+. *cb* (function) - callback, will be invoked with a map. If succesful the map will contain a :value key with the result of evaluation and :ns the current namespace. If unsuccessful will contain a :error key with an ex-info instance describing the cause of failure.
 --
+[%step]
+--
+options details:
+
 * *:def-emits-var*    - sets whether def (and derived) forms return either a Var (if set to true) or the def init value (if false). Default is false.
-* *:eval*             - eval function to invoke, see .eval-fn.
-* *:load*             - library resolution function, see .load-fn.
+* *:eval*             - eval function to invoke.
+* *:load*             - library resolution function.
 * *:static-fns*       - employ static dispatch to specific function arities in emitted JavaScript, as opposed to making use of the `call` construct. Defaults to false.
-
 --
 
-== Javascript Transpilation
+== Self-Hosted ClojureScript: Transpilation
 
 [%step]
 --
@@ -229,21 +246,27 @@ image::images/sicp.jpg[sicp]
                   "(let [a 1]
                       (+ a 2))"
                   ""
-                  {:static-fns false}
+                  { }
                   identity)
 ----
+--
+
+[%step]
 --
 . *state* (atom) - the compiler state
 . *source* (string) - the ClojureScript source
 . *name* (symbol or string) - optional, the name of the source
-. *opts* (map) -- compilation options.
-
+. *opts* (map) - compilation options.
+. *cb* (function) - callback, will be invoked with a map. If succesful the map will contain a :value key with the result of evaluation and :ns the current namespace. If unsuccessful will contain a :error key with an ex-info instance describing the cause of failure.
 --
-* *:def-emits-var*    - sets whether def (and derived) forms return either a Var (if set to true) or the def init value (if false). Default is false.
-* *:eval*             - eval function to invoke, see .eval-fn.
-* *:load*             - library resolution function, see .load-fn.
-* *:static-fns*       - employ static dispatch to specific function arities in emitted JavaScript, as opposed to making use of the `call` construct. Defaults to false. See http://blog.klipse.tech/clojurescript/2016/04/14/static-fns.html[Deep into clojurescript function call mechanisms: static vs. dynamic dispatch]
+[%step]
+--
+options details:
 
+* *:def-emits-var*    - sets whether def (and derived) forms return either a Var (if set to true) or the def init value (if false). Default is false.
+* *:eval*             - eval function to invoke.
+* *:load*             - library resolution function.
+* *:static-fns*       - employ static dispatch to specific function arities in emitted JavaScript, as opposed to making use of the `call` construct. Defaults to false.
 --
 
 == Pitfalls
@@ -321,6 +344,10 @@ With `:expr` context (default)
 (eval-several-expressions "(def a 4) (if a 1 2)")
 ----
 --
+
+== Namespace resolution
+
+image::images/alone.png[internals]
 
 == Namespace resolution
 
@@ -407,7 +434,7 @@ image::images/internals.jpg[internals]
 2. Clojure libs from analysis cache hosted by Klipse
 3. Code from a gist
 
-All the details are in Github https://github.com/viebel/klipse/blob/master/src/klipse/lang/clojure/io.cljs[io.cljs].
+All the details are in Github https://github.com/viebel/klipse/blob/master/src/klipse/lang/clojure/io.cljs[klipse/lang/clojure/io.cljs].
 
 
 == Klipse internals (1/3) - Clojure libs from Github
@@ -416,8 +443,8 @@ Super cool String manipulation library: https://github.com/expez/superstring[sup
 
 ++++
 <pre><code class="clj" data-external-libs="https://raw.githubusercontent.com/expez/superstring/279f722e5e61167ac11b27d6017c2d9d239f8343/src">
-(require '[superstring.core :as str]
-(str/swap-case "Hello ClojureX!")
+(require '[superstring.core :as superstring])
+(superstring/swap-case "Hello ClojureX!")
 </code></pre>
 ++++
 
@@ -506,9 +533,9 @@ If you want to add a lib to Klipse analysis cache, follow this https://github.co
 ----
 (defn foo [x] (if x 1 2))
 
-(loop []
+#_(loop []
   (foo 9)
-  (recur
+  (recur))
 ----
 --
 
@@ -687,7 +714,9 @@ image::images/questions.jpg[questions]
 
 
 ++++
-<h3>Meanwhile, you can give a github star to <a href="https://github.com/viebel/klipse">Klipse</a>... </h3>
+<h3>Meanwhile, you can give a github star to <a href="https://github.com/viebel/klipse">Klipse</a>... 
+<span><a class="github-button" href="https://github.com/viebel/klipse" data-size="large" data-show-count="true" aria-label="Star viebel/klipse on GitHub"></a></span>
+</h3>
 ++++
 
 ++++
@@ -703,6 +732,10 @@ image::images/questions.jpg[questions]
     margin-bottom: 10px;
     left: 12%;
     position: absolute;
+}
+
+.vertical-padder {
+height: 40vh;
 }
 </style>
 ++++
