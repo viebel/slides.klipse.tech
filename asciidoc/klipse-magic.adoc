@@ -189,6 +189,7 @@ Here is a http://blog.klipse.tech/clojure/2016/03/26/messing-with-macros.html[de
 - 100+ websites
 - Integration with blogging engines: Cyrogen, Jekyll, Ghost, Gatsby
 - Other integrations: Gitbook, deck.js (thanks @SevereOverfl0w from JUXT)
+- http://app.klipse.tech/?cljs_in=(defn%20hello%20%5Bx%5D%0A%20%20(str%20%22Hello%20%22%20x%20%22!%22))%0A%0A(println%20%22Klipse%20on%20ClojureX%22)%0A(hello%20%22ClojureX%22)[Klipse the app]
 
 == Self-Hosted ClojureScript
 
