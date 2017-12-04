@@ -176,6 +176,20 @@ nil
 Here is a http://blog.klipse.tech/clojure/2016/03/26/messing-with-macros.html[detailed explanation] why we need the extra `$macros` suffix.
 --
 
+== Klipse: the numbers
+
+- 1450 Github stars (and growing...)
+++++
+<a class="github-button" href="https://github.com/viebel/klipse" data-size="large" data-show-count="true" aria-label="Star viebel/klipse on GitHub">Klipse</a>
+++++
+- 77 forks
+- 849 commits
+- Started on March 2016
+- 11 languages: clojure, ruby, javascript, python, scheme, php, brainfuck, c++, lua, ocaml, reasonml
+- 100+ websites
+- Integration with blogging engines: Cyrogen, Jekyll, Ghost, Gatsby
+- Other integrations: Gitbook, slides.js
+
 
 == Self-Hosted ClojureScript
 
@@ -183,11 +197,14 @@ image::images/inception.jpg[inception]
 
 == Self-Hosted ClojureScript
 
-*Definition*: In computer science, bootstrapping is the process of writing a compiler in the source programming language that it intends to compile. Applying this technique leads to a self-hosting compiler (https://en.wikipedia.org/wiki/Bootstrapping_(compilers)[Wikipedia]).
-
-*Application*: In the context of the Web, once a language is bootstrapped it can run on a web page.
+*Definition*: Bootstrapping is the process of writing a compiler in the same language that it intends to compile
 
 *Example*: Eval written in LISP
+
+*Application*: Once a language that transpiles to javascript is bootstrapped it can run on a web page
+
+*Fact*: ClojureScript has been bootstrapped in July 2015
+
 
 image::images/sicp.jpg[sicp]
 
@@ -210,7 +227,11 @@ image::images/sicp.jpg[sicp]
 --
 [source.clj]
 ----
-(cljsjs/eval-str (cljsjs/empty-state)
+(def cljsjs-state (cljsjs/empty-state))
+----
+[source.clj]
+----
+(cljsjs/eval-str cljsjs-state
                "(map inc [1 2 3])"
                ""
                {:eval cljsjs/js-eval}
@@ -242,7 +263,7 @@ options details:
 --
 [source.clj]
 ----
-(cljsjs/compile-str (cljsjs/empty-state)
+(cljsjs/compile-str cljsjs-state
                   "(let [a 1]
                       (+ a 2))"
                   ""
@@ -277,7 +298,7 @@ With `:statement` context (default)
 
 [source.clj]
 ----
-(cljsjs/eval-str (cljsjs/empty-state)
+(cljsjs/eval-str cljsjs-state
                "(if 1 2 3)"
                ""
                {:eval cljsjs/js-eval
@@ -293,7 +314,7 @@ With `:expr` context (default)
 
 [source.clj]
 ----
-(cljsjs/eval-str (cljsjs/empty-state)
+(cljsjs/eval-str cljsjs-state
                "(if 1 2 3)"
                ""
                {:eval cljsjs/js-eval
@@ -313,9 +334,8 @@ With `:expr` context (default)
 --
 [source.clj]
 ----
-(def compiler-empty-state (cljsjs/empty-state))
 (defn eval [exp]
-  (cljsjs/eval-str compiler-empty-state
+  (cljsjs/eval-str cljsjs-state
                    exp
                    ""
                    {:eval cljsjs/js-eval
@@ -329,7 +349,7 @@ With `:expr` context (default)
 [source.clj]
 ----
 (defn eval-several-expressions [code]
-  (loop [exps (klipse.lang.clojure.split-expressions code)
+  (loop [exps (klipse.lang.clojure/split-expressions code)
          res nil]
     (if (seq exps)
       (recur (rest exps) (eval (first exps)))
@@ -359,7 +379,7 @@ The implementor needs to provide a custom mechanism for namespace resolution
 --
 [source.clj]
 ----
-(cljsjs/eval-str (cljsjs/empty-state)
+(cljsjs/eval-str cljsjs-state
                "(require 'my.ns)"
                ""
                {:eval cljsjs/js-eval}
@@ -381,7 +401,7 @@ The map has the following keys:
 --
 [source.clj]
 ----
-(cljsjs/eval-str (cljsjs/empty-state)
+(cljsjs/eval-str cljsjs-state
                "(require 'my.ns)"
                ""
                {:eval cljsjs/js-eval
@@ -408,13 +428,15 @@ If the resource could not be resolved, the callback should be invoked with `nil`
 
 [source.clj]
 ----
-(cljsjs/eval-str (cljsjs/empty-state)
-               "(require 'my.ns) (+ foo 10)"
-               ""
-               {:eval cljsjs/js-eval
-                :load (fn [data callback] (callback {:lang :clj
-                                           :source "(def foo 12)"}))}
-               identity)
+(cljsjs/eval-str cljsjs-state
+                 "(require '[my.bar :refer [foo]])
+                  (+ foo 10)"
+                 ""
+                 {:eval cljsjs/js-eval
+                  :load (fn [data callback] (callback {:lang :clj
+                                                       :source "(ns my.bar)
+                                                                (def foo 12)"}))}
+                 identity)
 ----
 --
 == Klipse internals
@@ -594,7 +616,7 @@ The eval function
 [source.clj]
 ----
 (defn eval-code [exp]
-  (cljsjs/eval-str (cljsjs/empty-state)
+  (cljsjs/eval-str cljsjs-state
                    exp
                    ""
                    {:eval cljsjs/js-eval}
