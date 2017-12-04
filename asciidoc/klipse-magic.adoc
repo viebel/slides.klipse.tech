@@ -493,7 +493,14 @@ Many popular clojure libs are available out-of-the box in Klipse:
 (permutations [1 2 3])
 ----
 
-If you want to add a lib to Klipse analysis cache, follow this https://github.com/viebel/klipse/blob/master/contributing.md#update-clojurescript-analysis-cache[guide].
+[%step]
+--
+++++
+<br>
+<br>
+++++
+If you want to add a lib to Klipse analysis cache, follow this https://github.com/viebel/klipse/blob/master/contributing.md#update-clojurescript-analysis-cache[guide] - (using Lumo).
+--
 
 
 == Klipse internals (1/3) - Clojure code from a gist
