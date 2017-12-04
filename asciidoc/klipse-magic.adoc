@@ -188,8 +188,7 @@ Here is a http://blog.klipse.tech/clojure/2016/03/26/messing-with-macros.html[de
 - 11 languages: clojure, ruby, javascript, python, scheme, php, brainfuck, c++, lua, ocaml, reasonml
 - 100+ websites
 - Integration with blogging engines: Cyrogen, Jekyll, Ghost, Gatsby
-- Other integrations: Gitbook, slides.js
-
+- Other integrations: Gitbook, deck.js (thanks @SevereOverfl0w from JUXT)
 
 == Self-Hosted ClojureScript
 
