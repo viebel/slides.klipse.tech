@@ -176,7 +176,7 @@ nil
 Here is a http://blog.klipse.tech/clojure/2016/03/26/messing-with-macros.html[detailed explanation] why we need the extra `$macros` suffix.
 --
 
-== Klipse: the numbers
+== Klipse: numbers and facts
 
 - 1450 Github stars (and growing...)
 ++++
