@@ -17,7 +17,7 @@
 ++++
 
 
-== The Magic of Self-Host ClojureScript in Any Web Page
+== Klipse - The Magic of Self-Host ClojureScript in Any Web Page
 
 ++++
 <section class="slide">
