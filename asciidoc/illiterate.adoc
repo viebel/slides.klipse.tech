@@ -159,7 +159,7 @@ They need to interact with it.
 [%step]
 --
 Problem 1: Readers are lazy.
-Noboding is going to clone your github repo to interact with the code you have linked to in your blog post.
+Nobody is going to clone your github repo to interact with the code you have linked to in your blog post.
 --
 
 [%step]
@@ -613,6 +613,95 @@ The evaluation of scheme code in the browser is powered by http://www.biwascheme
 == Klipse: Scheme - fun with car and cdr
 
 Who wants to share a fun piece of code with `car` and `cdr`?
+
+[source.scheme]
+----
+----
+
+== Quines
+
+
+A quine is a program that evaluates to its own source.
+
+In a sense, a quine is a fixed point of Klipse.
+
+image::images/hands.jpg[hands]
+
+== Quines in clojure
+
+
+[%step]
+--
+Let's find a unary function `f` and an argument `x` such that  such that `(f x)` is exactly `(f x)`.
+
+It's not hard to guess that this is going to involve self-referentiality. Therefore a good guess for `x` is `'f`.
+--
+
+[%step]
+--
+
+[source.clj]
+----
+(defn f [x] '(f 'f))
+(f 'f)
+----
+--
+
+[%step]
+--
+Let's find a way to reference `f` without using  `f` explicitely.
+--
+
+[%step]
+--
+
+[source.clj]
+----
+(def x 'f)
+----
+
+
+[source.clj]
+----
+x
+----
+
+[source.clj]
+----
+(list 'quote x)
+----
+--
+
+[%step]
+--
+To get from `x` to `(f 'f)`, we do:
+
+[source.clj]
+----
+(list x (list 'quote x))
+----
+--
+
+[%step]
+--
+So let's improve `f`:
+
+[source.clj]
+----
+(defn f [x] (list x (list 'quote x)))
+(f 'f)
+----
+--
+
+[%step]
+--
+Now if we replace `f` by its definition, we get our quine:
+
+[source.clj]
+----
+((fn [x] (list x (list 'quote x))) '(fn [x] (list x (list 'quote x))))
+----
+--
 
 == Klipse: Brainfuck
 

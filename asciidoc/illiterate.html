@@ -203,7 +203,7 @@ They need to interact with it.</p></div>
 <div class="openblock slide">
 <div class="content">
 <div class="paragraph"><p>Problem 1: Readers are lazy.<br>
-Noboding is going to clone your github repo to interact with the code you have linked to in your blog post.</p></div>
+Nobody is going to clone your github repo to interact with the code you have linked to in your blog post.</p></div>
 </div>
 </div>
 <div class="openblock slide">
@@ -660,6 +660,95 @@ The evaluation of scheme code in the browser is powered by <a href="http://www.b
 <section class="slide" id="_klipse_scheme_fun_with_car_and_cdr">
 <h2>Klipse: Scheme - fun with car and cdr</h2>
 <div class="paragraph"><p>Who wants to share a fun piece of code with <code>car</code> and <code>cdr</code>?</p></div>
+<div class="listingblock scheme">
+<div class="content">
+<pre class="highlight"><code></code></pre>
+</div>
+</div>
+</section>
+<section class="slide" id="_quines">
+<h2>Quines</h2>
+<div class="paragraph"><p>A quine is a program that evaluates to its own source.</p></div>
+<div class="paragraph"><p>In a sense, a quine is a fixed point of Klipse.</p></div>
+<div class="imageblock">
+<div class="content">
+<img alt="hands" src="images/hands.jpg">
+</div>
+</div>
+</section>
+<section class="slide" id="_quines_in_clojure">
+<h2>Quines in clojure</h2>
+<div class="openblock slide">
+<div class="content">
+<div class="paragraph"><p>Let&#8217;s find a unary function <code>f</code> and an argument <code>x</code> such that  such that <code>(f x)</code> is exactly <code>(f x)</code>.</p></div>
+<div class="paragraph"><p>It&#8217;s not hard to guess that this is going to involve self-referentiality. Therefore a good guess for <code>x</code> is <code>'f</code>.</p></div>
+</div>
+</div>
+<div class="openblock slide">
+<div class="content">
+<div class="listingblock clj">
+<div class="content">
+<pre class="highlight"><code>(defn f [x] '(f 'f))
+(f 'f)</code></pre>
+</div>
+</div>
+</div>
+</div>
+<div class="openblock slide">
+<div class="content">
+<div class="paragraph"><p>Let&#8217;s find a way to reference <code>f</code> without using  <code>f</code> explicitely.</p></div>
+</div>
+</div>
+<div class="openblock slide">
+<div class="content">
+<div class="listingblock clj">
+<div class="content">
+<pre class="highlight"><code>(def x 'f)</code></pre>
+</div>
+</div>
+<div class="listingblock clj">
+<div class="content">
+<pre class="highlight"><code>x</code></pre>
+</div>
+</div>
+<div class="listingblock clj">
+<div class="content">
+<pre class="highlight"><code>(list 'quote x)</code></pre>
+</div>
+</div>
+</div>
+</div>
+<div class="openblock slide">
+<div class="content">
+<div class="paragraph"><p>To get from <code>x</code> to <code>(f 'f)</code>, we do:</p></div>
+<div class="listingblock clj">
+<div class="content">
+<pre class="highlight"><code>(list x (list 'quote x))</code></pre>
+</div>
+</div>
+</div>
+</div>
+<div class="openblock slide">
+<div class="content">
+<div class="paragraph"><p>So let&#8217;s improve <code>f</code>:</p></div>
+<div class="listingblock clj">
+<div class="content">
+<pre class="highlight"><code>(defn f [x] (list x (list 'quote x)))
+(f 'f)</code></pre>
+</div>
+</div>
+</div>
+</div>
+<div class="openblock slide">
+<div class="content">
+<div class="paragraph"><p>Now if we replace <code>f</code> by its definition, we get our quine:</p></div>
+<div class="listingblock clj">
+<div class="content">
+<pre class="highlight"><code>((fn [x] (list x (list 'quote x))) '(fn [x] (list x (list 'quote x))))</code></pre>
+</div>
+</div>
+</div>
+</div>
 </section>
 <section class="slide" id="_klipse_brainfuck">
 <h2>Klipse: Brainfuck</h2>
@@ -847,7 +936,8 @@ for i in range(4):
         selector_js: '.transpile-cljs',
         selector_reagent: '.reagent',
         selector_eval_js: '.eval-js',
-    selector_render_jsx: '.render-jsx',
+    	selector_render_jsx: '.render-jsx',
+        selector_jsx: '.eval-jsx',
         selector_es2017: '.es2017',
         selector_brainfuck: '.brainfuck',
         selector_transpile_jsx: '.transpile-jsx',
@@ -862,6 +952,8 @@ for i in range(4):
     };
 </script>
 <script src="https://storage.googleapis.com/app.klipse.tech/plugin/js/klipse_plugin.js?v=7.0.6"></script>
+<!-- Place this tag in your head or just before your close body tag. -->
+<script async defer src="https://buttons.github.io/buttons.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/react/15.5.4/react-with-addons.min.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/react/15.5.4/react-dom.min.js"></script>
 <style>
