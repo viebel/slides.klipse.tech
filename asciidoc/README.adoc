@@ -10,3 +10,18 @@ Run the following two commands to:
 ls *.html | entr reload-browser "Google Chrome" &
 ls -d presentation.adoc| entr mach presentation.html
 ----
+
+Compile a single file
+
+[source, bash]
+----
+bundle exec asciidoctor -T templates/haml functional-oop-clojure.adoc
+----
+
+Compile and reload the browser
+
+[source, bash]
+----
+ls *.html | entr reload-browser "Google Chrome" &
+ls -d functional-oop-clojure.adoc | entr ./compile.sh functional-oop-clojure.adoc &
+----

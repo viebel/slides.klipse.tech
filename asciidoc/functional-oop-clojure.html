@@ -1,0 +1,745 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta content="text/html; charset=utf-8" http-equiv="Content-Type">
+<meta content="IE=edge,chrome=1" http-equiv="X-UA-Compatible">
+<meta content="Asciidoctor 1.5.5" name="generator">
+<title>Polymorphism à la Clojure: Functional Object Oriented Programming is not an Oxymoron</title>
+<link href="deck.js/core/deck.core.css" rel="stylesheet">
+<link href="deck.js/extensions/menu/deck.menu.css" media="screen" rel="stylesheet">
+<link href="deck.js/extensions/navigation/deck.navigation.css" media="screen" rel="stylesheet">
+<link href="deck.js/extensions/status/deck.status.css" media="screen" rel="stylesheet">
+<link href="deck.js/themes/style/none.css" media="screen" rel="stylesheet">
+<link href="deck.js/themes/transition/horizontal-slide.css" media="screen" rel="stylesheet">
+<link href="deck.js/core/print.css" media="print" rel="stylesheet">
+<script src="deck.js/modernizr.custom.js"></script>
+</head>
+<body class="article">
+<div class="deck-container">
+<section class="slide" id="title-slide">
+<h1>Polymorphism à la Clojure: Functional Object Oriented Programming is not an Oxymoron</h1>
+</section>
+<div id="preamble">
+<div class="sectionbody">
+<pre class="hidden"><code class="clj">
+(ns my.playground)
+</code></pre>
+</div>
+</div>
+<section class="slide" id="_intro">
+<h2>Intro</h2>
+<section class="slide">
+        <div class="text-centered">
+            <div class="centered" style="font-size:1.9em;">
+              <div class="left" style="width:50%;">
+	      <img src='https://chart.googleapis.com/chart?cht=qr&chl=http%3A%2F%2Fslides.klipse.tech%2Fasciidoc%2Ffunctional-oop-clojure.html&chs=300x300' alt='qr code'></img>
+	      </div>
+              <div class="left" style="width:50%;">
+		<div>
+                  <div>
+                    <img class="fullscreen" src="./images/klipse.png" alt="" width="150">
+                  </div>
+                  <div>
+		  <div>ClojureX 2017</div>
+		  <div>London - Dec 4, 2017</div>
+                  </div>
+                  <div class="clear">
+                    <div style="margin-top:14px;">
+		    <a class="github-button" href="https://github.com/viebel/klipse" data-size="large" data-show-count="true" aria-label="Star viebel/klipse on GitHub">Klipse</a>
+                    </div>
+                  </div>
+                  <div>
+		  <a href="https://tinyurl.com/fun-oop"> https://tinyurl.com/fun-oop </a>
+                  </div>
+		</div>
+              </div>
+            </div>
+            <div class="clear centered">
+	    <br><br><br>
+	      <div style="padding-top: 20px;">
+		<pre><code class="clj" data-loop-msec="1000" data-beautify-strings="true">
+		(str (js/Date.))
+		</code></pre>
+		<br>
+	      </div>
+            </div>
+	    <br><br>
+	    <div style="font-size: 2em;">Yehonathan Sharvit</div>
+	    <div style="font-size: 2em;"> <a href="https://twitter.com/viebel">@viebel</a>, viebel@gmail.com</div></p>
+        </div>
+      </section>
+</section>
+<section class="slide" id="_the_agenda">
+<h2>The Agenda</h2>
+<div class="ulist">
+<ul>
+<li>Definitions and Rhetorics</li>
+<li>Object oriented with maps</li>
+<li>Object oriented with multimethods</li>
+<li>Object oriented with records</li>
+<li>The expression problem</li>
+<li>Functions as protocols</li>
+<li>Conclusion</li>
+</ul>
+</div>
+</section>
+<section class="slide" id="_who_am_i">
+<h2>Who am I?</h2>
+<div class="openblock left">
+<div class="content">
+<div class="ulist">
+<ul>
+<li>Yehonathan Sharvit <a href="https://twitter.com/viebel">@viebel</a>, <a href="mailto:viebel@gmail.com">viebel@gmail.com</a>, <a href="https://www.linkedin.com/in/viebel/">LinkedIn</a></li>
+<li>A mathematician</li>
+<li>A coder</li>
+<li>A pragmatic theorist</li>
+<li>Author of <a href="https://github.com/viebel/klipse">Klipse</a> - a simple client-side code evaluator pluggable on any web page</li>
+<li>A Web consultant: Full-Stack, clojure, clojurescript, javascript, node.js, react</li>
+<li>Blogger about functional programming at <a href="http://blog.klipse.tech/">blog.klipse.tech</a></li>
+<li>Third year in a row at ClojureX</li>
+<li>Writing a book with Manning "Get Programming with Clojure"</li>
+</ul>
+</div>
+</div>
+</div>
+<div class="imageblock">
+<div class="content">
+<img alt="me" src="images/me.jpg">
+</div>
+</div>
+</section>
+<section class="slide" id="_definitions_and_rhetorics_oxymoron">
+<h2>Definitions and Rhetorics - Oxymoron</h2>
+<div class="quoteblock">
+<blockquote>
+Oxymoron: Figure of speech containing words that seem to contradict each other.
+</blockquote>
+</div>
+<div class="openblock slide">
+<div class="content">
+<div class="paragraph"><p>Examples:</p></div>
+<div class="ulist">
+<ul>
+<li>True myth</li>
+<li>Original copy</li>
+<li>Dark light</li>
+<li>Pragmatic theorist</li>
+</ul>
+</div>
+</div>
+</div>
+<div class="openblock slide">
+<div class="content">
+<div class="paragraph"><p>Purpose:</p></div>
+<div class="ulist">
+<ul>
+<li>Create a little bit of drama for the reader.</li>
+<li>Make a person stop and think, whether that&#8217;s to laugh or to wonder.</li>
+</ul>
+</div>
+</div>
+</div>
+<div class="paragraph slide"><p>But&#8230;&#8203;</p></div>
+</section>
+<section class="slide" id="_definitions_and_rhetorics_oxymoron_2">
+<h2>Definitions and Rhetorics - Oxymoron</h2>
+<div class="imageblock">
+<div class="content">
+<img alt="stone" src="images/stone.jpg">
+</div>
+</div>
+</section>
+<section class="slide" id="_definitions_and_rhetorics_object_oriented_programming">
+<h2>Definitions and Rhetorics - Object Oriented Programming</h2>
+<div class="quoteblock">
+<blockquote>
+OOP: A programming paradigm based on the concept of <strong>objects</strong>, which  contain <strong>data</strong>, in the form of fields; and <strong>code</strong>, in the form of procedures, often known as methods.<br>
+Methods can access and often modify the data fields of the object with which they are associated (objects have a notion of <em>this</em> or <em>self</em>).
+</blockquote>
+</div>
+</section>
+<section class="slide" id="_definitions_and_rhetorics_functional_programming">
+<h2>Definitions and Rhetorics - Functional Programming</h2>
+<div class="quoteblock">
+<blockquote>
+FP: A programming paradigm based on the concept of <strong>functions</strong>, which receive <strong>data</strong> as arguments and return data.<br>
+Functions avoid changing state and mutating data.
+</blockquote>
+</div>
+</section>
+<section class="slide" id="_definitons_and_rhetorics_summary">
+<h2>Definitons and Rhetorics - summary</h2>
+<div class="quoteblock">
+<blockquote>
+Is functional object oriented programming an oxymoron?
+</blockquote>
+</div>
+</section>
+<section class="slide" id="_definitions_and_rhetorics_oop_redefined">
+<h2>Definitions and Rhetorics - OOP redefined</h2>
+<div class="quoteblock">
+<blockquote>
+<div class="paragraph"><p>OOP: A programming paradigm in which the concepts of <strong>procedures</strong> and <strong>tasks</strong> are replaced by the concepts of <strong>objects</strong> and <strong>messages</strong>.</p></div>
+<div class="paragraph"><p>An <strong>object</strong> includes:</p></div>
+<div class="ulist">
+<ul>
+<li>a package of data</li>
+<li>a description of the operations that can be performed on that data</li>
+</ul>
+</div>
+<div class="paragraph"><p>A <strong>message</strong> specifies one of the operations, but unlike a procedure, does not describe how the operation should be carried out.</p></div>
+</blockquote>
+</div>
+</section>
+<section class="slide" id="_object_oriented_programming_with_maps">
+<h2>Object oriented programming with maps</h2>
+<div class="openblock slide">
+<div class="content">
+<div class="paragraph"><p>A "constructor"&#8230;&#8203;</p></div>
+<br>
+<div class="listingblock clj">
+<div class="content">
+<pre class="highlight"><code>(defn new-person [name age]
+  {:data {:name name
+          :age age}
+   :ops {:age (fn [this] (get-in this [:data :age]))
+         :name (fn [this] (get-in this [:data :name]))}})</code></pre>
+</div>
+</div>
+</div>
+</div>
+<div class="openblock slide">
+<div class="content">
+<br>
+<br>
+<div class="paragraph"><p>How are we going to send a <strong>message</strong> to an <strong>object</strong>?</p></div>
+<br>
+<br>
+</div>
+</div>
+<div class="openblock slide">
+<div class="content">
+<div class="listingblock clj">
+<div class="content">
+<pre class="highlight"><code>(defn send-msg [obj name]
+  (let [op (get-in obj [:ops name])]
+    (op obj)))</code></pre>
+</div>
+</div>
+</div>
+</div>
+<div class="openblock slide">
+<div class="content">
+<br>
+<br>
+<div class="paragraph"><p>Let&#8217;s create an <strong>object</strong> and send it <strong>messages</strong></p></div>
+<br>
+<br>
+</div>
+</div>
+<div class="openblock slide">
+<div class="content">
+<div class="listingblock clj">
+<div class="content">
+<pre class="highlight"><code>(def a (new-person "Dave" 42))
+(send-msg a :age)</code></pre>
+</div>
+</div>
+</div>
+</div>
+</section>
+<section class="slide" id="_oop_with_maps">
+<h2>OOP with maps</h2>
+<div class="openblock slide">
+<div class="content">
+<div class="paragraph"><p>We can create new functionalities outside of the objects.</p></div>
+</div>
+</div>
+<div class="openblock slide">
+<div class="content">
+<div class="listingblock clj">
+<div class="content">
+<pre class="highlight"><code>(defn display [someone]
+  (str (send-msg someone :name) " is "(send-msg someone :age) "."))
+(display a)</code></pre>
+</div>
+</div>
+</div>
+</div>
+</section>
+<section class="slide" id="_oop_with_maps_mutations">
+<h2>OOP with maps - mutations?</h2>
+<div class="openblock slide">
+<div class="content">
+<div class="paragraph"><p>What about mutations?</p></div>
+<br>
+<br>
+</div>
+</div>
+<div class="openblock slide">
+<div class="content">
+<div class="imageblock">
+<div class="content">
+<img alt="mutation" src="images/mutation.png" width="1000">
+</div>
+</div>
+</div>
+</div>
+</section>
+<section class="slide" id="_oop_with_maps_mutations_2">
+<h2>OOP with maps - "mutations"</h2>
+<div class="openblock slide">
+<div class="content">
+<div class="paragraph"><p>We have <strong>assoc</strong> and <strong>assoc-in</strong>!</p></div>
+<br>
+<br>
+</div>
+</div>
+<div class="openblock slide">
+<div class="content">
+<div class="listingblock clj">
+<div class="content">
+<pre class="highlight"><code>(defn new-person-with-mutations [name age]
+  {:data {:name name
+          :age age}
+   :ops {:age (fn [this] (get-in this [:data :age]))
+         :age! (fn [this age] (assoc-in this [:data :age] age))
+         :name (fn [this] (get-in this [:data :name]))}})</code></pre>
+</div>
+</div>
+</div>
+</div>
+<div class="openblock slide">
+<div class="content">
+<br>
+<br>
+<div class="paragraph"><p>How are we going to send a <strong>message</strong> with <em>arguments</em> to an <strong>object</strong>?</p></div>
+</div>
+</div>
+<div class="openblock slide">
+<div class="content">
+<div class="paragraph"><p>With <em>apply</em> and <em>&amp;</em> of course!</p></div>
+<div class="listingblock clj">
+<div class="content">
+<pre class="highlight"><code>(defn send-msg [obj name &amp; args]
+  (let [op (get-in obj [:ops name])]
+    (apply op obj args)))</code></pre>
+</div>
+</div>
+</div>
+</div>
+<div class="openblock slide">
+<div class="content">
+<br>
+<br>
+<div class="paragraph"><p>Let&#8217;s create an <strong>object</strong> and "mutate" it:</p></div>
+<div class="listingblock clj">
+<div class="content">
+<pre class="highlight"><code>(def a (new-person-with-mutations "Dave" 42))
+(send-msg a :age! 43)
+(send-msg a :age)</code></pre>
+</div>
+</div>
+<br>
+<br>
+<div class="paragraph"><p>Oops</p></div>
+</div>
+</div>
+</section>
+<section class="slide" id="_definitions_and_rhetorics_oops">
+<h2>Definitions and Rhetorics - Oops</h2>
+<div class="quoteblock">
+<blockquote>
+<div class="paragraph"><p>Oops:<br>
+1. An exclamation used to show recognition of a mistake or minor accident, often as part of an apology.<br>
+2. (unused) Object Oriented Programming (OOP) plural form.</p></div>
+</blockquote>
+</div>
+</section>
+<section class="slide" id="_oop_with_maps_mutations_3">
+<h2>OOP with maps - "mutations"</h2>
+<div class="openblock slide">
+<div class="content">
+<div class="quoteblock">
+<blockquote>
+In Clojure, we never mutate an object, we create a new version of it!
+</blockquote>
+</div>
+</div>
+</div>
+<div class="openblock slide">
+<div class="content">
+<div class="listingblock clj">
+<div class="content">
+<pre class="highlight"><code>(def aa (new-person-with-mutations "Dave" 42))
+(def bb (send-msg a :age! 43))
+(display bb)</code></pre>
+</div>
+</div>
+</div>
+</div>
+</section>
+<section class="slide" id="_oop_with_maps_polymorphism">
+<h2>OOP with maps - Polymorphism</h2>
+<div class="openblock slide">
+<div class="content">
+<div class="paragraph"><p>Let&#8217;s create another object that implements the same operations but behaves differently&#8230;&#8203;</p></div>
+<br>
+</div>
+</div>
+<div class="openblock slide">
+<div class="content">
+<div class="listingblock clj">
+<div class="content">
+<pre class="highlight"><code>(defn new-doctor [name age]
+  {:data {:name name
+          :age age}
+   :ops {:age (fn [this] (get-in this [:data :age]))
+         :age! (fn [this age] (assoc-in this [:data :age] age))
+         :name (fn [this] (str "Dr. " (get-in this [:data :name])))}})</code></pre>
+</div>
+</div>
+</div>
+</div>
+<div class="openblock slide">
+<div class="content">
+<br>
+<br>
+<div class="paragraph"><p>When we send a message, we don&#8217;t know what procedure is going to be called</p></div>
+</div>
+</div>
+<div class="openblock slide">
+<div class="content">
+<div class="paragraph"><p>The doctor:</p></div>
+<div class="listingblock clj">
+<div class="content">
+<pre class="highlight"><code>(def dd (new-doctor "Dave" 42))
+(send-msg dd :name)</code></pre>
+</div>
+</div>
+<div class="paragraph"><p>The person:</p></div>
+<div class="listingblock clj">
+<div class="content">
+<pre class="highlight"><code>(def ee (new-person-with-mutations "Dave" 42))
+(send-msg ee :name)</code></pre>
+</div>
+</div>
+<br>
+<br>
+<div class="paragraph"><p>Both pieces of code that send the message look the same, but the behaviour is different.</p></div>
+</div>
+</div>
+</section>
+<section class="slide" id="_oop_with_maps_inheritance">
+<h2>OOP with maps - "Inheritance"</h2>
+<div class="openblock slide">
+<div class="content">
+<div class="paragraph"><p>No coupling between the operations and the object.<br>
+We can extract the operations from the object as regular functions.</p></div>
+</div>
+</div>
+<div class="openblock slide">
+<div class="content">
+<div class="listingblock clj">
+<div class="content">
+<pre class="highlight"><code>(defn get-age [this]
+  (get-in this [:data :age]))
+
+(defn get-name [this]
+  (get-in this [:data :name]))
+
+(defn set-age! [this age]
+  (assoc-in this [:data :age] age))
+
+(defn new-person-inherit [name age]
+  {:data {:name name
+          :age age}
+   :ops {:age get-age
+         :age! set-age!
+         :name get-name}})</code></pre>
+</div>
+</div>
+</div>
+</div>
+<div class="openblock slide">
+<div class="content">
+<br>
+<br>
+<div class="paragraph"><p>And "inherit" any function we want.<br>
+The doctor inherits <strong>:age</strong> and <strong>:age!</strong> and it overrides <strong>:name</strong>.</p></div>
+<div class="listingblock clj">
+<div class="content">
+<pre class="highlight"><code>(defn new-doctor-inherit [name age]
+  {:data {:name name
+          :age age}
+   :ops {:age get-age
+         :age! set-age!
+         :name (fn [this] (str "Dr. " (get-in this [:data :name])))}})</code></pre>
+</div>
+</div>
+</div>
+</div>
+<div class="openblock slide">
+<div class="content">
+<br>
+<br>
+<div class="paragraph"><p>Let&#8217;s test it:</p></div>
+<div class="listingblock clj">
+<div class="content">
+<pre class="highlight"><code>(def ddd (new-doctor-inherit "Dave" 42))
+(display ddd)</code></pre>
+</div>
+</div>
+<br>
+<br>
+<div class="listingblock clj">
+<div class="content">
+<pre class="highlight"><code>(def eee (send-msg ddd :age! 88))
+(display eee)</code></pre>
+</div>
+</div>
+<br>
+<br>
+<div class="paragraph"><p>So far so good&#8230;&#8203;</p></div>
+</div>
+</div>
+</section>
+<section class="slide" id="_oop_with_maps_composition">
+<h2>OOP with maps - Composition</h2>
+<div class="openblock slide">
+<div class="content">
+<div class="paragraph"><p>We can even do composition.<br>
+A Doctor <em>isa</em> Person or a Doctor <em>hasa</em> Person?</p></div>
+</div>
+</div>
+<div class="openblock slide">
+<div class="content">
+<div class="listingblock clj">
+<div class="content">
+<pre class="highlight"><code>(defn new-doctor-compose [name age]
+  {:person (new-person-with-mutations name age)
+   :data nil
+   :ops {:age  (fn [this] (send-msg (:person this) :age))
+         :age! (fn [this age] (update this :person #(send-msg % :age! age)))
+         :name (fn [this] (str "Dr. " (send-msg (:person this) :name)))}})</code></pre>
+</div>
+</div>
+</div>
+</div>
+<div class="openblock slide">
+<div class="content">
+<br>
+<br>
+<div class="paragraph"><p>Let&#8217;s test it:</p></div>
+<div class="listingblock clj">
+<div class="content">
+<pre class="highlight"><code>(def dddd (new-doctor-compose "Dave" 42))
+(display dddd)</code></pre>
+</div>
+</div>
+</div>
+</div>
+<div class="openblock slide">
+<div class="content">
+<br>
+<br>
+<div class="paragraph"><p>Let&#8217;s change the age of the doctor.</p></div>
+<div class="listingblock clj">
+<div class="content">
+<pre class="highlight"><code>(def eeee (send-msg dddd :age! 88))
+(display eeee)</code></pre>
+</div>
+</div>
+<br>
+<br>
+</div>
+</div>
+<div class="openblock slide">
+<div class="content">
+<div class="paragraph"><p>It works but it becomes a bit complicated</p></div>
+</div>
+</div>
+</section>
+<section class="slide" id="_questions">
+<h2>Questions</h2>
+<div class="imageblock">
+<div class="content">
+<img alt="questions" src="images/questions.jpg">
+</div>
+</div>
+<style>
+.CodeMirror {
+    border: solid 2px #90B4FE !important;
+    width: 80%;
+    left: 10%;
+    font-size: 24px;
+}
+
+.klipse-container {
+    margin-bottom: 10px;
+    left: 12%;
+    position: absolute;
+}
+
+.vertical-padder {
+height: 40vh;
+}
+</style>
+<link rel="shortcut icon" href="./favicon.png">
+<link rel="stylesheet" media="screen" href="http://slides.klipse.tech/includes/deckjs/themes/style/klipse.css">
+<link rel="stylesheet" media="screen" href="http://slides.klipse.tech/asciidoc/klipse.css">
+
+<link rel="stylesheet" type="text/css" href="https://storage.googleapis.com/app.klipse.tech/css/codemirror.css">
+
+<script>
+    window.klipse_settings = {
+     codemirror_options_in: {
+            lineWrapping: true,
+            autoCloseBrackets: true
+        },
+        codemirror_options_out: {
+            lineWrapping: true
+        },
+        beautify_strings: true,
+        selector: '.clj',
+        selector_js: '.transpile-cljs',
+        selector_reagent: '.reagent',
+        selector_eval_js: '.eval-js',
+    	selector_render_jsx: '.render-jsx',
+        selector_jsx: '.eval-jsx',
+        selector_es2017: '.es2017',
+        selector_brainfuck: '.brainfuck',
+        selector_transpile_jsx: '.transpile-jsx',
+        selector_eval_php: '.php',
+        selector_eval_python_client: '.python',
+        selector_eval_html: '.html',
+        selector_sql: '.sql',
+        selector_eval_ruby: '.ruby',
+        selector_eval_scheme: '.scheme',
+    selector_eval_cpp: '.cpp',
+    selector_lua: '.lua',
+    };
+</script>
+<script src="https://storage.googleapis.com/app.klipse.tech/plugin/js/klipse_plugin.js?v=7.0.6"></script>
+<!-- Place this tag in your head or just before your close body tag. -->
+<script async defer src="https://buttons.github.io/buttons.js"></script>
+</section>
+<div aria-role="navigation">
+<a class="deck-prev-link" href="#" title="Previous">&#8592;</a>
+<a class="deck-next-link" href="#" title="Next">&#8594;</a>
+</div>
+<p aria-role="status" class="deck-status">
+<span></span>
+powered by
+<a href="https://github.com/viebel/klipse" target="_new">Klipse</a>
+<span class="deck-status-current"></span>
+/
+<span class="deck-status-total"></span>
+</p>
+</div>
+<script src="deck.js/jquery.min.js"></script>
+<script src="deck.js/core/deck.core.js"></script>
+<script src="deck.js/extensions/menu/deck.menu.js"></script>
+<script src="deck.js/extensions/navigation/deck.navigation.js"></script>
+<script src="deck.js/extensions/status/deck.status.js"></script>
+<script>
+  (function($, deck, undefined) {
+    $.deck.defaults.keys['previous'] = [8, 33, 37, 39];
+    $.deck.defaults.keys['next'] = [13, 32, 34, 39];
+  
+    $.extend(true, $[deck].defaults, {
+        countNested: false
+    });
+  
+    $.deck('.slide');
+  })(jQuery, 'deck');
+</script>
+<style>
+  .slide.canvas-image {
+  -moz-background-size: cover;
+  -webkit-background-size: cover;
+  -o-background-size: cover;
+  background-size: cover;
+  display: -moz-box;
+  display: -webkit-box;
+  display: -ms-box;
+  display: box;
+  -moz-box-orient: vertical;
+  -webkit-box-orient: vertical;
+  -ms-box-orient: vertical;
+  box-orient: vertical;
+  -moz-box-align: start;
+  -webkit-box-align: start;
+  -ms-box-align: start;
+  box-align: start;
+  -moz-box-pack: start;
+  -webkit-box-pack: start;
+  -ms-box-pack: start;
+  box-pack: start;}
+  
+  .bottom-left {
+    left: 1%;
+    bottom: 20%; }
+  
+  .top-left {
+    left: 1%;
+    top: 20%; }
+  
+  .bottom-right {
+    right: 1%;
+    bottom: 20%; }
+  
+  .top-right {
+    right: 1%;
+    top: 20%; }
+  
+  .center-up {
+    right: 50%;
+    top: 1%;
+  }
+  
+  .center-down {
+    right: 50%;
+    bottom: 1%;
+  }
+  .canvas-image .canvas-caption p {
+    text-align: center;
+    padding-top: 0;
+    padding: 0;
+    -moz-transform: none;
+    -webkit-transform: none;
+    -o-transform: none;
+    -ms-transform: none;
+    transform: none;
+    display: inline;
+    position: absolute;
+    background-color: rgba(0, 0, 0, 0.7);
+    font-weight: bold;
+    font-size: 58px;
+    -webkit-box-shadow: 2px 2px 2px #000;
+    -moz-box-shadow: 2px 2px 2px #000;
+    box-shadow: 2px 2px 2px #000;
+    padding: 1rem;
+    color: white; }
+  kbd.keyseq { color: #555555; }
+  kbd:not(.keyseq) {
+    display: inline-block;
+    color: #222222;
+    font-size: 0.7em;
+    line-height: 1.4;
+    background-color: #F7F7F7;
+    border: 1px solid #ccc;
+    -webkit-border-radius: 3px;
+    border-radius: 3px;
+    -webkit-box-shadow: 0 1px 0 rgba(0, 0, 0, 0.2), 0 0 0 2px white inset;
+    box-shadow: 0 1px 0 rgba(0, 0, 0, 0.2), 0 0 0 2px white inset;
+    margin: -0.15em 0.15em 0 0.15em;
+    padding: 0.2em 0.6em;
+    vertical-align: middle;
+    white-space: nowrap;
+  }
+  kbd kbd:first-child { margin-left: 0; }
+  kbd kbd:last-child { margin-right: 0; }
+</style>
+</body>
+</html>
