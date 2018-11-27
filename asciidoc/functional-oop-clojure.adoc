@@ -20,6 +20,13 @@
 <section class="slide">
         <div class="text-centered">
             <div class="centered" style="font-size:1.9em;">
+	    <br>
+            <div> Polymorphism à la Clojure
+    <br>
+    <span style="font-style:italic;m">Functional Object Oriented Programming</span>
+    <br>
+    is not an Oxymoron
+    </div>
               <div class="left" style="width:50%;">
 	      <img src='https://chart.googleapis.com/chart?cht=qr&chl=http%3A%2F%2Fslides.klipse.tech%2Fasciidoc%2Ffunctional-oop-clojure.html&chs=300x300' alt='qr code'></img>
 	      </div>
@@ -62,24 +69,22 @@
 == The Agenda
 
 - Definitions and Rhetorics
-- Object oriented with maps
-- Object oriented with multimethods
-- Object oriented with records
-- Functions as protocols
+- Object Oriented Programming with functions and maps
+- Object Oriented Programming with records and protocols
 - Conclusion
+
+https://clojure.org/reference/datatypes#_deftype_and_defrecord
 
 == Who am I?
 [.left]
 --
 - Yehonathan Sharvit https://twitter.com/viebel[@viebel], viebel@gmail.com, https://www.linkedin.com/in/viebel/[LinkedIn]
-- A mathematician
-- A coder
 - A pragmatic theorist
-- Author of https://github.com/viebel/klipse[Klipse] - a simple client-side code evaluator pluggable on any web page 
-- A Web consultant: Full-Stack, clojure, clojurescript, javascript, node.js, react
-- Blogger about functional programming at http://blog.klipse.tech/[blog.klipse.tech]
+- Author of https://github.com/viebel/klipse[Klipse]
+- A Web consultant: Full-Stack, clojure, clojurescript, node.js, react.js
+- Blogger about Functional Programming (http://blog.klipse.tech/[blog.klipse.tech])
 - Third year in a row at ClojureX
-- Writing a book with Manning "Get Programming with Clojure"
+- Writing a book with Manning "Get Programming with Clojure" - MEAP launch today
 --
 
 image::images/me.jpg[me]
@@ -87,8 +92,10 @@ image::images/me.jpg[me]
 
 == Definitions and Rhetorics - Oxymoron
 
-[quote]
-Oxymoron: Figure of speech containing words that seem to contradict each other. 
+
+*Oxymoron*:
+
+Figure of speech containing words that seem to contradict each other. 
 
 [%step]
 --
@@ -104,31 +111,49 @@ Examples:
 --
 Purpose:
 
-- Create a little bit of drama for the reader.
-- Make a person stop and think, whether that's to laugh or to wonder.
+- Create a little bit of *drama* for the reader.
+- Make a person stop and think, whether that's to *laugh* or to *wonder*.
 --
 
 [%step]
-But...
+But it doesn't always work, because...
 
 == Definitions and Rhetorics - Oxymoron
 
 image::images/stone.jpg[stone]
 
-== Definitions and Rhetorics - Object Oriented Programming
+== Definitions and Rhetorics - OOP vs. FP
 
-[quote]
-OOP: A programming paradigm based on the concept of *objects*, which  contain *data*, in the form of fields; and *code*, in the form of procedures, often known as methods.
-Methods can access and often modify the data fields of the object with which they are associated (objects have a notion of _this_ or _self_).
+[%step]
+--
+*Object Oriented Programming*:
+A programming paradigm based on the concept of *objects*, which  contain:
 
-== Definitions and Rhetorics - Functional Programming
+- *data*, in the form of fields
+- *code*, in the form of procedures, often known as methods.
 
-[quote]
-FP: A programming paradigm based on the concept of *functions*, which receive *data* as arguments and return data.
-Functions avoid changing state and mutating data.
+Methods can access and [yellow-background]#often modify the data fields of the object# with which they are associated (objects have a notion of *this* or *self*).
+--
 
 
-== Definitons and Rhetorics - summary
+[%step]
+--
+++++
+<br>
+<br>
+++++
+
+*Functional Programming*:
+A programming paradigm based on the concept of *functions*, which receive *data* as arguments and return data.
+A *function*:
+
+- receives *data* and returns *data*
+- [yellow-background]#avoids mutating *data*#
+
+--
+
+
+== Definitons and Rhetorics - Summary
 
 [quote]
 Is "functional object oriented programming" an oxymoron?
@@ -136,9 +161,10 @@ Is "functional object oriented programming" an oxymoron?
 
 == Definitions and Rhetorics - OOP redefined
 
-[quote]
+[%step]
 --
-OOP: A programming paradigm in which the concepts of *procedures* and *tasks* are replaced by the concepts of *objects* and *messages*.
+*Object Oriented Programming*:
+A programming paradigm based on the concepts of *objects* and *messages*.
 
 An *object* includes:
 
@@ -148,23 +174,170 @@ An *object* includes:
 A *message* specifies one of the operations, but unlike a procedure, does not describe how the operation should be carried out.
 --
 
+
+
+[%step]
+--
+++++
+<br>
+<br>
+++++
+
+*Functional Programming*:
+A programming paradigm based on the concept of *functions*, which receive *data* as arguments and return data.
+Functions avoid changing state and mutating data.
+--
+
+
+
+
 == Object oriented programming with maps
 
 [%step]
 --
+What is a person?
+--
 
-A "constructor"...
+[%step]
+. A person has a firstname
+. A person has a lastname
+. A person drinks
+
+== OOP with functions and maps
+
+A "constructor" that returns a map with *data* and *operations*
+[%step]
+--
 ++++
 <br>
 ++++
+[source.clj]
+----
+(defn new-person [firstname lastname]
+  {:data {:firstname firstname
+          :lastname lastname
+          :drinks []}
+   :ops {:fullname (fn [this] "(fullname) will be implemented soon")
+         :my-drinks (fn [this] "(my-drinks) will be implemented soon")
+         :drink (fn [this a-drink] (str "(drink " a-drink "will be implemented soon"))}})
+----
+--
+
+[%step]
+--
+At this stage, we can do two things:
+
+. inspect the *data*
+. send a *message*
+--
+
+[%step]
+--
+Inspecting the *data* is straightforward:
+[source.clj]
+----
+(:data (new-person "dave" "smith"))
+----
+--
+
+[%step]
+--
+To send a *message*, we need a utility function
+[source.clj]
+----
+(defn send-msg [obj op-name & args]
+  (let [op (get-in obj [:ops op-name])]
+    (if op
+      (apply op obj args)
+      (str "no operation named: " op-name))))
+----
+--
+
+[%step]
+--
+[source.clj]
+----
+(send-msg (new-person "dave" "smith") :fullname)
+----
+--
+
+== OOP with function and maps - Operations
+
+In order to implement *:fullname*, we need to:
+[%step]
+
+. Access _firstname_ and _lastname_ data fields
+. Combine them
+
+[%step]
+--
+First, the combinator
 
 [source.clj]
 ----
-(defn new-person [name age]
-  {:data {:name name
-          :age age}
-   :ops {:age (fn [this] (get-in this [:data :age]))
-         :name (fn [this] (get-in this [:data :name]))}})
+(require '[clojure.string :refer [capitalize]])
+
+(defn my-fullname [firstname lastname]
+  (str (capitalize firstname) " " (capitalize lastname)))
+----
+--
+
+[%step]
+--
+Now, the accessor
+[source.clj]
+----
+(defn new-person-1 [firstname lastname]
+  {:data {:firstname firstname
+          :lastname lastname
+          :drinks []}
+   :ops {:fullname (fn [this]
+                     (my-fullname (get-in this [:data :firstname])
+                               (get-in this [:data :lastname])))
+         :my-drinks (fn [this] "(my-drinks) will be implemented soon")
+         :drink (fn [this a-drink] (str "(drink " a-drink "will be implemented soon"))}})
+----
+--
+
+[%step]
+--
+Let's send a *:fullname* message to a person
+[source.clj]
+----
+(send-msg (new-person-1 "dave" "smith") :fullname)
+----
+--
+
+
+== More
+[source.clj]
+----
+(defn new-doctor-compose [firstname lastname]
+  {:person (new-person firstname lastname)
+   :data nil
+   :ops {:drinks (fn [this] (send-msg (:person this) :drinks))
+         :drink (fn [this drink] (update this :person #(send-msg % :eat-drink drink)))
+         :fullname (fn [this] (str "Dr. " (send-msg (:person this) :fullname)))}})
+----
+
+[source.clj]
+----
+(defn fullname [firstname lastname]
+  (str (capitalize firstname) " " (capitalize lastname)))
+
+(defn new-person [firstname lastname]
+  {:data {:firstname firstname
+          :lastname lastname
+          :drinks []}
+   :ops {:fullname (fn [this]
+                     (fullname (get-in this [:data :firstname])
+                               (get-in this [:data :lastname])))
+         :drinks (fn [this] (get-in this [:data :drinks]))
+         :drink (fn [this drink]
+                  (update-in this [:data :drinks] #(conj % drink)))
+         }})
+
+(send-msg (new-person "dave" "smith") :fullname)
 ----
 --
 [%step]
@@ -178,17 +351,14 @@ How are we going to send a *message* to an *object*?
 <br>
 <br>
 ++++
---
 
 [%step]
 --
 [source.clj]
 ----
-(defn send-msg [obj name]
-  (let [op (get-in obj [:ops name])]
-    (op obj)))
 ----
 --
+
 
 [%step]
 --
@@ -207,10 +377,69 @@ Let's create an *object* and send it *messages*
 --
 [source.clj]
 ----
-(def a (new-person "Dave" 42))
-(send-msg a :age) 
+(let [dave (new-person "Dave" 42)]
+  (send-msg dave :age))
 ----
 --
+
+== OOP with maps - Messages with arguments
+
+
+[%step]
+--
+[source.clj]
+----
+(defn new-person [name age]
+  {:data {:name name
+          :age age}
+   :ops {:age (fn [this] (get-in this [:data :age]))
+         :char-in-name (fn [this n] (nth (get-in this [:data :name]) n))
+         :name (fn [this] (get-in this [:data :name]))}}) 
+----
+--
+
+[%step]
+--
+++++
+<br>
+<br>
+++++
+How are we going to send a *message* with _arguments_ to an *object*?
+--
+
+[%step]
+--
+With _apply_ and _&_ of course!
+
+[source.clj]
+----
+----
+--
+
+
+[%step]
+--
+++++
+<br>
+<br>
+++++
+Let's create an *object* and send it *messages* with arguments
+++++
+<br>
+<br>
+++++
+--
+
+[%step]
+--
+[source.clj]
+----
+(let [dave (new-person "Dave" 42)]
+  (send-msg dave :char-in-name 0))
+----
+--
+
+
 
 == OOP with maps
 
@@ -260,8 +489,57 @@ What about mutations?
 
 [%step]
 --
-image::images/mutation.png[mutation, width=1000]
+image::images/mutation_is_bad.jpg[mutation, width=1000]
 --
+
+== OOP with maps - "mutations" first attemp
+
+[%step]
+--
+Clojure is powerful: let's use atoms
+++++
+<br>
+<br>
+++++
+--
+
+[%step]
+--
+[source.clj]
+----
+(defn new-person-with-atoms [name age]
+  {:data (atom {:name name
+          :age age})
+   :ops {:age (fn [this] (:age @(:data this)))
+         :age! (fn [this age] 
+                 (swap! (:data this) #(assoc % :age age))
+                 this)
+         :name (fn [this] (get-in this [:data :name]))}})
+----
+--
+
+[%step]
+--
+++++
+<br>
+<br>
+++++
+Let's create an *object* and "mutate" it:
+
+[source.clj]
+----
+(let [dave (new-person-with-atoms "Dave" 42)]
+  (send-msg dave :age! 43)
+  (display dave))
+----
+++++
+<br>
+<br>
+++++
+Victory? 
+++++
+--
+
 
 == OOP with maps - "mutations"
 
@@ -293,34 +571,13 @@ We have *assoc* and *assoc-in*!
 <br>
 <br>
 ++++
-How are we going to send a *message* with _arguments_ to an *object*?
---
-
-[%step]
---
-With _apply_ and _&_ of course!
-
-[source.clj]
-----
-(defn send-msg [obj name & args]
-  (let [op (get-in obj [:ops name])]
-    (apply op obj args)))
-----
---
-
-[%step]
---
-++++
-<br>
-<br>
-++++
 Let's create an *object* and "mutate" it:
 
 [source.clj]
 ----
-(def a (new-person-with-mutations "Dave" 42))
-(send-msg a :age! 43)
-(send-msg a :age)
+(let [dave (new-person-with-mutations "Dave" 42)]
+  (send-msg dave :age! 43)
+  (display dave))
 ----
 ++++
 <br>
@@ -355,9 +612,9 @@ In Clojure, we never mutate an object, we create a new version of it!
 --
 [source.clj]
 ----
-(def aa (new-person-with-mutations "Dave" 42))
-(def bb (send-msg a :age! 43))
-(display bb)
+(let [dave-42 (new-person-with-mutations "Dave" 42)
+      dave-43 (send-msg a :age! 43)]
+  (display dave-43))
 ----
 --
 
@@ -397,15 +654,15 @@ When we send a message, we don't know what procedure is going to be called
 The doctor:
 [source.clj]
 ----
-(def dd (new-doctor "Dave" 42))
-(send-msg dd :name)
+(let [dr-dave (new-doctor "Dave" 42)]
+  (send-msg dr-dave :name))
 ----
 
 The person:
 [source.clj]
 ----
-(def ee (new-person-with-mutations "Dave" 42))
-(send-msg ee :name)
+(let [dave (new-person-with-mutations "Dave" 42)]
+      (send-msg dave :name))
 ----
 ++++
 <br>
@@ -473,17 +730,9 @@ The doctor inherits *:age* and *:age!* and it overrides *:name*.
 Let's test it:
 [source.clj]
 ----
-(def ddd (new-doctor-inherit "Dave" 42))
-(display ddd)
-----
-++++
-<br>
-<br>
-++++
-[source.clj]
-----
-(def eee (send-msg ddd :age! 88))
-(display eee)
+(let [dr-dave-42 (new-doctor-inherit "Dave" 42)
+      dr-dave-88 (send-msg dr-dave-42 :age! 88)]
+  (display dr-dave-88))
 ----
 ++++
 <br>
@@ -522,8 +771,8 @@ A Doctor _isa_ Person or a Doctor _hasa_ Person?
 Let's test it:
 [source.clj]
 ----
-(def dddd (new-doctor-compose "Dave" 42))
-(display dddd)
+(let [dr-dave (new-doctor-compose "Dave" 42)]
+  (display dr-dave))
 ----
 --
 [%step]
@@ -532,11 +781,12 @@ Let's test it:
 <br>
 <br>
 ++++
-Let's change the age of the doctor.
+Let's change the age of the doctor:
 [source.clj]
 ----
-(def eeee (send-msg dddd :age! 88))
-(display eeee)
+(let [dr-dave-42 (new-doctor-compose "Dave" 42)
+      dr-dave-88 (send-msg dr-dave-42 :age! 88)]
+  (display dr-dave-88))
 ----
 ++++
 <br>
@@ -551,12 +801,342 @@ It works but it becomes a bit complicated
 
 
 
+== Definitions and Rhetorics - Functional OOP
+
+[%step]
+--
+*Functional Object Oriented Programming*:
+A programming paradigm based on the concepts of *functions*, *objects* and *messages*.
+
+
+A *function*:
+
+- receives *data* and returns *data*
+- avoids mutating *data*
+
+An *object* includes:
+
+- a package of *data*
+- a description of the operations that can be performed on that *data*
+- [yellow-background]#an operation avoids mutating data: it eithers returns *data* or a *new version* of the object#
+
+A *message* specifies one of the operations without describing how the operation should be carried out.
+--
+
+== Functional OOP with Records
+
+First, we define a protocol and a display function:
+
+[%step]
+--
+++++
+<br>
+++++
+[source.clj]
+----
+(defprotocol IPerson
+  (age [this])
+  (age! [this age])
+  (fullname [this]))
+
+(defn display-person [person]
+  (str (fullname person) " is " (age person)))
+----
+--
+
+[%step]
+--
+++++
+<br>
+<br>
+++++
+Then, a record that implements the protocol:
+[source.clj]
+----
+(defrecord Person [firstname lastname age]
+  IPerson
+  (age [this] age)
+  (age! [this new-age] (assoc this :age new-age))
+  (fullname [this] (str firstname " " lastname)))
+----
+--
+
+[%step]
+--
+++++
+<br>
+<br>
+++++
+And a constructor
+[source.clj]
+----
+(defn create-person [firstname lastname age]
+  (Person. firstname lastname age))
+----
+--
+
+[%step]
+--
+++++
+<br>
+<br>
+++++
+Let's create and display a person
+[source.clj]
+----
+(display-person  (create-person "Dave" "Smith" 42)) 
+----
+--
+
+== Functional OOP with Records - why constructors
+
+[%step]
+--
+++++
+<br>
+<br>
+++++
+Do we really need a constructor?
+--
+
+[%step]
+--
+image::images/indirection.jpg[mutation, width=1000]
+--
+
+
+== Functional OOP in Clojure - Records are wacky maps
+
+[%step]
+--
+++++
+<br>
+++++
+
+Records look like maps
+
+[source.clj]
+----
+(Person. "Dave" "Smith" 42)
+----
+++++
+--
+
+[%step]
+--
+++++
+<br>
+++++
+They have keys
+
+[source.clj]
+----
+(keys (Person. "Dave" "Smith" 42))
+----
+++++
+--
+
+[%step]
+--
+++++
+<br>
+++++
+keys are functions
+
+[source.clj]
+----
+(:age (Person. "Dave" "Smith" 42))
+----
+++++
+--
+
+[%step]
+--
+++++
+<br>
+++++
+
+[red]#But records are not functions#
+
+[source.clj]
+----
+(keys (Person. "Dave" "Smith" 42))
+----
+++++
+--
+
+[%step]
+--
+++++
+<br>
+++++
+You can assoc them
+
+[source.clj]
+----
+(assoc (Person. "Dave" "Smith" 42) :age 88)
+----
+++++
+--
+
+[%step]
+--
+++++
+<br>
+++++
+[red]#But be careful when you dissoc them#
+
+[source.clj]
+----
+(fullname (dissoc (Person. "Dave" "Smith" 42) :age))
+----
+++++
+--
+
+== Functional OOP with Records - why setters and getters?
+
+[%step]
+--
+++++
+<br>
+++++
+Do we really need *age* and *age!*?
+--
+
+[%step]
+--
+image::images/indirection.jpg[mutation, width=1000]
+--
+
+
+== Functional OOP with Records - composition
+
+[%step]
+--
+[source.clj]
+----
+(defrecord Doctor [person]
+  IPerson
+  (age [this] (age person))
+  (age! [this new-age] (update this :person #(age! % new-age)))
+  (fullname [this] (str "Dr. " (:firstname person) " " (:lastname person))))
+----
+--
+
+[%step]
+--
+++++
+<br>
+<br>
+++++
+[source.clj]
+----
+(defn create-doctor [firstname lastname age]
+  (Doctor. (Person. firstname lastname age)))
+----
+--
+
+
+[%step]
+--
+++++
+<br>
+<br>
+++++
+[source.clj]
+----
+(display-person (age! (create-doctor "Dave" "Smith" 42) 88))  
+----
+--
+
+== One last thing
+
+[%step]
+--
+In Clojure, everything can behave like a function
+--
+
+[%step]
+--
+[source.clj]
+----
+(extend-type Person
+  IFn
+  (-invoke
+    ([this key]
+     (get this key))))
+----
+--
+
+[%step]
+--
+[source.clj]
+----
+((create-person "Dave" "Smith" 42) :age)
+----
+--
+
+[%step]
+--
+Functions and maps emulate OOP
+Functions are protocols
+Circle diagram 
+--
+
+== Conclusion
+
+What is the essence of Clojure?
+
+[%step]
+
+- LISP syntax ?
+- Functional programming ?
+- Immutability ?
+
+
 == Questions
 
 image::images/questions.jpg[questions]
 
 
+== Maybe
 
+[source.clj]
+----
+
+(defn new-person-maybe [{:keys [firstname lastname languages fruits]
+                   :as data
+                   :or {languages #{} fruits []}}]
+  {:data (assoc data :languages languages :fruits fruits)
+   :ops {:full-name (fn [this] (str (capitalize firstname) " " (capitalize lastname)))
+         :add-language (fn [this language] 
+                         (update-in this [:data :languages] #(conj % language)))
+         :eat-fruit (fn [this fruit] 
+                         (update-in this [:data :fruits] #(conj % fruit)))
+                       }}) 
+
+
+
+(-> (new-person-maybe {:firstname "dave" :lastname "smith"})
+    (send-msg :add-language "fr")
+    (send-msg :add-language "en") 
+    (send-msg :eat-fruit "orange")
+    (send-msg :eat-fruit "orange")
+    (send-msg :eat-fruit "banana")
+
+    :data
+    )      
+----
+++++
+<style>
+.yellow-background {
+background: yellow;
+}
+.red {
+color: red;
+}
+</style>
+++++
 
 ++++
 <style>
