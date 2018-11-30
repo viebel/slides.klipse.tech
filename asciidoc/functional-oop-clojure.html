@@ -98,7 +98,8 @@
 <li>A pragmatic theorist</li>
 <li>Author of <a href="https://github.com/viebel/klipse">Klipse</a></li>
 <li>A Web consultant: Full-Stack, clojure, clojurescript, node.js, react.js</li>
-<li>Blogger about Functional Programming (<a href="http://blog.klipse.tech/">blog.klipse.tech</a>)</li>
+<li>A disciple of the Bible</li>
+<li>A Blogger about Functional Programming (<a href="http://blog.klipse.tech/">blog.klipse.tech</a>)</li>
 <li>Third year in a row at ClojureX</li>
 <li>Writing a book with Manning "Get Programming with Clojure" - MEAP launch today</li>
 </ul>
@@ -214,26 +215,64 @@ Functions avoid changing state and mutating data.</p></div>
 </div>
 </div>
 </section>
+<section class="slide" id="_functional_oop_the_5_commandments">
+<h2>Functional OOP - The 5 commandments</h2>
+<div class="openblock bible">
+<div class="content">
+<div class="olist arabic">
+<ol class="arabic">
+<li>
+Thou Shalt Not Encapsulate Information
+</li>
+<li>
+Thou Shalt Not Mutate an Object
+</li>
+<li>
+Let Thy Friend Extend a Class as Thyself
+</li>
+<li>
+Thou Shalt Only Program to an Interface
+</li>
+<li>
+Thou Shalt Not Derive from a Concrete Class
+</li>
+</ol>
+</div>
+</div>
+</div>
+</section>
+<section class="slide" id="_application_of_the_commandements">
+<h2>Application of the commandements</h2>
+<div class="openblock slide">
+<div class="content">
+<div class="paragraph"><p><span class="bible">Then God said, “Let us make <strong>mankind</strong> in our image, in our likeness, so that they may follow my <strong>commandements</strong> to modelize the fish in the sea and the birds in the sky, over the livestock and all the wild animals, and over all the creatures that move along the ground.”</span> (Genesis, Chapter 1 - revised)</p></div>
+</div>
+</div>
+</section>
 <section class="slide" id="_object_oriented_programming_with_maps">
 <h2>Object oriented programming with maps</h2>
 <div class="openblock slide">
 <div class="content">
-<div class="paragraph"><p>What is a person?</p></div>
+<div class="paragraph"><p>What is the essence of a human?</p></div>
 </div>
 </div>
 <div class="olist arabic">
 <ol class="arabic">
 <li class="slide">
-A person has a firstname
+A human has a name
 </li>
 <li class="slide">
-A person has a lastname
+A human has an appellation - how other humans refer to him
 </li>
 <li class="slide">
-A person drinks
+A human can drink
+</li>
+<li class="slide">
+When a human drinks too much, he is drunk
 </li>
 </ol>
 </div>
+<div class="paragraph"><p>add image of drunk biblical human</p></div>
 </section>
 <section class="slide" id="_oop_with_functions_and_maps">
 <h2>OOP with functions and maps</h2>
@@ -243,45 +282,39 @@ A person drinks
 <br>
 <div class="listingblock clj">
 <div class="content">
-<pre class="highlight"><code>(defn new-person [firstname lastname]
-  {:data {:firstname firstname
-          :lastname lastname
-          :drinks []}
-   :ops {:fullname (fn [this] "(fullname) will be implemented soon")
-         :my-drinks (fn [this] "(my-drinks) will be implemented soon")
-         :drink (fn [this a-drink] (str "(drink " a-drink "will be implemented soon"))}})</code></pre>
+<pre class="highlight"><code>(defn new-human-0 [name]
+  {:data {:name name
+          :drinks 0}
+   :ops {:appellation (fn [this] "(:appellation will be implemented soon")
+         :take-some-drinks (fn [this how-many] (str "(:take-some-drinks " how-many ") will be implemented soon"))
+         :drunk? (fn [this] "(:drunk? will be implemented soon")}})</code></pre>
 </div>
 </div>
 </div>
 </div>
 <div class="openblock slide">
 <div class="content">
-<div class="paragraph"><p>At this stage, we can do two things:</p></div>
-<div class="olist arabic">
-<ol class="arabic">
-<li>
-inspect the <strong>data</strong>
-</li>
-<li>
-send a <strong>message</strong>
-</li>
-</ol>
-</div>
-</div>
-</div>
-<div class="openblock slide">
-<div class="content">
-<div class="paragraph"><p>Inspecting the <strong>data</strong> is straightforward:</p></div>
+<div class="paragraph"><p>How does the first human being look like?</p></div>
 <div class="listingblock clj">
 <div class="content">
-<pre class="highlight"><code>(:data (new-person "dave" "smith"))</code></pre>
+<pre class="highlight"><code>(new-human-0 "Adam")</code></pre>
 </div>
 </div>
 </div>
 </div>
 <div class="openblock slide">
 <div class="content">
-<div class="paragraph"><p>To send a <strong>message</strong>, we need a utility function</p></div>
+<div class="paragraph"><p><strong>Data</strong> inspection is trivial</p></div>
+<div class="listingblock clj">
+<div class="content">
+<pre class="highlight"><code>(:data (new-human-0 "Adam"))</code></pre>
+</div>
+</div>
+</div>
+</div>
+<div class="openblock slide">
+<div class="content">
+<div class="paragraph"><p>To send a <strong>message</strong>, we retrieve the function from the <strong>:ops</strong> map and call it with the <em>object</em> and the <em>args</em>.</p></div>
 <div class="listingblock clj">
 <div class="content">
 <pre class="highlight"><code>(defn send-msg [obj op-name &amp; args]
@@ -295,206 +328,52 @@ send a <strong>message</strong>
 </div>
 <div class="openblock slide">
 <div class="content">
+<div class="paragraph"><p>Let&#8217;s ask Adam to take a drink</p></div>
+</div>
+</div>
+<div class="openblock slide">
+<div class="content">
 <div class="listingblock clj">
 <div class="content">
-<pre class="highlight"><code>(send-msg (new-person "dave" "smith") :fullname)</code></pre>
+<pre class="highlight"><code>(send-msg (new-human-0 "Adam") :take-some-drinks 1)</code></pre>
 </div>
 </div>
 </div>
 </div>
 </section>
-<section class="slide" id="_oop_with_function_and_maps_operations">
-<h2>OOP with function and maps - Operations</h2>
-<div class="paragraph"><p>In order to implement <strong>:fullname</strong>, we need to:</p></div>
-<div class="olist arabic">
-<ol class="arabic">
-<li class="slide">
-Access <em>firstname</em> and <em>lastname</em> data fields
-</li>
-<li class="slide">
-Combine them
-</li>
-</ol>
-</div>
+<section class="slide" id="_oop_with_function_and_maps_queries">
+<h2>OOP with function and maps - Queries</h2>
 <div class="openblock slide">
 <div class="content">
-<div class="paragraph"><p>First, the combinator</p></div>
+<div class="paragraph"><p>Queries are easy</p></div>
 <div class="listingblock clj">
 <div class="content">
-<pre class="highlight"><code>(require '[clojure.string :refer [capitalize]])
-
-(defn my-fullname [firstname lastname]
-  (str (capitalize firstname) " " (capitalize lastname)))</code></pre>
-</div>
-</div>
-</div>
-</div>
-<div class="openblock slide">
-<div class="content">
-<div class="paragraph"><p>Now, the accessor</p></div>
-<div class="listingblock clj">
-<div class="content">
-<pre class="highlight"><code>(defn new-person-1 [firstname lastname]
-  {:data {:firstname firstname
-          :lastname lastname
-          :drinks []}
-   :ops {:fullname (fn [this]
-                     (my-fullname (get-in this [:data :firstname])
-                               (get-in this [:data :lastname])))
-         :my-drinks (fn [this] "(my-drinks) will be implemented soon")
-         :drink (fn [this a-drink] (str "(drink " a-drink "will be implemented soon"))}})</code></pre>
-</div>
-</div>
-</div>
-</div>
-<div class="openblock slide">
-<div class="content">
-<div class="paragraph"><p>Let&#8217;s send a <strong>:fullname</strong> message to a person</p></div>
-<div class="listingblock clj">
-<div class="content">
-<pre class="highlight"><code>(send-msg (new-person-1 "dave" "smith") :fullname)</code></pre>
-</div>
-</div>
-</div>
-</div>
-</section>
-<section class="slide" id="_more">
-<h2>More</h2>
-<div class="listingblock clj">
-<div class="content">
-<pre class="highlight"><code>(defn new-doctor-compose [firstname lastname]
-  {:person (new-person firstname lastname)
-   :data nil
-   :ops {:drinks (fn [this] (send-msg (:person this) :drinks))
-         :drink (fn [this drink] (update this :person #(send-msg % :eat-drink drink)))
-         :fullname (fn [this] (str "Dr. " (send-msg (:person this) :fullname)))}})</code></pre>
-</div>
-</div>
-<div class="listingblock clj">
-<div class="content">
-<pre class="highlight"><code>(defn fullname [firstname lastname]
-  (str (capitalize firstname) " " (capitalize lastname)))
-
-(defn new-person [firstname lastname]
-  {:data {:firstname firstname
-          :lastname lastname
-          :drinks []}
-   :ops {:fullname (fn [this]
-                     (fullname (get-in this [:data :firstname])
-                               (get-in this [:data :lastname])))
-         :drinks (fn [this] (get-in this [:data :drinks]))
-         :drink (fn [this drink]
-                  (update-in this [:data :drinks] #(conj % drink)))
-         }})
-
-(send-msg (new-person "dave" "smith") :fullname)</code></pre>
-</div>
-</div>
-<div class="openblock">
-<div class="content">
-
-</div>
-</div>
-<br>
-<br>
-<div class="paragraph"><p>How are we going to send a <strong>message</strong> to an <strong>object</strong>?</p></div>
-<br>
-<br>
-<div class="openblock slide">
-<div class="content">
-<div class="listingblock clj">
-<div class="content">
-<pre class="highlight"><code></code></pre>
-</div>
-</div>
-</div>
-</div>
-<div class="openblock slide">
-<div class="content">
-<br>
-<br>
-<div class="paragraph"><p>Let&#8217;s create an <strong>object</strong> and send it <strong>messages</strong></p></div>
-<br>
-<br>
-</div>
-</div>
-<div class="openblock slide">
-<div class="content">
-<div class="listingblock clj">
-<div class="content">
-<pre class="highlight"><code>(let [dave (new-person "Dave" 42)]
-  (send-msg dave :age))</code></pre>
-</div>
-</div>
-</div>
-</div>
-</section>
-<section class="slide" id="_oop_with_maps_messages_with_arguments">
-<h2>OOP with maps - Messages with arguments</h2>
-<div class="openblock slide">
-<div class="content">
-<div class="listingblock clj">
-<div class="content">
-<pre class="highlight"><code>(defn new-person [name age]
+<pre class="highlight"><code>(defn new-human-1 [name]
   {:data {:name name
-          :age age}
-   :ops {:age (fn [this] (get-in this [:data :age]))
-         :char-in-name (fn [this n] (nth (get-in this [:data :name]) n))
-         :name (fn [this] (get-in this [:data :name]))}})</code></pre>
+          :drinks 0}
+   :ops {:appellation (fn [this] (get-in this [:data :name]))
+         :take-some-drinks (fn [this how-many] (str "(:take-some-drinks " how-many ") will be implemented soon"))
+         :drunk? (fn [this] (&gt; (get-in this [:data :drinks]) 3))}})</code></pre>
 </div>
 </div>
 </div>
 </div>
 <div class="openblock slide">
 <div class="content">
-<br>
-<br>
-<div class="paragraph"><p>How are we going to send a <strong>message</strong> with <em>arguments</em> to an <strong>object</strong>?</p></div>
-</div>
-</div>
-<div class="openblock slide">
-<div class="content">
-<div class="paragraph"><p>With <em>apply</em> and <em>&amp;</em> of course!</p></div>
+<div class="paragraph"><p>Let&#8217;s send a <strong>:appellation</strong> message to a human</p></div>
 <div class="listingblock clj">
 <div class="content">
-<pre class="highlight"><code></code></pre>
+<pre class="highlight"><code>(send-msg (new-human-1 "Adam") :appellation)</code></pre>
 </div>
 </div>
 </div>
 </div>
 <div class="openblock slide">
 <div class="content">
-<br>
-<br>
-<div class="paragraph"><p>Let&#8217;s create an <strong>object</strong> and send it <strong>messages</strong> with arguments</p></div>
-<br>
-<br>
-</div>
-</div>
-<div class="openblock slide">
-<div class="content">
+<div class="paragraph"><p>We can still inspect the data</p></div>
 <div class="listingblock clj">
 <div class="content">
-<pre class="highlight"><code>(let [dave (new-person "Dave" 42)]
-  (send-msg dave :char-in-name 0))</code></pre>
-</div>
-</div>
-</div>
-</div>
-</section>
-<section class="slide" id="_oop_with_maps">
-<h2>OOP with maps</h2>
-<div class="openblock slide">
-<div class="content">
-<div class="paragraph"><p>We can create new functionalities outside of the objects.</p></div>
-</div>
-</div>
-<div class="openblock slide">
-<div class="content">
-<div class="listingblock clj">
-<div class="content">
-<pre class="highlight"><code>(defn display [someone]
-  (str (send-msg someone :name) " is "(send-msg someone :age) "."))</code></pre>
+<pre class="highlight"><code>(inspect-data (new-human-1 "Adam") :name)</code></pre>
 </div>
 </div>
 </div>
@@ -503,20 +382,12 @@ Combine them
 <div class="content">
 <br>
 <br>
-<div class="paragraph"><p>We call <strong>display</strong> like a regular function.<br>
-No need to send a message.<br>
-Welcome to <strong>Functional OOP</strong>!</p></div>
-<div class="listingblock clj">
-<div class="content">
-<pre class="highlight"><code>(def j (new-person "Jennifer" 22))
-(display j)</code></pre>
-</div>
-</div>
+<div class="paragraph"><p><span class="meditation">Why do we need both <strong>:appellation</strong> operation and <strong>:name</strong> field?</span></p></div>
 </div>
 </div>
 </section>
 <section class="slide" id="_oop_with_maps_mutations">
-<h2>OOP with maps - mutations?</h2>
+<h2>OOP with maps - mutations</h2>
 <div class="openblock slide">
 <div class="content">
 <div class="paragraph"><p>What about mutations?</p></div>
@@ -547,55 +418,14 @@ Welcome to <strong>Functional OOP</strong>!</p></div>
 <div class="content">
 <div class="listingblock clj">
 <div class="content">
-<pre class="highlight"><code>(defn new-person-with-atoms [name age]
-  {:data (atom {:name name
-          :age age})
-   :ops {:age (fn [this] (:age @(:data this)))
-         :age! (fn [this age]
-                 (swap! (:data this) #(assoc % :age age))
-                 this)
-         :name (fn [this] (get-in this [:data :name]))}})</code></pre>
-</div>
-</div>
-</div>
-</div>
-<div class="openblock slide">
-<div class="content">
-<br>
-<br>
-<div class="paragraph"><p>Let&#8217;s create an <strong>object</strong> and "mutate" it:</p></div>
-<div class="listingblock clj">
-<div class="content">
-<pre class="highlight"><code>(let [dave (new-person-with-atoms "Dave" 42)]
-  (send-msg dave :age! 43)
-  (display dave))</code></pre>
-</div>
-</div>
-<br>
-<br>
-<div class="paragraph"><p>Victory?</p></div>
-</div>
-</div>
-</section>
-<section class="slide" id="_oop_with_maps_mutations_2">
-<h2>OOP with maps - "mutations"</h2>
-<div class="openblock slide">
-<div class="content">
-<div class="paragraph"><p>We have <strong>assoc</strong> and <strong>assoc-in</strong>!</p></div>
-<br>
-<br>
-</div>
-</div>
-<div class="openblock slide">
-<div class="content">
-<div class="listingblock clj">
-<div class="content">
-<pre class="highlight"><code>(defn new-person-with-mutations [name age]
+<pre class="highlight"><code>(defn new-human-with-atoms [name]
   {:data {:name name
-          :age age}
-   :ops {:age (fn [this] (get-in this [:data :age]))
-         :age! (fn [this age] (assoc-in this [:data :age] age))
-         :name (fn [this] (get-in this [:data :name]))}})</code></pre>
+          :drinks (atom 0)}
+   :ops {:appellation (fn [this] (get-in this [:data :name]))
+         :take-some-drinks (fn [this how-many]
+                             (swap! (get-in this [:data :drinks]) (partial + how-many))
+                             this)
+         :drunk? (fn [this] (&gt; @(get-in this [:data :drinks]) 3))}})</code></pre>
 </div>
 </div>
 </div>
@@ -604,46 +434,101 @@ Welcome to <strong>Functional OOP</strong>!</p></div>
 <div class="content">
 <br>
 <br>
-<div class="paragraph"><p>Let&#8217;s create an <strong>object</strong> and "mutate" it:</p></div>
+<div class="paragraph"><p>Let&#8217;s ask Noah to take a couple of drinks</p></div>
 <div class="listingblock clj">
 <div class="content">
-<pre class="highlight"><code>(let [dave (new-person-with-mutations "Dave" 42)]
-  (send-msg dave :age! 43)
-  (display dave))</code></pre>
+<pre class="highlight"><code>(let [noah (new-human-with-atoms "Noah")]
+  #_(send-msg noah :take-some-drinks 1)
+    #_(send-msg noah :take-some-drinks 1)
+      #_(send-msg noah :take-some-drinks 1)
+        #_(send-msg noah :take-some-drinks 1)
+	  (send-msg noah :drunk?))</code></pre>
+</div>
+</div>
 </div>
 </div>
 <br>
 <br>
-<div class="paragraph"><p>Oops</p></div>
-</div>
-</div>
-</section>
-<section class="slide" id="_definitions_and_rhetorics_oops">
-<h2>Definitions and Rhetorics - Oops</h2>
-<div class="quoteblock">
-<blockquote>
-<div class="paragraph"><p>Oops:</p></div>
+<div class="openblock slide">
+<div class="content">
+<div class="paragraph"><p>That&#8217;s not what we are looking for:</p></div>
 <div class="olist arabic">
 <ol class="arabic">
-<li class="slide">
-An exclamation used to show recognition of a mistake or minor accident, often as part of an apology.
+<li>
+Now, we have different states for <strong>Noah</strong>
 </li>
-<li class="slide">
-(unused) Object Oriented Programming (OOP) plural form.
+<li>
+We have violated Commandment #2 "Thou Shalt Not Mutate an Object"
 </li>
 </ol>
 </div>
-</blockquote>
+</div>
 </div>
 </section>
-<section class="slide" id="_oop_with_maps_mutations_3">
-<h2>OOP with maps - "mutations"</h2>
+<section class="slide" id="_oop_with_functions_and_maps_2">
+<h2>OOP with functions and maps</h2>
+<div class="paragraph"><p>After a drink, a human is not the same human</p></div>
+</section>
+<section class="slide" id="_oop_with_maps_changes_without_mutations">
+<h2>OOP with maps - changes without mutations</h2>
 <div class="openblock slide">
 <div class="content">
-<div class="quoteblock">
-<blockquote>
-In Clojure, we never mutate an object, we create a new version of it!
-</blockquote>
+<div class="paragraph"><p>We have <strong>update-in</strong></p></div>
+<br>
+<br>
+</div>
+</div>
+<div class="openblock slide">
+<div class="content">
+<div class="listingblock clj">
+<div class="content">
+<pre class="highlight"><code>(defn new-human [name]
+  {:data {:name name
+          :drinks 0}
+   :ops {:appellation (fn [this] (get-in this [:data :name]))
+         :drunk? (fn [this] (&gt; (get-in this [:data :drinks]) 3))
+         :take-some-drinks (fn [this how-many]
+                             (update-in this
+                                        [:data :drinks]
+                                        (partial + how-many)))}})</code></pre>
+</div>
+</div>
+</div>
+</div>
+<div class="openblock slide">
+<div class="content">
+<br>
+<br>
+<div class="paragraph"><p>Let&#8217;s create an <strong>object</strong> and "mutate" it:</p></div>
+<div class="listingblock clj">
+<div class="content">
+<pre class="highlight"><code>(let [abraham (new-human "Abraham")]
+  #_(send-msg abraham :take-some-drinks 1)
+    #_(send-msg abraham :take-some-drinks 1)
+      #_(send-msg abraham :take-some-drinks 1)
+        #_(send-msg abraham :take-some-drinks 1)
+	    (send-msg abraham :drunk?))</code></pre>
+</div>
+</div>
+<br>
+<br>
+<div class="paragraph"><p>Abraham looks much more resistant to alcohol than Noah!</p></div>
+</div>
+</div>
+<div class="openblock slide">
+<div class="content">
+<br>
+<br>
+<div class="paragraph"><p>Let&#8217;s explore the data</p></div>
+<div class="listingblock clj">
+<div class="content">
+<pre class="highlight"><code>(let [abraham (new-human "King Abraham")]
+  (send-msg abraham :take-some-drinks 1)
+    (send-msg abraham :take-some-drinks 1)
+      (send-msg abraham :take-some-drinks 1)
+        (send-msg abraham :take-some-drinks 1)
+	  (:data abraham))</code></pre>
+</div>
 </div>
 </div>
 </div>
@@ -651,9 +536,58 @@ In Clojure, we never mutate an object, we create a new version of it!
 <div class="content">
 <div class="listingblock clj">
 <div class="content">
-<pre class="highlight"><code>(let [dave-42 (new-person-with-mutations "Dave" 42)
-      dave-43 (send-msg a :age! 43)]
-  (display dave-43))</code></pre>
+<pre class="highlight"><code>(let [abraham (new-human "Abraham")
+      abraham-1 (send-msg abraham :take-some-drinks 1)
+            abraham-2 (send-msg abraham-1 :take-some-drinks 1)
+	          abraham-3 (send-msg abraham-2 :take-some-drinks 1)
+		        abraham-4 (send-msg abraham-3 :take-some-drinks 1)]
+			  (send-msg abraham-4 :drunk?))</code></pre>
+</div>
+</div>
+</div>
+</div>
+<div class="openblock slide">
+<div class="content">
+<div class="paragraph"><p>A shorter version of it</p></div>
+<div class="listingblock clj">
+<div class="content">
+<pre class="highlight"><code>(-&gt; (new-human "Abraham")
+    (send-msg :take-some-drinks 2)
+    (send-msg :take-some-drinks 3)
+    (send-msg :status))</code></pre>
+</div>
+</div>
+</div>
+</div>
+</section>
+<section class="slide" id="_functional_oop_extension">
+<h2>Functional OOP - extension</h2>
+<div class="openblock slide">
+<div class="content">
+<div class="listingblock clj">
+<div class="content">
+<pre class="highlight"><code>(defn new-human-with-status [name]
+  (let [human (new-human name)]
+    (assoc-in human [:ops :status]
+              (fn [this]
+                (let [name (get-in this [:data :name])
+                      drinks (get-in this [:data :drinks])]
+                  (str name " has drunk " drinks " drinks"))))))</code></pre>
+</div>
+</div>
+</div>
+</div>
+<div class="openblock slide">
+<div class="content">
+<br>
+<br>
+<div class="paragraph"><p>Let&#8217;s check Joseph&#8217;s status after a couple of drinks</p></div>
+<div class="listingblock clj">
+<div class="content">
+<pre class="highlight"><code>(-&gt; (new-human-with-status "Joseph")
+    (send-msg :take-some-drinks 2)
+    (send-msg :take-some-drinks 3)
+    (send-msg :status))</code></pre>
 </div>
 </div>
 </div>
@@ -671,12 +605,15 @@ In Clojure, we never mutate an object, we create a new version of it!
 <div class="content">
 <div class="listingblock clj">
 <div class="content">
-<pre class="highlight"><code>(defn new-doctor [name age]
+<pre class="highlight"><code>(defn new-king [name]
   {:data {:name name
-          :age age}
-   :ops {:age (fn [this] (get-in this [:data :age]))
-         :age! (fn [this age] (assoc-in this [:data :age] age))
-         :name (fn [this] (str "Dr. " (get-in this [:data :name])))}})</code></pre>
+          :drinks 0}
+   :ops {:appellation (fn [this] (str "King " (get-in this [:data :name])))
+         :drunk? (fn [this] (&gt; (get-in this [:data :drinks]) 3))
+         :take-some-drinks (fn [this how-many]
+                             (update-in this
+                                        [:data :drinks]
+                                        (partial + how-many)))}})</code></pre>
 </div>
 </div>
 </div>
@@ -690,147 +627,23 @@ In Clojure, we never mutate an object, we create a new version of it!
 </div>
 <div class="openblock slide">
 <div class="content">
-<div class="paragraph"><p>The doctor:</p></div>
+<div class="paragraph"><p>David, the king</p></div>
 <div class="listingblock clj">
 <div class="content">
-<pre class="highlight"><code>(let [dr-dave (new-doctor "Dave" 42)]
-  (send-msg dr-dave :name))</code></pre>
+<pre class="highlight"><code>(let [david (new-king "David")]
+  (send-msg david :appellation))</code></pre>
 </div>
 </div>
-<div class="paragraph"><p>The person:</p></div>
+<div class="paragraph"><p>David, the human</p></div>
 <div class="listingblock clj">
 <div class="content">
-<pre class="highlight"><code>(let [dave (new-person-with-mutations "Dave" 42)]
-      (send-msg dave :name))</code></pre>
+<pre class="highlight"><code>(let [david (new-human "David")]
+  (send-msg david :appellation))</code></pre>
 </div>
 </div>
 <br>
 <br>
 <div class="paragraph"><p>Both pieces of code that send the message look the same, but the behaviour is different.</p></div>
-</div>
-</div>
-</section>
-<section class="slide" id="_oop_with_maps_inheritance">
-<h2>OOP with maps - "Inheritance"</h2>
-<div class="openblock slide">
-<div class="content">
-<div class="paragraph"><p>No coupling between the operations and the object.<br>
-We can extract the operations from the object as regular functions.</p></div>
-</div>
-</div>
-<div class="openblock slide">
-<div class="content">
-<div class="listingblock clj">
-<div class="content">
-<pre class="highlight"><code>(defn get-age [this]
-  (get-in this [:data :age]))
-
-(defn get-name [this]
-  (get-in this [:data :name]))
-
-(defn set-age! [this age]
-  (assoc-in this [:data :age] age))
-
-(defn new-person-inherit [name age]
-  {:data {:name name
-          :age age}
-   :ops {:age get-age
-         :age! set-age!
-         :name get-name}})</code></pre>
-</div>
-</div>
-</div>
-</div>
-<div class="openblock slide">
-<div class="content">
-<br>
-<br>
-<div class="paragraph"><p>And "inherit" any function we want.<br>
-The doctor inherits <strong>:age</strong> and <strong>:age!</strong> and it overrides <strong>:name</strong>.</p></div>
-<div class="listingblock clj">
-<div class="content">
-<pre class="highlight"><code>(defn new-doctor-inherit [name age]
-  {:data {:name name
-          :age age}
-   :ops {:age get-age
-         :age! set-age!
-         :name (fn [this] (str "Dr. " (get-in this [:data :name])))}})</code></pre>
-</div>
-</div>
-</div>
-</div>
-<div class="openblock slide">
-<div class="content">
-<br>
-<br>
-<div class="paragraph"><p>Let&#8217;s test it:</p></div>
-<div class="listingblock clj">
-<div class="content">
-<pre class="highlight"><code>(let [dr-dave-42 (new-doctor-inherit "Dave" 42)
-      dr-dave-88 (send-msg dr-dave-42 :age! 88)]
-  (display dr-dave-88))</code></pre>
-</div>
-</div>
-<br>
-<br>
-<div class="paragraph"><p>So far so good&#8230;&#8203;</p></div>
-</div>
-</div>
-</section>
-<section class="slide" id="_oop_with_maps_composition">
-<h2>OOP with maps - Composition</h2>
-<div class="openblock slide">
-<div class="content">
-<div class="paragraph"><p>We can even do composition.<br>
-A Doctor <em>isa</em> Person or a Doctor <em>hasa</em> Person?</p></div>
-</div>
-</div>
-<div class="openblock slide">
-<div class="content">
-<div class="listingblock clj">
-<div class="content">
-<pre class="highlight"><code>(defn new-doctor-compose [name age]
-  {:person (new-person-with-mutations name age)
-   :data nil
-   :ops {:age  (fn [this] (send-msg (:person this) :age))
-         :age! (fn [this age] (update this :person #(send-msg % :age! age)))
-         :name (fn [this] (str "Dr. " (send-msg (:person this) :name)))}})</code></pre>
-</div>
-</div>
-</div>
-</div>
-<div class="openblock slide">
-<div class="content">
-<br>
-<br>
-<div class="paragraph"><p>Let&#8217;s test it:</p></div>
-<div class="listingblock clj">
-<div class="content">
-<pre class="highlight"><code>(let [dr-dave (new-doctor-compose "Dave" 42)]
-  (display dr-dave))</code></pre>
-</div>
-</div>
-</div>
-</div>
-<div class="openblock slide">
-<div class="content">
-<br>
-<br>
-<div class="paragraph"><p>Let&#8217;s change the age of the doctor:</p></div>
-<div class="listingblock clj">
-<div class="content">
-<pre class="highlight"><code>(let [dr-dave-42 (new-doctor-compose "Dave" 42)
-      dr-dave-88 (send-msg dr-dave-42 :age! 88)]
-  (display dr-dave-88))</code></pre>
-</div>
-</div>
-<br>
-<br>
-</div>
-</div>
-<div class="openblock slide">
-<div class="content">
-<div class="paragraph"><p>It works but it becomes a bit complicated</p></div>
 </div>
 </div>
 </section>
@@ -867,13 +680,13 @@ A programming paradigm based on the concepts of <strong>functions</strong>, <str
 <br>
 <div class="listingblock clj">
 <div class="content">
-<pre class="highlight"><code>(defprotocol IPerson
+<pre class="highlight"><code>(defprotocol IHuman
   (age [this])
   (age! [this age])
   (fullname [this]))
 
-(defn display-person [person]
-  (str (fullname person) " is " (age person)))</code></pre>
+(defn display-human [human]
+  (str (fullname human) " is " (age human)))</code></pre>
 </div>
 </div>
 </div>
@@ -885,8 +698,8 @@ A programming paradigm based on the concepts of <strong>functions</strong>, <str
 <div class="paragraph"><p>Then, a record that implements the protocol:</p></div>
 <div class="listingblock clj">
 <div class="content">
-<pre class="highlight"><code>(defrecord Person [firstname lastname age]
-  IPerson
+<pre class="highlight"><code>(defrecord Human [firstname lastname age]
+  IHuman
   (age [this] age)
   (age! [this new-age] (assoc this :age new-age))
   (fullname [this] (str firstname " " lastname)))</code></pre>
@@ -901,8 +714,8 @@ A programming paradigm based on the concepts of <strong>functions</strong>, <str
 <div class="paragraph"><p>And a constructor</p></div>
 <div class="listingblock clj">
 <div class="content">
-<pre class="highlight"><code>(defn create-person [firstname lastname age]
-  (Person. firstname lastname age))</code></pre>
+<pre class="highlight"><code>(defn create-human [firstname lastname age]
+  (Human. firstname lastname age))</code></pre>
 </div>
 </div>
 </div>
@@ -911,10 +724,10 @@ A programming paradigm based on the concepts of <strong>functions</strong>, <str
 <div class="content">
 <br>
 <br>
-<div class="paragraph"><p>Let&#8217;s create and display a person</p></div>
+<div class="paragraph"><p>Let&#8217;s create and display a human</p></div>
 <div class="listingblock clj">
 <div class="content">
-<pre class="highlight"><code>(display-person  (create-person "Dave" "Smith" 42))</code></pre>
+<pre class="highlight"><code>(display-human  (create-human "Dave" "Smith" 42))</code></pre>
 </div>
 </div>
 </div>
@@ -947,7 +760,7 @@ A programming paradigm based on the concepts of <strong>functions</strong>, <str
 <div class="paragraph"><p>Records look like maps</p></div>
 <div class="listingblock clj">
 <div class="content">
-<pre class="highlight"><code>(Person. "Dave" "Smith" 42)</code></pre>
+<pre class="highlight"><code>(Human. "Dave" "Smith" 42)</code></pre>
 </div>
 </div>
 </div>
@@ -958,7 +771,7 @@ A programming paradigm based on the concepts of <strong>functions</strong>, <str
 <div class="paragraph"><p>They have keys</p></div>
 <div class="listingblock clj">
 <div class="content">
-<pre class="highlight"><code>(keys (Person. "Dave" "Smith" 42))</code></pre>
+<pre class="highlight"><code>(keys (Human. "Dave" "Smith" 42))</code></pre>
 </div>
 </div>
 </div>
@@ -969,7 +782,7 @@ A programming paradigm based on the concepts of <strong>functions</strong>, <str
 <div class="paragraph"><p>keys are functions</p></div>
 <div class="listingblock clj">
 <div class="content">
-<pre class="highlight"><code>(:age (Person. "Dave" "Smith" 42))</code></pre>
+<pre class="highlight"><code>(:age (Human. "Dave" "Smith" 42))</code></pre>
 </div>
 </div>
 </div>
@@ -980,7 +793,7 @@ A programming paradigm based on the concepts of <strong>functions</strong>, <str
 <div class="paragraph"><p><span class="red">But records are not functions</span></p></div>
 <div class="listingblock clj">
 <div class="content">
-<pre class="highlight"><code>(keys (Person. "Dave" "Smith" 42))</code></pre>
+<pre class="highlight"><code>(keys (Human. "Dave" "Smith" 42))</code></pre>
 </div>
 </div>
 </div>
@@ -991,7 +804,7 @@ A programming paradigm based on the concepts of <strong>functions</strong>, <str
 <div class="paragraph"><p>You can assoc them</p></div>
 <div class="listingblock clj">
 <div class="content">
-<pre class="highlight"><code>(assoc (Person. "Dave" "Smith" 42) :age 88)</code></pre>
+<pre class="highlight"><code>(assoc (Human. "Dave" "Smith" 42) :age 88)</code></pre>
 </div>
 </div>
 </div>
@@ -1002,7 +815,7 @@ A programming paradigm based on the concepts of <strong>functions</strong>, <str
 <div class="paragraph"><p><span class="red">But be careful when you dissoc them</span></p></div>
 <div class="listingblock clj">
 <div class="content">
-<pre class="highlight"><code>(fullname (dissoc (Person. "Dave" "Smith" 42) :age))</code></pre>
+<pre class="highlight"><code>(fullname (dissoc (Human. "Dave" "Smith" 42) :age))</code></pre>
 </div>
 </div>
 </div>
@@ -1032,11 +845,11 @@ A programming paradigm based on the concepts of <strong>functions</strong>, <str
 <div class="content">
 <div class="listingblock clj">
 <div class="content">
-<pre class="highlight"><code>(defrecord Doctor [person]
-  IPerson
-  (age [this] (age person))
-  (age! [this new-age] (update this :person #(age! % new-age)))
-  (fullname [this] (str "Dr. " (:firstname person) " " (:lastname person))))</code></pre>
+<pre class="highlight"><code>(defrecord Doctor [human]
+  IHuman
+  (age [this] (age human))
+  (age! [this new-age] (update this :human #(age! % new-age)))
+  (fullname [this] (str "Dr. " (:firstname human) " " (:lastname human))))</code></pre>
 </div>
 </div>
 </div>
@@ -1048,7 +861,7 @@ A programming paradigm based on the concepts of <strong>functions</strong>, <str
 <div class="listingblock clj">
 <div class="content">
 <pre class="highlight"><code>(defn create-doctor [firstname lastname age]
-  (Doctor. (Person. firstname lastname age)))</code></pre>
+  (Doctor. (Human. firstname lastname age)))</code></pre>
 </div>
 </div>
 </div>
@@ -1059,7 +872,7 @@ A programming paradigm based on the concepts of <strong>functions</strong>, <str
 <br>
 <div class="listingblock clj">
 <div class="content">
-<pre class="highlight"><code>(display-person (age! (create-doctor "Dave" "Smith" 42) 88))</code></pre>
+<pre class="highlight"><code>(display-human (age! (create-doctor "Dave" "Smith" 42) 88))</code></pre>
 </div>
 </div>
 </div>
@@ -1076,7 +889,7 @@ A programming paradigm based on the concepts of <strong>functions</strong>, <str
 <div class="content">
 <div class="listingblock clj">
 <div class="content">
-<pre class="highlight"><code>(extend-type Person
+<pre class="highlight"><code>(extend-type Human
   IFn
   (-invoke
     ([this key]
@@ -1089,7 +902,7 @@ A programming paradigm based on the concepts of <strong>functions</strong>, <str
 <div class="content">
 <div class="listingblock clj">
 <div class="content">
-<pre class="highlight"><code>((create-person "Dave" "Smith" 42) :age)</code></pre>
+<pre class="highlight"><code>((create-human "Dave" "Smith" 42) :age)</code></pre>
 </div>
 </div>
 </div>
@@ -1125,7 +938,7 @@ Circle diagram</p></div>
 <h2>Maybe</h2>
 <div class="listingblock clj">
 <div class="content">
-<pre class="highlight"><code>(defn new-person-maybe [{:keys [firstname lastname languages fruits]
+<pre class="highlight"><code>(defn new-human-maybe [{:keys [firstname lastname languages fruits]
                    :as data
                    :or {languages #{} fruits []}}]
   {:data (assoc data :languages languages :fruits fruits)
@@ -1138,7 +951,7 @@ Circle diagram</p></div>
 
 
 
-(-&gt; (new-person-maybe {:firstname "dave" :lastname "smith"})
+(-&gt; (new-human-maybe {:firstname "dave" :lastname "smith"})
     (send-msg :add-language "fr")
     (send-msg :add-language "en")
     (send-msg :eat-fruit "orange")
@@ -1150,6 +963,10 @@ Circle diagram</p></div>
 </div>
 </div>
 <style>
+.bible {
+font-family: cursive;
+font-size: 2.5em;
+}
 .yellow-background {
 background: yellow;
 }
@@ -1175,7 +992,7 @@ color: red;
 height: 40vh;
 }
 </style>
-<link rel="shortcut icon" href="./favicon.png">
+<link rel="shortcut icon" type="image/png" href="./favicon.png">
 <link rel="stylesheet" media="screen" href="http://slides.klipse.tech/includes/deckjs/themes/style/klipse.css">
 <link rel="stylesheet" media="screen" href="http://slides.klipse.tech/asciidoc/klipse.css">
 

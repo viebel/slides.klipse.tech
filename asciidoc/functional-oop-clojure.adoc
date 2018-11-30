@@ -82,7 +82,8 @@ https://clojure.org/reference/datatypes#_deftype_and_defrecord
 - A pragmatic theorist
 - Author of https://github.com/viebel/klipse[Klipse]
 - A Web consultant: Full-Stack, clojure, clojurescript, node.js, react.js
-- Blogger about Functional Programming (http://blog.klipse.tech/[blog.klipse.tech])
+- A disciple of the Bible
+- A Blogger about Functional Programming (http://blog.klipse.tech/[blog.klipse.tech])
 - Third year in a row at ClojureX
 - Writing a book with Manning "Get Programming with Clojure" - MEAP launch today
 --
@@ -189,19 +190,45 @@ Functions avoid changing state and mutating data.
 --
 
 
+== Functional OOP - The 5 commandments 
+
+[bible]
+--
+. Thou Shalt Not Encapsulate Information
+
+. Thou Shalt Not Mutate an Object
+
+. Let Thy Friend Extend a Class as Thyself
+
+. Thou Shalt Only Program to an Interface
+
+. Thou Shalt Not Derive from a Concrete Class
+--
+
+
+== Application of the commandements
+
+[%step]
+--
+[bible]#Then God said, “Let us make *mankind* in our image, in our likeness, so that they may follow my *commandements* to modelize the fish in the sea and the birds in the sky, over the livestock and all the wild animals, and over all the creatures that move along the ground.”# (Genesis, Chapter 1 - revised)
+--
 
 
 == Object oriented programming with maps
 
 [%step]
 --
-What is a person?
+What is the essence of a human?
 --
 
 [%step]
-. A person has a firstname
-. A person has a lastname
-. A person drinks
+. A human has a name
+. A human has an appellation - how other humans refer to him
+. A human can drink
+. When a human drinks too much, he is drunk
+
+
+add image of drunk biblical human
 
 == OOP with functions and maps
 
@@ -213,36 +240,37 @@ A "constructor" that returns a map with *data* and *operations*
 ++++
 [source.clj]
 ----
-(defn new-person [firstname lastname]
-  {:data {:firstname firstname
-          :lastname lastname
-          :drinks []}
-   :ops {:fullname (fn [this] "(fullname) will be implemented soon")
-         :my-drinks (fn [this] "(my-drinks) will be implemented soon")
-         :drink (fn [this a-drink] (str "(drink " a-drink "will be implemented soon"))}})
+(defn new-human-0 [name]
+  {:data {:name name
+          :drinks 0}
+   :ops {:appellation (fn [this] "(:appellation will be implemented soon")
+         :take-some-drinks (fn [this how-many] (str "(:take-some-drinks " how-many ") will be implemented soon"))
+         :drunk? (fn [this] "(:drunk? will be implemented soon")}})
 ----
 --
 
 [%step]
 --
-At this stage, we can do two things:
-
-. inspect the *data*
-. send a *message*
---
-
-[%step]
---
-Inspecting the *data* is straightforward:
+How does the first human being look like? 
 [source.clj]
 ----
-(:data (new-person "dave" "smith"))
+(new-human-0 "Adam")
+----
+--
+
+
+[%step]
+--
+*Data* inspection is trivial
+[source.clj]
+----
+(:data (new-human-0 "Adam"))
 ----
 --
 
 [%step]
 --
-To send a *message*, we need a utility function
+To send a *message*, we retrieve the function from the *:ops* map and call it with the _object_ and the _args_.
 [source.clj]
 ----
 (defn send-msg [obj op-name & args]
@@ -255,205 +283,51 @@ To send a *message*, we need a utility function
 
 [%step]
 --
-[source.clj]
-----
-(send-msg (new-person "dave" "smith") :fullname)
-----
---
-
-== OOP with function and maps - Operations
-
-In order to implement *:fullname*, we need to:
-[%step]
-
-. Access _firstname_ and _lastname_ data fields
-. Combine them
-
-[%step]
---
-First, the combinator
-
-[source.clj]
-----
-(require '[clojure.string :refer [capitalize]])
-
-(defn my-fullname [firstname lastname]
-  (str (capitalize firstname) " " (capitalize lastname)))
-----
---
-
-[%step]
---
-Now, the accessor
-[source.clj]
-----
-(defn new-person-1 [firstname lastname]
-  {:data {:firstname firstname
-          :lastname lastname
-          :drinks []}
-   :ops {:fullname (fn [this]
-                     (my-fullname (get-in this [:data :firstname])
-                               (get-in this [:data :lastname])))
-         :my-drinks (fn [this] "(my-drinks) will be implemented soon")
-         :drink (fn [this a-drink] (str "(drink " a-drink "will be implemented soon"))}})
-----
---
-
-[%step]
---
-Let's send a *:fullname* message to a person
-[source.clj]
-----
-(send-msg (new-person-1 "dave" "smith") :fullname)
-----
---
-
-
-== More
-[source.clj]
-----
-(defn new-doctor-compose [firstname lastname]
-  {:person (new-person firstname lastname)
-   :data nil
-   :ops {:drinks (fn [this] (send-msg (:person this) :drinks))
-         :drink (fn [this drink] (update this :person #(send-msg % :eat-drink drink)))
-         :fullname (fn [this] (str "Dr. " (send-msg (:person this) :fullname)))}})
-----
-
-[source.clj]
-----
-(defn fullname [firstname lastname]
-  (str (capitalize firstname) " " (capitalize lastname)))
-
-(defn new-person [firstname lastname]
-  {:data {:firstname firstname
-          :lastname lastname
-          :drinks []}
-   :ops {:fullname (fn [this]
-                     (fullname (get-in this [:data :firstname])
-                               (get-in this [:data :lastname])))
-         :drinks (fn [this] (get-in this [:data :drinks]))
-         :drink (fn [this drink]
-                  (update-in this [:data :drinks] #(conj % drink)))
-         }})
-
-(send-msg (new-person "dave" "smith") :fullname)
-----
---
-[%step]
---
-++++
-<br>
-<br>
-++++
-How are we going to send a *message* to an *object*?
-++++
-<br>
-<br>
-++++
-
-[%step]
---
-[source.clj]
-----
-----
---
-
-
-[%step]
---
-++++
-<br>
-<br>
-++++
-Let's create an *object* and send it *messages*
-++++
-<br>
-<br>
-++++
+Let's ask Adam to take a drink
 --
 
 [%step]
 --
 [source.clj]
 ----
-(let [dave (new-person "Dave" 42)]
-  (send-msg dave :age))
+(send-msg (new-human-0 "Adam") :take-some-drinks 1)
 ----
 --
 
-== OOP with maps - Messages with arguments
 
+== OOP with function and maps - Queries
 
 [%step]
 --
+Queries are easy
+
 [source.clj]
 ----
-(defn new-person [name age]
+(defn new-human-1 [name]
   {:data {:name name
-          :age age}
-   :ops {:age (fn [this] (get-in this [:data :age]))
-         :char-in-name (fn [this n] (nth (get-in this [:data :name]) n))
-         :name (fn [this] (get-in this [:data :name]))}}) 
+          :drinks 0}
+   :ops {:appellation (fn [this] (get-in this [:data :name]))
+         :take-some-drinks (fn [this how-many] (str "(:take-some-drinks " how-many ") will be implemented soon"))
+         :drunk? (fn [this] (> (get-in this [:data :drinks]) 3))}})
 ----
 --
 
 [%step]
 --
-++++
-<br>
-<br>
-++++
-How are we going to send a *message* with _arguments_ to an *object*?
---
-
-[%step]
---
-With _apply_ and _&_ of course!
-
+Let's send a *:appellation* message to a human
 [source.clj]
 ----
+(send-msg (new-human-1 "Adam") :appellation)
 ----
 --
 
 
 [%step]
 --
-++++
-<br>
-<br>
-++++
-Let's create an *object* and send it *messages* with arguments
-++++
-<br>
-<br>
-++++
---
-
-[%step]
---
+We can still inspect the data
 [source.clj]
 ----
-(let [dave (new-person "Dave" 42)]
-  (send-msg dave :char-in-name 0))
-----
---
-
-
-
-== OOP with maps
-
-[%step]
---
-We can create new functionalities outside of the objects.
---
-
-[%step]
---
-[source.clj]
-----
-(defn display [someone]
-  (str (send-msg someone :name) " is "(send-msg someone :age) "."))
+(inspect-data (new-human-1 "Adam") :name)
 ----
 --
 
@@ -463,20 +337,11 @@ We can create new functionalities outside of the objects.
 <br>
 <br>
 ++++
-
-We call *display* like a regular function.
-No need to send a message.
-Welcome to *Functional OOP*!
-
-
-[source.clj]
-----
-(def j (new-person "Jennifer" 22))
-(display j)
-----
+[meditation]#Why do we need both *:appellation* operation and *:name* field?#
 --
 
-== OOP with maps - mutations?
+
+== OOP with maps - mutations
 
 [%step]
 --
@@ -507,61 +372,78 @@ Clojure is powerful: let's use atoms
 --
 [source.clj]
 ----
-(defn new-person-with-atoms [name age]
-  {:data (atom {:name name
-          :age age})
-   :ops {:age (fn [this] (:age @(:data this)))
-         :age! (fn [this age] 
-                 (swap! (:data this) #(assoc % :age age))
-                 this)
-         :name (fn [this] (get-in this [:data :name]))}})
-----
---
-
-[%step]
---
-++++
-<br>
-<br>
-++++
-Let's create an *object* and "mutate" it:
-
-[source.clj]
-----
-(let [dave (new-person-with-atoms "Dave" 42)]
-  (send-msg dave :age! 43)
-  (display dave))
-----
-++++
-<br>
-<br>
-++++
-Victory? 
-++++
---
-
-
-== OOP with maps - "mutations"
-
-[%step]
---
-We have *assoc* and *assoc-in*!
-++++
-<br>
-<br>
-++++
---
-
-[%step]
---
-[source.clj]
-----
-(defn new-person-with-mutations [name age]
+(defn new-human-with-atoms [name]
   {:data {:name name
-          :age age}
-   :ops {:age (fn [this] (get-in this [:data :age]))
-         :age! (fn [this age] (assoc-in this [:data :age] age))
-         :name (fn [this] (get-in this [:data :name]))}})
+          :drinks (atom 0)}
+   :ops {:appellation (fn [this] (get-in this [:data :name]))
+         :take-some-drinks (fn [this how-many]
+                             (swap! (get-in this [:data :drinks]) (partial + how-many))
+                             this)
+         :drunk? (fn [this] (> @(get-in this [:data :drinks]) 3))}})
+----
+--
+
+[%step]
+--
+++++
+<br>
+<br>
+++++
+Let's ask Noah to take a couple of drinks
+
+[source.clj]
+----
+(let [noah (new-human-with-atoms "Noah")]
+  #_(send-msg noah :take-some-drinks 1)
+    #_(send-msg noah :take-some-drinks 1)
+      #_(send-msg noah :take-some-drinks 1)
+        #_(send-msg noah :take-some-drinks 1)
+	  (send-msg noah :drunk?))
+----
+--
+++++
+<br>
+<br>
+++++
+[%step]
+--
+That's not what we are looking for:
+
+. Now, we have different states for *Noah*
+. We have violated Commandment #2 "Thou Shalt Not Mutate an Object"
+
+--
+
+== OOP with functions and maps
+
+After a drink, a human is not the same human
+
+
+
+== OOP with maps - changes without mutations
+
+[%step]
+--
+We have *update-in*
+++++
+<br>
+<br>
+++++
+--
+
+[%step]
+--
+[source.clj]
+----
+(defn new-human [name]
+  {:data {:name name
+          :drinks 0}
+   :ops {:appellation (fn [this] (get-in this [:data :name]))
+         :drunk? (fn [this] (> (get-in this [:data :drinks]) 3))
+         :take-some-drinks (fn [this how-many]
+                             (update-in this
+                                        [:data :drinks]
+                                        (partial + how-many)))}})
 ----
 --
 
@@ -575,48 +457,100 @@ Let's create an *object* and "mutate" it:
 
 [source.clj]
 ----
-(let [dave (new-person-with-mutations "Dave" 42)]
-  (send-msg dave :age! 43)
-  (display dave))
+(let [abraham (new-human "Abraham")]
+  #_(send-msg abraham :take-some-drinks 1)
+    #_(send-msg abraham :take-some-drinks 1)
+      #_(send-msg abraham :take-some-drinks 1)
+        #_(send-msg abraham :take-some-drinks 1)
+	    (send-msg abraham :drunk?))
 ----
 ++++
 <br>
 <br>
 ++++
-Oops
+Abraham looks much more resistant to alcohol than Noah!
 ++++
 --
 
-== Definitions and Rhetorics - Oops
-
-[quote]
---
-Oops:
-[%step]
-. An exclamation used to show recognition of a mistake or minor accident, often as part of an apology.
-[%step]
-. (unused) Object Oriented Programming (OOP) plural form.
---
-
-
-
-== OOP with maps - "mutations"
-
 [%step]
 --
-[quote]
-In Clojure, we never mutate an object, we create a new version of it!
+++++
+<br>
+<br>
+++++
+Let's explore the data
+
+[source.clj]
+----
+(let [abraham (new-human "King Abraham")]
+  (send-msg abraham :take-some-drinks 1)
+    (send-msg abraham :take-some-drinks 1)
+      (send-msg abraham :take-some-drinks 1)
+        (send-msg abraham :take-some-drinks 1)
+	  (:data abraham))
+----
 --
 
 [%step]
 --
 [source.clj]
 ----
-(let [dave-42 (new-person-with-mutations "Dave" 42)
-      dave-43 (send-msg a :age! 43)]
-  (display dave-43))
+(let [abraham (new-human "Abraham")
+      abraham-1 (send-msg abraham :take-some-drinks 1)
+            abraham-2 (send-msg abraham-1 :take-some-drinks 1)
+	          abraham-3 (send-msg abraham-2 :take-some-drinks 1)
+		        abraham-4 (send-msg abraham-3 :take-some-drinks 1)]
+			  (send-msg abraham-4 :drunk?))
 ----
 --
+
+[%step]
+--
+A shorter version of it
+[source.clj]
+----
+(-> (new-human "Abraham")
+    (send-msg :take-some-drinks 2)
+    (send-msg :take-some-drinks 3)
+    (send-msg :status))
+----
+--
+== Functional OOP - extension
+
+[%step]
+--
+[source.clj]
+----
+(defn new-human-with-status [name]
+  (let [human (new-human name)]
+    (assoc-in human [:ops :status]
+              (fn [this]
+                (let [name (get-in this [:data :name])
+                      drinks (get-in this [:data :drinks])]
+                  (str name " has drunk " drinks " drinks"))))))
+----
+--
+
+
+[%step]
+--
+++++
+<br>
+<br>
+++++
+
+Let's check Joseph's status after a couple of drinks
+
+
+[source.clj]
+----
+(-> (new-human-with-status "Joseph")
+    (send-msg :take-some-drinks 2)
+    (send-msg :take-some-drinks 3)
+    (send-msg :status))
+----
+--
+
 
 == OOP with maps - Polymorphism
 
@@ -631,12 +565,15 @@ Let's create another object that implements the same operations but behaves diff
 --
 [source.clj]
 ----
-(defn new-doctor [name age]
+(defn new-king [name]
   {:data {:name name
-          :age age}
-   :ops {:age (fn [this] (get-in this [:data :age]))
-         :age! (fn [this age] (assoc-in this [:data :age] age))
-         :name (fn [this] (str "Dr. " (get-in this [:data :name])))}})
+          :drinks 0}
+   :ops {:appellation (fn [this] (str "King " (get-in this [:data :name])))
+         :drunk? (fn [this] (> (get-in this [:data :drinks]) 3))
+         :take-some-drinks (fn [this how-many]
+                             (update-in this
+                                        [:data :drinks]
+                                        (partial + how-many)))}})
 ----
 --
 
@@ -651,18 +588,18 @@ When we send a message, we don't know what procedure is going to be called
 
 [%step]
 --
-The doctor:
+David, the king
 [source.clj]
 ----
-(let [dr-dave (new-doctor "Dave" 42)]
-  (send-msg dr-dave :name))
+(let [david (new-king "David")] 
+  (send-msg david :appellation))
 ----
 
-The person:
+David, the human
 [source.clj]
 ----
-(let [dave (new-person-with-mutations "Dave" 42)]
-      (send-msg dave :name))
+(let [david (new-human "David")] 
+  (send-msg david :appellation))
 ----
 ++++
 <br>
@@ -670,136 +607,6 @@ The person:
 ++++
 Both pieces of code that send the message look the same, but the behaviour is different.
 --
-
-== OOP with maps - "Inheritance"
-
-[%step]
---
-No coupling between the operations and the object.
-We can extract the operations from the object as regular functions.
---
-
-[%step]
---
-[source.clj]
-----
-(defn get-age [this]
-  (get-in this [:data :age]))
-
-(defn get-name [this]
-  (get-in this [:data :name]))
-
-(defn set-age! [this age]
-  (assoc-in this [:data :age] age))
-
-(defn new-person-inherit [name age]
-  {:data {:name name
-          :age age}
-   :ops {:age get-age
-         :age! set-age!
-         :name get-name}})
-----
---
-
-
-[%step]
---
-++++
-<br>
-<br>
-++++
-And "inherit" any function we want.
-The doctor inherits *:age* and *:age!* and it overrides *:name*.
-[source.clj]
-----
-(defn new-doctor-inherit [name age]
-  {:data {:name name
-          :age age}
-   :ops {:age get-age
-         :age! set-age!
-         :name (fn [this] (str "Dr. " (get-in this [:data :name])))}})
-----
---
-
-[%step]
---
-++++
-<br>
-<br>
-++++
-Let's test it:
-[source.clj]
-----
-(let [dr-dave-42 (new-doctor-inherit "Dave" 42)
-      dr-dave-88 (send-msg dr-dave-42 :age! 88)]
-  (display dr-dave-88))
-----
-++++
-<br>
-<br>
-++++
-So far so good...
---
-
-
-== OOP with maps - Composition
-
-[%step]
---
-We can even do composition.
-A Doctor _isa_ Person or a Doctor _hasa_ Person?
---
-
-[%step]
---
-[source.clj]
-----
-(defn new-doctor-compose [name age]
-  {:person (new-person-with-mutations name age)
-   :data nil
-   :ops {:age  (fn [this] (send-msg (:person this) :age))
-         :age! (fn [this age] (update this :person #(send-msg % :age! age)))
-         :name (fn [this] (str "Dr. " (send-msg (:person this) :name)))}})
-----
---
-[%step]
---
-++++
-<br>
-<br>
-++++
-Let's test it:
-[source.clj]
-----
-(let [dr-dave (new-doctor-compose "Dave" 42)]
-  (display dr-dave))
-----
---
-[%step]
---
-++++
-<br>
-<br>
-++++
-Let's change the age of the doctor:
-[source.clj]
-----
-(let [dr-dave-42 (new-doctor-compose "Dave" 42)
-      dr-dave-88 (send-msg dr-dave-42 :age! 88)]
-  (display dr-dave-88))
-----
-++++
-<br>
-<br>
-++++
---
-[%step]
---
-It works but it becomes a bit complicated
---
-
-
-
 
 == Definitions and Rhetorics - Functional OOP
 
@@ -834,13 +641,13 @@ First, we define a protocol and a display function:
 ++++
 [source.clj]
 ----
-(defprotocol IPerson
+(defprotocol IHuman
   (age [this])
   (age! [this age])
   (fullname [this]))
 
-(defn display-person [person]
-  (str (fullname person) " is " (age person)))
+(defn display-human [human]
+  (str (fullname human) " is " (age human)))
 ----
 --
 
@@ -853,8 +660,8 @@ First, we define a protocol and a display function:
 Then, a record that implements the protocol:
 [source.clj]
 ----
-(defrecord Person [firstname lastname age]
-  IPerson
+(defrecord Human [firstname lastname age]
+  IHuman
   (age [this] age)
   (age! [this new-age] (assoc this :age new-age))
   (fullname [this] (str firstname " " lastname)))
@@ -870,8 +677,8 @@ Then, a record that implements the protocol:
 And a constructor
 [source.clj]
 ----
-(defn create-person [firstname lastname age]
-  (Person. firstname lastname age))
+(defn create-human [firstname lastname age]
+  (Human. firstname lastname age))
 ----
 --
 
@@ -881,10 +688,10 @@ And a constructor
 <br>
 <br>
 ++++
-Let's create and display a person
+Let's create and display a human
 [source.clj]
 ----
-(display-person  (create-person "Dave" "Smith" 42)) 
+(display-human  (create-human "Dave" "Smith" 42)) 
 ----
 --
 
@@ -917,7 +724,7 @@ Records look like maps
 
 [source.clj]
 ----
-(Person. "Dave" "Smith" 42)
+(Human. "Dave" "Smith" 42)
 ----
 ++++
 --
@@ -931,7 +738,7 @@ They have keys
 
 [source.clj]
 ----
-(keys (Person. "Dave" "Smith" 42))
+(keys (Human. "Dave" "Smith" 42))
 ----
 ++++
 --
@@ -945,7 +752,7 @@ keys are functions
 
 [source.clj]
 ----
-(:age (Person. "Dave" "Smith" 42))
+(:age (Human. "Dave" "Smith" 42))
 ----
 ++++
 --
@@ -960,7 +767,7 @@ keys are functions
 
 [source.clj]
 ----
-(keys (Person. "Dave" "Smith" 42))
+(keys (Human. "Dave" "Smith" 42))
 ----
 ++++
 --
@@ -974,7 +781,7 @@ You can assoc them
 
 [source.clj]
 ----
-(assoc (Person. "Dave" "Smith" 42) :age 88)
+(assoc (Human. "Dave" "Smith" 42) :age 88)
 ----
 ++++
 --
@@ -988,7 +795,7 @@ You can assoc them
 
 [source.clj]
 ----
-(fullname (dissoc (Person. "Dave" "Smith" 42) :age))
+(fullname (dissoc (Human. "Dave" "Smith" 42) :age))
 ----
 ++++
 --
@@ -1015,11 +822,11 @@ image::images/indirection.jpg[mutation, width=1000]
 --
 [source.clj]
 ----
-(defrecord Doctor [person]
-  IPerson
-  (age [this] (age person))
-  (age! [this new-age] (update this :person #(age! % new-age)))
-  (fullname [this] (str "Dr. " (:firstname person) " " (:lastname person))))
+(defrecord Doctor [human]
+  IHuman
+  (age [this] (age human))
+  (age! [this new-age] (update this :human #(age! % new-age)))
+  (fullname [this] (str "Dr. " (:firstname human) " " (:lastname human))))
 ----
 --
 
@@ -1032,7 +839,7 @@ image::images/indirection.jpg[mutation, width=1000]
 [source.clj]
 ----
 (defn create-doctor [firstname lastname age]
-  (Doctor. (Person. firstname lastname age)))
+  (Doctor. (Human. firstname lastname age)))
 ----
 --
 
@@ -1045,7 +852,7 @@ image::images/indirection.jpg[mutation, width=1000]
 ++++
 [source.clj]
 ----
-(display-person (age! (create-doctor "Dave" "Smith" 42) 88))  
+(display-human (age! (create-doctor "Dave" "Smith" 42) 88))  
 ----
 --
 
@@ -1060,7 +867,7 @@ In Clojure, everything can behave like a function
 --
 [source.clj]
 ----
-(extend-type Person
+(extend-type Human
   IFn
   (-invoke
     ([this key]
@@ -1072,7 +879,7 @@ In Clojure, everything can behave like a function
 --
 [source.clj]
 ----
-((create-person "Dave" "Smith" 42) :age)
+((create-human "Dave" "Smith" 42) :age)
 ----
 --
 
@@ -1104,7 +911,7 @@ image::images/questions.jpg[questions]
 [source.clj]
 ----
 
-(defn new-person-maybe [{:keys [firstname lastname languages fruits]
+(defn new-human-maybe [{:keys [firstname lastname languages fruits]
                    :as data
                    :or {languages #{} fruits []}}]
   {:data (assoc data :languages languages :fruits fruits)
@@ -1117,7 +924,7 @@ image::images/questions.jpg[questions]
 
 
 
-(-> (new-person-maybe {:firstname "dave" :lastname "smith"})
+(-> (new-human-maybe {:firstname "dave" :lastname "smith"})
     (send-msg :add-language "fr")
     (send-msg :add-language "en") 
     (send-msg :eat-fruit "orange")
@@ -1129,6 +936,10 @@ image::images/questions.jpg[questions]
 ----
 ++++
 <style>
+.bible {
+font-family: cursive;
+font-size: 2.5em;
+}
 .yellow-background {
 background: yellow;
 }
@@ -1155,7 +966,7 @@ color: red;
 
 .vertical-padder {
 height: 40vh;
-}
+} 
 </style>
 ++++
 
