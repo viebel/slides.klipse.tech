@@ -30,18 +30,24 @@
 <h2>Intro</h2>
 <section class="slide">
         <div class="text-centered">
-            <div class="centered" style="font-size:1.9em;">
-	    <br>
-            <div> Polymorphism à la Clojure
+            <div class="centered" style="font-size:1.4em;">
+            <div style="font-size:2em;"> Polymorphism à la Clojure
     <br>
     <span style="font-style:italic;m">Functional Object Oriented Programming</span>
     <br>
     is not an Oxymoron
     </div>
+    <br>
+    <br>
               <div class="left" style="width:50%;">
+	      <div> Interactive Slides</div>
 	      <img src='https://chart.googleapis.com/chart?cht=qr&chl=http%3A%2F%2Fslides.klipse.tech%2Fasciidoc%2Ffunctional-oop-clojure.html&chs=300x300' alt='qr code'></img>
+              <div>
+		  <a href="https://tinyurl.com/fun-oop"> https://tinyurl.com/fun-oop </a>
+              </div>
+
 	      </div>
-              <div class="left" style="width:50%;">
+              <div class="left" style="width:50%;margin-top:30px;">
 		<div>
                   <div>
                     <img class="fullscreen" src="./images/klipse.png" alt="" width="150">
@@ -55,20 +61,11 @@
 		    <a class="github-button" href="https://github.com/viebel/klipse" data-size="large" data-show-count="true" aria-label="Star viebel/klipse on GitHub">Klipse</a>
                     </div>
                   </div>
-                  <div>
-		  <a href="https://tinyurl.com/fun-oop"> https://tinyurl.com/fun-oop </a>
-                  </div>
 		</div>
               </div>
             </div>
             <div class="clear centered">
 	    <br><br><br>
-	      <div style="padding-top: 20px;">
-		<pre><code class="clj" data-loop-msec="1000" data-beautify-strings="true">
-		(str (js/Date.))
-		</code></pre>
-		<br>
-	      </div>
             </div>
 	    <br><br>
 	    <div style="font-size: 2em;">Yehonathan Sharvit</div>
@@ -81,8 +78,8 @@
 <div class="ulist">
 <ul>
 <li>Definitions and Rhetorics</li>
-<li>Object Oriented Programming with functions and maps</li>
-<li>Object Oriented Programming with records and protocols</li>
+<li>Functional Object Oriented Programming with maps</li>
+<li>Functional Object Oriented Programming with records</li>
 <li>Conclusion</li>
 </ul>
 </div>
@@ -111,22 +108,32 @@
 </div>
 </div>
 </section>
-<section class="slide" id="_definitions_and_rhetorics_oxymoron">
-<h2>Definitions and Rhetorics - Oxymoron</h2>
+<section class="slide" id="_definitions_and_rhetoric_oxymoron">
+<h2>Definitions and Rhetoric - Oxymoron</h2>
+<div class="openblock slide">
+<div class="content">
+<div class="paragraph"><p><strong>Rhetoric</strong>:<br>
+Rhetoric is the art of using language to convince.</p></div>
+</div>
+</div>
+<div class="openblock slide">
+<div class="content">
 <div class="paragraph"><p><strong>Oxymoron</strong>:</p></div>
-<div class="paragraph"><p>Figure of speech containing words that seem to contradict each other.</p></div>
+<div class="paragraph"><p>An oxymoron is a rhetorical device containing words that seem to contradict each other.</p></div>
+</div>
+</div>
 <div class="openblock slide">
 <div class="content">
 <div class="paragraph"><p>Examples:</p></div>
+</div>
+</div>
 <div class="ulist">
 <ul>
-<li>True myth</li>
-<li>Original copy</li>
-<li>Dark light</li>
-<li>Pragmatic theorist</li>
+<li class="slide">The owner of the gallery told me that this picture was an <strong>original copy</strong></li>
+<li class="slide">Do you like <strong>Virtual Reality</strong>?</li>
+<li class="slide">"Javascript is an awful language" is a <strong>true myth</strong></li>
+<li class="slide">Yehonathan Sharvit is a <strong>pragmatic theorist</strong></li>
 </ul>
-</div>
-</div>
 </div>
 <div class="openblock slide">
 <div class="content">
@@ -141,7 +148,7 @@
 </div>
 <div class="paragraph slide"><p>But it doesn&#8217;t always work, because&#8230;&#8203;</p></div>
 </section>
-<section class="slide" id="_definitions_and_rhetorics_oxymoron_2">
+<section class="slide" id="_definitions_and_rhetorics_oxymoron">
 <h2>Definitions and Rhetorics - Oxymoron</h2>
 <div class="imageblock">
 <div class="content">
@@ -169,7 +176,7 @@ A programming paradigm based on the concept of <strong>objects</strong>, which  
 <br>
 <br>
 <div class="paragraph"><p><strong>Functional Programming</strong>:<br>
-A programming paradigm based on the concept of <strong>functions</strong>, which receive <strong>data</strong> as arguments and return data.<br>
+A programming paradigm based on the concept of <strong>functions</strong><br>
 A <strong>function</strong>:</p></div>
 <div class="ulist">
 <ul>
@@ -194,7 +201,7 @@ Is "functional object oriented programming" an oxymoron?
 <div class="content">
 <div class="paragraph"><p><strong>Object Oriented Programming</strong>:<br>
 A programming paradigm based on the concepts of <strong>objects</strong> and <strong>messages</strong>.</p></div>
-<div class="paragraph"><p>Anmm <strong>object</strong> includes:</p></div>
+<div class="paragraph"><p>An <strong>object</strong> includes:</p></div>
 <div class="ulist">
 <ul>
 <li>a package of data</li>
@@ -209,8 +216,19 @@ A programming paradigm based on the concepts of <strong>objects</strong> and <st
 <br>
 <br>
 <div class="paragraph"><p><strong>Functional Programming</strong>:<br>
-A programming paradigm based on the concept of <strong>functions</strong>, which receive <strong>data</strong> as arguments and return data.<br>
-Functions avoid changing state and mutating data.</p></div>
+A programming paradigm based on the concept of <strong>functions</strong><br>
+A <strong>function</strong>:</p></div>
+<div class="ulist">
+<ul>
+<li>receives <strong>data</strong> and returns <strong>data</strong></li>
+<li><span class="yellow-background">avoids mutating <strong>data</strong></span></li>
+</ul>
+</div>
+</div>
+</div>
+<div class="openblock slide">
+<div class="content">
+<div class="paragraph"><p>What if sending a message was done through a function?</p></div>
 </div>
 </div>
 </section>
@@ -235,33 +253,8 @@ A programming paradigm based on the concepts of <strong>functions</strong>, <str
 <li><span class="yellow-background">an operation avoids mutating data: it eithers returns <strong>data</strong> or a <strong>new version</strong> of the object</span></li>
 </ul>
 </div>
-<div class="paragraph"><p>A <strong>message</strong> specifies one of the operations without describing how the operation should be carried out.</p></div>
-</div>
-</div>
-</section>
-<section class="slide" id="_functional_oop_the_5_commandments">
-<h2>Functional OOP - The 5 commandments</h2>
-<div class="openblock bible">
-<div class="content">
-<div class="olist arabic">
-<ol class="arabic">
-<li>
-Thou Shalt Not Encapsulate Information (Transparency)
-</li>
-<li>
-Thou Shalt Not Mutate an Object (Immutability)
-</li>
-<li>
-Thou Shalt Only Program to an Interface (Polymorphism)
-</li>
-<li>
-Thou Shalt Not Derive from a Concrete Class (Simplicity)
-</li>
-<li>
-Let Thy Friend Extend a Class as Thyself (Extensibility)
-</li>
-</ol>
-</div>
+<div class="paragraph"><p>A <strong>message</strong> specifies one of the operations without describing how the operation should be carried out.<br>
+Messages are sent through a function.</p></div>
 </div>
 </div>
 </section>
@@ -275,16 +268,16 @@ Let Thy Friend Extend a Class as Thyself (Extensibility)
 <div class="olist arabic">
 <ol class="arabic">
 <li class="slide">
-A human has a name
+A human has a <strong>name</strong>
 </li>
 <li class="slide">
-A human has an appellation - how other humans refer to him
+A human has an <strong>appellation</strong> - how other humans refer to him
 </li>
 <li class="slide">
-A human can drink
+A human can <strong>drink</strong>
 </li>
 <li class="slide">
-When a human drinks too much, he is drunk
+When a human drinks too much, he is <strong>drunk</strong>
 </li>
 </ol>
 </div>
@@ -397,6 +390,11 @@ When a human drinks too much, he is drunk
 <div class="paragraph"><p><span class="meditation">Why do we need both <strong>:appellation</strong> operation and <strong>:name</strong> field?</span></p></div>
 </div>
 </div>
+<div class="openblock slide">
+<div class="content">
+<div class="paragraph"><p><span class="meditation">Why do we need to store the <strong>name</strong> in the <strong>:data</strong> instead of accessing the lexical scope?</span></p></div>
+</div>
+</div>
 </section>
 <section class="slide" id="_functional_oop_with_maps_mutations">
 <h2>Functional OOP with maps - mutations</h2>
@@ -431,9 +429,9 @@ When a human drinks too much, he is drunk
 </div>
 </div>
 </div>
-<div class="paragraph slide"><p>Let&#8217;s make the <strong>:drinks</strong> data field an atom</p></div>
-<div class="openblock">
+<div class="openblock slide">
 <div class="content">
+<div class="paragraph"><p>Let&#8217;s make the <strong>:drinks</strong> data field an atom</p></div>
 <div class="listingblock clj">
 <div class="content">
 <pre class="highlight"><code>(defn new-human-with-atoms [name]
@@ -469,17 +467,8 @@ When a human drinks too much, he is drunk
 <br>
 <div class="openblock slide">
 <div class="content">
-<div class="paragraph"><p>That&#8217;s not what we are looking for:</p></div>
-<div class="olist arabic">
-<ol class="arabic">
-<li>
-Now, we have different states for <strong>Noah</strong>
-</li>
-<li>
-We have violated Commandment #2 "Thou Shalt Not Mutate an Object"
-</li>
-</ol>
-</div>
+<div class="paragraph"><p>That&#8217;s not what we are looking for: Now, we have different states for <strong>Noah</strong>.</p></div>
+<div class="paragraph"><p>The code is harder to <em>reason about</em>.</p></div>
 </div>
 </div>
 <div class="openblock slide">
@@ -497,10 +486,16 @@ We have violated Commandment #2 "Thou Shalt Not Mutate an Object"
 <h2>Functional OOP with maps - changes without mutations</h2>
 <div class="openblock slide">
 <div class="content">
+<div class="paragraph"><p>Clojure is famous for its immutable data structures.<br>
+Let&#8217;s leverage them!</p></div>
+</div>
+</div>
+<div class="openblock slide">
+<div class="content">
 <div class="paragraph"><p>Let&#8217;s use <strong>update-in</strong></p></div>
 <div class="listingblock clj">
 <div class="content">
-<pre class="highlight"><code>(update-in {:a {:b 0}} [:a :b] inc)</code></pre>
+<pre class="highlight"><code>(update-in {:a {:b 0}} [:a :b] (partial + 3))</code></pre>
 </div>
 </div>
 <br>
@@ -586,39 +581,6 @@ We have violated Commandment #2 "Thou Shalt Not Mutate an Object"
 </div>
 </div>
 </section>
-<section class="slide" id="_functional_oop_with_maps_extension">
-<h2>Functional OOP with maps - extension</h2>
-<div class="openblock slide">
-<div class="content">
-<div class="listingblock clj">
-<div class="content">
-<pre class="highlight"><code>(defn new-human-with-status [name]
-  (let [human (new-human name)]
-    (assoc-in human [:ops :status]
-              (fn [this]
-                (let [name (get-in this [:data :name])
-                      drinks (get-in this [:data :drinks])]
-                  (str name " has drunk " drinks " drinks"))))))</code></pre>
-</div>
-</div>
-</div>
-</div>
-<div class="openblock slide">
-<div class="content">
-<br>
-<br>
-<div class="paragraph"><p>Let&#8217;s check Joseph&#8217;s status after a couple of drinks</p></div>
-<div class="listingblock clj">
-<div class="content">
-<pre class="highlight"><code>(-&gt; (new-human-with-status "Joseph")
-    (send-msg :take-some-drinks 2)
-    (send-msg :take-some-drinks 3)
-    (send-msg :status))</code></pre>
-</div>
-</div>
-</div>
-</div>
-</section>
 <section class="slide" id="_functional_oop_with_maps_polymorphism">
 <h2>Functional OOP with maps - Polymorphism</h2>
 <div class="openblock slide">
@@ -626,6 +588,12 @@ We have violated Commandment #2 "Thou Shalt Not Mutate an Object"
 <div class="paragraph"><p>Let&#8217;s create another object that implements the same operations but behaves differently&#8230;&#8203;</p></div>
 <br>
 </div>
+</div>
+<div class="ulist">
+<ul>
+<li class="slide">A king&#8217;s appellation contains a title</li>
+<li class="slide">A king is drunk after 5 drinks</li>
+</ul>
 </div>
 <div class="openblock slide">
 <div class="content">
@@ -635,7 +603,7 @@ We have violated Commandment #2 "Thou Shalt Not Mutate an Object"
   {:data {:name name
           :drinks 0}
    :ops {:appellation (fn [this] (str "King " (get-in this [:data :name])))
-         :drunk? (fn [this] (&gt; (get-in this [:data :drinks]) 3))
+         :drunk? (fn [this] (&gt; (get-in this [:data :drinks]) 5))
          :take-some-drinks (fn [this how-many]
                              (update-in this
                                         [:data :drinks]
@@ -677,26 +645,7 @@ We have violated Commandment #2 "Thou Shalt Not Mutate an Object"
 <h2>Functional OOP with maps - summary</h2>
 <div class="openblock slide">
 <div class="content">
-<div class="paragraph"><p>We followed all the commandments:</p></div>
-<div class="olist arabic">
-<ol class="arabic">
-<li>
-✓ Transparency
-</li>
-<li>
-✓ Immutability
-</li>
-<li>
-✓ Polymorphism
-</li>
-<li>
-✓ No Class derivation
-</li>
-<li>
-✓ Extensibility
-</li>
-</ol>
-</div>
+<div class="paragraph"><p>We have created our own Object Oriented "system"</p></div>
 </div>
 </div>
 <div class="openblock slide">
@@ -722,20 +671,46 @@ We have violated Commandment #2 "Thou Shalt Not Mutate an Object"
 </div>
 <div class="openblock slide">
 <div class="content">
-<div class="paragraph"><p>But lots of custom code had to be written</p></div>
+<div class="paragraph"><p>But it&#8217;s not really a system</p></div>
 <div class="olist arabic">
 <ol class="arabic">
 <li>
-Methods access Data trough <strong>this</strong> instead of lexical scope
-</li>
-<li>
-Custom <strong>:data</strong> and <strong>:ops</strong>
+Custom <strong>:data</strong> and <strong>:ops</strong> structure
 </li>
 <li>
 Custom <strong>send-msg</strong> function
 </li>
 <li>
 We have messages but we don&#8217;t have interfaces
+</li>
+<li>
+Methods access data trough <strong>this</strong> instead of lexical scope
+</li>
+</ol>
+</div>
+</div>
+</div>
+</section>
+<section class="slide" id="_functional_oop_in_clojure_the_5_commandments">
+<h2>Functional OOP in Clojure - The 5 commandments</h2>
+<div class="openblock bible">
+<div class="content">
+<div class="olist arabic">
+<ol class="arabic">
+<li class="slide">
+Thou Shalt Not Encapsulate Information (Transparency)
+</li>
+<li class="slide">
+Thou Shalt Not Mutate an Object (Immutability)
+</li>
+<li class="slide">
+Thou Shalt Only Program to an Interface (Polymorphism)
+</li>
+<li class="slide">
+Thou Shalt Not Derive from a Concrete Class (Simplicity)
+</li>
+<li class="slide">
+Let Thy Friend Extend a Class as Thyself (Extensibility)
 </li>
 </ol>
 </div>
@@ -744,7 +719,7 @@ We have messages but we don&#8217;t have interfaces
 </section>
 <section class="slide" id="_functional_oop_with_records_and_protocols">
 <h2>Functional OOP with Records and Protocols</h2>
-<div class="paragraph"><p>In Clojure there are three ways to create an object (or a datatype):</p></div>
+<div class="paragraph"><p>In Clojure there are three ways to create an object (it&#8217;s called a datatype):</p></div>
 <div class="olist arabic">
 <ol class="arabic">
 <li>
@@ -858,7 +833,7 @@ reify
 <h2>Records and Protocols - Transparency</h2>
 <div class="openblock slide">
 <div class="content">
-<div class="paragraph"><p><span class="bible">Thou Shalt Not Encapsulate Information (Transparency)</span></p></div>
+<div class="paragraph"><p><span class="bible">1. Thou Shalt Not Encapsulate Information (Transparency)</span></p></div>
 </div>
 </div>
 <div class="openblock slide">
@@ -882,7 +857,7 @@ reify
 </section>
 <section class="slide" id="_records_and_protocols_immutability">
 <h2>Records and Protocols - Immutability</h2>
-<div class="paragraph slide"><p><span class="bible">Thou Shalt Not Mutate an Object (Immutability)</span></p></div>
+<div class="paragraph slide"><p><span class="bible">2. Thou Shalt Not Mutate an Object (Immutability)</span></p></div>
 <div class="openblock slide">
 <div class="content">
 <div class="listingblock clj">
@@ -897,10 +872,14 @@ reify
 </section>
 <section class="slide" id="_records_and_protocols_strict_polymorphism">
 <h2>Records and Protocols - Strict Polymorphism</h2>
-<div class="paragraph slide"><p><span class="bible">Thou Shalt Only Program to an Interface (Strict Polymorphism)</span></p></div>
+<div class="paragraph slide"><p><span class="bible">3. Thou Shalt Only Program to an Interface (Strict Polymorphism)</span></p></div>
 <div class="openblock slide">
 <div class="content">
 <div class="paragraph"><p>The syntax doesn&#8217;t allow adding a method to a record without specifying a protocol</p></div>
+</div>
+</div>
+<div class="openblock slide">
+<div class="content">
 <div class="listingblock clj">
 <div class="content">
 <pre class="highlight"><code>(defrecord IAmAlone []
@@ -936,7 +915,7 @@ IHuman
 <h2>Records and protocols - Simplicity</h2>
 <div class="openblock slide">
 <div class="content">
-<div class="paragraph"><p><span class="bible">Thou Shalt Not Derive from a Concrete Class (Simplicity)</span></p></div>
+<div class="paragraph"><p><span class="bible">4. Thou Shalt Not Derive from a Concrete Class (Simplicity)</span></p></div>
 </div>
 </div>
 <div class="openblock slide">
@@ -948,7 +927,7 @@ IHuman
 </section>
 <section class="slide" id="_records_and_protocols_extensibility">
 <h2>Records and Protocols - Extensibility</h2>
-<div class="paragraph slide"><p><span class="bible">Let Thy Friend Extend a Class as Thyself (Extensibility)</span></p></div>
+<div class="paragraph slide"><p><span class="bible">5. Let Thy Friend Extend a Class as Thyself (Extensibility)</span></p></div>
 <div class="openblock slide">
 <div class="content">
 <div class="paragraph"><p>In order to add new functionality to a record, we have to create a new protocol:</p></div>
@@ -962,7 +941,8 @@ IHuman
 </div>
 <div class="openblock slide">
 <div class="content">
-<div class="paragraph"><p>Although the <strong>Human</strong> record is closed, we can still extend it:</p></div>
+<div class="paragraph"><p>Although the <strong>Human</strong> record is already defined, we can still extend it.<br>
+A record is never closed!</p></div>
 <div class="listingblock clj">
 <div class="content">
 <pre class="highlight"><code>(extend-type Human
@@ -1099,12 +1079,22 @@ IHuman
 </section>
 <section class="slide" id="_questions">
 <h2>Questions</h2>
-<div class="imageblock">
-<div class="content">
-<img alt="questions" src="images/get-programming-clojure-book.png">
+<div class="left" style="width:50%; margin-top: 300px;">
+   <div class="centered">
+   <p>
+   Early access version of the book
+   </p>
+      <img src='https://chart.googleapis.com/chart?cht=qr&chl=https%3A%2F%2Ftinyurl.com%2Fget-clojure&chs=300x300' alt='qr code'/>
+   <p>
+     <a href="https://tinyurl.com/get-clojure"> https://tinyurl.com/get-clojure </a>
+   </p>
+     <p>DISCOUNT CODE: <span style="font-weight: bold;">mlsharvit</span> (50% off)</p>
+     <p>Valid until December 9, 2018</p>
+   </div>
 </div>
+<div class="left" style="width:50%;">
+   <img style="width: 80%" src='./images/get-programming-clojure-book.png'/>
 </div>
-<div class="paragraph"><p><a class="bare" href="https://tinyurl.com/get-clojure">https://tinyurl.com/get-clojure</a></p></div>
 <style>
 .bible {
 font-family: cursive;

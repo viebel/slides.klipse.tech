@@ -19,18 +19,24 @@
 ++++
 <section class="slide">
         <div class="text-centered">
-            <div class="centered" style="font-size:1.9em;">
-	    <br>
-            <div> Polymorphism à la Clojure
+            <div class="centered" style="font-size:1.4em;">
+            <div style="font-size:2em;"> Polymorphism à la Clojure
     <br>
     <span style="font-style:italic;m">Functional Object Oriented Programming</span>
     <br>
     is not an Oxymoron
     </div>
+    <br>
+    <br>
               <div class="left" style="width:50%;">
+	      <div> Interactive Slides</div>
 	      <img src='https://chart.googleapis.com/chart?cht=qr&chl=http%3A%2F%2Fslides.klipse.tech%2Fasciidoc%2Ffunctional-oop-clojure.html&chs=300x300' alt='qr code'></img>
+              <div>
+		  <a href="https://tinyurl.com/fun-oop"> https://tinyurl.com/fun-oop </a>
+              </div>
+	      
 	      </div>
-              <div class="left" style="width:50%;">
+              <div class="left" style="width:50%;margin-top:30px;">
 		<div>
                   <div>
                     <img class="fullscreen" src="./images/klipse.png" alt="" width="150">
@@ -44,20 +50,11 @@
 		    <a class="github-button" href="https://github.com/viebel/klipse" data-size="large" data-show-count="true" aria-label="Star viebel/klipse on GitHub">Klipse</a>
                     </div>
                   </div>
-                  <div>
-		  <a href="https://tinyurl.com/fun-oop"> https://tinyurl.com/fun-oop </a>
-                  </div>
 		</div>
               </div>
             </div>
             <div class="clear centered">
 	    <br><br><br>
-	      <div style="padding-top: 20px;">
-		<pre><code class="clj" data-loop-msec="1000" data-beautify-strings="true">
-		(str (js/Date.))
-		</code></pre>
-		<br>
-	      </div>
             </div>
 	    <br><br>
 	    <div style="font-size: 2em;">Yehonathan Sharvit</div>
@@ -69,8 +66,8 @@
 == The Agenda
 
 - Definitions and Rhetorics
-- Object Oriented Programming with functions and maps
-- Object Oriented Programming with records and protocols
+- Functional Object Oriented Programming with maps
+- Functional Object Oriented Programming with records
 - Conclusion
 
 
@@ -90,22 +87,31 @@
 image::images/me.jpg[me]
 
 
-== Definitions and Rhetorics - Oxymoron
+== Definitions and Rhetoric - Oxymoron
 
-
-*Oxymoron*:
-
-Figure of speech containing words that seem to contradict each other. 
 
 [%step]
 --
-Examples:
-
-- True myth
-- Original copy
-- Dark light
-- Pragmatic theorist
+*Rhetoric*:
+Rhetoric is the art of using language to convince.
 --
+
+[%step]
+--
+*Oxymoron*:
+
+An oxymoron is a rhetorical device containing words that seem to contradict each other.
+--
+[%step]
+--
+Examples:
+--
+[%step]
+- The owner of the gallery told me that this picture was an *original copy*
+- Do you like *Virtual Reality*?
+- "Javascript is an awful language" is a *true myth*
+- Yehonathan Sharvit is a *pragmatic theorist*
+
 
 [%step]
 --
@@ -144,7 +150,7 @@ Methods can access and [yellow-background]#often modify the data fields of the o
 ++++
 
 *Functional Programming*:
-A programming paradigm based on the concept of *functions*, which receive *data* as arguments and return data.
+A programming paradigm based on the concept of *functions*
 A *function*:
 
 - receives *data* and returns *data*
@@ -166,7 +172,7 @@ Is "functional object oriented programming" an oxymoron?
 *Object Oriented Programming*:
 A programming paradigm based on the concepts of *objects* and *messages*.
 
-Anmm *object* includes:
+An *object* includes:
 
 - a package of data
 - a description of the operations that can be performed on that data
@@ -181,12 +187,18 @@ A *message* specifies one of the operations, but unlike a procedure, does not de
 <br>
 <br>
 ++++
-
 *Functional Programming*:
-A programming paradigm based on the concept of *functions*, which receive *data* as arguments and return data.
-Functions avoid changing state and mutating data.
+A programming paradigm based on the concept of *functions*
+A *function*:
+
+- receives *data* and returns *data*
+- [yellow-background]#avoids mutating *data*#
 --
 
+[%step]
+--
+What if sending a message was done through a function?
+--
 
 == Definitions and Rhetorics - Functional OOP
 
@@ -208,25 +220,9 @@ An *object* includes:
 - [yellow-background]#an operation avoids mutating data: it eithers returns *data* or a *new version* of the object#
 
 A *message* specifies one of the operations without describing how the operation should be carried out.
+Messages are sent through a function.
 --
 
-
-
-== Functional OOP - The 5 commandments 
-
-[bible]
---
-. Thou Shalt Not Encapsulate Information (Transparency)
-
-. Thou Shalt Not Mutate an Object (Immutability)
-
-. Thou Shalt Only Program to an Interface (Polymorphism)
-
-. Thou Shalt Not Derive from a Concrete Class (Simplicity)
-
-. Let Thy Friend Extend a Class as Thyself (Extensibility)
-
---
 
 
 == Functional OOP with maps
@@ -237,10 +233,10 @@ What is the essence of a human?
 --
 
 [%step]
-. A human has a name
-. A human has an appellation - how other humans refer to him
-. A human can drink
-. When a human drinks too much, he is drunk
+. A human has a *name*
+. A human has an *appellation* - how other humans refer to him
+. A human can *drink*
+. When a human drinks too much, he is *drunk*
 
 
 [%step]
@@ -349,6 +345,10 @@ Let's send a *:appellation* message to a human
 [meditation]#Why do we need both *:appellation* operation and *:name* field?#
 --
 
+[%step]
+--
+[meditation]#Why do we need to store the *name* in the *:data* instead of accessing the lexical scope?#
+--
 
 == Functional OOP with maps - mutations
 
@@ -380,8 +380,8 @@ Clojure is powerful: let's use atoms and *swap!* them
 --
 
 [%step]
-Let's make the *:drinks* data field an atom
 --
+Let's make the *:drinks* data field an atom
 [source.clj]
 ----
 (defn new-human-with-atoms [name]
@@ -419,11 +419,9 @@ Let's ask Noah to take a couple of drinks
 ++++
 [%step]
 --
-That's not what we are looking for:
+That's not what we are looking for: Now, we have different states for *Noah*.
 
-. Now, we have different states for *Noah*
-. We have violated Commandment #2 "Thou Shalt Not Mutate an Object"
-
+The code is harder to _reason about_.
 --
 
 
@@ -440,10 +438,15 @@ image::images/drunk.png[mutation, width=1000]
 
 [%step]
 --
+Clojure is famous for its immutable data structures.
+Let's leverage them!
+--
+[%step]
+--
 Let's use *update-in*
 [source.clj]
 ----
-(update-in {:a {:b 0}} [:a :b] inc)
+(update-in {:a {:b 0}} [:a :b] (partial + 3))
 ----
 ++++
 <br>
@@ -533,42 +536,6 @@ The code looks shorter with a thread macro
 ----
 --
 
-== Functional OOP with maps - extension
-
-[%step]
---
-[source.clj]
-----
-(defn new-human-with-status [name]
-  (let [human (new-human name)]
-    (assoc-in human [:ops :status]
-              (fn [this]
-                (let [name (get-in this [:data :name])
-                      drinks (get-in this [:data :drinks])]
-                  (str name " has drunk " drinks " drinks"))))))
-----
---
-
-
-[%step]
---
-++++
-<br>
-<br>
-++++
-
-Let's check Joseph's status after a couple of drinks
-
-
-[source.clj]
-----
-(-> (new-human-with-status "Joseph")
-    (send-msg :take-some-drinks 2)
-    (send-msg :take-some-drinks 3)
-    (send-msg :status))
-----
---
-
 
 == Functional OOP with maps - Polymorphism
 
@@ -580,6 +547,10 @@ Let's create another object that implements the same operations but behaves diff
 ++++
 --
 [%step]
+* A king's appellation contains a title
+* A king is drunk after 5 drinks
+
+[%step]
 --
 [source.clj]
 ----
@@ -587,7 +558,7 @@ Let's create another object that implements the same operations but behaves diff
   {:data {:name name
           :drinks 0}
    :ops {:appellation (fn [this] (str "King " (get-in this [:data :name])))
-         :drunk? (fn [this] (> (get-in this [:data :drinks]) 3))
+         :drunk? (fn [this] (> (get-in this [:data :drinks]) 5))
          :take-some-drinks (fn [this how-many]
                              (update-in this
                                         [:data :drinks]
@@ -631,13 +602,7 @@ Both pieces of code that send the message look the same, but the behaviour is di
 
 [%step]
 --
-We followed all the commandments:
-
-. ✓ Transparency
-. ✓ Immutability
-. ✓ Polymorphism
-. ✓ No Class derivation 
-. ✓ Extensibility 
+We have created our own Object Oriented "system"
 --
 
 [%step]
@@ -664,18 +629,33 @@ We followed all the commandments:
 
 [%step]
 --
-But lots of custom code had to be written
+But it's not really a system
 
-. Methods access Data trough *this* instead of lexical scope
-. Custom *:data* and *:ops* 
+. Custom *:data* and *:ops* structure
 . Custom *send-msg* function
 . We have messages but we don't have interfaces
+. Methods access data trough *this* instead of lexical scope
+--
+
+
+
+
+== Functional OOP in Clojure - The 5 commandments 
+
+[bible]
+--
+[%step]
+. Thou Shalt Not Encapsulate Information (Transparency)
+. Thou Shalt Not Mutate an Object (Immutability)
+. Thou Shalt Only Program to an Interface (Polymorphism)
+. Thou Shalt Not Derive from a Concrete Class (Simplicity)
+. Let Thy Friend Extend a Class as Thyself (Extensibility)
 --
 
 
 == Functional OOP with Records and Protocols
 
-In Clojure there are three ways to create an object (or a datatype):
+In Clojure there are three ways to create an object (it's called a datatype):
 
 . deftype
 . defrecord
@@ -784,7 +764,7 @@ image::images/indirection.jpg[mutation, width=1000]
 
 [%step]
 --
-[bible]#Thou Shalt Not Encapsulate Information (Transparency)#
+[bible]#1. Thou Shalt Not Encapsulate Information (Transparency)#
 --
 [%step]
 --
@@ -805,7 +785,7 @@ image::images/indirection.jpg[mutation, width=1000]
 == Records and Protocols - Immutability
 
 [%step]
-[bible]#Thou Shalt Not Mutate an Object (Immutability)#
+[bible]#2. Thou Shalt Not Mutate an Object (Immutability)#
 
 [%step]
 --
@@ -821,12 +801,14 @@ image::images/indirection.jpg[mutation, width=1000]
 
 
 [%step]
-[bible]#Thou Shalt Only Program to an Interface (Strict Polymorphism)#
+[bible]#3. Thou Shalt Only Program to an Interface (Strict Polymorphism)#
 
 [%step]
 --
 The syntax doesn't allow adding a method to a record without specifying a protocol
-
+--
+[%step]
+--
 [source.clj]
 ----
 (defrecord IAmAlone []
@@ -859,7 +841,7 @@ Bad things happen
 
 [%step]
 --
-[bible]#Thou Shalt Not Derive from a Concrete Class (Simplicity)#
+[bible]#4. Thou Shalt Not Derive from a Concrete Class (Simplicity)#
 --
 
 [%step]
@@ -872,7 +854,7 @@ Clojure blocks it. You can try composition
 == Records and Protocols - Extensibility
 
 [%step]
-[bible]#Let Thy Friend Extend a Class as Thyself (Extensibility)#
+[bible]#5. Let Thy Friend Extend a Class as Thyself (Extensibility)#
 
 [%step]
 --
@@ -886,7 +868,8 @@ In order to add new functionality to a record, we have to create a new protocol:
 
 [%step]
 --
-Although the *Human* record is closed, we can still extend it:
+Although the *Human* record is already defined, we can still extend it.
+A record is never closed!
 [source.clj]
 ----
 (extend-type Human
@@ -1036,10 +1019,27 @@ What is the essence of Clojure?
 
 == Questions
 
-image::images/get-programming-clojure-book.png[questions]
+++++
+<div class="left" style="width:50%; margin-top: 300px;">
+   <div class="centered">
+   <p>
+   Early access version of the book
+   </p>
+      <img src='https://chart.googleapis.com/chart?cht=qr&chl=https%3A%2F%2Ftinyurl.com%2Fget-clojure&chs=300x300' alt='qr code'/>
+   <p>
+     <a href="https://tinyurl.com/get-clojure"> https://tinyurl.com/get-clojure </a>
+   </p>
+     <p>DISCOUNT CODE: <span style="font-weight: bold;">mlsharvit</span> (50% off)</p>
+     <p>Valid until December 9, 2018</p>
+   </div>
+</div>
+++++
 
-https://tinyurl.com/get-clojure
-
+++++
+<div class="left" style="width:50%;">
+   <img style="width: 80%" src='./images/get-programming-clojure-book.png'/>
+</div>
+++++
 
 
 ++++
