@@ -20,7 +20,7 @@
 <section class="slide">
         <div class="text-centered">
             <div class="centered" style="font-size:1.4em;">
-            <div style="font-size:2em;"> Polymorphism à la Clojure
+            <div style="font-size:2em;"> Polymorphism à la Clojure:
     <br>
     <span style="font-style:italic;m">Functional Object Oriented Programming</span>
     <br>
@@ -39,16 +39,11 @@
               <div class="left" style="width:50%;margin-top:30px;">
 		<div>
                   <div>
-                    <img class="fullscreen" src="./images/klipse.png" alt="" width="150">
+                    <img class="fullscreen" src="./images/ldn-clj.png" alt="" width="150">
                   </div> 
                   <div>
 		  <div>ClojureX 2018</div>
 		  <div>London - Dec 3, 2018</div>
-                  </div>
-                  <div class="clear">
-                    <div style="margin-top:14px;">
-		    <a class="github-button" href="https://github.com/viebel/klipse" data-size="large" data-show-count="true" aria-label="Star viebel/klipse on GitHub">Klipse</a>
-                    </div>
                   </div>
 		</div>
               </div>
@@ -58,17 +53,16 @@
             </div>
 	    <br><br>
 	    <div style="font-size: 2em;">Yehonathan Sharvit</div>
-	    <div style="font-size: 2em;"> <a href="https://twitter.com/viebel">@viebel</a>, viebel@gmail.com</div></p>
+	    <div style="font-size: 2em;"> <a href="https://twitter.com/viebel">@viebel</a></div></p>
         </div>
       </section>
 ++++
 
-== The Agenda
+== Agenda
 
-- Definitions and Rhetorics
-- Functional Object Oriented Programming with maps
-- Functional Object Oriented Programming with records
-- Conclusion
+. Definitions and Rhetoric
+. Functional Object Oriented Programming with maps
+. Functional Object Oriented Programming with records
 
 
 == Who am I?
@@ -78,14 +72,21 @@
 - A pragmatic theorist
 - Author of https://github.com/viebel/klipse[Klipse]
 - A Web consultant: Full-Stack, clojure, clojurescript, node.js, react.js
-- A disciple of the Bible
-- A Blogger about Functional Programming (http://blog.klipse.tech/[blog.klipse.tech])
+- A Blogger about Functional Programming at http://blog.klipse.tech/
 - Third year in a row at ClojureX
 - Writing a book with Manning "Get Programming with Clojure" - MEAP launch today
 --
 
 image::images/me.jpg[me]
 
+
+== Definitions and Rhetoric
+
+[chapter-intro]
+--
+[text-centered]#Part 1#
+Definition and Rhetoric
+--
 
 == Definitions and Rhetoric - Oxymoron
 
@@ -124,11 +125,11 @@ Purpose:
 [%step]
 But it doesn't always work, because...
 
-== Definitions and Rhetorics - Oxymoron
+== Definitions and Rhetoric - Oxymoron
 
 image::images/stone.jpg[stone]
 
-== Definitions and Rhetorics - OOP vs. FP
+== Definitions and Rhetoric - OOP vs. FP
 
 [%step]
 --
@@ -159,13 +160,13 @@ A *function*:
 --
 
 
-== Definitons and Rhetorics - Summary
+== Definitons and Rhetoric - Summary
 
 [quote]
 Is "functional object oriented programming" an oxymoron?
 
 
-== Definitions and Rhetorics - OOP redefined
+== Definitions and Rhetoric - OOP redefined
 
 [%step]
 --
@@ -181,26 +182,14 @@ A *message* specifies one of the operations, but unlike a procedure, does not de
 --
 
 
-[%step]
---
-++++
-<br>
-<br>
-++++
-*Functional Programming*:
-A programming paradigm based on the concept of *functions*
-A *function*:
 
-- receives *data* and returns *data*
-- [yellow-background]#avoids mutating *data*#
---
 
 [%step]
 --
 What if sending a message was done through a function?
 --
 
-== Definitions and Rhetorics - Functional OOP
+== Definitions and Rhetoric - Functional OOP
 
 [%step]
 --
@@ -223,9 +212,15 @@ A *message* specifies one of the operations without describing how the operation
 Messages are sent through a function.
 --
 
-
-
 == Functional OOP with maps
+[chapter-intro]
+--
+Part 2
+Functional OOP with maps
+--
+
+
+== Functional OOP with maps - human's essence
 
 [%step]
 --
@@ -524,6 +519,32 @@ When we manipulate a map in Clojure, we create new versions of the map.
 ----
 --
 
+== Functional OOP with maps - changes with thread macro
+
+
+[%step]
+--
+Thread macro
+[source.clj]
+----
+(-> {}
+    (assoc :a 1)
+    (assoc :b 2))
+----
+--
+
+[%step]
+--
+Let's rewrite this piece of code
+[source.clj]
+----
+(let [abraham (new-human "Abraham")
+      abraham-1 (send-msg abraham :take-some-drinks 2)
+      abraham-2 (send-msg abraham-1 :take-some-drinks 3)]
+  (send-msg abraham-2 :drunk?))
+----
+--
+
 [%step]
 --
 The code looks shorter with a thread macro
@@ -542,9 +563,6 @@ The code looks shorter with a thread macro
 [%step]
 --
 Let's create another object that implements the same operations but behaves differently...
-++++
-<br>
-++++
 --
 [%step]
 * A king's appellation contains a title
@@ -568,10 +586,6 @@ Let's create another object that implements the same operations but behaves diff
 
 [%step]
 --
-++++
-<br>
-<br>
-++++
 When we send a message, we don't know what procedure is going to be called
 --
 
@@ -590,10 +604,6 @@ David, the human
 (let [david (new-human "David")] 
   (send-msg david :appellation))
 ----
-++++
-<br>
-<br>
-++++
 Both pieces of code that send the message look the same, but the behaviour is different.
 --
 
@@ -638,9 +648,25 @@ But it's not really a system
 --
 
 
+== Functional OOP with Records and Protocols
+[chapter-intro]
+--
+Part 3
+Functional OOP with Records and Protocols
+--
+
+== Functional OOP with Records and Protocols
+
+In Clojure there are three ways to create an object (it's called a datatype):
+
+. deftype
+. defrecord
+. reify
+
+We will focus on *defrecord*
 
 
-== Functional OOP in Clojure - The 5 commandments 
+== Functional OOP with Records and Protocols - The 5 commandments 
 
 [bible]
 --
@@ -653,15 +679,6 @@ But it's not really a system
 --
 
 
-== Functional OOP with Records and Protocols
-
-In Clojure there are three ways to create an object (it's called a datatype):
-
-. deftype
-. defrecord
-. reify
-
-Now, we will focus on *defrecord*
 
 == Functional OOP with Records and Protocols
 
@@ -669,9 +686,6 @@ First, we define a protocol:
 
 [%step]
 --
-++++
-<br>
-++++
 [source.clj]
 ----
 (defprotocol IHuman
@@ -683,10 +697,6 @@ First, we define a protocol:
 
 [%step]
 --
-++++
-<br>
-<br>
-++++
 Then, a record that implements the protocol:
 [source.clj]
 ----
@@ -703,10 +713,6 @@ Then, a record that implements the protocol:
 
 [%step]
 --
-++++
-<br>
-<br>
-++++
 And a constructor 
 [source.clj]
 ----
@@ -718,10 +724,6 @@ And a constructor
 
 [%step]
 --
-++++
-<br>
-<br>
-++++
 Let's create a human and ask him to take some drinks
 [source.clj]
 ----
@@ -774,6 +776,7 @@ image::images/indirection.jpg[mutation, width=1000]
 ----
 --
 
+
 [%step]
 --
 [source.clj]
@@ -796,6 +799,26 @@ image::images/indirection.jpg[mutation, width=1000]
   adam)
 ----
 --
+
+[%step]
+--
+Successive operations usually done with the thread macro
+[source.clj]
+----
+(let [abraham (create-human "Abraham")]
+  (-> abraham
+      (take-some-drinks 2)
+      (take-some-drinks 3)))
+----
+--
+
+[%step]
+--
+Remember: After a drink, a human is not the same human
+
+image::images/drunk.png[mutation, width=1000]
+--
+
 
 == Records and Protocols - Strict Polymorphism
 
@@ -870,9 +893,24 @@ In order to add new functionality to a record, we have to create a new protocol:
 --
 Although the *Human* record is already defined, we can still extend it.
 A record is never closed!
+--
+
+[%step]
+--
+The original *Human* record doesn't have a status
 [source.clj]
 ----
-(extend-type Human
+(def adam (create-human "Adam"))
+(status adam)
+----
+
+--
+[%step]
+--
+Let's extend the *Human* record to the *IStatus* protocol 
+[source.clj]
+----
+#_(extend-type Human
   IStatus
   (status [this] (str (:name this) " has drunk " (:drinks this) " drinks")))
 ----
@@ -883,7 +921,7 @@ A record is never closed!
 Now, Adam has a status:
 [source.clj]
 ----
-(status (create-human "Adam"))
+#_(status adam)
 ----
 --
 
@@ -1047,6 +1085,13 @@ What is the essence of Clojure?
 .bible {
 font-family: cursive;
 font-size: 2.5em;
+}
+.chapter-intro {
+font-size: 2.5em;
+font-weight: bold;
+color: #63b132;
+margin-top: 300px;
+text-align: center;
 }
 .yellow-background {
 background: yellow;

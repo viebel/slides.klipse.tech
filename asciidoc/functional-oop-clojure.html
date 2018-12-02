@@ -31,7 +31,7 @@
 <section class="slide">
         <div class="text-centered">
             <div class="centered" style="font-size:1.4em;">
-            <div style="font-size:2em;"> Polymorphism à la Clojure
+            <div style="font-size:2em;"> Polymorphism à la Clojure:
     <br>
     <span style="font-style:italic;m">Functional Object Oriented Programming</span>
     <br>
@@ -50,16 +50,11 @@
               <div class="left" style="width:50%;margin-top:30px;">
 		<div>
                   <div>
-                    <img class="fullscreen" src="./images/klipse.png" alt="" width="150">
+                    <img class="fullscreen" src="./images/ldn-clj.png" alt="" width="150">
                   </div>
                   <div>
 		  <div>ClojureX 2018</div>
 		  <div>London - Dec 3, 2018</div>
-                  </div>
-                  <div class="clear">
-                    <div style="margin-top:14px;">
-		    <a class="github-button" href="https://github.com/viebel/klipse" data-size="large" data-show-count="true" aria-label="Star viebel/klipse on GitHub">Klipse</a>
-                    </div>
                   </div>
 		</div>
               </div>
@@ -69,19 +64,24 @@
             </div>
 	    <br><br>
 	    <div style="font-size: 2em;">Yehonathan Sharvit</div>
-	    <div style="font-size: 2em;"> <a href="https://twitter.com/viebel">@viebel</a>, viebel@gmail.com</div></p>
+	    <div style="font-size: 2em;"> <a href="https://twitter.com/viebel">@viebel</a></div></p>
         </div>
       </section>
 </section>
-<section class="slide" id="_the_agenda">
-<h2>The Agenda</h2>
-<div class="ulist">
-<ul>
-<li>Definitions and Rhetorics</li>
-<li>Functional Object Oriented Programming with maps</li>
-<li>Functional Object Oriented Programming with records</li>
-<li>Conclusion</li>
-</ul>
+<section class="slide" id="_agenda">
+<h2>Agenda</h2>
+<div class="olist arabic">
+<ol class="arabic">
+<li>
+Definitions and Rhetoric
+</li>
+<li>
+Functional Object Oriented Programming with maps
+</li>
+<li>
+Functional Object Oriented Programming with records
+</li>
+</ol>
 </div>
 </section>
 <section class="slide" id="_who_am_i">
@@ -94,8 +94,7 @@
 <li>A pragmatic theorist</li>
 <li>Author of <a href="https://github.com/viebel/klipse">Klipse</a></li>
 <li>A Web consultant: Full-Stack, clojure, clojurescript, node.js, react.js</li>
-<li>A disciple of the Bible</li>
-<li>A Blogger about Functional Programming (<a href="http://blog.klipse.tech/">blog.klipse.tech</a>)</li>
+<li>A Blogger about Functional Programming at <a class="bare" href="http://blog.klipse.tech/">http://blog.klipse.tech/</a></li>
 <li>Third year in a row at ClojureX</li>
 <li>Writing a book with Manning "Get Programming with Clojure" - MEAP launch today</li>
 </ul>
@@ -105,6 +104,15 @@
 <div class="imageblock">
 <div class="content">
 <img alt="me" src="images/me.jpg">
+</div>
+</div>
+</section>
+<section class="slide" id="_definitions_and_rhetoric">
+<h2>Definitions and Rhetoric</h2>
+<div class="openblock chapter-intro">
+<div class="content">
+<div class="paragraph"><p><span class="text-centered">Part 1</span><br>
+Definition and Rhetoric</p></div>
 </div>
 </div>
 </section>
@@ -148,16 +156,16 @@ Rhetoric is the art of using language to convince.</p></div>
 </div>
 <div class="paragraph slide"><p>But it doesn&#8217;t always work, because&#8230;&#8203;</p></div>
 </section>
-<section class="slide" id="_definitions_and_rhetorics_oxymoron">
-<h2>Definitions and Rhetorics - Oxymoron</h2>
+<section class="slide" id="_definitions_and_rhetoric_oxymoron_2">
+<h2>Definitions and Rhetoric - Oxymoron</h2>
 <div class="imageblock">
 <div class="content">
 <img alt="stone" src="images/stone.jpg">
 </div>
 </div>
 </section>
-<section class="slide" id="_definitions_and_rhetorics_oop_vs_fp">
-<h2>Definitions and Rhetorics - OOP vs. FP</h2>
+<section class="slide" id="_definitions_and_rhetoric_oop_vs_fp">
+<h2>Definitions and Rhetoric - OOP vs. FP</h2>
 <div class="openblock slide">
 <div class="content">
 <div class="paragraph"><p><strong>Object Oriented Programming</strong>:<br>
@@ -187,16 +195,16 @@ A <strong>function</strong>:</p></div>
 </div>
 </div>
 </section>
-<section class="slide" id="_definitons_and_rhetorics_summary">
-<h2>Definitons and Rhetorics - Summary</h2>
+<section class="slide" id="_definitons_and_rhetoric_summary">
+<h2>Definitons and Rhetoric - Summary</h2>
 <div class="quoteblock">
 <blockquote>
 Is "functional object oriented programming" an oxymoron?
 </blockquote>
 </div>
 </section>
-<section class="slide" id="_definitions_and_rhetorics_oop_redefined">
-<h2>Definitions and Rhetorics - OOP redefined</h2>
+<section class="slide" id="_definitions_and_rhetoric_oop_redefined">
+<h2>Definitions and Rhetoric - OOP redefined</h2>
 <div class="openblock slide">
 <div class="content">
 <div class="paragraph"><p><strong>Object Oriented Programming</strong>:<br>
@@ -213,27 +221,12 @@ A programming paradigm based on the concepts of <strong>objects</strong> and <st
 </div>
 <div class="openblock slide">
 <div class="content">
-<br>
-<br>
-<div class="paragraph"><p><strong>Functional Programming</strong>:<br>
-A programming paradigm based on the concept of <strong>functions</strong><br>
-A <strong>function</strong>:</p></div>
-<div class="ulist">
-<ul>
-<li>receives <strong>data</strong> and returns <strong>data</strong></li>
-<li><span class="yellow-background">avoids mutating <strong>data</strong></span></li>
-</ul>
-</div>
-</div>
-</div>
-<div class="openblock slide">
-<div class="content">
 <div class="paragraph"><p>What if sending a message was done through a function?</p></div>
 </div>
 </div>
 </section>
-<section class="slide" id="_definitions_and_rhetorics_functional_oop">
-<h2>Definitions and Rhetorics - Functional OOP</h2>
+<section class="slide" id="_definitions_and_rhetoric_functional_oop">
+<h2>Definitions and Rhetoric - Functional OOP</h2>
 <div class="openblock slide">
 <div class="content">
 <div class="paragraph"><p><strong>Functional Object Oriented Programming</strong>:<br>
@@ -260,6 +253,15 @@ Messages are sent through a function.</p></div>
 </section>
 <section class="slide" id="_functional_oop_with_maps">
 <h2>Functional OOP with maps</h2>
+<div class="openblock chapter-intro">
+<div class="content">
+<div class="paragraph"><p>Part 2<br>
+Functional OOP with maps</p></div>
+</div>
+</div>
+</section>
+<section class="slide" id="_functional_oop_with_maps_human_s_essence">
+<h2>Functional OOP with maps - human&#8217;s essence</h2>
 <div class="openblock slide">
 <div class="content">
 <div class="paragraph"><p>What is the essence of a human?</p></div>
@@ -567,6 +569,34 @@ Let&#8217;s leverage them!</p></div>
 </div>
 </div>
 </div>
+</section>
+<section class="slide" id="_functional_oop_with_maps_changes_with_thread_macro">
+<h2>Functional OOP with maps - changes with thread macro</h2>
+<div class="openblock slide">
+<div class="content">
+<div class="paragraph"><p>Thread macro</p></div>
+<div class="listingblock clj">
+<div class="content">
+<pre class="highlight"><code>(-&gt; {}
+    (assoc :a 1)
+    (assoc :b 2))</code></pre>
+</div>
+</div>
+</div>
+</div>
+<div class="openblock slide">
+<div class="content">
+<div class="paragraph"><p>Let&#8217;s rewrite this piece of code</p></div>
+<div class="listingblock clj">
+<div class="content">
+<pre class="highlight"><code>(let [abraham (new-human "Abraham")
+      abraham-1 (send-msg abraham :take-some-drinks 2)
+      abraham-2 (send-msg abraham-1 :take-some-drinks 3)]
+  (send-msg abraham-2 :drunk?))</code></pre>
+</div>
+</div>
+</div>
+</div>
 <div class="openblock slide">
 <div class="content">
 <div class="paragraph"><p>The code looks shorter with a thread macro</p></div>
@@ -586,7 +616,6 @@ Let&#8217;s leverage them!</p></div>
 <div class="openblock slide">
 <div class="content">
 <div class="paragraph"><p>Let&#8217;s create another object that implements the same operations but behaves differently&#8230;&#8203;</p></div>
-<br>
 </div>
 </div>
 <div class="ulist">
@@ -614,8 +643,6 @@ Let&#8217;s leverage them!</p></div>
 </div>
 <div class="openblock slide">
 <div class="content">
-<br>
-<br>
 <div class="paragraph"><p>When we send a message, we don&#8217;t know what procedure is going to be called</p></div>
 </div>
 </div>
@@ -635,8 +662,6 @@ Let&#8217;s leverage them!</p></div>
   (send-msg david :appellation))</code></pre>
 </div>
 </div>
-<br>
-<br>
 <div class="paragraph"><p>Both pieces of code that send the message look the same, but the behaviour is different.</p></div>
 </div>
 </div>
@@ -691,8 +716,35 @@ Methods access data trough <strong>this</strong> instead of lexical scope
 </div>
 </div>
 </section>
-<section class="slide" id="_functional_oop_in_clojure_the_5_commandments">
-<h2>Functional OOP in Clojure - The 5 commandments</h2>
+<section class="slide" id="_functional_oop_with_records_and_protocols">
+<h2>Functional OOP with Records and Protocols</h2>
+<div class="openblock chapter-intro">
+<div class="content">
+<div class="paragraph"><p>Part 3<br>
+Functional OOP with Records and Protocols</p></div>
+</div>
+</div>
+</section>
+<section class="slide" id="_functional_oop_with_records_and_protocols_2">
+<h2>Functional OOP with Records and Protocols</h2>
+<div class="paragraph"><p>In Clojure there are three ways to create an object (it&#8217;s called a datatype):</p></div>
+<div class="olist arabic">
+<ol class="arabic">
+<li>
+deftype
+</li>
+<li>
+defrecord
+</li>
+<li>
+reify
+</li>
+</ol>
+</div>
+<div class="paragraph"><p>We will focus on <strong>defrecord</strong></p></div>
+</section>
+<section class="slide" id="_functional_oop_with_records_and_protocols_the_5_commandments">
+<h2>Functional OOP with Records and Protocols - The 5 commandments</h2>
 <div class="openblock bible">
 <div class="content">
 <div class="olist arabic">
@@ -717,30 +769,11 @@ Let Thy Friend Extend a Class as Thyself (Extensibility)
 </div>
 </div>
 </section>
-<section class="slide" id="_functional_oop_with_records_and_protocols">
-<h2>Functional OOP with Records and Protocols</h2>
-<div class="paragraph"><p>In Clojure there are three ways to create an object (it&#8217;s called a datatype):</p></div>
-<div class="olist arabic">
-<ol class="arabic">
-<li>
-deftype
-</li>
-<li>
-defrecord
-</li>
-<li>
-reify
-</li>
-</ol>
-</div>
-<div class="paragraph"><p>Now, we will focus on <strong>defrecord</strong></p></div>
-</section>
-<section class="slide" id="_functional_oop_with_records_and_protocols_2">
+<section class="slide" id="_functional_oop_with_records_and_protocols_3">
 <h2>Functional OOP with Records and Protocols</h2>
 <div class="paragraph"><p>First, we define a protocol:</p></div>
 <div class="openblock slide">
 <div class="content">
-<br>
 <div class="listingblock clj">
 <div class="content">
 <pre class="highlight"><code>(defprotocol IHuman
@@ -753,8 +786,6 @@ reify
 </div>
 <div class="openblock slide">
 <div class="content">
-<br>
-<br>
 <div class="paragraph"><p>Then, a record that implements the protocol:</p></div>
 <div class="listingblock clj">
 <div class="content">
@@ -772,8 +803,6 @@ reify
 </div>
 <div class="openblock slide">
 <div class="content">
-<br>
-<br>
 <div class="paragraph"><p>And a constructor</p></div>
 <div class="listingblock clj">
 <div class="content">
@@ -785,8 +814,6 @@ reify
 </div>
 <div class="openblock slide">
 <div class="content">
-<br>
-<br>
 <div class="paragraph"><p>Let&#8217;s create a human and ask him to take some drinks</p></div>
 <div class="listingblock clj">
 <div class="content">
@@ -869,6 +896,29 @@ reify
 </div>
 </div>
 </div>
+<div class="openblock slide">
+<div class="content">
+<div class="paragraph"><p>Successive operations usually done with the thread macro</p></div>
+<div class="listingblock clj">
+<div class="content">
+<pre class="highlight"><code>(let [abraham (create-human "Abraham")]
+  (-&gt; abraham
+      (take-some-drinks 2)
+      (take-some-drinks 3)))</code></pre>
+</div>
+</div>
+</div>
+</div>
+<div class="openblock slide">
+<div class="content">
+<div class="paragraph"><p>Remember: After a drink, a human is not the same human</p></div>
+<div class="imageblock">
+<div class="content">
+<img alt="mutation" src="images/drunk.png" width="1000">
+</div>
+</div>
+</div>
+</div>
 </section>
 <section class="slide" id="_records_and_protocols_strict_polymorphism">
 <h2>Records and Protocols - Strict Polymorphism</h2>
@@ -943,9 +993,25 @@ IHuman
 <div class="content">
 <div class="paragraph"><p>Although the <strong>Human</strong> record is already defined, we can still extend it.<br>
 A record is never closed!</p></div>
+</div>
+</div>
+<div class="openblock slide">
+<div class="content">
+<div class="paragraph"><p>The original <strong>Human</strong> record doesn&#8217;t have a status</p></div>
 <div class="listingblock clj">
 <div class="content">
-<pre class="highlight"><code>(extend-type Human
+<pre class="highlight"><code>(def adam (create-human "Adam"))
+(status adam)</code></pre>
+</div>
+</div>
+</div>
+</div>
+<div class="openblock slide">
+<div class="content">
+<div class="paragraph"><p>Let&#8217;s extend the <strong>Human</strong> record to the <strong>IStatus</strong> protocol</p></div>
+<div class="listingblock clj">
+<div class="content">
+<pre class="highlight"><code>#_(extend-type Human
   IStatus
   (status [this] (str (:name this) " has drunk " (:drinks this) " drinks")))</code></pre>
 </div>
@@ -957,7 +1023,7 @@ A record is never closed!</p></div>
 <div class="paragraph"><p>Now, Adam has a status:</p></div>
 <div class="listingblock clj">
 <div class="content">
-<pre class="highlight"><code>(status (create-human "Adam"))</code></pre>
+<pre class="highlight"><code>#_(status adam)</code></pre>
 </div>
 </div>
 </div>
@@ -1099,6 +1165,13 @@ A record is never closed!</p></div>
 .bible {
 font-family: cursive;
 font-size: 2.5em;
+}
+.chapter-intro {
+font-size: 2.5em;
+font-weight: bold;
+color: #63b132;
+margin-top: 300px;
+text-align: center;
 }
 .yellow-background {
 background: yellow;
