@@ -86,7 +86,6 @@
 <li>Conclusion</li>
 </ul>
 </div>
-<div class="paragraph"><p><a class="bare" href="https://clojure.org/reference/datatypes#_deftype_and_defrecord">https://clojure.org/reference/datatypes#_deftype_and_defrecord</a></p></div>
 </section>
 <section class="slide" id="_who_am_i">
 <h2>Who am I?</h2>
@@ -162,7 +161,7 @@ A programming paradigm based on the concept of <strong>objects</strong>, which  
 <li><strong>code</strong>, in the form of procedures, often known as methods.</li>
 </ul>
 </div>
-<div class="paragraph"><p>Methods can access and <span class="yellow-background">often modify the data fields of the object</span> with which they are associated (objects have a notion of <strong>this</strong> or <strong>self</strong>).</p></div>
+<div class="paragraph"><p>Methods can access and <span class="yellow-background">often modify the data fields of the object</span> with which they are associated.</p></div>
 </div>
 </div>
 <div class="openblock slide">
@@ -195,7 +194,7 @@ Is "functional object oriented programming" an oxymoron?
 <div class="content">
 <div class="paragraph"><p><strong>Object Oriented Programming</strong>:<br>
 A programming paradigm based on the concepts of <strong>objects</strong> and <strong>messages</strong>.</p></div>
-<div class="paragraph"><p>An <strong>object</strong> includes:</p></div>
+<div class="paragraph"><p>Anmm <strong>object</strong> includes:</p></div>
 <div class="ulist">
 <ul>
 <li>a package of data</li>
@@ -215,6 +214,31 @@ Functions avoid changing state and mutating data.</p></div>
 </div>
 </div>
 </section>
+<section class="slide" id="_definitions_and_rhetorics_functional_oop">
+<h2>Definitions and Rhetorics - Functional OOP</h2>
+<div class="openblock slide">
+<div class="content">
+<div class="paragraph"><p><strong>Functional Object Oriented Programming</strong>:<br>
+A programming paradigm based on the concepts of <strong>functions</strong>, <strong>objects</strong> and <strong>messages</strong>.</p></div>
+<div class="paragraph"><p>A <strong>function</strong>:</p></div>
+<div class="ulist">
+<ul>
+<li>receives <strong>data</strong> and returns <strong>data</strong></li>
+<li>avoids mutating <strong>data</strong></li>
+</ul>
+</div>
+<div class="paragraph"><p>An <strong>object</strong> includes:</p></div>
+<div class="ulist">
+<ul>
+<li>a package of <strong>data</strong></li>
+<li>a description of the operations that can be performed on that <strong>data</strong></li>
+<li><span class="yellow-background">an operation avoids mutating data: it eithers returns <strong>data</strong> or a <strong>new version</strong> of the object</span></li>
+</ul>
+</div>
+<div class="paragraph"><p>A <strong>message</strong> specifies one of the operations without describing how the operation should be carried out.</p></div>
+</div>
+</div>
+</section>
 <section class="slide" id="_functional_oop_the_5_commandments">
 <h2>Functional OOP - The 5 commandments</h2>
 <div class="openblock bible">
@@ -222,35 +246,27 @@ Functions avoid changing state and mutating data.</p></div>
 <div class="olist arabic">
 <ol class="arabic">
 <li>
-Thou Shalt Not Encapsulate Information
+Thou Shalt Not Encapsulate Information (Transparency)
 </li>
 <li>
-Thou Shalt Not Mutate an Object
+Thou Shalt Not Mutate an Object (Immutability)
 </li>
 <li>
-Let Thy Friend Extend a Class as Thyself
+Thou Shalt Only Program to an Interface (Polymorphism)
 </li>
 <li>
-Thou Shalt Only Program to an Interface
+Thou Shalt Not Derive from a Concrete Class (Simplicity)
 </li>
 <li>
-Thou Shalt Not Derive from a Concrete Class
+Let Thy Friend Extend a Class as Thyself (Extensibility)
 </li>
 </ol>
 </div>
 </div>
 </div>
 </section>
-<section class="slide" id="_application_of_the_commandements">
-<h2>Application of the commandements</h2>
-<div class="openblock slide">
-<div class="content">
-<div class="paragraph"><p><span class="bible">Then God said, “Let us make <strong>mankind</strong> in our image, in our likeness, so that they may follow my <strong>commandements</strong> to modelize the fish in the sea and the birds in the sky, over the livestock and all the wild animals, and over all the creatures that move along the ground.”</span> (Genesis, Chapter 1 - revised)</p></div>
-</div>
-</div>
-</section>
-<section class="slide" id="_object_oriented_programming_with_maps">
-<h2>Object oriented programming with maps</h2>
+<section class="slide" id="_functional_oop_with_maps">
+<h2>Functional OOP with maps</h2>
 <div class="openblock slide">
 <div class="content">
 <div class="paragraph"><p>What is the essence of a human?</p></div>
@@ -272,11 +288,19 @@ When a human drinks too much, he is drunk
 </li>
 </ol>
 </div>
-<div class="paragraph"><p>add image of drunk biblical human</p></div>
+<div class="openblock slide">
+<div class="content">
+<div class="imageblock">
+<div class="content">
+<img alt="mutation" src="images/drunk.png" width="1000">
+</div>
+</div>
+</div>
+</div>
 </section>
-<section class="slide" id="_oop_with_functions_and_maps">
-<h2>OOP with functions and maps</h2>
-<div class="paragraph"><p>A "constructor" that returns a map with <strong>data</strong> and <strong>operations</strong></p></div>
+<section class="slide" id="_functional_oop_with_maps_2">
+<h2>Functional OOP with maps</h2>
+<div class="paragraph"><p>A "constructor" is a function that returns a map with <strong>data</strong> and <strong>operations</strong></p></div>
 <div class="openblock slide">
 <div class="content">
 <br>
@@ -294,7 +318,7 @@ When a human drinks too much, he is drunk
 </div>
 <div class="openblock slide">
 <div class="content">
-<div class="paragraph"><p>How does the first human being look like?</p></div>
+<div class="paragraph"><p>How does a human look like?</p></div>
 <div class="listingblock clj">
 <div class="content">
 <pre class="highlight"><code>(new-human-0 "Adam")</code></pre>
@@ -319,9 +343,7 @@ When a human drinks too much, he is drunk
 <div class="content">
 <pre class="highlight"><code>(defn send-msg [obj op-name &amp; args]
   (let [op (get-in obj [:ops op-name])]
-    (if op
-      (apply op obj args)
-      (str "no operation named: " op-name))))</code></pre>
+      (apply op obj args)))</code></pre>
 </div>
 </div>
 </div>
@@ -341,11 +363,11 @@ When a human drinks too much, he is drunk
 </div>
 </div>
 </section>
-<section class="slide" id="_oop_with_function_and_maps_queries">
-<h2>OOP with function and maps - Queries</h2>
+<section class="slide" id="_functional_oop_with_maps_queries">
+<h2>Functional OOP with maps - Queries</h2>
 <div class="openblock slide">
 <div class="content">
-<div class="paragraph"><p>Queries are easy</p></div>
+<div class="paragraph"><p>Methods that query data are easy to implement</p></div>
 <div class="listingblock clj">
 <div class="content">
 <pre class="highlight"><code>(defn new-human-1 [name]
@@ -370,24 +392,14 @@ When a human drinks too much, he is drunk
 </div>
 <div class="openblock slide">
 <div class="content">
-<div class="paragraph"><p>We can still inspect the data</p></div>
-<div class="listingblock clj">
-<div class="content">
-<pre class="highlight"><code>(inspect-data (new-human-1 "Adam") :name)</code></pre>
-</div>
-</div>
-</div>
-</div>
-<div class="openblock slide">
-<div class="content">
 <br>
 <br>
 <div class="paragraph"><p><span class="meditation">Why do we need both <strong>:appellation</strong> operation and <strong>:name</strong> field?</span></p></div>
 </div>
 </div>
 </section>
-<section class="slide" id="_oop_with_maps_mutations">
-<h2>OOP with maps - mutations</h2>
+<section class="slide" id="_functional_oop_with_maps_mutations">
+<h2>Functional OOP with maps - mutations</h2>
 <div class="openblock slide">
 <div class="content">
 <div class="paragraph"><p>What about mutations?</p></div>
@@ -405,16 +417,22 @@ When a human drinks too much, he is drunk
 </div>
 </div>
 </section>
-<section class="slide" id="_oop_with_maps_mutations_first_attemp">
-<h2>OOP with maps - "mutations" first attemp</h2>
+<section class="slide" id="_functional_oop_with_maps_mutations_first_attempt">
+<h2>Functional OOP with maps - "mutations" first attempt</h2>
 <div class="openblock slide">
 <div class="content">
-<div class="paragraph"><p>Clojure is powerful: let&#8217;s use atoms</p></div>
-<br>
-<br>
+<div class="paragraph"><p>Clojure is powerful: let&#8217;s use atoms and <strong>swap!</strong> them</p></div>
+<div class="listingblock clj">
+<div class="content">
+<pre class="highlight"><code>(let [my-counter (atom 0)]
+  (dotimes [_ 10] (swap! my-counter inc))
+  @my-counter)</code></pre>
 </div>
 </div>
-<div class="openblock slide">
+</div>
+</div>
+<div class="paragraph slide"><p>Let&#8217;s make the <strong>:drinks</strong> data field an atom</p></div>
+<div class="openblock">
 <div class="content">
 <div class="listingblock clj">
 <div class="content">
@@ -464,17 +482,27 @@ We have violated Commandment #2 "Thou Shalt Not Mutate an Object"
 </div>
 </div>
 </div>
-</section>
-<section class="slide" id="_oop_with_functions_and_maps_2">
-<h2>OOP with functions and maps</h2>
-<div class="paragraph"><p>After a drink, a human is not the same human</p></div>
-</section>
-<section class="slide" id="_oop_with_maps_changes_without_mutations">
-<h2>OOP with maps - changes without mutations</h2>
 <div class="openblock slide">
 <div class="content">
-<div class="paragraph"><p>We have <strong>update-in</strong></p></div>
-<br>
+<div class="paragraph"><p>Remember: After a drink, a human is not the same human</p></div>
+<div class="imageblock">
+<div class="content">
+<img alt="mutation" src="images/drunk.png" width="1000">
+</div>
+</div>
+</div>
+</div>
+</section>
+<section class="slide" id="_functional_oop_with_maps_changes_without_mutations">
+<h2>Functional OOP with maps - changes without mutations</h2>
+<div class="openblock slide">
+<div class="content">
+<div class="paragraph"><p>Let&#8217;s use <strong>update-in</strong></p></div>
+<div class="listingblock clj">
+<div class="content">
+<pre class="highlight"><code>(update-in {:a {:b 0}} [:a :b] inc)</code></pre>
+</div>
+</div>
 <br>
 </div>
 </div>
@@ -498,7 +526,6 @@ We have violated Commandment #2 "Thou Shalt Not Mutate an Object"
 <div class="openblock slide">
 <div class="content">
 <br>
-<br>
 <div class="paragraph"><p>Let&#8217;s create an <strong>object</strong> and "mutate" it:</p></div>
 <div class="listingblock clj">
 <div class="content">
@@ -511,18 +538,16 @@ We have violated Commandment #2 "Thou Shalt Not Mutate an Object"
 </div>
 </div>
 <br>
-<br>
 <div class="paragraph"><p>Abraham looks much more resistant to alcohol than Noah!</p></div>
 </div>
 </div>
 <div class="openblock slide">
 <div class="content">
 <br>
-<br>
 <div class="paragraph"><p>Let&#8217;s explore the data</p></div>
 <div class="listingblock clj">
 <div class="content">
-<pre class="highlight"><code>(let [abraham (new-human "King Abraham")]
+<pre class="highlight"><code>(let [abraham (new-human "Abraham")]
   (send-msg abraham :take-some-drinks 1)
     (send-msg abraham :take-some-drinks 1)
       (send-msg abraham :take-some-drinks 1)
@@ -534,6 +559,7 @@ We have violated Commandment #2 "Thou Shalt Not Mutate an Object"
 </div>
 <div class="openblock slide">
 <div class="content">
+<div class="paragraph"><p>When we manipulate a map in Clojure, we create new versions of the map.</p></div>
 <div class="listingblock clj">
 <div class="content">
 <pre class="highlight"><code>(let [abraham (new-human "Abraham")
@@ -548,20 +574,20 @@ We have violated Commandment #2 "Thou Shalt Not Mutate an Object"
 </div>
 <div class="openblock slide">
 <div class="content">
-<div class="paragraph"><p>A shorter version of it</p></div>
+<div class="paragraph"><p>The code looks shorter with a thread macro</p></div>
 <div class="listingblock clj">
 <div class="content">
 <pre class="highlight"><code>(-&gt; (new-human "Abraham")
     (send-msg :take-some-drinks 2)
     (send-msg :take-some-drinks 3)
-    (send-msg :status))</code></pre>
+    (send-msg :drunk?))</code></pre>
 </div>
 </div>
 </div>
 </div>
 </section>
-<section class="slide" id="_functional_oop_extension">
-<h2>Functional OOP - extension</h2>
+<section class="slide" id="_functional_oop_with_maps_extension">
+<h2>Functional OOP with maps - extension</h2>
 <div class="openblock slide">
 <div class="content">
 <div class="listingblock clj">
@@ -593,8 +619,8 @@ We have violated Commandment #2 "Thou Shalt Not Mutate an Object"
 </div>
 </div>
 </section>
-<section class="slide" id="_oop_with_maps_polymorphism">
-<h2>OOP with maps - Polymorphism</h2>
+<section class="slide" id="_functional_oop_with_maps_polymorphism">
+<h2>Functional OOP with maps - Polymorphism</h2>
 <div class="openblock slide">
 <div class="content">
 <div class="paragraph"><p>Let&#8217;s create another object that implements the same operations but behaves differently&#8230;&#8203;</p></div>
@@ -647,46 +673,105 @@ We have violated Commandment #2 "Thou Shalt Not Mutate an Object"
 </div>
 </div>
 </section>
-<section class="slide" id="_definitions_and_rhetorics_functional_oop">
-<h2>Definitions and Rhetorics - Functional OOP</h2>
+<section class="slide" id="_functional_oop_with_maps_summary">
+<h2>Functional OOP with maps - summary</h2>
 <div class="openblock slide">
 <div class="content">
-<div class="paragraph"><p><strong>Functional Object Oriented Programming</strong>:<br>
-A programming paradigm based on the concepts of <strong>functions</strong>, <strong>objects</strong> and <strong>messages</strong>.</p></div>
-<div class="paragraph"><p>A <strong>function</strong>:</p></div>
-<div class="ulist">
-<ul>
-<li>receives <strong>data</strong> and returns <strong>data</strong></li>
-<li>avoids mutating <strong>data</strong></li>
-</ul>
+<div class="paragraph"><p>We followed all the commandments:</p></div>
+<div class="olist arabic">
+<ol class="arabic">
+<li>
+✓ Transparency
+</li>
+<li>
+✓ Immutability
+</li>
+<li>
+✓ Polymorphism
+</li>
+<li>
+✓ No Class derivation
+</li>
+<li>
+✓ Extensibility
+</li>
+</ol>
 </div>
-<div class="paragraph"><p>An <strong>object</strong> includes:</p></div>
-<div class="ulist">
-<ul>
-<li>a package of <strong>data</strong></li>
-<li>a description of the operations that can be performed on that <strong>data</strong></li>
-<li><span class="yellow-background">an operation avoids mutating data: it eithers returns <strong>data</strong> or a <strong>new version</strong> of the object</span></li>
-</ul>
 </div>
-<div class="paragraph"><p>A <strong>message</strong> specifies one of the operations without describing how the operation should be carried out.</p></div>
+</div>
+<div class="openblock slide">
+<div class="content">
+<div class="listingblock clj">
+<div class="content">
+<pre class="highlight"><code>(defn new-human [name]
+  {:data {:name name
+          :drinks 0}
+   :ops {:appellation (fn [this] (get-in this [:data :name]))
+         :drunk? (fn [this] (&gt; (get-in this [:data :drinks]) 3))
+         :take-some-drinks (fn [this how-many]
+                             (update-in this
+                                        [:data :drinks]
+                                        (partial + how-many)))}})
+
+(defn send-msg [obj op-name &amp; args]
+  (let [op (get-in obj [:ops op-name])]
+      (apply op obj args)))</code></pre>
+</div>
+</div>
+</div>
+</div>
+<div class="openblock slide">
+<div class="content">
+<div class="paragraph"><p>But lots of custom code had to be written</p></div>
+<div class="olist arabic">
+<ol class="arabic">
+<li>
+Methods access Data trough <strong>this</strong> instead of lexical scope
+</li>
+<li>
+Custom <strong>:data</strong> and <strong>:ops</strong>
+</li>
+<li>
+Custom <strong>send-msg</strong> function
+</li>
+<li>
+We have messages but we don&#8217;t have interfaces
+</li>
+</ol>
+</div>
 </div>
 </div>
 </section>
-<section class="slide" id="_functional_oop_with_records">
-<h2>Functional OOP with Records</h2>
-<div class="paragraph"><p>First, we define a protocol and a display function:</p></div>
+<section class="slide" id="_functional_oop_with_records_and_protocols">
+<h2>Functional OOP with Records and Protocols</h2>
+<div class="paragraph"><p>In Clojure there are three ways to create an object (or a datatype):</p></div>
+<div class="olist arabic">
+<ol class="arabic">
+<li>
+deftype
+</li>
+<li>
+defrecord
+</li>
+<li>
+reify
+</li>
+</ol>
+</div>
+<div class="paragraph"><p>Now, we will focus on <strong>defrecord</strong></p></div>
+</section>
+<section class="slide" id="_functional_oop_with_records_and_protocols_2">
+<h2>Functional OOP with Records and Protocols</h2>
+<div class="paragraph"><p>First, we define a protocol:</p></div>
 <div class="openblock slide">
 <div class="content">
 <br>
 <div class="listingblock clj">
 <div class="content">
 <pre class="highlight"><code>(defprotocol IHuman
-  (age [this])
-  (age! [this age])
-  (fullname [this]))
-
-(defn display-human [human]
-  (str (fullname human) " is " (age human)))</code></pre>
+  (appelation [this])
+  (drunk? [this])
+  (take-some-drinks [this how-many]))</code></pre>
 </div>
 </div>
 </div>
@@ -698,11 +783,14 @@ A programming paradigm based on the concepts of <strong>functions</strong>, <str
 <div class="paragraph"><p>Then, a record that implements the protocol:</p></div>
 <div class="listingblock clj">
 <div class="content">
-<pre class="highlight"><code>(defrecord Human [firstname lastname age]
+<pre class="highlight"><code>(defrecord Human [name drinks]
   IHuman
-  (age [this] age)
-  (age! [this new-age] (assoc this :age new-age))
-  (fullname [this] (str firstname " " lastname)))</code></pre>
+  (appelation [this] name)
+  (drunk? [this] (&gt; drinks 3))
+  (take-some-drinks [this how-many]
+                    (update this
+                               :drinks
+                               (partial + how-many))))</code></pre>
 </div>
 </div>
 </div>
@@ -714,8 +802,8 @@ A programming paradigm based on the concepts of <strong>functions</strong>, <str
 <div class="paragraph"><p>And a constructor</p></div>
 <div class="listingblock clj">
 <div class="content">
-<pre class="highlight"><code>(defn create-human [firstname lastname age]
-  (Human. firstname lastname age))</code></pre>
+<pre class="highlight"><code>(defn create-human [name]
+  (Human. name 0))</code></pre>
 </div>
 </div>
 </div>
@@ -724,22 +812,36 @@ A programming paradigm based on the concepts of <strong>functions</strong>, <str
 <div class="content">
 <br>
 <br>
-<div class="paragraph"><p>Let&#8217;s create and display a human</p></div>
+<div class="paragraph"><p>Let&#8217;s create a human and ask him to take some drinks</p></div>
 <div class="listingblock clj">
 <div class="content">
-<pre class="highlight"><code>(display-human  (create-human "Dave" "Smith" 42))</code></pre>
+<pre class="highlight"><code>(let [abraham (create-human "Abraham")]
+  (-&gt; abraham
+      (take-some-drinks 11)
+      drunk?))</code></pre>
+</div>
+</div>
+</div>
+</div>
+<div class="openblock slide">
+<div class="content">
+<div class="paragraph"><p>Beware of this common pitfall</p></div>
+<div class="listingblock clj">
+<div class="content">
+<pre class="highlight"><code>(let [adam (create-human "Adam")]
+  (take-some-drinks adam 10)
+  (drunk? adam))</code></pre>
 </div>
 </div>
 </div>
 </div>
 </section>
-<section class="slide" id="_functional_oop_with_records_why_constructors">
-<h2>Functional OOP with Records - why constructors</h2>
+<section class="slide" id="_functional_oop_with_records_constructors">
+<h2>Functional OOP with Records - constructors</h2>
 <div class="openblock slide">
 <div class="content">
 <br>
-<br>
-<div class="paragraph"><p>Do we really need a constructor?</p></div>
+<div class="paragraph"><p><span class="meditation">Why do we need a constructor?</span></p></div>
 </div>
 </div>
 <div class="openblock slide">
@@ -752,15 +854,143 @@ A programming paradigm based on the concepts of <strong>functions</strong>, <str
 </div>
 </div>
 </section>
-<section class="slide" id="_functional_oop_in_clojure_records_are_wacky_maps">
-<h2>Functional OOP in Clojure - Records are wacky maps</h2>
+<section class="slide" id="_records_and_protocols_transparency">
+<h2>Records and Protocols - Transparency</h2>
 <div class="openblock slide">
 <div class="content">
-<br>
-<div class="paragraph"><p>Records look like maps</p></div>
+<div class="paragraph"><p><span class="bible">Thou Shalt Not Encapsulate Information (Transparency)</span></p></div>
+</div>
+</div>
+<div class="openblock slide">
+<div class="content">
 <div class="listingblock clj">
 <div class="content">
-<pre class="highlight"><code>(Human. "Dave" "Smith" 42)</code></pre>
+<pre class="highlight"><code>(create-human "Adam")</code></pre>
+</div>
+</div>
+</div>
+</div>
+<div class="openblock slide">
+<div class="content">
+<div class="listingblock clj">
+<div class="content">
+<pre class="highlight"><code>(take-some-drinks (create-human "Adam") 10)</code></pre>
+</div>
+</div>
+</div>
+</div>
+</section>
+<section class="slide" id="_records_and_protocols_immutability">
+<h2>Records and Protocols - Immutability</h2>
+<div class="paragraph slide"><p><span class="bible">Thou Shalt Not Mutate an Object (Immutability)</span></p></div>
+<div class="openblock slide">
+<div class="content">
+<div class="listingblock clj">
+<div class="content">
+<pre class="highlight"><code>(let [adam (create-human "Adam")]
+  (take-some-drinks adam 10)
+  adam)</code></pre>
+</div>
+</div>
+</div>
+</div>
+</section>
+<section class="slide" id="_records_and_protocols_strict_polymorphism">
+<h2>Records and Protocols - Strict Polymorphism</h2>
+<div class="paragraph slide"><p><span class="bible">Thou Shalt Only Program to an Interface (Strict Polymorphism)</span></p></div>
+<div class="openblock slide">
+<div class="content">
+<div class="paragraph"><p>The syntax doesn&#8217;t allow adding a method to a record without specifying a protocol</p></div>
+<div class="listingblock clj">
+<div class="content">
+<pre class="highlight"><code>(defrecord IAmAlone []
+  (foo [this] (str "sniff...")))</code></pre>
+</div>
+</div>
+</div>
+</div>
+<div class="openblock slide">
+<div class="content">
+<div class="paragraph"><p>If we add a method that is not part of the protocol</p></div>
+<div class="listingblock clj">
+<div class="content">
+<pre class="highlight"><code>(defrecord IAmAlone []
+IHuman
+  (foo [this] (str "sniff...")))</code></pre>
+</div>
+</div>
+</div>
+</div>
+<div class="openblock slide">
+<div class="content">
+<div class="paragraph"><p>Bad things happen</p></div>
+<div class="listingblock clj">
+<div class="content">
+<pre class="highlight"><code>(foo (IAmAlone.))</code></pre>
+</div>
+</div>
+</div>
+</div>
+</section>
+<section class="slide" id="_records_and_protocols_simplicity">
+<h2>Records and protocols - Simplicity</h2>
+<div class="openblock slide">
+<div class="content">
+<div class="paragraph"><p><span class="bible">Thou Shalt Not Derive from a Concrete Class (Simplicity)</span></p></div>
+</div>
+</div>
+<div class="openblock slide">
+<div class="content">
+<div class="paragraph"><p>Concrete derivation is bad!</p></div>
+<div class="paragraph"><p>Clojure blocks it. You can try composition</p></div>
+</div>
+</div>
+</section>
+<section class="slide" id="_records_and_protocols_extensibility">
+<h2>Records and Protocols - Extensibility</h2>
+<div class="paragraph slide"><p><span class="bible">Let Thy Friend Extend a Class as Thyself (Extensibility)</span></p></div>
+<div class="openblock slide">
+<div class="content">
+<div class="paragraph"><p>In order to add new functionality to a record, we have to create a new protocol:</p></div>
+<div class="listingblock clj">
+<div class="content">
+<pre class="highlight"><code>(defprotocol IStatus
+  (status [this]))</code></pre>
+</div>
+</div>
+</div>
+</div>
+<div class="openblock slide">
+<div class="content">
+<div class="paragraph"><p>Although the <strong>Human</strong> record is closed, we can still extend it:</p></div>
+<div class="listingblock clj">
+<div class="content">
+<pre class="highlight"><code>(extend-type Human
+  IStatus
+  (status [this] (str (:name this) " has drunk " (:drinks this) " drinks")))</code></pre>
+</div>
+</div>
+</div>
+</div>
+<div class="openblock slide">
+<div class="content">
+<div class="paragraph"><p>Now, Adam has a status:</p></div>
+<div class="listingblock clj">
+<div class="content">
+<pre class="highlight"><code>(status (create-human "Adam"))</code></pre>
+</div>
+</div>
+</div>
+</div>
+</section>
+<section class="slide" id="_functional_oop_in_clojure_records_are_wacky_maps">
+<h2>Functional OOP in Clojure - Records are wacky maps</h2>
+<div class="paragraph"><p>Records look like maps</p></div>
+<div class="openblock slide">
+<div class="content">
+<div class="listingblock clj">
+<div class="content">
+<pre class="highlight"><code>(println (Human. "Adam" 5))</code></pre>
 </div>
 </div>
 </div>
@@ -771,7 +1001,7 @@ A programming paradigm based on the concepts of <strong>functions</strong>, <str
 <div class="paragraph"><p>They have keys</p></div>
 <div class="listingblock clj">
 <div class="content">
-<pre class="highlight"><code>(keys (Human. "Dave" "Smith" 42))</code></pre>
+<pre class="highlight"><code>(keys (Human. "Adam" 5))</code></pre>
 </div>
 </div>
 </div>
@@ -782,7 +1012,7 @@ A programming paradigm based on the concepts of <strong>functions</strong>, <str
 <div class="paragraph"><p>keys are functions</p></div>
 <div class="listingblock clj">
 <div class="content">
-<pre class="highlight"><code>(:age (Human. "Dave" "Smith" 42))</code></pre>
+<pre class="highlight"><code>(:name (Human. "Adam" 5))</code></pre>
 </div>
 </div>
 </div>
@@ -793,7 +1023,7 @@ A programming paradigm based on the concepts of <strong>functions</strong>, <str
 <div class="paragraph"><p><span class="red">But records are not functions</span></p></div>
 <div class="listingblock clj">
 <div class="content">
-<pre class="highlight"><code>(keys (Human. "Dave" "Smith" 42))</code></pre>
+<pre class="highlight"><code>((Human. "Adam" 5) :name)</code></pre>
 </div>
 </div>
 </div>
@@ -801,10 +1031,10 @@ A programming paradigm based on the concepts of <strong>functions</strong>, <str
 <div class="openblock slide">
 <div class="content">
 <br>
-<div class="paragraph"><p>You can assoc them</p></div>
+<div class="paragraph"><p>You can assoc them new keys</p></div>
 <div class="listingblock clj">
 <div class="content">
-<pre class="highlight"><code>(assoc (Human. "Dave" "Smith" 42) :age 88)</code></pre>
+<pre class="highlight"><code>(println (assoc (Human. "Adam" 5) :books 88))</code></pre>
 </div>
 </div>
 </div>
@@ -815,66 +1045,11 @@ A programming paradigm based on the concepts of <strong>functions</strong>, <str
 <div class="paragraph"><p><span class="red">But be careful when you dissoc them</span></p></div>
 <div class="listingblock clj">
 <div class="content">
-<pre class="highlight"><code>(fullname (dissoc (Human. "Dave" "Smith" 42) :age))</code></pre>
+<pre class="highlight"><code>(type (dissoc (Human. "Adam" 5) :name))</code></pre>
 </div>
 </div>
-</div>
-</div>
-</section>
-<section class="slide" id="_functional_oop_with_records_why_setters_and_getters">
-<h2>Functional OOP with Records - why setters and getters?</h2>
-<div class="openblock slide">
-<div class="content">
-<br>
-<div class="paragraph"><p>Do we really need <strong>age</strong> and <strong>age!</strong>?</p></div>
-</div>
-</div>
-<div class="openblock slide">
-<div class="content">
-<div class="imageblock">
-<div class="content">
-<img alt="mutation" src="images/indirection.jpg" width="1000">
-</div>
-</div>
-</div>
-</div>
-</section>
-<section class="slide" id="_functional_oop_with_records_composition">
-<h2>Functional OOP with Records - composition</h2>
-<div class="openblock slide">
-<div class="content">
-<div class="listingblock clj">
-<div class="content">
-<pre class="highlight"><code>(defrecord Doctor [human]
-  IHuman
-  (age [this] (age human))
-  (age! [this new-age] (update this :human #(age! % new-age)))
-  (fullname [this] (str "Dr. " (:firstname human) " " (:lastname human))))</code></pre>
-</div>
-</div>
-</div>
-</div>
-<div class="openblock slide">
-<div class="content">
 <br>
 <br>
-<div class="listingblock clj">
-<div class="content">
-<pre class="highlight"><code>(defn create-doctor [firstname lastname age]
-  (Doctor. (Human. firstname lastname age)))</code></pre>
-</div>
-</div>
-</div>
-</div>
-<div class="openblock slide">
-<div class="content">
-<br>
-<br>
-<div class="listingblock clj">
-<div class="content">
-<pre class="highlight"><code>(display-human (age! (create-doctor "Dave" "Smith" 42) 88))</code></pre>
-</div>
-</div>
 </div>
 </div>
 </section>
@@ -889,7 +1064,7 @@ A programming paradigm based on the concepts of <strong>functions</strong>, <str
 <div class="content">
 <div class="listingblock clj">
 <div class="content">
-<pre class="highlight"><code>(extend-type Human
+<pre class="highlight"><code>#_(extend-type Human
   IFn
   (-invoke
     ([this key]
@@ -902,18 +1077,14 @@ A programming paradigm based on the concepts of <strong>functions</strong>, <str
 <div class="content">
 <div class="listingblock clj">
 <div class="content">
-<pre class="highlight"><code>((create-human "Dave" "Smith" 42) :age)</code></pre>
+<pre class="highlight"><code>#_((create-human "Adam") :name)</code></pre>
 </div>
 </div>
+<br>
+<br>
 </div>
 </div>
-<div class="openblock slide">
-<div class="content">
-<div class="paragraph"><p>Functions and maps emulate OOP<br>
-Functions are protocols<br>
-Circle diagram</p></div>
-</div>
-</div>
+<div class="paragraph slide"><p>Funny thought: In Clojure, even functions are protocols.</p></div>
 </section>
 <section class="slide" id="_conclusion">
 <h2>Conclusion</h2>
@@ -930,38 +1101,10 @@ Circle diagram</p></div>
 <h2>Questions</h2>
 <div class="imageblock">
 <div class="content">
-<img alt="questions" src="images/questions.jpg">
+<img alt="questions" src="images/get-programming-clojure-book.png">
 </div>
 </div>
-</section>
-<section class="slide" id="_maybe">
-<h2>Maybe</h2>
-<div class="listingblock clj">
-<div class="content">
-<pre class="highlight"><code>(defn new-human-maybe [{:keys [firstname lastname languages fruits]
-                   :as data
-                   :or {languages #{} fruits []}}]
-  {:data (assoc data :languages languages :fruits fruits)
-   :ops {:full-name (fn [this] (str (capitalize firstname) " " (capitalize lastname)))
-         :add-language (fn [this language]
-                         (update-in this [:data :languages] #(conj % language)))
-         :eat-fruit (fn [this fruit]
-                         (update-in this [:data :fruits] #(conj % fruit)))
-                       }})
-
-
-
-(-&gt; (new-human-maybe {:firstname "dave" :lastname "smith"})
-    (send-msg :add-language "fr")
-    (send-msg :add-language "en")
-    (send-msg :eat-fruit "orange")
-    (send-msg :eat-fruit "orange")
-    (send-msg :eat-fruit "banana")
-
-    :data
-    )</code></pre>
-</div>
-</div>
+<div class="paragraph"><p><a class="bare" href="https://tinyurl.com/get-clojure">https://tinyurl.com/get-clojure</a></p></div>
 <style>
 .bible {
 font-family: cursive;

@@ -73,7 +73,6 @@
 - Object Oriented Programming with records and protocols
 - Conclusion
 
-https://clojure.org/reference/datatypes#_deftype_and_defrecord
 
 == Who am I?
 [.left]
@@ -133,7 +132,7 @@ A programming paradigm based on the concept of *objects*, which  contain:
 - *data*, in the form of fields
 - *code*, in the form of procedures, often known as methods.
 
-Methods can access and [yellow-background]#often modify the data fields of the object# with which they are associated (objects have a notion of *this* or *self*).
+Methods can access and [yellow-background]#often modify the data fields of the object# with which they are associated.
 --
 
 
@@ -167,14 +166,13 @@ Is "functional object oriented programming" an oxymoron?
 *Object Oriented Programming*:
 A programming paradigm based on the concepts of *objects* and *messages*.
 
-An *object* includes:
+Anmm *object* includes:
 
 - a package of data
 - a description of the operations that can be performed on that data
 
 A *message* specifies one of the operations, but unlike a procedure, does not describe how the operation should be carried out.
 --
-
 
 
 [%step]
@@ -190,31 +188,48 @@ Functions avoid changing state and mutating data.
 --
 
 
+== Definitions and Rhetorics - Functional OOP
+
+[%step]
+--
+*Functional Object Oriented Programming*:
+A programming paradigm based on the concepts of *functions*, *objects* and *messages*.
+
+
+A *function*:
+
+- receives *data* and returns *data*
+- avoids mutating *data*
+
+An *object* includes:
+
+- a package of *data*
+- a description of the operations that can be performed on that *data*
+- [yellow-background]#an operation avoids mutating data: it eithers returns *data* or a *new version* of the object#
+
+A *message* specifies one of the operations without describing how the operation should be carried out.
+--
+
+
+
 == Functional OOP - The 5 commandments 
 
 [bible]
 --
-. Thou Shalt Not Encapsulate Information
+. Thou Shalt Not Encapsulate Information (Transparency)
 
-. Thou Shalt Not Mutate an Object
+. Thou Shalt Not Mutate an Object (Immutability)
 
-. Let Thy Friend Extend a Class as Thyself
+. Thou Shalt Only Program to an Interface (Polymorphism)
 
-. Thou Shalt Only Program to an Interface
+. Thou Shalt Not Derive from a Concrete Class (Simplicity)
 
-. Thou Shalt Not Derive from a Concrete Class
+. Let Thy Friend Extend a Class as Thyself (Extensibility)
+
 --
 
 
-== Application of the commandements
-
-[%step]
---
-[bible]#Then God said, “Let us make *mankind* in our image, in our likeness, so that they may follow my *commandements* to modelize the fish in the sea and the birds in the sky, over the livestock and all the wild animals, and over all the creatures that move along the ground.”# (Genesis, Chapter 1 - revised)
---
-
-
-== Object oriented programming with maps
+== Functional OOP with maps
 
 [%step]
 --
@@ -228,11 +243,15 @@ What is the essence of a human?
 . When a human drinks too much, he is drunk
 
 
-add image of drunk biblical human
+[%step]
+--
+image::images/drunk.png[mutation, width=1000]
+--
 
-== OOP with functions and maps
 
-A "constructor" that returns a map with *data* and *operations*
+== Functional OOP with maps
+
+A "constructor" is a function that returns a map with *data* and *operations*
 [%step]
 --
 ++++
@@ -251,7 +270,7 @@ A "constructor" that returns a map with *data* and *operations*
 
 [%step]
 --
-How does the first human being look like? 
+How does a human look like? 
 [source.clj]
 ----
 (new-human-0 "Adam")
@@ -275,9 +294,7 @@ To send a *message*, we retrieve the function from the *:ops* map and call it wi
 ----
 (defn send-msg [obj op-name & args]
   (let [op (get-in obj [:ops op-name])]
-    (if op
-      (apply op obj args)
-      (str "no operation named: " op-name))))
+      (apply op obj args)))
 ----
 --
 
@@ -295,11 +312,12 @@ Let's ask Adam to take a drink
 --
 
 
-== OOP with function and maps - Queries
+== Functional OOP with maps - Queries
 
 [%step]
 --
-Queries are easy
+
+Methods that query data are easy to implement
 
 [source.clj]
 ----
@@ -324,15 +342,6 @@ Let's send a *:appellation* message to a human
 
 [%step]
 --
-We can still inspect the data
-[source.clj]
-----
-(inspect-data (new-human-1 "Adam") :name)
-----
---
-
-[%step]
---
 ++++
 <br>
 <br>
@@ -341,7 +350,7 @@ We can still inspect the data
 --
 
 
-== OOP with maps - mutations
+== Functional OOP with maps - mutations
 
 [%step]
 --
@@ -357,18 +366,21 @@ What about mutations?
 image::images/mutation_is_bad.jpg[mutation, width=1000]
 --
 
-== OOP with maps - "mutations" first attemp
+== Functional OOP with maps - "mutations" first attempt
 
 [%step]
 --
-Clojure is powerful: let's use atoms
-++++
-<br>
-<br>
-++++
+Clojure is powerful: let's use atoms and *swap!* them
+[source.clj]
+----
+(let [my-counter (atom 0)]
+  (dotimes [_ 10] (swap! my-counter inc))
+  @my-counter)
+----
 --
 
 [%step]
+Let's make the *:drinks* data field an atom
 --
 [source.clj]
 ----
@@ -414,19 +426,26 @@ That's not what we are looking for:
 
 --
 
-== OOP with functions and maps
-
-After a drink, a human is not the same human
-
-
-
-== OOP with maps - changes without mutations
 
 [%step]
 --
-We have *update-in*
+Remember: After a drink, a human is not the same human
+
+image::images/drunk.png[mutation, width=1000]
+--
+
+
+
+== Functional OOP with maps - changes without mutations
+
+[%step]
+--
+Let's use *update-in*
+[source.clj]
+----
+(update-in {:a {:b 0}} [:a :b] inc)
+----
 ++++
-<br>
 <br>
 ++++
 --
@@ -451,7 +470,6 @@ We have *update-in*
 --
 ++++
 <br>
-<br>
 ++++
 Let's create an *object* and "mutate" it:
 
@@ -466,7 +484,6 @@ Let's create an *object* and "mutate" it:
 ----
 ++++
 <br>
-<br>
 ++++
 Abraham looks much more resistant to alcohol than Noah!
 ++++
@@ -476,13 +493,12 @@ Abraham looks much more resistant to alcohol than Noah!
 --
 ++++
 <br>
-<br>
 ++++
-Let's explore the data
+Let's explore the data 
 
 [source.clj]
 ----
-(let [abraham (new-human "King Abraham")]
+(let [abraham (new-human "Abraham")]
   (send-msg abraham :take-some-drinks 1)
     (send-msg abraham :take-some-drinks 1)
       (send-msg abraham :take-some-drinks 1)
@@ -493,6 +509,7 @@ Let's explore the data
 
 [%step]
 --
+When we manipulate a map in Clojure, we create new versions of the map.
 [source.clj]
 ----
 (let [abraham (new-human "Abraham")
@@ -506,16 +523,17 @@ Let's explore the data
 
 [%step]
 --
-A shorter version of it
+The code looks shorter with a thread macro
 [source.clj]
 ----
 (-> (new-human "Abraham")
     (send-msg :take-some-drinks 2)
     (send-msg :take-some-drinks 3)
-    (send-msg :status))
+    (send-msg :drunk?))
 ----
 --
-== Functional OOP - extension
+
+== Functional OOP with maps - extension
 
 [%step]
 --
@@ -552,7 +570,7 @@ Let's check Joseph's status after a couple of drinks
 --
 
 
-== OOP with maps - Polymorphism
+== Functional OOP with maps - Polymorphism
 
 [%step]
 --
@@ -608,31 +626,66 @@ David, the human
 Both pieces of code that send the message look the same, but the behaviour is different.
 --
 
-== Definitions and Rhetorics - Functional OOP
+
+== Functional OOP with maps - summary
 
 [%step]
 --
-*Functional Object Oriented Programming*:
-A programming paradigm based on the concepts of *functions*, *objects* and *messages*.
+We followed all the commandments:
 
-
-A *function*:
-
-- receives *data* and returns *data*
-- avoids mutating *data*
-
-An *object* includes:
-
-- a package of *data*
-- a description of the operations that can be performed on that *data*
-- [yellow-background]#an operation avoids mutating data: it eithers returns *data* or a *new version* of the object#
-
-A *message* specifies one of the operations without describing how the operation should be carried out.
+. ✓ Transparency
+. ✓ Immutability
+. ✓ Polymorphism
+. ✓ No Class derivation 
+. ✓ Extensibility 
 --
 
-== Functional OOP with Records
+[%step]
+--
+[source.clj]
+----
+(defn new-human [name]
+  {:data {:name name
+          :drinks 0}
+   :ops {:appellation (fn [this] (get-in this [:data :name]))
+         :drunk? (fn [this] (> (get-in this [:data :drinks]) 3))
+         :take-some-drinks (fn [this how-many]
+                             (update-in this
+                                        [:data :drinks]
+                                        (partial + how-many)))}})
 
-First, we define a protocol and a display function:
+(defn send-msg [obj op-name & args]
+  (let [op (get-in obj [:ops op-name])]
+      (apply op obj args)))
+----
+--
+
+
+
+[%step]
+--
+But lots of custom code had to be written
+
+. Methods access Data trough *this* instead of lexical scope
+. Custom *:data* and *:ops* 
+. Custom *send-msg* function
+. We have messages but we don't have interfaces
+--
+
+
+== Functional OOP with Records and Protocols
+
+In Clojure there are three ways to create an object (or a datatype):
+
+. deftype
+. defrecord
+. reify
+
+Now, we will focus on *defrecord*
+
+== Functional OOP with Records and Protocols
+
+First, we define a protocol:
 
 [%step]
 --
@@ -642,12 +695,9 @@ First, we define a protocol and a display function:
 [source.clj]
 ----
 (defprotocol IHuman
-  (age [this])
-  (age! [this age])
-  (fullname [this]))
-
-(defn display-human [human]
-  (str (fullname human) " is " (age human)))
+  (appelation [this])
+  (drunk? [this])
+  (take-some-drinks [this how-many]))
 ----
 --
 
@@ -660,11 +710,14 @@ First, we define a protocol and a display function:
 Then, a record that implements the protocol:
 [source.clj]
 ----
-(defrecord Human [firstname lastname age]
+(defrecord Human [name drinks]
   IHuman
-  (age [this] age)
-  (age! [this new-age] (assoc this :age new-age))
-  (fullname [this] (str firstname " " lastname)))
+  (appelation [this] name)
+  (drunk? [this] (> drinks 3))
+  (take-some-drinks [this how-many]
+                    (update this
+                               :drinks
+                               (partial + how-many))))
 ----
 --
 
@@ -674,13 +727,14 @@ Then, a record that implements the protocol:
 <br>
 <br>
 ++++
-And a constructor
+And a constructor 
 [source.clj]
 ----
-(defn create-human [firstname lastname age]
-  (Human. firstname lastname age))
+(defn create-human [name]
+  (Human. name 0))
 ----
 --
+
 
 [%step]
 --
@@ -688,22 +742,36 @@ And a constructor
 <br>
 <br>
 ++++
-Let's create and display a human
+Let's create a human and ask him to take some drinks
 [source.clj]
 ----
-(display-human  (create-human "Dave" "Smith" 42)) 
+(let [abraham (create-human "Abraham")]
+  (-> abraham
+      (take-some-drinks 11)
+      drunk?))
 ----
 --
 
-== Functional OOP with Records - why constructors
+[%step]
+--
+Beware of this common pitfall
+[source.clj]
+----
+(let [adam (create-human "Adam")]
+  (take-some-drinks adam 10)
+  (drunk? adam))
+----
+--
+
+== Functional OOP with Records - constructors
 
 [%step]
 --
 ++++
 <br>
-<br>
+
 ++++
-Do we really need a constructor?
+[meditation]#Why do we need a constructor?#
 --
 
 [%step]
@@ -712,21 +780,141 @@ image::images/indirection.jpg[mutation, width=1000]
 --
 
 
-== Functional OOP in Clojure - Records are wacky maps
+== Records and Protocols - Transparency
 
 [%step]
 --
-++++
-<br>
-++++
+[bible]#Thou Shalt Not Encapsulate Information (Transparency)#
+--
+[%step]
+--
+[source.clj]
+----
+(create-human "Adam")
+----
+--
 
-Records look like maps
+[%step]
+--
+[source.clj]
+----
+(take-some-drinks (create-human "Adam") 10)
+----
+--
+
+== Records and Protocols - Immutability
+
+[%step]
+[bible]#Thou Shalt Not Mutate an Object (Immutability)#
+
+[%step]
+--
+[source.clj]
+----
+(let [adam (create-human "Adam")]
+  (take-some-drinks adam 10)
+  adam)
+----
+--
+
+== Records and Protocols - Strict Polymorphism
+
+
+[%step]
+[bible]#Thou Shalt Only Program to an Interface (Strict Polymorphism)#
+
+[%step]
+--
+The syntax doesn't allow adding a method to a record without specifying a protocol
 
 [source.clj]
 ----
-(Human. "Dave" "Smith" 42)
+(defrecord IAmAlone []
+  (foo [this] (str "sniff...")))
 ----
-++++
+--
+
+
+[%step]
+--
+If we add a method that is not part of the protocol
+[source.clj]
+----
+(defrecord IAmAlone []
+IHuman
+  (foo [this] (str "sniff...")))
+----
+--
+
+[%step]
+--
+Bad things happen
+[source.clj]
+----
+(foo (IAmAlone.))
+----
+--
+
+== Records and protocols - Simplicity
+
+[%step]
+--
+[bible]#Thou Shalt Not Derive from a Concrete Class (Simplicity)#
+--
+
+[%step]
+--
+Concrete derivation is bad!
+
+Clojure blocks it. You can try composition
+--
+
+== Records and Protocols - Extensibility
+
+[%step]
+[bible]#Let Thy Friend Extend a Class as Thyself (Extensibility)#
+
+[%step]
+--
+In order to add new functionality to a record, we have to create a new protocol:
+[source.clj]
+----
+(defprotocol IStatus
+  (status [this]))
+----
+--
+
+[%step]
+--
+Although the *Human* record is closed, we can still extend it:
+[source.clj]
+----
+(extend-type Human
+  IStatus
+  (status [this] (str (:name this) " has drunk " (:drinks this) " drinks")))
+----
+--
+
+[%step]
+--
+Now, Adam has a status:
+[source.clj]
+----
+(status (create-human "Adam"))
+----
+--
+
+
+== Functional OOP in Clojure - Records are wacky maps
+
+Records look like maps
+
+[%step]
+--
+[source.clj]
+----
+(println (Human. "Adam" 5))
+----
 --
 
 [%step]
@@ -738,9 +926,8 @@ They have keys
 
 [source.clj]
 ----
-(keys (Human. "Dave" "Smith" 42))
+(keys (Human. "Adam" 5))
 ----
-++++
 --
 
 [%step]
@@ -752,9 +939,8 @@ keys are functions
 
 [source.clj]
 ----
-(:age (Human. "Dave" "Smith" 42))
+(:name (Human. "Adam" 5))
 ----
-++++
 --
 
 [%step]
@@ -767,9 +953,8 @@ keys are functions
 
 [source.clj]
 ----
-(keys (Human. "Dave" "Smith" 42))
+((Human. "Adam" 5) :name)
 ----
-++++
 --
 
 [%step]
@@ -777,13 +962,12 @@ keys are functions
 ++++
 <br>
 ++++
-You can assoc them
+You can assoc them new keys
 
 [source.clj]
 ----
-(assoc (Human. "Dave" "Smith" 42) :age 88)
+(println (assoc (Human. "Adam" 5) :books 88))
 ----
-++++
 --
 
 [%step]
@@ -795,66 +979,14 @@ You can assoc them
 
 [source.clj]
 ----
-(fullname (dissoc (Human. "Dave" "Smith" 42) :age))
+(type (dissoc (Human. "Adam" 5) :name))
 ----
-++++
---
-
-== Functional OOP with Records - why setters and getters?
-
-[%step]
---
-++++
-<br>
-++++
-Do we really need *age* and *age!*?
---
-
-[%step]
---
-image::images/indirection.jpg[mutation, width=1000]
---
-
-
-== Functional OOP with Records - composition
-
-[%step]
---
-[source.clj]
-----
-(defrecord Doctor [human]
-  IHuman
-  (age [this] (age human))
-  (age! [this new-age] (update this :human #(age! % new-age)))
-  (fullname [this] (str "Dr. " (:firstname human) " " (:lastname human))))
-----
---
-
-[%step]
---
 ++++
 <br>
 <br>
 ++++
-[source.clj]
-----
-(defn create-doctor [firstname lastname age]
-  (Doctor. (Human. firstname lastname age)))
-----
 --
 
-
-[%step]
---
-++++
-<br>
-<br>
-++++
-[source.clj]
-----
-(display-human (age! (create-doctor "Dave" "Smith" 42) 88))  
-----
---
 
 == One last thing
 
@@ -867,7 +999,7 @@ In Clojure, everything can behave like a function
 --
 [source.clj]
 ----
-(extend-type Human
+#_(extend-type Human
   IFn
   (-invoke
     ([this key]
@@ -879,16 +1011,17 @@ In Clojure, everything can behave like a function
 --
 [source.clj]
 ----
-((create-human "Dave" "Smith" 42) :age)
+#_((create-human "Adam") :name)
 ----
+++++
+<br>
+<br>
+++++
 --
 
 [%step]
---
-Functions and maps emulate OOP
-Functions are protocols
-Circle diagram 
---
+
+Funny thought: In Clojure, even functions are protocols.
 
 == Conclusion
 
@@ -903,37 +1036,12 @@ What is the essence of Clojure?
 
 == Questions
 
-image::images/questions.jpg[questions]
+image::images/get-programming-clojure-book.png[questions]
 
-
-== Maybe
-
-[source.clj]
-----
-
-(defn new-human-maybe [{:keys [firstname lastname languages fruits]
-                   :as data
-                   :or {languages #{} fruits []}}]
-  {:data (assoc data :languages languages :fruits fruits)
-   :ops {:full-name (fn [this] (str (capitalize firstname) " " (capitalize lastname)))
-         :add-language (fn [this language] 
-                         (update-in this [:data :languages] #(conj % language)))
-         :eat-fruit (fn [this fruit] 
-                         (update-in this [:data :fruits] #(conj % fruit)))
-                       }}) 
+https://tinyurl.com/get-clojure
 
 
 
-(-> (new-human-maybe {:firstname "dave" :lastname "smith"})
-    (send-msg :add-language "fr")
-    (send-msg :add-language "en") 
-    (send-msg :eat-fruit "orange")
-    (send-msg :eat-fruit "orange")
-    (send-msg :eat-fruit "banana")
-
-    :data
-    )      
-----
 ++++
 <style>
 .bible {
