@@ -62,7 +62,7 @@
 
 . Definitions and Rhetoric
 . Functional Object Oriented Programming with maps
-. Functional Object Oriented Programming with records
+. Functional Object Oriented Programming with records and protocols
 
 
 == Who am I?
@@ -199,14 +199,14 @@ A programming paradigm based on the concepts of *functions*, *objects* and *mess
 
 A *function*:
 
-- receives *data* and returns *data*
-- avoids mutating *data*
+* receives *data* and returns *data*
+* avoids mutating *data*
 
 An *object* includes:
 
-- a package of *data*
-- a description of the operations that can be performed on that *data*
-- [yellow-background]#an operation avoids mutating data: it eithers returns *data* or a *new version* of the object#
+* a package of *data*
+* a description of the operations that can be performed on that *data*
+* [yellow-background]#operations avoid mutating data#: queries return *data* while commands return a *new version* of the object
 
 A *message* specifies one of the operations without describing how the operation should be carried out.
 Messages are sent through a function.
@@ -345,7 +345,7 @@ Let's send a *:appellation* message to a human
 [meditation]#Why do we need to store the *name* in the *:data* instead of accessing the lexical scope?#
 --
 
-== Functional OOP with maps - mutations
+== Functional OOP with maps - commands
 
 [%step]
 --
@@ -361,7 +361,7 @@ What about mutations?
 image::images/mutation_is_bad.jpg[mutation, width=1000]
 --
 
-== Functional OOP with maps - "mutations" first attempt
+== Functional OOP with maps - commands first attempt
 
 [%step]
 --
@@ -429,7 +429,7 @@ image::images/drunk.png[mutation, width=1000]
 
 
 
-== Functional OOP with maps - changes without mutations
+== Functional OOP with maps - commands without mutations
 
 [%step]
 --
@@ -519,7 +519,7 @@ When we manipulate a map in Clojure, we create new versions of the map.
 ----
 --
 
-== Functional OOP with maps - changes with thread macro
+== Functional OOP with maps - commands with thread macro
 
 
 [%step]
@@ -635,11 +635,18 @@ We have created our own Object Oriented "system"
 ----
 --
 
+[%step]
+--
+Nothing unique to Clojure.
+But Clojure was really helpful:
 
+. Immutable data collections
+. Thread macros
+--
 
 [%step]
 --
-But it's not really a system
+But it's not really a system:
 
 . Custom *:data* and *:ops* structure
 . Custom *send-msg* function
@@ -659,9 +666,9 @@ Functional OOP with Records and Protocols
 
 In Clojure there are three ways to create an object (it's called a datatype):
 
-. deftype
-. defrecord
-. reify
+. deftype (low level)
+. defrecord (application level)
+. reify (anonymous)
 
 We will focus on *defrecord*
 
@@ -713,7 +720,7 @@ Then, a record that implements the protocol:
 
 [%step]
 --
-And a constructor 
+And a custom constructor 
 [source.clj]
 ----
 (defn create-human [name]
@@ -753,7 +760,7 @@ Beware of this common pitfall
 <br>
 
 ++++
-[meditation]#Why do we need a constructor?#
+[meditation]#Why do we need a custom constructor?#
 --
 
 [%step]

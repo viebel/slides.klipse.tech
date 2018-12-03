@@ -79,7 +79,7 @@ Definitions and Rhetoric
 Functional Object Oriented Programming with maps
 </li>
 <li>
-Functional Object Oriented Programming with records
+Functional Object Oriented Programming with records and protocols
 </li>
 </ol>
 </div>
@@ -243,7 +243,7 @@ A programming paradigm based on the concepts of <strong>functions</strong>, <str
 <ul>
 <li>a package of <strong>data</strong></li>
 <li>a description of the operations that can be performed on that <strong>data</strong></li>
-<li><span class="yellow-background">an operation avoids mutating data: it eithers returns <strong>data</strong> or a <strong>new version</strong> of the object</span></li>
+<li><span class="yellow-background">operations avoid mutating data</span>: queries return <strong>data</strong> while commands return a <strong>new version</strong> of the object</li>
 </ul>
 </div>
 <div class="paragraph"><p>A <strong>message</strong> specifies one of the operations without describing how the operation should be carried out.<br>
@@ -398,8 +398,8 @@ When a human drinks too much, he is <strong>drunk</strong>
 </div>
 </div>
 </section>
-<section class="slide" id="_functional_oop_with_maps_mutations">
-<h2>Functional OOP with maps - mutations</h2>
+<section class="slide" id="_functional_oop_with_maps_commands">
+<h2>Functional OOP with maps - commands</h2>
 <div class="openblock slide">
 <div class="content">
 <div class="paragraph"><p>What about mutations?</p></div>
@@ -417,8 +417,8 @@ When a human drinks too much, he is <strong>drunk</strong>
 </div>
 </div>
 </section>
-<section class="slide" id="_functional_oop_with_maps_mutations_first_attempt">
-<h2>Functional OOP with maps - "mutations" first attempt</h2>
+<section class="slide" id="_functional_oop_with_maps_commands_first_attempt">
+<h2>Functional OOP with maps - commands first attempt</h2>
 <div class="openblock slide">
 <div class="content">
 <div class="paragraph"><p>Clojure is powerful: let&#8217;s use atoms and <strong>swap!</strong> them</p></div>
@@ -484,8 +484,8 @@ When a human drinks too much, he is <strong>drunk</strong>
 </div>
 </div>
 </section>
-<section class="slide" id="_functional_oop_with_maps_changes_without_mutations">
-<h2>Functional OOP with maps - changes without mutations</h2>
+<section class="slide" id="_functional_oop_with_maps_commands_without_mutations">
+<h2>Functional OOP with maps - commands without mutations</h2>
 <div class="openblock slide">
 <div class="content">
 <div class="paragraph"><p>Clojure is famous for its immutable data structures.<br>
@@ -570,8 +570,8 @@ Let&#8217;s leverage them!</p></div>
 </div>
 </div>
 </section>
-<section class="slide" id="_functional_oop_with_maps_changes_with_thread_macro">
-<h2>Functional OOP with maps - changes with thread macro</h2>
+<section class="slide" id="_functional_oop_with_maps_commands_with_thread_macro">
+<h2>Functional OOP with maps - commands with thread macro</h2>
 <div class="openblock slide">
 <div class="content">
 <div class="paragraph"><p>Thread macro</p></div>
@@ -696,7 +696,23 @@ Let&#8217;s leverage them!</p></div>
 </div>
 <div class="openblock slide">
 <div class="content">
-<div class="paragraph"><p>But it&#8217;s not really a system</p></div>
+<div class="paragraph"><p>Nothing unique to Clojure.<br>
+But Clojure was really helpful:</p></div>
+<div class="olist arabic">
+<ol class="arabic">
+<li>
+Immutable data collections
+</li>
+<li>
+Thread macros
+</li>
+</ol>
+</div>
+</div>
+</div>
+<div class="openblock slide">
+<div class="content">
+<div class="paragraph"><p>But it&#8217;s not really a system:</p></div>
 <div class="olist arabic">
 <ol class="arabic">
 <li>
@@ -731,13 +747,13 @@ Functional OOP with Records and Protocols</p></div>
 <div class="olist arabic">
 <ol class="arabic">
 <li>
-deftype
+deftype (low level)
 </li>
 <li>
-defrecord
+defrecord (application level)
 </li>
 <li>
-reify
+reify (anonymous)
 </li>
 </ol>
 </div>
@@ -803,7 +819,7 @@ Let Thy Friend Extend a Class as Thyself (Extensibility)
 </div>
 <div class="openblock slide">
 <div class="content">
-<div class="paragraph"><p>And a constructor</p></div>
+<div class="paragraph"><p>And a custom constructor</p></div>
 <div class="listingblock clj">
 <div class="content">
 <pre class="highlight"><code>(defn create-human [name]
@@ -843,7 +859,7 @@ Let Thy Friend Extend a Class as Thyself (Extensibility)
 <div class="openblock slide">
 <div class="content">
 <br>
-<div class="paragraph"><p><span class="meditation">Why do we need a constructor?</span></p></div>
+<div class="paragraph"><p><span class="meditation">Why do we need a custom constructor?</span></p></div>
 </div>
 </div>
 <div class="openblock slide">
