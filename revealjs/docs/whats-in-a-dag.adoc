@@ -262,6 +262,7 @@ pages.nodes().map(node => `${node.id()}: ${pr.rank(node)}`).join("\n")
 - Social networks (Clustering, Affinity)
 - Dependency resolution (toplogcal sort)
 - Online Store (Recommendation)
+- Fraud detection
 - ...
 
 == Storing a graph in a SQL database
