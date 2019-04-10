@@ -5,13 +5,28 @@ include::slide.attrs[]
 [state=title]
 == What's in a DAG?
 
+== Agenda
+
+- The birth of Graph Theory
+- How to make money from Graph Theory
+
+== Who am I?
+
+- A Full Stack Expert
+- A pragmatic theorist
+- A freak of interactivity
+- A partner in a software consulting company (We are hiring!)
+
 == Once upon a time, there was a (unsolvable) riddle
 
+image::images/konigsberg.jpg[riddle, 900]
 
 
-== And then, came Euler
+== Then, came Euler
 
-== Abstraction is sometimes helpful
+image::images/euler.jpg[euler, 500]
+
+== Simplification and Abstraction
 
 ++++
 <div class="hidden">
@@ -29,9 +44,9 @@ function weightedGraphOptions() {
   return options;
 }
 
-function dijkstraAlgo(graph) {
+function dijkstraAlgo(graph, id) {
 
- return graph.elements().dijkstra('#a', function(edge){
+ return graph.elements().dijkstra('#' + id, function(edge){
   return edge.data('weight');
 });
 }
@@ -45,65 +60,59 @@ function pathToArrows(path) {
 </div>
 ++++
 
-[source,eval-javascript]
-----
-
-var bridges = cytoscape({
+++++
+<div class="hidden">
+<div class="eval-javascript language-eval-javascript">
+function abstractBridges() {
+window.bridges = cytoscape({
   ...undirectedGraphOptions(),
   container: document.getElementById('bridges'),
   elements: [
-    {
-      data: { id: 'a' }
-    },
-    {
-      data: { id: 'b' }
-    },
-    {
-      data: { id: 'c' }
-    },
-    {
-      data: { id: 'd' },
-    },
-    {
-      data: { id: 'ab', source: 'a', target: 'b' }
-    },
-    {
-      data: { id: 'ac', source: 'a', target: 'c' }
-    },
-    {
-      data: { id: 'ad', source: 'a', target: 'd' }
-    },
-    {
-      data: { id: 'bc', source: 'b', target: 'c' }
-    },
-    {
-      data: { id: 'bc2', source: 'b', target: 'c' }
-    },
-    {
-      data: { id: 'cd', source: 'c', target: 'd' }
-    },
-    {
-      data: { id: 'cd2', source: 'c', target: 'd' }
-    }
-  ],
-});
+    { data: { id: 'a' }},
+    { data: { id: 'b' }},
+    { data: { id: 'c' }},
+    { data: { id: 'd' }},
+    { data: { source: 'a', target: 'b' }},
+    { data: { source: 'a', target: 'c' }},
+    { data: { source: 'a', target: 'd' }},
+    { data: { source: 'b', target: 'c' }},
+    { data: { source: 'b', target: 'c' }},
+    { data: { source: 'c', target: 'd' }},
+    { data: { source: 'c', target: 'd' }}]});
+ }
+</div>
+</div>
+++++
+
+[source,eval-javascript]
+----
+//abstractBridges()
 ----
 
 +++
-<div id="bridges" class="graph">
+<div id="bridges" class="graph" style="height:500px; width: 50%; float:left;">
+</div>
+<div>
+<img src="images/konigsberg.jpg" width="40%">
+</img>
 </div>
 +++
 
 == How many times this door was opened?
+
+image::images/opening-door.jpg[door, 600]
+
+
+== Let's give it a name
 
 [source,eval-javascript]
 ----
 bridges.nodes().map(x=> `${x.id()}: ${x.degree()}`).join("\n")
 ----
 
-== Graph Theory was born
+== Graph Theory was born: Happy Birthday!
 
-
+image::images/birthday-tree.jpg[tree, 700]
 
 == Basic Graph concepts
 
@@ -119,22 +128,62 @@ Properties:
 
 == Representing a graph
 
-- List of nodes and edges
-- Adjacency list
-- Adjacency matrix
+List of nodes and edges
+
+[source,eval-javascript]
+----
+listNodesAndEdges = [
+  { id: 'a' },
+  { id: 'b' },
+  { id: 'c' },
+  { id: 'd' },
+  { source: 'a', target: 'b' },
+  { source: 'a', target: 'c' },
+  { source: 'a', target: 'd' },
+  { source: 'b', target: 'c' },
+  { source: 'b', target: 'c' },
+  { source: 'c', target: 'd' },
+  { source: 'c', target: 'd' }
+];
+----
+
+Adjacency list
+
+[source, eval-javascript]
+----
+
+adjacencyList = {
+  'a': ['b', 'c', 'd'],
+  'b': ['c', 'c'],
+  'c': ['d','d'],
+  'd': []
+};
+----
+
+Adjacency matrix
+
+[source,eval-javascript]
+----
+adjacencyMatrix = [
+  [0, 1, 1, 1],
+  [1, 0, 1, 0]
+  [1, 1, 0, 1],
+  [1, 0, 1, 0]
+  ];
+----
+
+++++
+<br/><br/><br/>
+++++
 
 == Type of graphs
 
 - Weighted graph
 - Direct Acyclic Graph (DAG)
 
-== Theorem of 4 colors
-
 == Waze
 
 Djikstra algorithm
-
-== Demo
 
 [source,eval-javascript]
 ----
@@ -142,34 +191,14 @@ var map = cytoscape({
   ...weightedGraphOptions(),
   container: document.getElementById('map'),
   elements: [
-    {
-      data: { id: 'a' }
-    },
-    {
-      data: { id: 'b' }
-    },
-    {
-      data: { id: 'c' }
-    },
-    {
-      data: { id: 'd' },
-    },
-    {
-      data: { id: 'ab', source: 'a', target: 'b', weight: 5 }
-    },
-   
-    {
-      data: { id: 'bc', source: 'b', target: 'c', weight: 6 }
-    },
-    
-    {
-      data: { id: 'cd', source: 'c', target: 'd', weight: 3 }
-    },
-    {
-      data: { id: 'ad', source: 'a', target: 'd', weight: 3 }
-    },
-  ],
-});
+    { data: { id: 'Tel-Aviv' }},
+    { data: { id: 'Jerusalem' }},
+    { data: { id: 'Haifa' }},
+    { data: { id: 'Eilat' }},
+    { data: { source: 'Tel-Aviv', target: 'Jerusalem', weight: 5 }},
+    { data: { source: 'Jerusalem', target: 'Haifa', weight: 6 }},
+    { data: { source: 'Haifa', target: 'Eilat', weight: 3 }},
+    { data: { source: 'Tel-Aviv', target: 'Eilat', weight: 30 }}]});
 ----
 
 +++
@@ -179,21 +208,58 @@ var map = cytoscape({
 
 [source, eval-javascript]
 ----
-var shortestPath = dijkstraAlgo(map).pathTo( map.$('#d') );
-var shortestDistance = dijkstraAlgo(map).distanceTo( map.$('#d') );
+var shortestPath = dijkstraAlgo(map,'Tel-Aviv')
+                   .pathTo( map.$('#Eilat') )
+var shortestDistance = dijkstraAlgo(map, 'Tel-Aviv')
+                   .distanceTo( map.$('#Eilat') );
 console.log(`shortest distance: ${shortestDistance}`);
-console.log(`shortest path: ${pathToArrows(shortestPath)}`);
+console.log(`shortest path: ${pathToArrows(shortestPath)}`); 
 ----
 
-== Solving the dependency problem
+++++
+<br/><br/><br/><br/><br/>
+++++
 
-Topological order
+
+== Page Rank
+
+[source,eval-javascript]
+----
+var pages = cytoscape({
+  ...defaultGraphOptions,
+  container: document.getElementById('pages'),
+  elements: [
+    { data: { id: 'wikipedia.org' }},
+    { data: { id: 'cnn.com' }},
+    { data: { id: 'stackoverflow.com' }},
+    { data: { id: 'meetup.com' }},
+    { data: { id: 'myblog.com' }},
+    { data: { source: 'meetup.com', target: 'wikipedia.org'}},
+    { data: { source: 'cnn.com', target: 'wikipedia.org'}},
+    { data: { source: 'stackoverflow.com', target: 'wikipedia.org'}},
+    { data: { source: 'wikipedia.org', target: 'myblog.com'}},
+    { data: { source: 'stackoverflow.com' , target: 'cnn.com' }},
+    { data: { source: 'meetup.com', target: 'cnn.com' }}]}); 
+----
+
++++
+<div id="pages" class="graph">
+</div>
++++
+
+[source,eval-javascript]
+----
+var pr = pages.elements().pageRank();
+pages.nodes().map(node => `${node.id()}: ${pr.rank(node)}`).join("\n")
+----
 
 == Social networks
 
 == Storing a graph in a SQL database
 
-== Conclusion
+Good Luck!
+
+== Questions
 
 
 ++++

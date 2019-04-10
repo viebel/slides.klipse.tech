@@ -3,9 +3,11 @@ link.rel = 'stylesheet';
 link.type = 'text/css';
 link.href = window.location.search.match( /print-pdf/gi ) ? "https://cdnjs.cloudflare.com/ajax/libs/reveal.js/3.6.0/css/print/pdf.css" : "https://cdnjs.cloudflare.com/ajax/libs/reveal.js/3.6.0/css/print/paper.css";
 document.getElementsByTagName( 'head' )[0].appendChild( link );</script><!--[if lt IE 9]><script src="https://cdnjs.cloudflare.com/ajax/libs/reveal.js/3.6.0/lib/js/html5shiv.js"></script><![endif]--><link rel="shortcut icon" type="image/x-icon" href="img/clojure-logo-icon-32.png"><link rel="stylesheet" href="slides.css"></head><body><div class="reveal"><div class="slides"><section id="whats_in_a_dag" data-state="title"><h2>What&#8217;s in a DAG?</h2></section>
-<section id="once_upon_a_time_there_was_a_unsolvable_riddle"><h2>Once upon a time, there was a (unsolvable) riddle</h2></section>
-<section id="and_then_came_euler"><h2>And then, came Euler</h2></section>
-<section id="abstraction_is_sometimes_helpful"><h2>Abstraction is sometimes helpful</h2><div class="hidden">
+<section id="agenda"><h2>Agenda</h2><div class="ulist"><ul><li><p>The birth of Graph Theory</p></li><li><p>How to make money from Graph Theory</p></li></ul></div></section>
+<section id="who_am_i"><h2>Who am I?</h2><div class="ulist"><ul><li><p>A Full Stack Expert</p></li><li><p>A pragmatic theorist</p></li><li><p>A freak of interactivity</p></li><li><p>A partner in a software consulting company (We are hiring!)</p></li></ul></div></section>
+<section id="once_upon_a_time_there_was_a_unsolvable_riddle"><h2>Once upon a time, there was a (unsolvable) riddle</h2><div class="imageblock" style=""><img src="images/konigsberg.jpg" alt="riddle" width="900"></div></section>
+<section id="then_came_euler"><h2>Then, came Euler</h2><div class="imageblock" style=""><img src="images/euler.jpg" alt="euler" width="500"></div></section>
+<section id="simplification_and_abstraction"><h2>Simplification and Abstraction</h2><div class="hidden">
 <div class="eval-javascript language-eval-javascript">
 prettyFormat = x=&gt;x;
 function undirectedGraphOptions() {
@@ -20,9 +22,9 @@ function weightedGraphOptions() {
   return options;
 }
 
-function dijkstraAlgo(graph) {
+function dijkstraAlgo(graph, id) {
 
- return graph.elements().dijkstra('#a', function(edge){
+ return graph.elements().dijkstra('#' + id, function(edge){
   return edge.data('weight');
 });
 }
@@ -34,102 +36,120 @@ function pathToArrows(path) {
 }
 </div>
 </div>
-<div class="listingblock"><div class="content"><pre class="highlight"><code class="eval-javascript language-eval-javascript">var bridges = cytoscape({
+<div class="hidden">
+<div class="eval-javascript language-eval-javascript">
+function abstractBridges() {
+window.bridges = cytoscape({
   ...undirectedGraphOptions(),
   container: document.getElementById('bridges'),
   elements: [
-    {
-      data: { id: 'a' }
-    },
-    {
-      data: { id: 'b' }
-    },
-    {
-      data: { id: 'c' }
-    },
-    {
-      data: { id: 'd' },
-    },
-    {
-      data: { id: 'ab', source: 'a', target: 'b' }
-    },
-    {
-      data: { id: 'ac', source: 'a', target: 'c' }
-    },
-    {
-      data: { id: 'ad', source: 'a', target: 'd' }
-    },
-    {
-      data: { id: 'bc', source: 'b', target: 'c' }
-    },
-    {
-      data: { id: 'bc2', source: 'b', target: 'c' }
-    },
-    {
-      data: { id: 'cd', source: 'c', target: 'd' }
-    },
-    {
-      data: { id: 'cd2', source: 'c', target: 'd' }
-    }
-  ],
-});</code></pre></div></div>
+    { data: { id: 'a' }},
+    { data: { id: 'b' }},
+    { data: { id: 'c' }},
+    { data: { id: 'd' }},
+    { data: { source: 'a', target: 'b' }},
+    { data: { source: 'a', target: 'c' }},
+    { data: { source: 'a', target: 'd' }},
+    { data: { source: 'b', target: 'c' }},
+    { data: { source: 'b', target: 'c' }},
+    { data: { source: 'c', target: 'd' }},
+    { data: { source: 'c', target: 'd' }}]});
+ }
+</div>
+</div>
+<div class="listingblock"><div class="content"><pre class="highlight"><code class="eval-javascript language-eval-javascript">//abstractBridges()</code></pre></div></div>
 <div class="paragraph"><p>
-<div id="bridges" class="graph">
+<div id="bridges" class="graph" style="height:500px; width: 50%; float:left;">
+</div>
+<div>
+<img src="images/konigsberg.jpg" width="40%">
+</img>
 </div>
 </p></div></section>
-<section id="how_many_times_this_door_was_opened"><h2>How many times this door was opened?</h2><div class="listingblock"><div class="content"><pre class="highlight"><code class="eval-javascript language-eval-javascript">bridges.nodes().map(x=&gt; `${x.id()}: ${x.degree()}`).join("\n")</code></pre></div></div></section>
-<section id="graph_theory_was_born"><h2>Graph Theory was born</h2></section>
+<section id="how_many_times_this_door_was_opened"><h2>How many times this door was opened?</h2><div class="imageblock" style=""><img src="images/opening-door.jpg" alt="door" width="600"></div></section>
+<section id="lets_give_it_a_name"><h2>Let&#8217;s give it a name</h2><div class="listingblock"><div class="content"><pre class="highlight"><code class="eval-javascript language-eval-javascript">bridges.nodes().map(x=&gt; `${x.id()}: ${x.degree()}`).join("\n")</code></pre></div></div></section>
+<section id="graph_theory_was_born_happy_birthday"><h2>Graph Theory was born: Happy Birthday!</h2><div class="imageblock" style=""><img src="images/birthday-tree.jpg" alt="tree" width="700"></div></section>
 <section id="basic_graph_concepts"><h2>Basic Graph concepts</h2><div class="ulist"><ul><li><p>Vertices</p></li><li><p>Edges</p></li></ul></div>
 <div class="paragraph"><p>Properties:</p></div>
 <div class="ulist"><ul><li><p>Degree</p></li><li><p>Cycle</p></li><li><p>Neighboors</p></li><li><p>Clusters</p></li></ul></div></section>
-<section id="representing_a_graph"><h2>Representing a graph</h2><div class="ulist"><ul><li><p>List of nodes and edges</p></li><li><p>Adjacency list</p></li><li><p>Adjacency matrix</p></li></ul></div></section>
+<section id="representing_a_graph"><h2>Representing a graph</h2><div class="paragraph"><p>List of nodes and edges</p></div>
+<div class="listingblock"><div class="content"><pre class="highlight"><code class="eval-javascript language-eval-javascript">listNodesAndEdges = [
+  { id: 'a' },
+  { id: 'b' },
+  { id: 'c' },
+  { id: 'd' },
+  { source: 'a', target: 'b' },
+  { source: 'a', target: 'c' },
+  { source: 'a', target: 'd' },
+  { source: 'b', target: 'c' },
+  { source: 'b', target: 'c' },
+  { source: 'c', target: 'd' },
+  { source: 'c', target: 'd' }
+];</code></pre></div></div>
+<div class="paragraph"><p>Adjacency list</p></div>
+<div class="listingblock"><div class="content"><pre class="highlight"><code class="eval-javascript language-eval-javascript">adjacencyList = {
+  'a': ['b', 'c', 'd'],
+  'b': ['c', 'c'],
+  'c': ['d','d'],
+  'd': []
+};</code></pre></div></div>
+<div class="paragraph"><p>Adjacency matrix</p></div>
+<div class="listingblock"><div class="content"><pre class="highlight"><code class="eval-javascript language-eval-javascript">adjacencyMatrix = [
+  [0, 1, 1, 1],
+  [1, 0, 1, 0]
+  [1, 1, 0, 1],
+  [1, 0, 1, 0]
+  ];</code></pre></div></div>
+<br/><br/><br/></section>
 <section id="type_of_graphs"><h2>Type of graphs</h2><div class="ulist"><ul><li><p>Weighted graph</p></li><li><p>Direct Acyclic Graph (DAG)</p></li></ul></div></section>
-<section id="theorem_of_4_colors"><h2>Theorem of 4 colors</h2></section>
-<section id="waze"><h2>Waze</h2><div class="paragraph"><p>Djikstra algorithm</p></div></section>
-<section id="demo"><h2>Demo</h2><div class="listingblock"><div class="content"><pre class="highlight"><code class="eval-javascript language-eval-javascript">var map = cytoscape({
+<section id="waze"><h2>Waze</h2><div class="paragraph"><p>Djikstra algorithm</p></div>
+<div class="listingblock"><div class="content"><pre class="highlight"><code class="eval-javascript language-eval-javascript">var map = cytoscape({
   ...weightedGraphOptions(),
   container: document.getElementById('map'),
   elements: [
-    {
-      data: { id: 'a' }
-    },
-    {
-      data: { id: 'b' }
-    },
-    {
-      data: { id: 'c' }
-    },
-    {
-      data: { id: 'd' },
-    },
-    {
-      data: { id: 'ab', source: 'a', target: 'b', weight: 5 }
-    },
-
-    {
-      data: { id: 'bc', source: 'b', target: 'c', weight: 6 }
-    },
-
-    {
-      data: { id: 'cd', source: 'c', target: 'd', weight: 3 }
-    },
-    {
-      data: { id: 'ad', source: 'a', target: 'd', weight: 3 }
-    },
-  ],
-});</code></pre></div></div>
+    { data: { id: 'Tel-Aviv' }},
+    { data: { id: 'Jerusalem' }},
+    { data: { id: 'Haifa' }},
+    { data: { id: 'Eilat' }},
+    { data: { source: 'Tel-Aviv', target: 'Jerusalem', weight: 5 }},
+    { data: { source: 'Jerusalem', target: 'Haifa', weight: 6 }},
+    { data: { source: 'Haifa', target: 'Eilat', weight: 3 }},
+    { data: { source: 'Tel-Aviv', target: 'Eilat', weight: 30 }}]});</code></pre></div></div>
 <div class="paragraph"><p>
 <div id="map" class="graph">
 </div>
 </p></div>
-<div class="listingblock"><div class="content"><pre class="highlight"><code class="eval-javascript language-eval-javascript">var shortestPath = dijkstraAlgo(map).pathTo( map.$('#d') );
-var shortestDistance = dijkstraAlgo(map).distanceTo( map.$('#d') );
+<div class="listingblock"><div class="content"><pre class="highlight"><code class="eval-javascript language-eval-javascript">var shortestPath = dijkstraAlgo(map,'Tel-Aviv')
+                   .pathTo( map.$('#Eilat') )
+var shortestDistance = dijkstraAlgo(map, 'Tel-Aviv')
+                   .distanceTo( map.$('#Eilat') );
 console.log(`shortest distance: ${shortestDistance}`);
-console.log(`shortest path: ${pathToArrows(shortestPath)}`);</code></pre></div></div></section>
-<section id="solving_the_dependency_problem"><h2>Solving the dependency problem</h2><div class="paragraph"><p>Topological order</p></div></section>
+console.log(`shortest path: ${pathToArrows(shortestPath)}`);</code></pre></div></div>
+<br/><br/><br/><br/><br/></section>
+<section id="page_rank"><h2>Page Rank</h2><div class="listingblock"><div class="content"><pre class="highlight"><code class="eval-javascript language-eval-javascript">var pages = cytoscape({
+  ...defaultGraphOptions,
+  container: document.getElementById('pages'),
+  elements: [
+    { data: { id: 'wikipedia.org' }},
+    { data: { id: 'cnn.com' }},
+    { data: { id: 'stackoverflow.com' }},
+    { data: { id: 'meetup.com' }},
+    { data: { id: 'myblog.com' }},
+    { data: { source: 'meetup.com', target: 'wikipedia.org'}},
+    { data: { source: 'cnn.com', target: 'wikipedia.org'}},
+    { data: { source: 'stackoverflow.com', target: 'wikipedia.org'}},
+    { data: { source: 'wikipedia.org', target: 'myblog.com'}},
+    { data: { source: 'stackoverflow.com' , target: 'cnn.com' }},
+    { data: { source: 'meetup.com', target: 'cnn.com' }}]});</code></pre></div></div>
+<div class="paragraph"><p>
+<div id="pages" class="graph">
+</div>
+</p></div>
+<div class="listingblock"><div class="content"><pre class="highlight"><code class="eval-javascript language-eval-javascript">var pr = pages.elements().pageRank();
+pages.nodes().map(node =&gt; `${node.id()}: ${pr.rank(node)}`).join("\n")</code></pre></div></div></section>
 <section id="social_networks"><h2>Social networks</h2></section>
-<section id="storing_a_graph_in_a_sql_database"><h2>Storing a graph in a SQL database</h2></section>
-<section id="conclusion"><h2>Conclusion</h2><script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/cytoscape/3.5.2/cytoscape.min.js">
+<section id="storing_a_graph_in_a_sql_database"><h2>Storing a graph in a SQL database</h2><div class="paragraph"><p>Good Luck!</p></div></section>
+<section id="questions"><h2>Questions</h2><script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/cytoscape/3.5.2/cytoscape.min.js">
 </script>
 <script type="text/javascript" src="js/cytoscape-custom.js">
 </script></section></div></div><script src="https://cdnjs.cloudflare.com/ajax/libs/reveal.js/3.6.0/lib/js/head.min.js"></script><script src="https://cdnjs.cloudflare.com/ajax/libs/reveal.js/3.6.0/js/reveal.js"></script><script>// See https://github.com/hakimel/reveal.js#configuration for a full list of configuration options

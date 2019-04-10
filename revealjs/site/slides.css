@@ -1,3 +1,7 @@
+.reveal {
+    overflow: scroll;
+}
+
 .reveal h2, th {
   font-size: 1.5em;
   padding-bottom: 0.5em;
@@ -15,14 +19,12 @@
   font-size: 1.0em;
   color: #5B80D4;
   /* allow vertical scrolling in slides */
-  max-height: 100%;
+  height: 100%;
   overflow-y: auto;
 }
 
 .reveal section img {
   margin: 0;
-  border: 10px solid #66AF40;
-  height: 300px;
 }
 
 .reveal section p, h1, h2, div {
@@ -30,7 +32,10 @@
 }
 
 .slides {
-  width: 90% !important;
+    margin-top: 10px !important;
+    margin-bottom: 10px !important;
+    width: 90% !important;
+    height: 100% !important;
 }
 
 html.title body {
