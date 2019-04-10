@@ -5,8 +5,79 @@ link.href = window.location.search.match( /print-pdf/gi ) ? "https://cdnjs.cloud
 document.getElementsByTagName( 'head' )[0].appendChild( link );</script><!--[if lt IE 9]><script src="https://cdnjs.cloudflare.com/ajax/libs/reveal.js/3.6.0/lib/js/html5shiv.js"></script><![endif]--><link rel="shortcut icon" type="image/x-icon" href="img/clojure-logo-icon-32.png"><link rel="stylesheet" href="slides.css"></head><body><div class="reveal"><div class="slides"><section id="whats_in_a_dag" data-state="title"><h2>What&#8217;s in a DAG?</h2></section>
 <section id="once_upon_a_time_there_was_a_unsolvable_riddle"><h2>Once upon a time, there was a (unsolvable) riddle</h2></section>
 <section id="and_then_came_euler"><h2>And then, came Euler</h2></section>
-<section id="abstraction_is_sometimes_helpful"><h2>Abstraction is sometimes helpful</h2></section>
-<section id="how_many_times_this_door_was_opened"><h2>How many times this door was opened?</h2></section>
+<section id="abstraction_is_sometimes_helpful"><h2>Abstraction is sometimes helpful</h2><div class="hidden">
+<div class="eval-javascript language-eval-javascript">
+prettyFormat = x=&gt;x;
+function undirectedGraphOptions() {
+  var options = JSON.parse(JSON.stringify(defaultGraphOptions));
+  options.style[1].style["target-arrow-shape"] = "line";
+  return options;
+}
+
+function weightedGraphOptions() {
+  var options = JSON.parse(JSON.stringify(defaultGraphOptions));
+  options.style[1].style.label = "data(weight)"
+  return options;
+}
+
+function dijkstraAlgo(graph) {
+
+ return graph.elements().dijkstra('#a', function(edge){
+  return edge.data('weight');
+});
+}
+
+function pathToArrows(path) {
+  return path
+    .filter((x,i) =&gt; i %2 === 0)
+    .map(x =&gt; x.id()).join(" -&gt; ");
+}
+</div>
+</div>
+<div class="listingblock"><div class="content"><pre class="highlight"><code class="eval-javascript language-eval-javascript">var bridges = cytoscape({
+  ...undirectedGraphOptions(),
+  container: document.getElementById('bridges'),
+  elements: [
+    {
+      data: { id: 'a' }
+    },
+    {
+      data: { id: 'b' }
+    },
+    {
+      data: { id: 'c' }
+    },
+    {
+      data: { id: 'd' },
+    },
+    {
+      data: { id: 'ab', source: 'a', target: 'b' }
+    },
+    {
+      data: { id: 'ac', source: 'a', target: 'c' }
+    },
+    {
+      data: { id: 'ad', source: 'a', target: 'd' }
+    },
+    {
+      data: { id: 'bc', source: 'b', target: 'c' }
+    },
+    {
+      data: { id: 'bc2', source: 'b', target: 'c' }
+    },
+    {
+      data: { id: 'cd', source: 'c', target: 'd' }
+    },
+    {
+      data: { id: 'cd2', source: 'c', target: 'd' }
+    }
+  ],
+});</code></pre></div></div>
+<div class="paragraph"><p>
+<div id="bridges" class="graph">
+</div>
+</p></div></section>
+<section id="how_many_times_this_door_was_opened"><h2>How many times this door was opened?</h2><div class="listingblock"><div class="content"><pre class="highlight"><code class="eval-javascript language-eval-javascript">bridges.nodes().map(x=&gt; `${x.id()}: ${x.degree()}`).join("\n")</code></pre></div></div></section>
 <section id="graph_theory_was_born"><h2>Graph Theory was born</h2></section>
 <section id="basic_graph_concepts"><h2>Basic Graph concepts</h2><div class="ulist"><ul><li><p>Vertices</p></li><li><p>Edges</p></li></ul></div>
 <div class="paragraph"><p>Properties:</p></div>
@@ -15,10 +86,53 @@ document.getElementsByTagName( 'head' )[0].appendChild( link );</script><!--[if 
 <section id="type_of_graphs"><h2>Type of graphs</h2><div class="ulist"><ul><li><p>Weighted graph</p></li><li><p>Direct Acyclic Graph (DAG)</p></li></ul></div></section>
 <section id="theorem_of_4_colors"><h2>Theorem of 4 colors</h2></section>
 <section id="waze"><h2>Waze</h2><div class="paragraph"><p>Djikstra algorithm</p></div></section>
+<section id="demo"><h2>Demo</h2><div class="listingblock"><div class="content"><pre class="highlight"><code class="eval-javascript language-eval-javascript">var map = cytoscape({
+  ...weightedGraphOptions(),
+  container: document.getElementById('map'),
+  elements: [
+    {
+      data: { id: 'a' }
+    },
+    {
+      data: { id: 'b' }
+    },
+    {
+      data: { id: 'c' }
+    },
+    {
+      data: { id: 'd' },
+    },
+    {
+      data: { id: 'ab', source: 'a', target: 'b', weight: 5 }
+    },
+
+    {
+      data: { id: 'bc', source: 'b', target: 'c', weight: 6 }
+    },
+
+    {
+      data: { id: 'cd', source: 'c', target: 'd', weight: 3 }
+    },
+    {
+      data: { id: 'ad', source: 'a', target: 'd', weight: 3 }
+    },
+  ],
+});</code></pre></div></div>
+<div class="paragraph"><p>
+<div id="map" class="graph">
+</div>
+</p></div>
+<div class="listingblock"><div class="content"><pre class="highlight"><code class="eval-javascript language-eval-javascript">var shortestPath = dijkstraAlgo(map).pathTo( map.$('#d') );
+var shortestDistance = dijkstraAlgo(map).distanceTo( map.$('#d') );
+console.log(`shortest distance: ${shortestDistance}`);
+console.log(`shortest path: ${pathToArrows(shortestPath)}`);</code></pre></div></div></section>
 <section id="solving_the_dependency_problem"><h2>Solving the dependency problem</h2><div class="paragraph"><p>Topological order</p></div></section>
 <section id="social_networks"><h2>Social networks</h2></section>
 <section id="storing_a_graph_in_a_sql_database"><h2>Storing a graph in a SQL database</h2></section>
-<section id="conclusion"><h2>Conclusion</h2></section></div></div><script src="https://cdnjs.cloudflare.com/ajax/libs/reveal.js/3.6.0/lib/js/head.min.js"></script><script src="https://cdnjs.cloudflare.com/ajax/libs/reveal.js/3.6.0/js/reveal.js"></script><script>// See https://github.com/hakimel/reveal.js#configuration for a full list of configuration options
+<section id="conclusion"><h2>Conclusion</h2><script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/cytoscape/3.5.2/cytoscape.min.js">
+</script>
+<script type="text/javascript" src="js/cytoscape-custom.js">
+</script></section></div></div><script src="https://cdnjs.cloudflare.com/ajax/libs/reveal.js/3.6.0/lib/js/head.min.js"></script><script src="https://cdnjs.cloudflare.com/ajax/libs/reveal.js/3.6.0/js/reveal.js"></script><script>// See https://github.com/hakimel/reveal.js#configuration for a full list of configuration options
 Reveal.initialize({
   // Display controls in the bottom right corner
   controls: true,

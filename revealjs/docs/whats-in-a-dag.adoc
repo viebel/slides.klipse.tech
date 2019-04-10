@@ -7,13 +7,103 @@ include::slide.attrs[]
 
 == Once upon a time, there was a (unsolvable) riddle
 
+
+
 == And then, came Euler
 
 == Abstraction is sometimes helpful
 
+++++
+<div class="hidden">
+<div class="eval-javascript language-eval-javascript">
+prettyFormat = x=&gt;x;
+function undirectedGraphOptions() {
+  var options = JSON.parse(JSON.stringify(defaultGraphOptions));
+  options.style[1].style["target-arrow-shape"] = "line";
+  return options;
+}
+
+function weightedGraphOptions() {
+  var options = JSON.parse(JSON.stringify(defaultGraphOptions));
+  options.style[1].style.label = "data(weight)"
+  return options;
+}
+
+function dijkstraAlgo(graph) {
+
+ return graph.elements().dijkstra('#a', function(edge){
+  return edge.data('weight');
+});
+}
+
+function pathToArrows(path) {
+  return path
+    .filter((x,i) =&gt; i %2 === 0)
+    .map(x =&gt; x.id()).join(" -&gt; ");
+}
+</div>
+</div>
+++++
+
+[source,eval-javascript]
+----
+
+var bridges = cytoscape({
+  ...undirectedGraphOptions(),
+  container: document.getElementById('bridges'),
+  elements: [
+    {
+      data: { id: 'a' }
+    },
+    {
+      data: { id: 'b' }
+    },
+    {
+      data: { id: 'c' }
+    },
+    {
+      data: { id: 'd' },
+    },
+    {
+      data: { id: 'ab', source: 'a', target: 'b' }
+    },
+    {
+      data: { id: 'ac', source: 'a', target: 'c' }
+    },
+    {
+      data: { id: 'ad', source: 'a', target: 'd' }
+    },
+    {
+      data: { id: 'bc', source: 'b', target: 'c' }
+    },
+    {
+      data: { id: 'bc2', source: 'b', target: 'c' }
+    },
+    {
+      data: { id: 'cd', source: 'c', target: 'd' }
+    },
+    {
+      data: { id: 'cd2', source: 'c', target: 'd' }
+    }
+  ],
+});
+----
+
++++
+<div id="bridges" class="graph">
+</div>
++++
+
 == How many times this door was opened?
 
+[source,eval-javascript]
+----
+bridges.nodes().map(x=> `${x.id()}: ${x.degree()}`).join("\n")
+----
+
 == Graph Theory was born
+
+
 
 == Basic Graph concepts
 
@@ -44,6 +134,57 @@ Properties:
 
 Djikstra algorithm
 
+== Demo
+
+[source,eval-javascript]
+----
+var map = cytoscape({
+  ...weightedGraphOptions(),
+  container: document.getElementById('map'),
+  elements: [
+    {
+      data: { id: 'a' }
+    },
+    {
+      data: { id: 'b' }
+    },
+    {
+      data: { id: 'c' }
+    },
+    {
+      data: { id: 'd' },
+    },
+    {
+      data: { id: 'ab', source: 'a', target: 'b', weight: 5 }
+    },
+   
+    {
+      data: { id: 'bc', source: 'b', target: 'c', weight: 6 }
+    },
+    
+    {
+      data: { id: 'cd', source: 'c', target: 'd', weight: 3 }
+    },
+    {
+      data: { id: 'ad', source: 'a', target: 'd', weight: 3 }
+    },
+  ],
+});
+----
+
++++
+<div id="map" class="graph">
+</div>
++++
+
+[source, eval-javascript]
+----
+var shortestPath = dijkstraAlgo(map).pathTo( map.$('#d') );
+var shortestDistance = dijkstraAlgo(map).distanceTo( map.$('#d') );
+console.log(`shortest distance: ${shortestDistance}`);
+console.log(`shortest path: ${pathToArrows(shortestPath)}`);
+----
+
 == Solving the dependency problem
 
 Topological order
@@ -53,4 +194,17 @@ Topological order
 == Storing a graph in a SQL database
 
 == Conclusion
+
+
+++++
+<script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/cytoscape/3.5.2/cytoscape.min.js">
+</script>
+++++
+
+++++
+<script type="text/javascript" src="js/cytoscape-custom.js">
+</script>
+++++
+
+
 

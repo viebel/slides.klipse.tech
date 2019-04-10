@@ -61,3 +61,14 @@ code {
   padding-bottom: 30px !important;
   margin-bottom: -30px !important;
 }
+
+.hidden {
+    display: none;
+    height: 0px;
+}
+
+.graph {
+  width: 1000px;
+  height: 500px;
+  background-color: white;
+}
