@@ -5,6 +5,8 @@ include::slide.attrs[]
 [state=title]
 == What's in a DAG?
 
+image::images/nemo.jpg[nemo, 700]
+
 == Agenda
 
 - The birth of Graph Theory
