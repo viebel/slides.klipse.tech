@@ -1,0 +1,56 @@
+= What's in a DAG?
+include::slide.attrs[]
+
+
+[state=title]
+== What's in a DAG?
+
+== Once upon a time, there was a (unsolvable) riddle
+
+== And then, came Euler
+
+== Abstraction is sometimes helpful
+
+== How many times this door was opened?
+
+== Graph Theory was born
+
+== Basic Graph concepts
+
+- Vertices
+- Edges
+
+Properties:
+
+- Degree
+- Cycle
+- Neighboors
+- Clusters
+
+== Representing a graph
+
+- List of nodes and edges
+- Adjacency list
+- Adjacency matrix
+
+== Type of graphs
+
+- Weighted graph
+- Direct Acyclic Graph (DAG)
+
+== Theorem of 4 colors
+
+== Waze
+
+Djikstra algorithm
+
+== Solving the dependency problem
+
+Topological order
+
+== Social networks
+
+== Storing a graph in a SQL database
+
+== Conclusion
+

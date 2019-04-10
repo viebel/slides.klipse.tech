@@ -1,0 +1,26 @@
+= asciidoctor-revealjs-klipse
+
+Create slides from markup that contain interactive code snippets.
+
+See the [live example](https://timothypratley.github.io/asciidoctor-revaljs-klipse/slides.html).
+
+Notice that you can click into the code blocks and change them, it re-evaluates on the fly.
+This is handy for people who want to play around with your examples,
+or if you just want nice syntax highlighting.
+
+This is a template project that shows how you can produce interactive slides.
+It combines Asciidoctor, RevealJS and Klipse.  
+Asciidoctor is a powerful toolchain for publishing.
+RevealJS is a slide deck generator.
+Klipse is a client-side code evaluator.
+
+== Building
+
+    ./bb.sh
+
+Gets dependencies and builds
+
+    ./watch.sh
+
+Builds, watches for changes, rebuilds
+

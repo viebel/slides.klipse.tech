@@ -1,0 +1,51 @@
+= asciidoctor-revealJS-klipse example slides
+:copyright: Timothy Pratley
+:license: Eclipse Public License http://www.eclipse.org/legal/epl-v10.html
+include::slide.attrs[]
+
+
+[state=title]
+== Interactive slides example
+
+The slides are built with https://revealjs.com/[RevealJS], a slide deck generator using https://asciidoctor.org/[Asciidoctor], a powerful toolchain for publishing.
+
+The code snippets are evaluated by https://github.com/viebel/klipse[Klipse], an interactive client-side code evaluator.
+
+A template for this type of presentations is available in https://github.com/timothypratley/asciidoctor-revealjs-klipse[asciidoctor-revealjs-klipse github repository].
+
+
+RevealJS navigation help can be accessed by pressing "?".
+
+Press the "right arrow" key to move to the next slide.
+
+
+== ClojureScript
+
+[source,eval-clojure]
+(+ 1 2)
+
+
+
+== JavaScript
+
+[source,eval-javascript]
+1 + 2
+
+
+== HTML
+
+[source,eval-html]
+<svg>
+  <circle fill="blue"
+          r="20" cx="50" cy="50" />
+  <circle fill="green"
+          r="20" cx="200" cy="50" />
+</svg>
+
+
+== Fin
+
+Thank you
+
+https://github.com/timothypratley/asciidoctor-revealjs-klipse
+
