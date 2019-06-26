@@ -21,10 +21,34 @@ This text will only show in the speaker view mode.
 
 == Three key ideas
 
+[%step]
 . The power of expressions
 . Dealing with data is valuable
 . Pure functions are helpful
 
+
+== The lack of power of expressions
+[.fragment]
+Step 1
+
+[.fragment]
+Step 2
+
+NOTE: It works!
+
+TIP: Be careful always
+
+CAUTION: dass
+
+[source, python]
+----
+print "Hello World"
+----
+
+[source, clojure]
+----
+(map inc [1 2 3])
+----
 
 == The lack of power of expressions
 
@@ -36,38 +60,122 @@ The syntax is not uniform: operator, statements, function calls, function defini
 
 == The power of expressions
 
-Every part of the language is an expression, with the same structure
+[.fragment]
+TIP: Every part of the language is an expression, with the same structure
 
-Arithmetic operations
+
+[.fragment]
+[cols="2*", frame=none, grid=none]
+|===
+
+a|[.fragment]
+--
+arithmetic operation
 [source.eval-clojure, clojure]
 (+ 1 2)
+--
 
-Boolean operations
+a|[.fragment]
+--
+boolean operation
 [source.eval-clojure, clojure]
 (and true false)
+--
 
-Namespace declaration
+a|[.fragment]
+--
+namespace declaration
 [source.eval-clojure, clojure]
 (ns fun.clj)
+--
 
-Variable assignments
+a|[.fragment]
+--
+variable assignment
 [source.eval-clojure, clojure]
 (def my-num 42)
+--
 
-If expressions
+a|[.fragment]
+--
+`if` expression
 [source.eval-clojure, clojure]
 (if my-num "happy" "sad")
+--
 
-Function calls
+a|[.fragment]
+--
+function call
 [source.eval-clojure, clojure]
 (inc 42)
-
-Function definitions
-[source.eval-clojure, clojure]
 --
+
+a|[.fragment]
+--
+function definition
+[source.eval-clojure, clojure]
 (defn add-42 [x]
   (+ x 42))
 --
+|===
+
+
+== The power of expressions - Javascript vs. Clojure
+
+|===
+
+|Javascript|Clojure
+
+a|
+--
+[source, javascript]
+foo(1, 2)
+--
+a|
+--
+[source, clojure]
+(foo 1 2)
+--
+
+a|
+--
+[source, javascript]
+2 + 3
+--
+a|
+--
+[source, clojure]
+(+ 2 3)
+--
+
+a|
+--
+[source, javascript]
+if (x > 2) {
+  return 3;
+} else {
+  return 5;
+}
+--
+a|
+--
+[source, clojure]
+(if (> x 2)
+    3
+    5)
+--
+
+a|
+--
+[source, javascript]
+var myNum = 42
+--
+a|
+--
+[source, clojure]
+(def my-num 42)
+--
+|===
 
 == The power of expressions - if expressions
 
@@ -101,7 +209,9 @@ We can comment out a single expression out of a big piece of code
 [source.eval-clojure, clojure]
 (+ 1 2)
 
-TIP: Try changing the numbers in the top box.
+TIP: Why
+
+
 The answer in the bottom box is evaluated immediately.
 
 

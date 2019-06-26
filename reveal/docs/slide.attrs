@@ -6,6 +6,10 @@
 :revealjs_minScale: 1.0
 :revealjs_maxScale: 1.0
 :revealjs_history: true
+:revealjs_slideNumber: true
+:revealjs_plugin_zoom: disabled
+:revealjs_fragmentInURL: true
 :docinfo: shared
 :notitle:
 :icons: font
+:source-highlighter: highlightjs

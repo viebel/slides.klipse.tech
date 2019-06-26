@@ -4,31 +4,37 @@ link.type = 'text/css';
 link.href = window.location.search.match( /print-pdf/gi ) ? "reveal.js/css/print/pdf.css" : "reveal.js/css/print/paper.css";
 document.getElementsByTagName( 'head' )[0].appendChild( link );</script><!--[if lt IE 9]><script src="reveal.js/lib/js/html5shiv.js"></script><![endif]--><link rel="shortcut icon" type="image/x-icon" href="img/clojure-logo-icon-32.png"><link rel="stylesheet" href="slides.css"></head><body><div class="reveal"><div class="slides"><section id="clojure_made_easy" data-state="title"><h2>Clojure made easy</h2><aside class="notes">This text will only show in the speaker view mode.</aside></section>
 <section id="begin_with_the_end_in_mind"><h2>Begin with the End in Mind</h2><div class="olist arabic"><ol class="arabic"><li><p>You are motivated to learn Clojure</p></li><li><p>You look differently at your existing Software knowledge</p></li><li><p>You had a fun evening</p></li><li><p>You want to read my book on Clojure</p></li></ol></div></section>
-<section id="three_key_ideas"><h2>Three key ideas</h2><div class="olist arabic"><ol class="arabic"><li><p>The power of expressions</p></li><li><p>Dealing with data is valuable</p></li><li><p>Pure functions are helpful</p></li></ol></div></section>
-<section id="the_lack_of_power_of_expressions"><h2>The lack of power of expressions</h2><div class="paragraph"><p>We cannot assign the result of an <code>if</code> statement to a variable.</p></div>
+<section id="three_key_ideas"><h2>Three key ideas</h2><div class="olist arabic"><ol class="arabic"><li class="fragment"><p>The power of expressions</p></li><li class="fragment"><p>Dealing with data is valuable</p></li><li class="fragment"><p>Pure functions are helpful</p></li></ol></div></section>
+<section id="the_lack_of_power_of_expressions"><h2>The lack of power of expressions</h2><div class="paragraph fragment"><p>Step 1</p></div>
+<div class="paragraph fragment"><p>Step 2</p></div>
+<div class="admonitionblock note"><table><tr><td class="icon"><i class="fa fa-info-circle" title="Note"></i></td><td class="content">It works!</td></tr></table></div>
+<div class="admonitionblock tip"><table><tr><td class="icon"><i class="fa fa-lightbulb-o" title="Tip"></i></td><td class="content">Be careful always</td></tr></table></div>
+<div class="admonitionblock caution"><table><tr><td class="icon"><i class="fa fa-fire" title="Caution"></i></td><td class="content">dass</td></tr></table></div>
+<div class="listingblock"><div class="content"><pre class="highlight"><code data-noescape class="python language-python">print "Hello World"</code></pre></div></div>
+<div class="listingblock"><div class="content"><pre class="highlight"><code data-noescape class="clojure language-clojure">(map inc [1 2 3])</code></pre></div></div></section>
+<section id="the_lack_of_power_of_expressions_2"><h2>The lack of power of expressions</h2><div class="paragraph"><p>We cannot assign the result of an <code>if</code> statement to a variable.</p></div>
 <div class="paragraph"><p>We cannot comment out an expression.</p></div>
 <div class="paragraph"><p>The syntax is not uniform: operator, statements, function calls, function definition, classes&#8230;&#8203;</p></div></section>
-<section id="the_power_of_expressions"><h2>The power of expressions</h2><div class="paragraph"><p>Every part of the language is an expression, with the same structure</p></div>
-<div class="paragraph"><p>Arithmetic operations</p></div>
-<div class="listingblock eval-clojure"><div class="content"><pre class="highlight"><code class="clojure language-clojure">(+ 1 2)</code></pre></div></div>
-<div class="paragraph"><p>Boolean operations</p></div>
-<div class="listingblock eval-clojure"><div class="content"><pre class="highlight"><code class="clojure language-clojure">(and true false)</code></pre></div></div>
-<div class="paragraph"><p>Namespace declaration</p></div>
-<div class="listingblock eval-clojure"><div class="content"><pre class="highlight"><code class="clojure language-clojure">(ns fun.clj)</code></pre></div></div>
-<div class="paragraph"><p>Variable assignments</p></div>
-<div class="listingblock eval-clojure"><div class="content"><pre class="highlight"><code class="clojure language-clojure">(def my-num 42)</code></pre></div></div>
-<div class="paragraph"><p>If expressions</p></div>
-<div class="listingblock eval-clojure"><div class="content"><pre class="highlight"><code class="clojure language-clojure">(if my-num "happy" "sad")</code></pre></div></div>
-<div class="paragraph"><p>Function calls</p></div>
-<div class="listingblock eval-clojure"><div class="content"><pre class="highlight"><code class="clojure language-clojure">(inc 42)</code></pre></div></div>
-<div class="paragraph"><p>Function definitions</p></div>
-<div class="listingblock eval-clojure"><div class="content"><pre class="highlight"><code class="clojure language-clojure">(defn add-42 [x]
-  (+ x 42))</code></pre></div></div></section>
+<section id="the_power_of_expressions"><h2>The power of expressions</h2><div class="admonitionblock tip fragment"><table><tr><td class="icon"><i class="fa fa-lightbulb-o" title="Tip"></i></td><td class="content">Every part of the language is an expression, with the same structure</td></tr></table></div>
+<table class="tableblock frame-none grid-none fragment" style="width:100%"><colgroup><col style="width:50%"><col style="width:50%"></colgroup><tbody><tr><td class="tableblock halign-left valign-top"><div><div class="openblock fragment"><div class="content"><div class="paragraph"><p>arithmetic operation</p></div>
+<div class="listingblock eval-clojure"><div class="content"><pre class="highlight"><code data-noescape class="clojure language-clojure">(+ 1 2)</code></pre></div></div></div></div></div></td><td class="tableblock halign-left valign-top"><div><div class="openblock fragment"><div class="content"><div class="paragraph"><p>boolean operation</p></div>
+<div class="listingblock eval-clojure"><div class="content"><pre class="highlight"><code data-noescape class="clojure language-clojure">(and true false)</code></pre></div></div></div></div></div></td></tr><tr><td class="tableblock halign-left valign-top"><div><div class="openblock fragment"><div class="content"><div class="paragraph"><p>namespace declaration</p></div>
+<div class="listingblock eval-clojure"><div class="content"><pre class="highlight"><code data-noescape class="clojure language-clojure">(ns fun.clj)</code></pre></div></div></div></div></div></td><td class="tableblock halign-left valign-top"><div><div class="openblock fragment"><div class="content"><div class="paragraph"><p>variable assignment</p></div>
+<div class="listingblock eval-clojure"><div class="content"><pre class="highlight"><code data-noescape class="clojure language-clojure">(def my-num 42)</code></pre></div></div></div></div></div></td></tr><tr><td class="tableblock halign-left valign-top"><div><div class="openblock fragment"><div class="content"><div class="paragraph"><p><code>if</code> expression</p></div>
+<div class="listingblock eval-clojure"><div class="content"><pre class="highlight"><code data-noescape class="clojure language-clojure">(if my-num "happy" "sad")</code></pre></div></div></div></div></div></td><td class="tableblock halign-left valign-top"><div><div class="openblock fragment"><div class="content"><div class="paragraph"><p>function call</p></div>
+<div class="listingblock eval-clojure"><div class="content"><pre class="highlight"><code data-noescape class="clojure language-clojure">(inc 42)</code></pre></div></div></div></div></div></td></tr></table></section>
+<section id="the_power_of_expressions_javascript_vs_clojure"><h2>The power of expressions - Javascript vs. Clojure</h2><table class="tableblock frame-all grid-all" style="width:100%"><colgroup><col style="width:50%"><col style="width:50%"></colgroup><tbody><tr><td class="tableblock halign-left valign-top"><p class="tableblock">Javascript</p></td><td class="tableblock halign-left valign-top"><p class="tableblock">Clojure</p></td></tr><tr><td class="tableblock halign-left valign-top"><div><div class="openblock"><div class="content"><div class="listingblock"><div class="content"><pre class="highlight"><code data-noescape class="javascript language-javascript">foo(1, 2)</code></pre></div></div></div></div></div></td><td class="tableblock halign-left valign-top"><div><div class="openblock"><div class="content"><div class="listingblock"><div class="content"><pre class="highlight"><code data-noescape class="clojure language-clojure">(foo 1 2)</code></pre></div></div></div></div></div></td></tr><tr><td class="tableblock halign-left valign-top"><div><div class="openblock"><div class="content"><div class="listingblock"><div class="content"><pre class="highlight"><code data-noescape class="javascript language-javascript">2 + 3</code></pre></div></div></div></div></div></td><td class="tableblock halign-left valign-top"><div><div class="openblock"><div class="content"><div class="listingblock"><div class="content"><pre class="highlight"><code data-noescape class="clojure language-clojure">(+ 2 3)</code></pre></div></div></div></div></div></td></tr><tr><td class="tableblock halign-left valign-top"><div><div class="openblock"><div class="content"><div class="listingblock"><div class="content"><pre class="highlight"><code data-noescape class="javascript language-javascript">if (x &gt; 2) {
+  return 3;
+} else {
+  return 5;
+}</code></pre></div></div></div></div></div></td><td class="tableblock halign-left valign-top"><div><div class="openblock"><div class="content"><div class="listingblock"><div class="content"><pre class="highlight"><code data-noescape class="clojure language-clojure">(if (&gt; x 2)
+    3
+    5)</code></pre></div></div></div></div></div></td></tr><tr><td class="tableblock halign-left valign-top"><div><div class="openblock"><div class="content"><div class="listingblock"><div class="content"><pre class="highlight"><code data-noescape class="javascript language-javascript">var myNum = 42</code></pre></div></div></div></div></div></td><td class="tableblock halign-left valign-top"><div><div class="openblock"><div class="content"><div class="listingblock"><div class="content"><pre class="highlight"><code data-noescape class="clojure language-clojure">(def my-num 42)</code></pre></div></div></div></div></div></td></tr></table></section>
 <section id="the_power_of_expressions_if_expressions"><h2>The power of expressions - if expressions</h2><div class="paragraph"><p>We can assign the result of an <code>if</code> expression into a variable</p></div>
-<div class="listingblock eval-clojure"><div class="content"><pre class="highlight"><code class="clojure language-clojure">(def my-mood (if my-num "happy" "sad"))
+<div class="listingblock eval-clojure"><div class="content"><pre class="highlight"><code data-noescape class="clojure language-clojure">(def my-mood (if my-num "happy" "sad"))
 my-mood</code></pre></div></div></section>
 <section id="the_power_of_expressions_comments"><h2>The power of expressions - comments</h2><div class="paragraph"><p>We can comment out a single expression out of a big piece of code</p></div>
-<div class="listingblock eval-clojure"><div class="content"><pre class="highlight"><code class="clojure language-clojure">(defn print-moods [num]
+<div class="listingblock eval-clojure"><div class="content"><pre class="highlight"><code data-noescape class="clojure language-clojure">(defn print-moods [num]
   (println "happy")
   (if (= num 42)
     (println "furious")
@@ -36,12 +42,12 @@ my-mood</code></pre></div></div></section>
   (println "sad"))
 
 (print-moods 42)</code></pre></div></div></section>
-<section id="next"><h2>Next</h2><div class="listingblock eval-clojure"><div class="content"><pre class="highlight"><code class="clojure language-clojure">(+ 1 2)</code></pre></div></div>
-<div class="admonitionblock tip"><table><tr><td class="icon"><i class="fa fa-lightbulb-o" title="Tip"></i></td><td class="content">Try changing the numbers in the top box.
-The answer in the bottom box is evaluated immediately.</td></tr></table></div></section>
-<section id="javascript"><h2>JavaScript</h2><div class="listingblock eval-javascript"><div class="content"><pre class="highlight"><code class="javascript language-javascript">1 + 2</code></pre></div></div>
+<section id="next"><h2>Next</h2><div class="listingblock eval-clojure"><div class="content"><pre class="highlight"><code data-noescape class="clojure language-clojure">(+ 1 2)</code></pre></div></div>
+<div class="admonitionblock tip"><table><tr><td class="icon"><i class="fa fa-lightbulb-o" title="Tip"></i></td><td class="content">Why</td></tr></table></div>
+<div class="paragraph"><p>The answer in the bottom box is evaluated immediately.</p></div></section>
+<section id="javascript"><h2>JavaScript</h2><div class="listingblock eval-javascript"><div class="content"><pre class="highlight"><code data-noescape class="javascript language-javascript">1 + 2</code></pre></div></div>
 <div class="admonitionblock note"><table><tr><td class="icon"><i class="fa fa-info-circle" title="Note"></i></td><td class="content">Multiple languages are supported by Klipse</td></tr></table></div></section>
-<section id="html"><h2>HTML</h2><div class="listingblock eval-html"><div class="content"><pre class="highlight"><code class="html language-html">&lt;svg&gt;
+<section id="html"><h2>HTML</h2><div class="listingblock eval-html"><div class="content"><pre class="highlight"><code data-noescape class="html language-html">&lt;svg&gt;
   &lt;circle fill="blue"
           r="20" cx="50" cy="50" /&gt;
   &lt;circle fill="green"
@@ -73,7 +79,7 @@ Reveal.initialize({
   // Set a per-slide timing for speaker notes, null means none
   defaultTiming: null,
   // Display the page number of the current slide
-  slideNumber: false,
+  slideNumber: true,
   // Push each slide change to the browser history
   history: true,
   // Enable keyboard shortcuts for navigation
@@ -151,7 +157,7 @@ Reveal.initialize({
       { src: 'reveal.js/lib/js/classList.js', condition: function() { return !document.body.classList; } },
       { src: 'reveal.js/plugin/markdown/marked.js', condition: function() { return !!document.querySelector( '[data-markdown]' ); } },
       { src: 'reveal.js/plugin/markdown/markdown.js', condition: function() { return !!document.querySelector( '[data-markdown]' ); } },
-      
+      { src: 'reveal.js/plugin/highlight/highlight.js', async: true, callback: function() { hljs.initHighlightingOnLoad(); } },
       { src: 'reveal.js/plugin/zoom-js/zoom.js', async: true },
       { src: 'reveal.js/plugin/notes/notes.js', async: true }
   ]

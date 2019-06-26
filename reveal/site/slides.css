@@ -1,3 +1,26 @@
+pre code.hljs {
+    background-color: white;
+    border: none;
+    display: block;
+    background: white;
+    color: #4d4d4c;
+    padding: 10px;
+
+}
+
+.highlight {
+    background-color: white;
+    border: none;
+}
+
+.reveal table th, .reveal table td {
+    padding: 0.2em 0.5em 0.2em 0.5em; 
+}
+
+.reveal table.grid-none td { /* some theme css files override border-bottom without respecting the table attributes */
+  border-bottom: 0;
+}
+
 .reveal h2, th {
   font-size: 1.5em;
   padding-bottom: 0.5em;
@@ -8,7 +31,7 @@
   font-size: 0.8em;
   box-shadow: none;
   padding: 0.1em;
-  background-color: #F8F8F8;
+  background-color: white;
 }
 
 .reveal section {
@@ -66,3 +89,4 @@ code {
   padding-bottom: 30px !important;
   margin-bottom: -30px !important;
 }
+

@@ -6,12 +6,12 @@ document.getElementsByTagName( 'head' )[0].appendChild( link );</script><!--[if 
 <div class="paragraph"><p>Press "?" for help.</p></div>
 <div class="paragraph"><p>Press the "right arrow" key to move to the next slide.</p></div>
 <aside class="notes">This text will only show in the speaker view mode.</aside></section>
-<section id="clojurescript"><h2>ClojureScript</h2><div class="listingblock eval-clojure"><div class="content"><pre class="highlight"><code class="clojure language-clojure">(+ 1 2)</code></pre></div></div>
+<section id="clojurescript"><h2>ClojureScript</h2><div class="listingblock eval-clojure"><div class="content"><pre class="highlight"><code data-noescape class="clojure language-clojure">(+ 1 2)</code></pre></div></div>
 <div class="admonitionblock tip"><table><tr><td class="icon"><i class="fa fa-lightbulb-o" title="Tip"></i></td><td class="content">Try changing the numbers in the top box.
 The answer in the bottom box is evaluated immediately.</td></tr></table></div></section>
-<section id="javascript"><h2>JavaScript</h2><div class="listingblock eval-javascript"><div class="content"><pre class="highlight"><code class="javascript language-javascript">1 + 2</code></pre></div></div>
+<section id="javascript"><h2>JavaScript</h2><div class="listingblock eval-javascript"><div class="content"><pre class="highlight"><code data-noescape class="javascript language-javascript">1 + 2</code></pre></div></div>
 <div class="admonitionblock note"><table><tr><td class="icon"><i class="fa fa-info-circle" title="Note"></i></td><td class="content">Multiple languages are supported by Klipse</td></tr></table></div></section>
-<section id="html"><h2>HTML</h2><div class="listingblock eval-html"><div class="content"><pre class="highlight"><code class="html language-html">&lt;svg&gt;
+<section id="html"><h2>HTML</h2><div class="listingblock eval-html"><div class="content"><pre class="highlight"><code data-noescape class="html language-html">&lt;svg&gt;
   &lt;circle fill="blue"
           r="20" cx="50" cy="50" /&gt;
   &lt;circle fill="green"
@@ -43,7 +43,7 @@ Reveal.initialize({
   // Set a per-slide timing for speaker notes, null means none
   defaultTiming: null,
   // Display the page number of the current slide
-  slideNumber: false,
+  slideNumber: true,
   // Push each slide change to the browser history
   history: true,
   // Enable keyboard shortcuts for navigation
@@ -121,7 +121,7 @@ Reveal.initialize({
       { src: 'reveal.js/lib/js/classList.js', condition: function() { return !document.body.classList; } },
       { src: 'reveal.js/plugin/markdown/marked.js', condition: function() { return !!document.querySelector( '[data-markdown]' ); } },
       { src: 'reveal.js/plugin/markdown/markdown.js', condition: function() { return !!document.querySelector( '[data-markdown]' ); } },
-      
+      { src: 'reveal.js/plugin/highlight/highlight.js', async: true, callback: function() { hljs.initHighlightingOnLoad(); } },
       { src: 'reveal.js/plugin/zoom-js/zoom.js', async: true },
       { src: 'reveal.js/plugin/notes/notes.js', async: true }
   ]
