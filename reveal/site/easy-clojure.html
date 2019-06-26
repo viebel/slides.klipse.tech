@@ -1,0 +1,171 @@
+<!DOCTYPE html><html lang="en"><head><meta charset="utf-8"><meta name="copyright" content="Yehonathan Sharvit"><title>Clojure made easy</title><meta content="yes" name="apple-mobile-web-app-capable"><meta content="black-translucent" name="apple-mobile-web-app-status-bar-style"><meta content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, minimal-ui" name="viewport"><link href="reveal.js/css/reveal.css" rel="stylesheet"><link rel="stylesheet" href="reveal.js/css/theme/simple.css" id="theme"><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.3.0/css/font-awesome.min.css"><link href="reveal.js/lib/css/zenburn.css" rel="stylesheet"><script>var link = document.createElement( 'link' );
+link.rel = 'stylesheet';
+link.type = 'text/css';
+link.href = window.location.search.match( /print-pdf/gi ) ? "reveal.js/css/print/pdf.css" : "reveal.js/css/print/paper.css";
+document.getElementsByTagName( 'head' )[0].appendChild( link );</script><!--[if lt IE 9]><script src="reveal.js/lib/js/html5shiv.js"></script><![endif]--><link rel="shortcut icon" type="image/x-icon" href="img/clojure-logo-icon-32.png"><link rel="stylesheet" href="slides.css"></head><body><div class="reveal"><div class="slides"><section id="clojure_made_easy" data-state="title"><h2>Clojure made easy</h2><aside class="notes">This text will only show in the speaker view mode.</aside></section>
+<section id="begin_with_the_end_in_mind"><h2>Begin with the End in Mind</h2><div class="olist arabic"><ol class="arabic"><li><p>You are motivated to learn Clojure</p></li><li><p>You look differently at your existing Software knowledge</p></li><li><p>You had a fun evening</p></li><li><p>You want to read my book on Clojure</p></li></ol></div></section>
+<section id="three_key_ideas"><h2>Three key ideas</h2><div class="olist arabic"><ol class="arabic"><li><p>The power of expressions</p></li><li><p>Dealing with data is valuable</p></li><li><p>Pure functions are helpful</p></li></ol></div></section>
+<section id="the_lack_of_power_of_expressions"><h2>The lack of power of expressions</h2><div class="paragraph"><p>We cannot assign the result of an <code>if</code> statement to a variable.</p></div>
+<div class="paragraph"><p>We cannot comment out an expression.</p></div>
+<div class="paragraph"><p>The syntax is not uniform: operator, statements, function calls, function definition, classes&#8230;&#8203;</p></div></section>
+<section id="the_power_of_expressions"><h2>The power of expressions</h2><div class="paragraph"><p>Every part of the language is an expression, with the same structure</p></div>
+<div class="paragraph"><p>Arithmetic operations</p></div>
+<div class="listingblock eval-clojure"><div class="content"><pre class="highlight"><code class="clojure language-clojure">(+ 1 2)</code></pre></div></div>
+<div class="paragraph"><p>Boolean operations</p></div>
+<div class="listingblock eval-clojure"><div class="content"><pre class="highlight"><code class="clojure language-clojure">(and true false)</code></pre></div></div>
+<div class="paragraph"><p>Namespace declaration</p></div>
+<div class="listingblock eval-clojure"><div class="content"><pre class="highlight"><code class="clojure language-clojure">(ns fun.clj)</code></pre></div></div>
+<div class="paragraph"><p>Variable assignments</p></div>
+<div class="listingblock eval-clojure"><div class="content"><pre class="highlight"><code class="clojure language-clojure">(def my-num 42)</code></pre></div></div>
+<div class="paragraph"><p>If expressions</p></div>
+<div class="listingblock eval-clojure"><div class="content"><pre class="highlight"><code class="clojure language-clojure">(if my-num "happy" "sad")</code></pre></div></div>
+<div class="paragraph"><p>Function calls</p></div>
+<div class="listingblock eval-clojure"><div class="content"><pre class="highlight"><code class="clojure language-clojure">(inc 42)</code></pre></div></div>
+<div class="paragraph"><p>Function definitions</p></div>
+<div class="listingblock eval-clojure"><div class="content"><pre class="highlight"><code class="clojure language-clojure">(defn add-42 [x]
+  (+ x 42))</code></pre></div></div></section>
+<section id="the_power_of_expressions_if_expressions"><h2>The power of expressions - if expressions</h2><div class="paragraph"><p>We can assign the result of an <code>if</code> expression into a variable</p></div>
+<div class="listingblock eval-clojure"><div class="content"><pre class="highlight"><code class="clojure language-clojure">(def my-mood (if my-num "happy" "sad"))
+my-mood</code></pre></div></div></section>
+<section id="the_power_of_expressions_comments"><h2>The power of expressions - comments</h2><div class="paragraph"><p>We can comment out a single expression out of a big piece of code</p></div>
+<div class="listingblock eval-clojure"><div class="content"><pre class="highlight"><code class="clojure language-clojure">(defn print-moods [num]
+  (println "happy")
+  (if (= num 42)
+    (println "furious")
+    (println "angry"))
+  (println "sad"))
+
+(print-moods 42)</code></pre></div></div></section>
+<section id="next"><h2>Next</h2><div class="listingblock eval-clojure"><div class="content"><pre class="highlight"><code class="clojure language-clojure">(+ 1 2)</code></pre></div></div>
+<div class="admonitionblock tip"><table><tr><td class="icon"><i class="fa fa-lightbulb-o" title="Tip"></i></td><td class="content">Try changing the numbers in the top box.
+The answer in the bottom box is evaluated immediately.</td></tr></table></div></section>
+<section id="javascript"><h2>JavaScript</h2><div class="listingblock eval-javascript"><div class="content"><pre class="highlight"><code class="javascript language-javascript">1 + 2</code></pre></div></div>
+<div class="admonitionblock note"><table><tr><td class="icon"><i class="fa fa-info-circle" title="Note"></i></td><td class="content">Multiple languages are supported by Klipse</td></tr></table></div></section>
+<section id="html"><h2>HTML</h2><div class="listingblock eval-html"><div class="content"><pre class="highlight"><code class="html language-html">&lt;svg&gt;
+  &lt;circle fill="blue"
+          r="20" cx="50" cy="50" /&gt;
+  &lt;circle fill="green"
+          r="20" cx="200" cy="50" /&gt;
+&lt;/svg&gt;</code></pre></div></div>
+<div class="admonitionblock tip"><table><tr><td class="icon"><i class="fa fa-lightbulb-o" title="Tip"></i></td><td class="content">Try changing one of the colors</td></tr></table></div></section>
+<section id="what_is_klipse"><h2>What is Klipse?</h2><div class="paragraph"><p>An interactive client-side code evaluator.</p></div>
+<div class="paragraph"><p>Turns <code>&lt;pre&gt;&lt;code&gt; &#8230;&#8203; &lt;/code&gt;&lt;/pre&gt;</code> snippets into a live editor,
+with beautiful syntax highlighting.</p></div>
+<div class="paragraph"><p>Supports many languages.</p></div>
+<div class="paragraph"><p>Perfect for blogs&#8230;&#8203; and slides!</p></div>
+<div class="paragraph"><p>See the <a href="https://github.com/viebel/klipse" class="external" target="_blank">Klipse github repo</a>.</p></div></section>
+<section id="what_is_asciidoctor"><h2>What is AsciiDoctor?</h2><div class="paragraph"><p>A powerful toolchain for publishing.</p></div>
+<div class="paragraph"><p>Better than markdown:</p></div>
+<div class="ulist"><ul><li><p>Target multiple formats (html/pdf/book/slides)</p></li><li><p>Tables, figures, tip/warn/note, table of contents</p></li></ul></div>
+<div class="paragraph"><p>See <a href="https://asciidoctor.org/" class="external" target="_blank">Asciidoctor</a> for more information.</p></div></section>
+<section id="what_is_revealjs"><h2>What is RevealJS?</h2><div class="paragraph"><p>A modern HTML slide presentation framework.</p></div>
+<div class="paragraph"><p>Features include:</p></div>
+<div class="ulist"><ul><li><p>Speaker notes and full screen</p></li><li><p>Transitions</p></li><li><p>And much more</p></li></ul></div>
+<div class="paragraph"><p>Read more on the <a href="https://revealjs.com/" class="external" target="_blank">RevealJS website</a>.</p></div></section>
+<section id="putting_it_all_together"><h2>Putting it all together&#8230;&#8203;</h2><div class="paragraph"><p>This presentation is a template project for creating your own presentation.</p></div>
+<div class="paragraph"><p>Get the source:</p></div>
+<div class="paragraph"><p><a href="https://github.com/timothypratley/asciidoctor-revealjs-klipse" class="external" target="_blank">asciidoctor-revealjs-klipse github repository</a>.</p></div></section></div></div><script src="reveal.js/lib/js/head.min.js"></script><script src="reveal.js/js/reveal.js"></script><script>// See https://github.com/hakimel/reveal.js#configuration for a full list of configuration options
+Reveal.initialize({
+  // Display controls in the bottom right corner
+  controls: true,
+  // Display a presentation progress bar
+  progress: true,
+  // Set a per-slide timing for speaker notes, null means none
+  defaultTiming: null,
+  // Display the page number of the current slide
+  slideNumber: false,
+  // Push each slide change to the browser history
+  history: true,
+  // Enable keyboard shortcuts for navigation
+  keyboard: true,
+  // Enable the slide overview mode
+  overview: true,
+  // Vertical centering of slides
+  center: false,
+  // Enables touch navigation on devices with touch input
+  touch: true,
+  // Loop the presentation
+  loop: false,
+  // Change the presentation direction to be RTL
+  rtl: false,
+  // Randomizes the order of slides each time the presentation loads
+  shuffle: false,
+  // Turns fragments on and off globally
+  fragments: true,
+  // Flags if the presentation is running in an embedded mode,
+  // i.e. contained within a limited portion of the screen
+  embedded: false,
+  // Flags if we should show a help overlay when the questionmark
+  // key is pressed
+  help: true,
+  // Flags if speaker notes should be visible to all viewers
+  showNotes: false,
+  // Global override for autolaying embedded media (video/audio/iframe)
+  // - null: Media will only autoplay if data-autoplay is present
+  // - true: All media will autoplay, regardless of individual setting
+  // - false: No media will autoplay, regardless of individual setting
+  autoPlayMedia: null,
+  // Number of milliseconds between automatically proceeding to the
+  // next slide, disabled when set to 0, this value can be overwritten
+  // by using a data-autoslide attribute on your slides
+  autoSlide: 0,
+  // Stop auto-sliding after user input
+  autoSlideStoppable: true,
+  // Enable slide navigation via mouse wheel
+  mouseWheel: false,
+  // Hides the address bar on mobile devices
+  hideAddressBar: true,
+  // Opens links in an iframe preview overlay
+  previewLinks: false,
+  // Theme (e.g., beige, black, league, night, serif, simple, sky, solarized, white)
+  // NOTE setting the theme in the config no longer works in reveal.js 3.x
+  //theme: Reveal.getQueryHash().theme || 'simple',
+  // Transition style (e.g., none, fade, slide, convex, concave, zoom)
+  transition: Reveal.getQueryHash().transition || 'slide',
+  // Transition speed (e.g., default, fast, slow)
+  transitionSpeed: 'default',
+  // Transition style for full page slide backgrounds (e.g., none, fade, slide, convex, concave, zoom)
+  backgroundTransition: 'fade',
+  // Number of slides away from the current that are visible
+  viewDistance: 3,
+  // Parallax background image (e.g., "'https://s3.amazonaws.com/hakim-static/reveal-js/reveal-parallax-1.jpg'")
+  parallaxBackgroundImage: '',
+  // Parallax background size in CSS syntax (e.g., "2100px 900px")
+  parallaxBackgroundSize: '',
+
+  // The "normal" size of the presentation, aspect ratio will be preserved
+  // when the presentation is scaled to fit different resolutions. Can be
+  // specified using percentage units.
+  width: "100%",
+  height: "100%",
+
+  // Factor of the display size that should remain empty around the content
+  margin: 0.1,
+
+  // Bounds for smallest/largest possible scale to apply to content
+  minScale: 1.0,
+  maxScale: 1.0,
+
+  // Optional libraries used to extend on reveal.js
+  dependencies: [
+      { src: 'reveal.js/lib/js/classList.js', condition: function() { return !document.body.classList; } },
+      { src: 'reveal.js/plugin/markdown/marked.js', condition: function() { return !!document.querySelector( '[data-markdown]' ); } },
+      { src: 'reveal.js/plugin/markdown/markdown.js', condition: function() { return !!document.querySelector( '[data-markdown]' ); } },
+      
+      { src: 'reveal.js/plugin/zoom-js/zoom.js', async: true },
+      { src: 'reveal.js/plugin/notes/notes.js', async: true }
+  ]
+});</script><link rel="stylesheet" type="text/css" href="https://storage.googleapis.com/app.klipse.tech/css/codemirror.css">
+<script>
+    window.klipse_settings = {
+        selector: '.eval-clojure',
+	selector_eval_js: '.eval-javascript',
+	selector_eval_html: '.eval-html'
+    };
+</script>
+<script src="https://storage.googleapis.com/app.klipse.tech/plugin/js/klipse_plugin.js"></script>
+<script>
+    Reveal.addEventListener( 'slidechanged', function() {
+        window.dispatchEvent(new Event('resize'));
+    } );
+</script></body></html>

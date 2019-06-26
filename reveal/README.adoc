@@ -1,0 +1,83 @@
+= asciidoctor-revealjs-klipse
+
+Create slides from markdown that contain interactive code snippets.
+
+See the https://timothypratley.github.io/asciidoctor-revealjs-klipse/slides.html[live example].
+
+Notice that you can click into the code blocks and change them.
+It re-evaluates the code on the fly.
+This is handy for people who want to play around with your examples,
+or if you just want nice syntax highlighting.
+
+
+== About
+
+This is a template project that shows how you can produce interactive slides.
+
+The slides are generated using the
+https://asciidoctor.org/docs/asciidoctor-revealjs[Asciidoctor-revealjs]
+converter.
+You can read the documentation on how to create slides
+https://asciidoctor.org/docs/asciidoctor-revealjs/#syntax-examples[here].
+
+TLDR something like:
+
+----
+== Slide Title
+
+Hello and welcome to my talk!
+
+[source,eval-clojure]
+(+ 1 2)
+----
+
+You can see the source for the slides in this repo under
+link:docs/slides.adoc[docs/slides.adoc].
+
+
+== Dependencies
+
+1. https://asciidoctor.org/[Asciidoctor], a powerful toolchain for publishing
+2. https://revealjs.com/[RevealJS], a slide deck generator
+3. https://github.com/viebel/klipse[Klipse], an interactive client-side code evaluator.  
+
+The key things required to integrate Klipse inside the slides are:
+
+1. Load the Klipse javascript.
+   Trigger a window resize event on slide transition.
+   This causes CodeMirror to resize.
+   Otherwise when future slides get loaded, the code area is height 0.
+   (see link:docs/docinfo-footer.html[docs/docinfo-footer.html])
+2. Avoid center aligning code and avoid scaling.
+   (see link:docs/slide.attrs[docs/slide.attrs])
+3. Override the `CodeMirror-cursor` and `CodeMirror-scroll` styles
+   so that the cursor shows and clicking on the last line doesn't scroll weirdly.
+   Also override `klipse-snippet` and `klipse-result` to make them stand out a little.
+   (see end of link:site/slides.css[site/slides.css])
+
+
+== Building
+
+You'll need https://www.ruby-lang.org/en/documentation/installation/[Ruby]
+and https://bundler.io[Bundler] installed.
+If you prefer, you could also set up your own build based on
+https://asciidoctor.org/docs/asciidoctor-revealjs/#node-javascript-setup[NodeJS].
+
+    ./bb.sh
+
+Gets dependencies and builds
+
+    ./watch.sh
+
+Builds, watches for changes, rebuilds
+
+
+== Deploying
+
+An automated TravisCI builds and deploys whenever changes are pushed to the master branch.
+The automated deployment is configured in link:.travis.yml[.travis.yml].
+See https://docs.travis-ci.com/user/deployment/pages/[Github Pages deployment with Travis].
+
+It is also possible to build and deploy the site to github pages manually:
+
+    ./deploy.sh

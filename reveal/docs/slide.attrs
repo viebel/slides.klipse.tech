@@ -1,0 +1,11 @@
+:customcss: slides.css
+:revealjs_width: "100%"
+:revealjs_height: "100%"
+:revealjs_theme: simple
+:revealjs_center: false
+:revealjs_minScale: 1.0
+:revealjs_maxScale: 1.0
+:revealjs_history: true
+:docinfo: shared
+:notitle:
+:icons: font
