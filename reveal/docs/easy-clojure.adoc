@@ -23,32 +23,71 @@ This text will only show in the speaker view mode.
 
 [%step]
 . The power of expressions
+. Separate side effects from computation
 . Dealing with data is valuable
 . Pure functions are helpful
+. Macros are awesome
 
 
-== The lack of power of expressions
+
+
+== Hello Clojure
+
 [.fragment]
-Step 1
+--
+We create a function named `hello` that receives `name` +
+and returns the concatenation of `"Hello"` and `name`
+[source.eval-clojure, clojure]
+(defn hello [name]
+  (str "Hello, " name "!"))
+--
 
 [.fragment]
-Step 2
+--
+We call the `hello` function with `"Clojure"` as an argument
+[source.eval-clojure, clojure]
+(hello "Clojure")
+--
 
-NOTE: It works!
+[.fragment]
+--
+We print the return value of `(hello "Clojure")`
+[source.eval-clojure, clojure]
+(println (hello "Clojure"))
+--
 
-TIP: Be careful always
 
-CAUTION: dass
+== Pure functions vs. side effects
 
-[source, python]
-----
-print "Hello World"
-----
+[fragment]
+--
+A pure function
 
-[source, clojure]
-----
-(map inc [1 2 3])
-----
+image::hello.png[height=250]
+--
+
+[fragment]
+--
+A function with side effects
+
+image::println.png[height=320]
+--
+
+== Key idea: separate side effects from computation
+
+--
+image::print-hello.png[]
+--
+
+== Hello worlds
+[.fragment]
+[source.eval-clojure, clojure]
+(defn multiple-hellos [names]
+  (clojure.string/join "\n" (map hello names)))
+
+
+
+(println (multiple-hellos ["Martin" "Bert"]))
 
 == The lack of power of expressions
 
@@ -176,6 +215,21 @@ a|
 (def my-num 42)
 --
 |===
+
+== The power of expressions - the rules
+
+[%step]
+. An expression is enclosed into opening and closing parenthesis
+. First element inside the parentheses is the name of the expression: `def`, `if`, `+`...
+. Other elements inside the parentheses are the "arguments" to be passed to the expression, either a primitive or an expression
+. When one of the "arguments" is itself an expression, it follows the same syntactic rules (recursively)
+
+
+== The power of expressions - more examples
+
+A table with:
+simple expressions
+nested expression
 
 == The power of expressions - if expressions
 

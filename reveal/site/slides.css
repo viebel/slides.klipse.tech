@@ -23,7 +23,6 @@ pre code.hljs {
 
 .reveal h2, th {
   font-size: 1.5em;
-  padding-bottom: 0.5em;
   color: #66AF40;
 }
 
@@ -34,9 +33,10 @@ pre code.hljs {
   background-color: white;
 }
 
-.reveal section {
+.reveal .slides > section {
   font-size: 1.0em;
   color: #5B80D4;
+  padding: 0 0 0 0;
   /* allow vertical scrolling in slides */
   max-height: 100%;
   overflow-y: auto;
@@ -44,16 +44,16 @@ pre code.hljs {
 
 .reveal section img {
   margin: 0;
-  border: 10px solid #66AF40;
-  height: 300px;
+  border: 1px solid #66AF40;
 }
 
 .reveal section p, h1, h2, div {
   text-align: left;
 }
 
-.slides {
-  width: 90% !important;
+.reveal .slides {
+    width: 100% !important;
+    margin: 0px 5px 5px 20px;
 }
 
 html.title body {
