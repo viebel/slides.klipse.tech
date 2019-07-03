@@ -7,6 +7,15 @@ include::slide.attrs[]
 [state=title]
 == Clojure made easy
 
+[.hidden]
+--
+[source.eval-clojure, clojure]
+(ns fun.clj
+(:require
+        [clojure.string :refer [join upper-case]]
+        [clojure.test 
+           :refer-macros [deftest is are]]))
+--
 
 [NOTE.speaker]
 This text will only show in the speaker view mode.
@@ -33,6 +42,20 @@ This text will only show in the speaker view mode.
 
 == Hello Clojure
 
+++++
+<br><br>
+++++
+[quote]
+--
+Challenge 1 +
+
+Write a function that receives a `name` and prints to the console +
+Hello <name>! +
+
+_You may use the language of your choice._
+--
+
+== Hello Clojure
 [.fragment]
 --
 We create a function named `hello` that receives `name` +
@@ -61,34 +84,170 @@ We print the return value of `(hello "Clojure")`
 
 [fragment]
 --
-A pure function
-
-image::hello.png[height=250]
+A *pure* function
+[.centered]
+image::hello.png[width=65%]
 --
 
 [fragment]
 --
-A function with side effects
-
-image::println.png[height=320]
+A function with *side effects*
+[.centered]
+image::println.png[width=65%]
 --
 
 == Key idea: separate side effects from computation
 
+++++
+<br><br>
+++++
 --
 image::print-hello.png[]
 --
 
-== Hello worlds
-[.fragment]
+== The value of pure functions
+
+[%step]
+. Testable
+. Composable
+. Cachable
+
+== Testable
+
+[fragment]
+--
+A trivial test case
 [source.eval-clojure, clojure]
+(deftest test-hello-clojure
+   (is (= (hello "Clojure")
+          "Hello, Clojure!"))) 
+--
+
+[fragment]
+--
+Check
+[source.eval-clojure, clojure]
+(test-hello-clojure)
+--
+
+[fragment]
+--
+🤔 Can you test the function you wrote to solve the challenge?
+--
+
+
+== Composable
+
+[quote]
+--
+We can use our functions as building blocks 🧱  for other functions.
+--
+
+[fragment]
+--
+[cols="1,2", frame=none, grid=none]
+|===
+|We compose as we wish
+a|[source.eval-clojure, clojure]
+(defn hello-cap [name]
+  (upper-case (hello name)))
+
+|===
+--
+
+[fragment]
+--
+[cols="1,2", frame=none, grid=none]
+|===
+|It returns a composed string
+a|[source.eval-clojure, clojure]
+(hello-cap "Clojure")
+|===
+--
+
+[fragment]
+--
+[cols="1,2", frame=none, grid=none]
+|===
+|We print it, later
+a|["Clojure" "Python" "Javascript" "Java"]
+[source.eval-clojure, clojure]
+(println (hello-cap "Clojure"))
+|===
+--
+
+[fragment]
+--
+🤔 Can you compose the function you wrote without modifying its code?
+--
+
+
+== Hello worlds
+
+Handle sequences
+[.fragment]
+--
+Let's handle sequence of names
+[source.eval-clojure, clojure, width=500]
+(map hello ["Clojure" "Python" "Javascript" "Java"])
+--
+
+[.fragment]
+--
+[cols="1,2", frame=none, grid=none]
+|===
+|Let's combine the elements of the sequence, into a string
+a|[source.eval-clojure, clojure]
 (defn multiple-hellos [names]
-  (clojure.string/join "\n" (map hello names)))
+  (join " " (map hello names)))
+--
+
+[.fragment]
+--
+We print, later
+[source.eval-clojure, clojure]
+(println (multiple-hellos ["Clojure" "Python" "Javascript" "Java"]))
+--
+
+
+== Cachable
+
+[.fragment]
+--
+[cols="2"]
+|===
+|Imagine that string concatenation were a heavy operation.
+a|[source.eval-clojure, clojure]
+(defn hello-print [name]
+  (println (str "Hello, " name "!")))
+|===
+--
+
+
+[quote.fragment]
+--
+We would like to cache the function +
+Next time we call it, it returns the result immediately 
+--
+
+
+[.fragment]
+--
+[cols="2"]
+|===
+|🤪  It makes no sense to cache a function with side effects!
+a|[source.eval-clojure, clojure]
+(def memoized-print (memoize println))
+(memoized-print "Hello!")
+(memoized-print "Hello!")
+(memoized-print "Good bye!")
+|===
+--
 
 
 
-(println (multiple-hellos ["Martin" "Bert"]))
 
+  
 == The lack of power of expressions
 
 We cannot assign the result of an `if` statement to a variable.
@@ -123,9 +282,9 @@ boolean operation
 
 a|[.fragment]
 --
-namespace declaration
+local bindings
 [source.eval-clojure, clojure]
-(ns fun.clj)
+(let [a 42])
 --
 
 a|[.fragment]

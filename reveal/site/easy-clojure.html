@@ -2,10 +2,21 @@
 link.rel = 'stylesheet';
 link.type = 'text/css';
 link.href = window.location.search.match( /print-pdf/gi ) ? "reveal.js/css/print/pdf.css" : "reveal.js/css/print/paper.css";
-document.getElementsByTagName( 'head' )[0].appendChild( link );</script><!--[if lt IE 9]><script src="reveal.js/lib/js/html5shiv.js"></script><![endif]--><link rel="shortcut icon" type="image/x-icon" href="img/clojure-logo-icon-32.png"><link rel="stylesheet" href="slides.css"></head><body><div class="reveal"><div class="slides"><section id="clojure_made_easy" data-state="title"><h2>Clojure made easy</h2><aside class="notes">This text will only show in the speaker view mode.</aside></section>
+document.getElementsByTagName( 'head' )[0].appendChild( link );</script><!--[if lt IE 9]><script src="reveal.js/lib/js/html5shiv.js"></script><![endif]--><link rel="shortcut icon" type="image/x-icon" href="img/favicon.png">
+<link href="https://fonts.googleapis.com/css?family=Cormorant+Garamond&display=swap" rel="stylesheet"><link rel="stylesheet" href="slides.css"></head><body><div class="reveal"><div class="slides"><section id="clojure_made_easy" data-state="title"><h2>Clojure made easy</h2><div class="openblock hidden"><div class="content"><div class="listingblock eval-clojure"><div class="content"><pre class="highlight"><code data-noescape class="clojure language-clojure">(ns fun.clj
+(:require
+        [clojure.string :refer [join upper-case]]
+        [clojure.test
+           :refer-macros [deftest is are]]))</code></pre></div></div></div></div>
+<aside class="notes">This text will only show in the speaker view mode.</aside></section>
 <section id="begin_with_the_end_in_mind"><h2>Begin with the End in Mind</h2><div class="olist arabic"><ol class="arabic"><li><p>You are motivated to learn Clojure</p></li><li><p>You look differently at your existing Software knowledge</p></li><li><p>You had a fun evening</p></li><li><p>You want to read my book on Clojure</p></li></ol></div></section>
 <section id="three_key_ideas"><h2>Three key ideas</h2><div class="olist arabic"><ol class="arabic"><li class="fragment"><p>The power of expressions</p></li><li class="fragment"><p>Separate side effects from computation</p></li><li class="fragment"><p>Dealing with data is valuable</p></li><li class="fragment"><p>Pure functions are helpful</p></li><li class="fragment"><p>Macros are awesome</p></li></ol></div></section>
-<section id="hello_clojure"><h2>Hello Clojure</h2><div class="openblock fragment"><div class="content"><div class="paragraph"><p>We create a function named <code>hello</code> that receives <code>name</code><br>
+<section id="hello_clojure"><h2>Hello Clojure</h2><br><br>
+<div class="quoteblock"><blockquote><div class="paragraph"><p>Challenge 1<br></p></div>
+<div class="paragraph"><p>Write a function that receives a <code>name</code> and prints to the console<br>
+Hello &lt;name&gt;!<br></p></div>
+<div class="paragraph"><p><em>You may use the language of your choice.</em></p></div></blockquote></div></section>
+<section id="hello_clojure_2"><h2>Hello Clojure</h2><div class="openblock fragment"><div class="content"><div class="paragraph"><p>We create a function named <code>hello</code> that receives <code>name</code><br>
 and returns the concatenation of <code>"Hello"</code> and <code>name</code></p></div>
 <div class="listingblock eval-clojure"><div class="content"><pre class="highlight"><code data-noescape class="clojure language-clojure">(defn hello [name]
   (str "Hello, " name "!"))</code></pre></div></div></div></div>
@@ -13,22 +24,49 @@ and returns the concatenation of <code>"Hello"</code> and <code>name</code></p><
 <div class="listingblock eval-clojure"><div class="content"><pre class="highlight"><code data-noescape class="clojure language-clojure">(hello "Clojure")</code></pre></div></div></div></div>
 <div class="openblock fragment"><div class="content"><div class="paragraph"><p>We print the return value of <code>(hello "Clojure")</code></p></div>
 <div class="listingblock eval-clojure"><div class="content"><pre class="highlight"><code data-noescape class="clojure language-clojure">(println (hello "Clojure"))</code></pre></div></div></div></div></section>
-<section id="pure_functions_vs_side_effects"><h2>Pure functions vs. side effects</h2><div class="openblock fragment"><div class="content"><div class="paragraph"><p>A pure function</p></div>
-<div class="imageblock" style=""><img src="hello.png" alt="hello" height="250"></div></div></div>
-<div class="openblock fragment"><div class="content"><div class="paragraph"><p>A function with side effects</p></div>
-<div class="imageblock" style=""><img src="println.png" alt="println" height="320"></div></div></div></section>
-<section id="key_idea_separate_side_effects_from_computation"><h2>Key idea: separate side effects from computation</h2><div class="openblock"><div class="content"><div class="imageblock" style=""><img src="print-hello.png" alt="print hello"></div></div></div></section>
-<section id="hello_worlds"><h2>Hello worlds</h2><div class="listingblock fragment eval-clojure"><div class="content"><pre class="highlight"><code data-noescape class="clojure language-clojure">(defn multiple-hellos [names]
-  (clojure.string/join "\n" (map hello names)))</code></pre></div></div>
-<div class="paragraph"><p>(println (multiple-hellos ["Martin" "Bert"]))</p></div></section>
+<section id="pure_functions_vs_side_effects"><h2>Pure functions vs. side effects</h2><div class="openblock fragment"><div class="content"><div class="paragraph"><p>A <strong>pure</strong> function</p></div>
+<div class="imageblock centered" style=""><img src="img/hello.png" alt="hello" width="65%"></div></div></div>
+<div class="openblock fragment"><div class="content"><div class="paragraph"><p>A function with <strong>side effects</strong></p></div>
+<div class="imageblock centered" style=""><img src="img/println.png" alt="println" width="65%"></div></div></div></section>
+<section id="key_idea_separate_side_effects_from_computation"><h2>Key idea: separate side effects from computation</h2><br><br>
+<div class="openblock"><div class="content"><div class="imageblock" style=""><img src="img/print-hello.png" alt="print hello"></div></div></div></section>
+<section id="the_value_of_pure_functions"><h2>The value of pure functions</h2><div class="olist arabic"><ol class="arabic"><li class="fragment"><p>Testable</p></li><li class="fragment"><p>Composable</p></li><li class="fragment"><p>Cachable</p></li></ol></div></section>
+<section id="testable"><h2>Testable</h2><div class="openblock fragment"><div class="content"><div class="paragraph"><p>A trivial test case</p></div>
+<div class="listingblock eval-clojure"><div class="content"><pre class="highlight"><code data-noescape class="clojure language-clojure">(deftest test-hello-clojure
+   (is (= (hello "Clojure")
+          "Hello, Clojure!")))</code></pre></div></div></div></div>
+<div class="openblock fragment"><div class="content"><div class="paragraph"><p>Check</p></div>
+<div class="listingblock eval-clojure"><div class="content"><pre class="highlight"><code data-noescape class="clojure language-clojure">(test-hello-clojure)</code></pre></div></div></div></div>
+<div class="openblock fragment"><div class="content"><div class="paragraph"><p>🤔 Can you test the function you wrote to solve the challenge?</p></div></div></div></section>
+<section id="composable"><h2>Composable</h2><div class="quoteblock"><blockquote><div class="paragraph"><p>We can use our functions as building blocks 🧱  for other functions.</p></div></blockquote></div>
+<div class="openblock fragment"><div class="content"><table class="tableblock frame-none grid-none" style="width:100%"><colgroup><col style="width:33.3333%"><col style="width:66.6667%"></colgroup><tbody><tr><td class="tableblock halign-left valign-top"><p class="tableblock">We compose as we wish</p></td><td class="tableblock halign-left valign-top"><div><div class="listingblock eval-clojure"><div class="content"><pre class="highlight"><code data-noescape class="clojure language-clojure">(defn hello-cap [name]
+  (upper-case (hello name)))</code></pre></div></div></div></td></tr></table></div></div>
+<div class="openblock fragment"><div class="content"><table class="tableblock frame-none grid-none" style="width:100%"><colgroup><col style="width:33.3333%"><col style="width:66.6667%"></colgroup><tbody><tr><td class="tableblock halign-left valign-top"><p class="tableblock">It returns a composed string</p></td><td class="tableblock halign-left valign-top"><div><div class="listingblock eval-clojure"><div class="content"><pre class="highlight"><code data-noescape class="clojure language-clojure">(hello-cap "Clojure")</code></pre></div></div></div></td></tr></table></div></div>
+<div class="openblock fragment"><div class="content"><table class="tableblock frame-none grid-none" style="width:100%"><colgroup><col style="width:33.3333%"><col style="width:66.6667%"></colgroup><tbody><tr><td class="tableblock halign-left valign-top"><p class="tableblock">We print it, later</p></td><td class="tableblock halign-left valign-top"><div><div class="listingblock eval-clojure"><div class="content"><pre class="highlight"><code data-noescape class="clojure language-clojure">(println (hello-cap "Clojure"))</code></pre></div></div></div></td></tr></table></div></div>
+<div class="openblock fragment"><div class="content"><div class="paragraph"><p>🤔 Can you compose the function you wrote without modifying its code?</p></div></div></div></section>
+<section id="hello_worlds"><h2>Hello worlds</h2><div class="paragraph"><p>Handle sequences</p></div>
+<div class="openblock fragment"><div class="content"><div class="paragraph"><p>Let&#8217;s handle sequence of names</p></div>
+<div class="listingblock eval-clojure"><div class="content"><pre class="highlight"><code data-noescape class="clojure language-clojure">(map hello ["Clojure" "Python" "Javascript" "Java"])</code></pre></div></div></div></div>
+<div class="openblock fragment"><div class="content"><table class="tableblock frame-none grid-none" style="width:100%"><colgroup><col style="width:33.3333%"><col style="width:66.6667%"></colgroup><tbody><tr><td class="tableblock halign-left valign-top"><p class="tableblock">Let&#8217;s combine the elements of the sequence, into a string</p></td><td class="tableblock halign-left valign-top"><div><div class="listingblock eval-clojure"><div class="content"><pre class="highlight"><code data-noescape class="clojure language-clojure">(defn multiple-hellos [names]
+  (join " " (map hello names)))</code></pre></div></div></div></td></tr></table></div></div>
+<div class="openblock fragment"><div class="content"><div class="paragraph"><p>We print, later</p></div>
+<div class="listingblock eval-clojure"><div class="content"><pre class="highlight"><code data-noescape class="clojure language-clojure">(println (multiple-hellos ["Clojure" "Python" "Javascript" "Java"]))</code></pre></div></div></div></div></section>
+<section id="cachable"><h2>Cachable</h2><div class="openblock fragment"><div class="content"><table class="tableblock frame-all grid-all" style="width:100%"><colgroup><col style="width:50%"><col style="width:50%"></colgroup><tbody><tr><td class="tableblock halign-left valign-top"><p class="tableblock">Imagine that string concatenation were a heavy operation.</p></td><td class="tableblock halign-left valign-top"><div><div class="listingblock eval-clojure"><div class="content"><pre class="highlight"><code data-noescape class="clojure language-clojure">(defn hello-print [name]
+  (println (str "Hello, " name "!")))</code></pre></div></div></div></td></tr></table></div></div>
+<div class="quoteblock fragment"><blockquote><div class="paragraph"><p>We would like to cache the function<br>
+Next time we call it, it returns the result immediately</p></div></blockquote></div>
+<div class="openblock fragment"><div class="content"><table class="tableblock frame-all grid-all" style="width:100%"><colgroup><col style="width:50%"><col style="width:50%"></colgroup><tbody><tr><td class="tableblock halign-left valign-top"><p class="tableblock">🤪  It makes no sense to cache a function with side effects!</p></td><td class="tableblock halign-left valign-top"><div><div class="listingblock eval-clojure"><div class="content"><pre class="highlight"><code data-noescape class="clojure language-clojure">(def memoized-print (memoize println))
+(memoized-print "Hello!")
+(memoized-print "Hello!")
+(memoized-print "Good bye!")</code></pre></div></div></div></td></tr></table></div></div></section>
 <section id="the_lack_of_power_of_expressions"><h2>The lack of power of expressions</h2><div class="paragraph"><p>We cannot assign the result of an <code>if</code> statement to a variable.</p></div>
 <div class="paragraph"><p>We cannot comment out an expression.</p></div>
 <div class="paragraph"><p>The syntax is not uniform: operator, statements, function calls, function definition, classes&#8230;&#8203;</p></div></section>
 <section id="the_power_of_expressions"><h2>The power of expressions</h2><div class="admonitionblock tip fragment"><table><tr><td class="icon"><i class="fa fa-lightbulb-o" title="Tip"></i></td><td class="content">Every part of the language is an expression, with the same structure</td></tr></table></div>
 <table class="tableblock frame-none grid-none fragment" style="width:100%"><colgroup><col style="width:50%"><col style="width:50%"></colgroup><tbody><tr><td class="tableblock halign-left valign-top"><div><div class="openblock fragment"><div class="content"><div class="paragraph"><p>arithmetic operation</p></div>
 <div class="listingblock eval-clojure"><div class="content"><pre class="highlight"><code data-noescape class="clojure language-clojure">(+ 1 2)</code></pre></div></div></div></div></div></td><td class="tableblock halign-left valign-top"><div><div class="openblock fragment"><div class="content"><div class="paragraph"><p>boolean operation</p></div>
-<div class="listingblock eval-clojure"><div class="content"><pre class="highlight"><code data-noescape class="clojure language-clojure">(and true false)</code></pre></div></div></div></div></div></td></tr><tr><td class="tableblock halign-left valign-top"><div><div class="openblock fragment"><div class="content"><div class="paragraph"><p>namespace declaration</p></div>
-<div class="listingblock eval-clojure"><div class="content"><pre class="highlight"><code data-noescape class="clojure language-clojure">(ns fun.clj)</code></pre></div></div></div></div></div></td><td class="tableblock halign-left valign-top"><div><div class="openblock fragment"><div class="content"><div class="paragraph"><p>variable assignment</p></div>
+<div class="listingblock eval-clojure"><div class="content"><pre class="highlight"><code data-noescape class="clojure language-clojure">(and true false)</code></pre></div></div></div></div></div></td></tr><tr><td class="tableblock halign-left valign-top"><div><div class="openblock fragment"><div class="content"><div class="paragraph"><p>local bindings</p></div>
+<div class="listingblock eval-clojure"><div class="content"><pre class="highlight"><code data-noescape class="clojure language-clojure">(let [a 42])</code></pre></div></div></div></div></div></td><td class="tableblock halign-left valign-top"><div><div class="openblock fragment"><div class="content"><div class="paragraph"><p>variable assignment</p></div>
 <div class="listingblock eval-clojure"><div class="content"><pre class="highlight"><code data-noescape class="clojure language-clojure">(def my-num 42)</code></pre></div></div></div></div></div></td></tr><tr><td class="tableblock halign-left valign-top"><div><div class="openblock fragment"><div class="content"><div class="paragraph"><p><code>if</code> expression</p></div>
 <div class="listingblock eval-clojure"><div class="content"><pre class="highlight"><code data-noescape class="clojure language-clojure">(if my-num "happy" "sad")</code></pre></div></div></div></div></div></td><td class="tableblock halign-left valign-top"><div><div class="openblock fragment"><div class="content"><div class="paragraph"><p>function call</p></div>
 <div class="listingblock eval-clojure"><div class="content"><pre class="highlight"><code data-noescape class="clojure language-clojure">(inc 42)</code></pre></div></div></div></div></div></td></tr></table></section>

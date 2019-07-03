@@ -13,8 +13,63 @@ pre code.hljs {
     border: none;
 }
 
+.hidden {
+    visibility: hidden;
+    height:0px;
+}
+
+.centered {
+    /*width: 50%;*/
+    padding-left: 25%;
+    text-align: center;
+
+}
+.text-centered {
+    text-align: center;
+}
+
+.left {
+    float: left;
+}
+.right {
+    float: right;
+}
+
+.margin-left {
+    margin-left: 10px;
+}
+
+.margin-right {
+    margin-right: 10px;
+}
+.margin-top {
+    margin-top: 10px;
+}
+
+.margin-bottom {
+    margin-bottom: 10px;
+}
+
+
+.clear {
+    clear: both;
+}
+.livedoc {
+    border: none;
+    width: 100%;
+    height: 600px;
+}
+
+#klipse-color {
+    width: 300px;
+    height: 50px;
+    background-color: red;
+}
+
+
+
 .reveal table th, .reveal table td {
-    padding: 0.2em 0.5em 0.2em 0.5em; 
+    padding: 0 0.5em 0 0.5em; 
 }
 
 .reveal table.grid-none td { /* some theme css files override border-bottom without respecting the table attributes */
@@ -52,8 +107,8 @@ pre code.hljs {
 }
 
 .reveal .slides {
-    width: 100% !important;
-    margin: 0px 5px 5px 20px;
+    /*width: 100% !important;*/
+    margin: 0px 20px 5px 20px;
 }
 
 html.title body {
@@ -72,9 +127,20 @@ html.title body {
   border: solid #91B3FB 1px !important;
 }
 
-code {
-  background-color: #F8F8F8;
+.reveal code {
+/*  background-color: #F8F8F8;*/
   font-family: 'FiraCode', monospace !important;
+}
+
+.reveal blockquote {
+    font-style: normal;
+    padding: 10px 10px 10px 10px;
+    font-family: 'Cormorant Garamond', serif;
+    box-shadow: 0px 5px 12px rgb(91, 128, 212);
+}
+
+.reveal blockquote code {
+    font-size: 32px;
 }
 
 .CodeMirror {
@@ -89,4 +155,3 @@ code {
   padding-bottom: 30px !important;
   margin-bottom: -30px !important;
 }
-

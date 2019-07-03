@@ -10,6 +10,7 @@
 :revealjs_plugin_zoom: disabled
 :revealjs_fragmentInURL: true
 :docinfo: shared
+:imagesdir: img
 :notitle:
 :icons: font
 :source-highlighter: highlightjs
