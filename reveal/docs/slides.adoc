@@ -25,6 +25,10 @@ This text will only show in the speaker view mode.
 TIP: Try changing the numbers in the top box.
 The answer in the bottom box is evaluated immediately.
 
+=== Clojurescript (cont.)
+
+[source.eval-clojure, clojure]
+(map inc [1 2 3])
 
 == JavaScript
 
