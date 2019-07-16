@@ -5,6 +5,7 @@ link.href = window.location.search.match( /print-pdf/gi ) ? "reveal.js/css/print
 document.getElementsByTagName( 'head' )[0].appendChild( link );</script><!--[if lt IE 9]><script src="reveal.js/lib/js/html5shiv.js"></script><![endif]--><link rel="shortcut icon" type="image/x-icon" href="img/favicon.png">
 <link href="https://fonts.googleapis.com/css?family=Cormorant+Garamond&display=swap" rel="stylesheet"><link rel="stylesheet" href="slides.css"></head><body><div class="reveal"><div class="slides"><section id="clojure_made_easy"><h2>Clojure made easy</h2><div class="openblock hidden"><div class="content"><div class="listingblock eval-clojure"><div class="content"><pre class="highlight"><code data-noescape class="clojure language-clojure">(ns fun.clj
 (:require
+        [klipse-clj.macros :refer [dbg]])
         [clojure.string :refer [join upper-case]]
         [clojure.test
            :refer-macros [deftest is are]]))</code></pre></div></div></div></div>
