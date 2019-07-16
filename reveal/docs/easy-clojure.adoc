@@ -4,6 +4,7 @@
 include::slide.attrs[]
 
 
+== Clojure made easy
 
 [.hidden]
 --
@@ -15,10 +16,7 @@ include::slide.attrs[]
            :refer-macros [deftest is are]]))
 --
 
-[NOTE.speaker]
-This text will only show in the speaker view mode.
 
-== Clojure made easy
 
 
 [.left.w30.p20]

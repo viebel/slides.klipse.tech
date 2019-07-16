@@ -3,8 +3,12 @@ link.rel = 'stylesheet';
 link.type = 'text/css';
 link.href = window.location.search.match( /print-pdf/gi ) ? "reveal.js/css/print/pdf.css" : "reveal.js/css/print/paper.css";
 document.getElementsByTagName( 'head' )[0].appendChild( link );</script><!--[if lt IE 9]><script src="reveal.js/lib/js/html5shiv.js"></script><![endif]--><link rel="shortcut icon" type="image/x-icon" href="img/favicon.png">
-<link href="https://fonts.googleapis.com/css?family=Cormorant+Garamond&display=swap" rel="stylesheet"><link rel="stylesheet" href="slides.css"></head><body><div class="reveal"><div class="slides">
-<section id="clojure_made_easy"><h2>Clojure made easy</h2><div class="openblock left w30 p20"><div class="content"><div class="paragraph"><p>Interactive Slides</p></div>
+<link href="https://fonts.googleapis.com/css?family=Cormorant+Garamond&display=swap" rel="stylesheet"><link rel="stylesheet" href="slides.css"></head><body><div class="reveal"><div class="slides"><section id="clojure_made_easy"><h2>Clojure made easy</h2><div class="openblock hidden"><div class="content"><div class="listingblock eval-clojure"><div class="content"><pre class="highlight"><code data-noescape class="clojure language-clojure">(ns fun.clj
+(:require
+        [clojure.string :refer [join upper-case]]
+        [clojure.test
+           :refer-macros [deftest is are]]))</code></pre></div></div></div></div>
+<div class="openblock left w30 p20"><div class="content"><div class="paragraph"><p>Interactive Slides</p></div>
 <div class="imageblock" style=""><img src="https://chart.googleapis.com/chart?cht=qr&chl=https%3A%2F%2Fslides.klipse.tech%2Freveal%2Fsite%2Feasy-clojure.html&chs=300x300" alt="chart?cht=qr&chl=https%3A%2F%2Fslides.klipse.tech%2Freveal%2Fsite%2Feasy clojure" width="300px"></div>
 <div class="paragraph medium-font"><p><a href="https://tinyurl.com/easy-clj" class="bare">https://tinyurl.com/easy-clj</a></p></div></div></div>
 <div class="openblock left w30"><div class="content"><div class="imageblock p10" style=""><img src="img/clj-logo.png" alt="clj"></div>
