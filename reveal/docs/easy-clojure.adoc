@@ -10,11 +10,11 @@ include::slide.attrs[]
 --
 [source.eval-clojure, clojure]
 (ns fun.clj
-(:require
-        [klipse-clj.macros :refer [dbg]])
-        [clojure.string :refer [join upper-case]]
-        [clojure.test 
-           :refer-macros [deftest is are]]))
+  (:require-macros [klipse-clj.macros :refer-macros [dbg]])
+  (:require
+   [clojure.string :refer [join upper-case]]
+   [clojure.test
+    :refer-macros [deftest is are]]))
 --
 
 
