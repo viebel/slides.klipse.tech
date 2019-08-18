@@ -71,6 +71,45 @@ Let's provide a default implementation:
 ----
 --
 
+[%step]
+--
+We can also provide a hierarchy of keywords
+
+[source, role="clj"]
+----
+(display :integer 3)
+----
+
+The hierarchy is respected when looking for a method implementation
+
+[source, role="clj"]
+----
+(defmethod display ::number [_ x]
+  (str "a number: " x))
+----
+
+
+[source, role="clj"]
+----
+(display :integer 3)
+----
+--
+
+[%step]
+--
+
+We can remove all the methods
+
+[source, role="clj"]
+----
+(remove-all-methods display)
+----
+
+
+
+
+--
+
 
 == Multimethods - reflection
 
@@ -215,6 +254,9 @@ Let's define a type that implements this protocol:
 
 (disp (Rational. 1 2))
 ----
+
+Remark: methods of records must always be part of a protocol
+
 --
 
 [%step]
@@ -237,11 +279,15 @@ The cool thing with protocols and types (and also records) is that we can extend
 (disp (Complex. 1 2))
 ----
 --
+
 ++++
 <br/>
 ++++
-Remark: Sometimes it is more convenient to use https://clojuredocs.org/clojure.core/extend-protocol[extend-protocol].
 
+[%step]
+--
+Remark: Sometimes it is more convenient to use https://clojuredocs.org/clojure.core/extend-protocol[extend-protocol].
+--
 
 == Protocols - reflection and extension
 

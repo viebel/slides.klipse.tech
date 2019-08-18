@@ -92,6 +92,38 @@
 </div>
 </div>
 </div>
+<div class="openblock slide">
+<div class="content">
+<div class="paragraph"><p>We can also provide a hierarchy of keywords</p></div>
+<div class="listingblock clj">
+<div class="content">
+<pre class="highlight"><code>(display :integer 3)</code></pre>
+</div>
+</div>
+<div class="paragraph"><p>The hierarchy is respected when looking for a method implementation</p></div>
+<div class="listingblock clj">
+<div class="content">
+<pre class="highlight"><code>(defmethod display ::number [_ x]
+  (str "a number: " x))</code></pre>
+</div>
+</div>
+<div class="listingblock clj">
+<div class="content">
+<pre class="highlight"><code>(display :integer 3)</code></pre>
+</div>
+</div>
+</div>
+</div>
+<div class="openblock slide">
+<div class="content">
+<div class="paragraph"><p>We can remove all the methods</p></div>
+<div class="listingblock clj">
+<div class="content">
+<pre class="highlight"><code>(remove-all-methods display)</code></pre>
+</div>
+</div>
+</div>
+</div>
 </section>
 <section class="slide" id="_multimethods_reflection">
 <h2>Multimethods - reflection</h2>
@@ -224,6 +256,7 @@ In that case, it is simple to use protocols, types and records.</p></div>
 (disp (Rational. 1 2))</code></pre>
 </div>
 </div>
+<div class="paragraph"><p>Remark: methods of records must always be part of a protocol</p></div>
 </div>
 </div>
 <div class="openblock slide">
@@ -247,7 +280,11 @@ In that case, it is simple to use protocols, types and records.</p></div>
 </div>
 </div>
 <br/>
+<div class="openblock slide">
+<div class="content">
 <div class="paragraph"><p>Remark: Sometimes it is more convenient to use <a href="https://clojuredocs.org/clojure.core/extend-protocol">extend-protocol</a>.</p></div>
+</div>
+</div>
 </section>
 <section class="slide" id="_protocols_reflection_and_extension">
 <h2>Protocols - reflection and extension</h2>
@@ -458,7 +495,7 @@ For <code>Dog</code>, implement the protocol outside the definition of the type 
 (assert (= (my-age (Cat. 7)) "cat cat cat cat cat cat cat"))</code></pre>
 </div>
 </div>
-<link rel="shortcut icon" href="./favicon.png">
+<link rel="shortcut icon" type="image/png" href="./favicon.png">
 <link rel="stylesheet" media="screen" href="http://slides.klipse.tech/includes/deckjs/themes/style/klipse.css">
 <link rel="stylesheet" media="screen" href="http://slides.klipse.tech/asciidoc/klipse.css">
 
@@ -477,9 +514,25 @@ For <code>Dog</code>, implement the protocol outside the definition of the type 
         selector: '.clj',
         selector_js: '.transpile-cljs',
         selector_reagent: '.reagent',
+        selector_eval_js: '.eval-js',
+    	selector_render_jsx: '.render-jsx',
+        selector_jsx: '.eval-jsx',
+        selector_es2017: '.es2017',
+        selector_brainfuck: '.brainfuck',
+        selector_transpile_jsx: '.transpile-jsx',
+        selector_eval_php: '.php',
+        selector_eval_python_client: '.python',
+        selector_eval_html: '.html',
+        selector_sql: '.sql',
+        selector_eval_ruby: '.ruby',
+        selector_eval_scheme: '.scheme',
+    selector_eval_cpp: '.cpp',
+    selector_lua: '.lua',
     };
 </script>
-<script src="https://storage.googleapis.com/app.klipse.tech/plugin/js/klipse_plugin.js"></script>
+<script src="https://storage.googleapis.com/app.klipse.tech/plugin/js/klipse_plugin.js?v=7.0.6"></script>
+<!-- Place this tag in your head or just before your close body tag. -->
+<script async defer src="https://buttons.github.io/buttons.js"></script>
 </section>
 <div aria-role="navigation">
 <a class="deck-prev-link" href="#" title="Previous">&#8592;</a>
