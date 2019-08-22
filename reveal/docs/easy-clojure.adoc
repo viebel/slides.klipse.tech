@@ -81,7 +81,7 @@ Yehonathan Sharvit https://twitter.com/viebel[@viebel]
 [.fragment]
 2. You look differently at your existing Software knowledge 
 [.fragment]
-3. You feel you had a fun evening
+3. You feel you had a fun time
 
 [.fragment]
 
@@ -276,7 +276,7 @@ a|
 === The power of expressions - the rules
 
 [%step]
-. An expression is enclosed into opening and closing parenthesis
+. An expression is enclosed into opening and closing parenthesis: `()`, `[]` or `{}`
 . First element inside the parentheses is the name of the expression: `def`, `if`, `+`...
 . Other elements inside the parentheses are the arguments to be passed to the expression, either a primitive or an expression
 . When one of the arguments is itself an expression, it follows the same syntactic rules (recursively)
@@ -316,6 +316,11 @@ We can comment out a single expression out of a big piece of code
 (print-moods 42)
 --
 
+=== The power of expressions - macros
+
+We can write code that receives source code and genenerates another code.
+
+
 == Pure functions are helpful
 
 ++++
@@ -346,33 +351,46 @@ hello('Javascript');
 --
 Thoughts 🤔 
 [%step]
-. Can you test?
+. Can you write a unit test?
 . Can you compose?
 . Can you cache?
 --
 
 === Hello Clojure
+
 [.fragment]
 --
-We create a function named `hello` that receives `name` +
-and returns the concatenation of `"Hello"` and `name`
+We are going to separate:
+
+* Computation (concatenation of `"Hello"` and `name`)
+* Side effects (print to the console)
+--
+
+=== Hello Clojure
+
+[.fragment]
+--
+We create a function named `hello-str` that receives `name` +
+and "computes" the concatenation of `"Hello"` and `name`
+
 [source.eval-clojure, clojure]
-(defn hello [name]
+(defn hello-str [name]
   (str "Hello, " name "!"))
 --
 
 [.fragment]
 --
-We call the `hello` function with `"Clojure"` as an argument
+The `hello` function that does the side effect (print) uses `hello-str`:
+
 [source.eval-clojure, clojure]
-(hello "Clojure")
+(defn hello [name]
+  (println (hello-str name)))
 --
 
 [.fragment]
 --
-We print the return value of `(hello "Clojure")`
 [source.eval-clojure, clojure]
-(println (hello "Clojure"))
+(hello "Clojure")
 --
 
 
