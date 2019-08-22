@@ -433,7 +433,7 @@ image::print-hello.png[]
 A trivial test case
 [source.eval-clojure, clojure]
 (deftest test-hello-clojure
-   (is (= (hello "Clojure")
+   (is (= (hello-str "Clojure")
           "Hello, Clojure!"))) 
 --
 
@@ -464,7 +464,7 @@ We can use our functions as building blocks 🧱  for other functions.
 |We compose as we wish
 a|[source.eval-clojure, clojure]
 (defn hello-cap [name]
-  (upper-case (hello name)))
+  (upper-case (hello-str name)))
 
 |===
 --
@@ -503,7 +503,7 @@ Handle sequences
 --
 Let's handle sequence of names
 [source.eval-clojure, clojure, width=500]
-(map hello ["Clojure" "Python" "Javascript" "Java"])
+(map hello-str ["Clojure" "Python" "Javascript" "Java"])
 --
 
 [.fragment]
@@ -594,7 +594,6 @@ image::history.png[width=85%]
 * 2011 - ClojureScript - Clojure rocks, Javascript Reaches!
 * 2013 - Facebook creates react.js - A functional javascript frontend framework
 * 2015 - Dan Abramov invents http://redux.js.org/[redux] - A javascript library that imposes FP constraints on a frontend app
-* 2019, July 15 - Clojure meetup
 
 
 == Dealing with Data is valuable
@@ -783,7 +782,7 @@ my-state
 . It would be cool to write asynchronous code that looks synchronous
 . It would be fun to add debugging capabilities
 . It would be productive to write code that disappears on production
-. It would be nice to pass data manipulation functions sequentially
+. It would be nice to pass data to data manipulation functions sequentially
 
 
 === Custom debugging
