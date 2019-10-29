@@ -204,7 +204,7 @@ image::images/inception.jpg[inception]
 
 *Application*: Once a language that transpiles to javascript is bootstrapped it can run on a web page
 
-*Fact*: ClojureScript has been bootstrapped in July 2015
+*Fact*: ClojureScript has been http://swannodette.github.io/2015/07/29/clojurescript-17[bootstrapped] in July 2015
 
 
 image::images/sicp.jpg[sicp]
@@ -216,6 +216,7 @@ image::images/sicp.jpg[sicp]
 --
 [source.clj]
 ----
+(ns my.sandbox)
 (require '[cljs.js :as cljsjs])
 ----
 --
@@ -236,7 +237,7 @@ image::images/sicp.jpg[sicp]
                "(map inc [1 2 3])"
                ""
                {:eval cljsjs/js-eval}
-               identity)
+               println)
 ----
 --
 
@@ -269,7 +270,7 @@ options details:
                       (+ a 2))"
                   ""
                   { }
-                  identity)
+                  (comp println :value))
 ----
 --
 
@@ -304,7 +305,7 @@ With `:statement` context (default)
                ""
                {:eval cljsjs/js-eval
 	        :context :statement}
-               identity)
+               println)
 ----
 --
 
@@ -320,7 +321,7 @@ With `:expr` context (default)
                ""
                {:eval cljsjs/js-eval
 	        :context :expr}
-               identity)
+               println)
 ----
 --
 
@@ -341,7 +342,7 @@ With `:expr` context (default)
                    ""
                    {:eval cljsjs/js-eval
                     :context :expr}
-                   identity))
+                   println))
 ----
 --
 
@@ -349,8 +350,9 @@ With `:expr` context (default)
 --
 [source.clj]
 ----
+(require '[viebel.gist-983676a98aee0991cfb002a67676602f.raw.split-expressions :refer [split-expressions]])
 (defn eval-several-expressions [code]
-  (loop [exps (klipse.lang.clojure/split-expressions code)
+  (loop [exps (split-expressions code)
          res nil]
     (if (seq exps)
       (recur (rest exps) (eval (first exps)))
@@ -384,7 +386,7 @@ The implementor needs to provide a custom mechanism for namespace resolution
                "(require 'my.ns)"
                ""
                {:eval cljsjs/js-eval}
-               identity)
+               println)
 ----
 --
 
@@ -407,7 +409,7 @@ The map has the following keys:
                ""
                {:eval cljsjs/js-eval
                 :load (fn [data callback] (println data))}
-               identity)
+               println)
 ----
 --
 
@@ -437,7 +439,7 @@ If the resource could not be resolved, the callback should be invoked with `nil`
                   :load (fn [data callback] (callback {:lang :clj
                                                        :source "(ns my.bar)
                                                                 (def foo 12)"}))}
-                 identity)
+                 println)
 ----
 --
 == Klipse internals
@@ -628,7 +630,7 @@ The eval function
                    exp
                    ""
                    {:eval cljsjs/js-eval}
-                   identity))
+                   println))
 ----
 --
 

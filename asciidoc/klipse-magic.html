@@ -250,7 +250,7 @@ nil</code></pre>
 <div class="paragraph"><p><strong>Definition</strong>: Bootstrapping is the process of writing a compiler in the same language that it intends to compile</p></div>
 <div class="paragraph"><p><strong>Example</strong>: Eval written in LISP</p></div>
 <div class="paragraph"><p><strong>Application</strong>: Once a language that transpiles to javascript is bootstrapped it can run on a web page</p></div>
-<div class="paragraph"><p><strong>Fact</strong>: ClojureScript has been bootstrapped in July 2015</p></div>
+<div class="paragraph"><p><strong>Fact</strong>: ClojureScript has been <a href="http://swannodette.github.io/2015/07/29/clojurescript-17">bootstrapped</a> in July 2015</p></div>
 <div class="imageblock">
 <div class="content">
 <img alt="sicp" src="images/sicp.jpg">
@@ -263,7 +263,8 @@ nil</code></pre>
 <div class="content">
 <div class="listingblock clj">
 <div class="content">
-<pre class="highlight"><code>(require '[cljs.js :as cljsjs])</code></pre>
+<pre class="highlight"><code>(ns my.sandbox)
+(require '[cljs.js :as cljsjs])</code></pre>
 </div>
 </div>
 </div>
@@ -284,7 +285,7 @@ nil</code></pre>
                "(map inc [1 2 3])"
                ""
                {:eval cljsjs/js-eval}
-               identity)</code></pre>
+               println)</code></pre>
 </div>
 </div>
 </div>
@@ -337,7 +338,7 @@ nil</code></pre>
                       (+ a 2))"
                   ""
                   { }
-                  identity)</code></pre>
+                  (comp println :value))</code></pre>
 </div>
 </div>
 </div>
@@ -391,7 +392,7 @@ nil</code></pre>
                ""
                {:eval cljsjs/js-eval
 	        :context :statement}
-               identity)</code></pre>
+               println)</code></pre>
 </div>
 </div>
 </div>
@@ -406,7 +407,7 @@ nil</code></pre>
                ""
                {:eval cljsjs/js-eval
 	        :context :expr}
-               identity)</code></pre>
+               println)</code></pre>
 </div>
 </div>
 </div>
@@ -430,7 +431,7 @@ nil</code></pre>
                    ""
                    {:eval cljsjs/js-eval
                     :context :expr}
-                   identity))</code></pre>
+                   println))</code></pre>
 </div>
 </div>
 </div>
@@ -439,8 +440,9 @@ nil</code></pre>
 <div class="content">
 <div class="listingblock clj">
 <div class="content">
-<pre class="highlight"><code>(defn eval-several-expressions [code]
-  (loop [exps (klipse.lang.clojure/split-expressions code)
+<pre class="highlight"><code>(require '[viebel.gist-983676a98aee0991cfb002a67676602f.raw.split-expressions :refer [split-expressions]])
+(defn eval-several-expressions [code]
+  (loop [exps (split-expressions code)
          res nil]
     (if (seq exps)
       (recur (rest exps) (eval (first exps)))
@@ -482,7 +484,7 @@ nil</code></pre>
                "(require 'my.ns)"
                ""
                {:eval cljsjs/js-eval}
-               identity)</code></pre>
+               println)</code></pre>
 </div>
 </div>
 </div>
@@ -509,7 +511,7 @@ The map has the following keys:</p></div>
                ""
                {:eval cljsjs/js-eval
                 :load (fn [data callback] (println data))}
-               identity)</code></pre>
+               println)</code></pre>
 </div>
 </div>
 </div>
@@ -542,7 +544,7 @@ The map has the following keys:</p></div>
                   :load (fn [data callback] (callback {:lang :clj
                                                        :source "(ns my.bar)
                                                                 (def foo 12)"}))}
-                 identity)</code></pre>
+                 println)</code></pre>
 </div>
 </div>
 </div>
@@ -757,7 +759,7 @@ We wrap the read last expression into a <code>reagent.core/render</code> call
                    exp
                    ""
                    {:eval cljsjs/js-eval}
-                   identity))</code></pre>
+                   println))</code></pre>
 </div>
 </div>
 </div>
@@ -908,7 +910,7 @@ rewritten-code</code></pre>
 height: 40vh;
 }
 </style>
-<link rel="shortcut icon" href="./favicon.png">
+<link rel="shortcut icon" type="image/png" href="./favicon.png">
 <link rel="stylesheet" media="screen" href="http://slides.klipse.tech/includes/deckjs/themes/style/klipse.css">
 <link rel="stylesheet" media="screen" href="http://slides.klipse.tech/asciidoc/klipse.css">
 
