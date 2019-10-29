@@ -178,14 +178,14 @@ Here is a http://blog.klipse.tech/clojure/2016/03/26/messing-with-macros.html[de
 
 == Klipse: numbers and facts
 
-- 1450 Github stars (and growing...)
+- 1950 Github stars (and growing...)
 ++++
 <a class="github-button" href="https://github.com/viebel/klipse" data-size="large" data-show-count="true" aria-label="Star viebel/klipse on GitHub">Klipse</a>
 ++++
 - 77 forks
 - 849 commits
 - Started on March 2016
-- 11 languages: clojure, ruby, javascript, python, scheme, php, brainfuck, c++, lua, ocaml, reasonml
+- 13 languages: clojure, ruby, javascript, python, scheme, php, brainfuck, c++, lua, ocaml, reasonml, common lisp, prolog
 - 100+ websites
 - 105 clojure articles on http://blog.klipse.tech/[http://blog.klipse.tech/]
 - Integration with blogging engines: Cyrogen, Jekyll, Ghost, Gatsby
@@ -653,7 +653,7 @@ The code as a string
 Separate the component from the rest of the code
 [source.clj]
 ----
-(def expressions (klipse.lang.clojure/split-expressions code))
+(def expressions (split-expressions code))
 (def component (cljs.reader/read-string (last expressions)))
 ----
 --
@@ -719,7 +719,7 @@ https://github.com/viebel/codox-klipse-theme[Klipse Codox Theme]
 
 == Add new languages to Klipse
 
-As of December 2017, Klipse supports 11 languages: clojure, ruby, javascript, python, scheme, php, brainfuck, c++, lua, ocaml, reasonml.
+As of November 2019, Klipse supports 13 languages: clojure, ruby, javascript, python, scheme, php, brainfuck, c++, lua, ocaml, reasonml, common lisp, prolog.
 
 ++++
 <br>
@@ -732,11 +732,8 @@ image::images/poplanguages.jpg[questions]
 == Pull Requests are more than welcome!!!
 
 - Evaluate Code inside a web worker (Solve security issues + make the evaluation interruptible)
-- Upgrade to latest clojurescript (deal with clojure.spec.alpha)
 - Connect with npm hosted repository
 - `source` special form
-- `doc` special form
-- autocomplete
 - add a button to trigger evaluation
 - Solve CSS issues on reveal.js
 - etc... See https://github.com/viebel/klipse/issues[Klipse issues]

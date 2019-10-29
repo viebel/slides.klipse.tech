@@ -219,7 +219,7 @@ nil</code></pre>
 <h2>Klipse: numbers and facts</h2>
 <div class="ulist">
 <ul>
-<li>1450 Github stars (and growing&#8230;&#8203;)</li>
+<li>1950 Github stars (and growing&#8230;&#8203;)</li>
 </ul>
 </div>
 <a class="github-button" href="https://github.com/viebel/klipse" data-size="large" data-show-count="true" aria-label="Star viebel/klipse on GitHub">Klipse</a>
@@ -228,7 +228,7 @@ nil</code></pre>
 <li>77 forks</li>
 <li>849 commits</li>
 <li>Started on March 2016</li>
-<li>11 languages: clojure, ruby, javascript, python, scheme, php, brainfuck, c++, lua, ocaml, reasonml</li>
+<li>13 languages: clojure, ruby, javascript, python, scheme, php, brainfuck, c++, lua, ocaml, reasonml, common lisp, prolog</li>
 <li>100+ websites</li>
 <li>105 clojure articles on <a href="http://blog.klipse.tech/">http://blog.klipse.tech/</a></li>
 <li>Integration with blogging engines: Cyrogen, Jekyll, Ghost, Gatsby</li>
@@ -782,7 +782,7 @@ We wrap the read last expression into a <code>reagent.core/render</code> call
 <div class="paragraph"><p>Separate the component from the rest of the code</p></div>
 <div class="listingblock clj">
 <div class="content">
-<pre class="highlight"><code>(def expressions (klipse.lang.clojure/split-expressions code))
+<pre class="highlight"><code>(def expressions (split-expressions code))
 (def component (cljs.reader/read-string (last expressions)))</code></pre>
 </div>
 </div>
@@ -857,7 +857,7 @@ rewritten-code</code></pre>
 </section>
 <section class="slide" id="_add_new_languages_to_klipse">
 <h2>Add new languages to Klipse</h2>
-<div class="paragraph"><p>As of December 2017, Klipse supports 11 languages: clojure, ruby, javascript, python, scheme, php, brainfuck, c++, lua, ocaml, reasonml.</p></div>
+<div class="paragraph"><p>As of November 2019, Klipse supports 13 languages: clojure, ruby, javascript, python, scheme, php, brainfuck, c++, lua, ocaml, reasonml, common lisp, prolog.</p></div>
 <br>
 <div class="paragraph"><p>It takes less than 10 lines of code to add a new language. See <a href="https://github.com/viebel/klipse/wiki/How-to-add-a-language-to-klipse">the guide</a>.</p></div>
 <div class="imageblock">
@@ -871,11 +871,8 @@ rewritten-code</code></pre>
 <div class="ulist">
 <ul>
 <li>Evaluate Code inside a web worker (Solve security issues + make the evaluation interruptible)</li>
-<li>Upgrade to latest clojurescript (deal with clojure.spec.alpha)</li>
 <li>Connect with npm hosted repository</li>
 <li><code>source</code> special form</li>
-<li><code>doc</code> special form</li>
-<li>autocomplete</li>
 <li>add a button to trigger evaluation</li>
 <li>Solve CSS issues on reveal.js</li>
 <li>etc&#8230;&#8203; See <a href="https://github.com/viebel/klipse/issues">Klipse issues</a></li>
