@@ -131,7 +131,7 @@
 	  <p> All you have to do is to require <code>clojure.spec</code> like this:</p>
 	  <pre><code class="clojure">
 	      (ns foo.core
-	      (:require [clojure.spec :as s]))
+	      (:require [clojure.spec.alpha :as s]))
 	  </code></pre> 
 	</div> 
       </section>
@@ -256,7 +256,12 @@
       <section class="slide">
 	<h2> Data parsing with s/conform</h2>
 	<div>
-	  <p>It's really powerful to parse our data with <code>s/conform</code></p>
+	  <p>Conform is a fancy term for data parsing according to a spec</p>
+	  <p>With primitives, the conformed data is the same as the original data</p>
+	  <pre><code class="clojure">
+(s/conform ::id 4200000)
+	  </code></pre>
+	  <p>With non-primitives, the conformed data is parsed into a data structure with information about the data</p>
 	  <p>When it's a big integer:</p>
 	  <pre><code class="clojure">
               (s/conform ::big-integer-or-short-string 4200000)
@@ -270,7 +275,7 @@
               (s/conform ::big-integer-or-short-string :hello-world!)
 	  </code></pre>
 
-	  <p> It works as expected with nested <code>s/or</code></p>
+	  <p> It works well with a nested spec</p>
 	  <pre><code class="clojure">
 	      (s/def ::my-special-spec (s/or :keyword keyword?
 	      :bioss ::big-integer-or-short-string))
@@ -305,7 +310,7 @@
 	      (s/valid? (s/keys) {::big-integer-or-short-string 90})
 	  </code></pre>
 	</div>
-	<p class="slide meditation"><strong>All</strong> the namespace-qualified keys are validated by any registered specs!</p>
+	<p class="slide meditation">It's a bit surprising but in spec, <strong>ALL</strong> the namespace-qualified keys are validated by any registered specs!</p>
 	<p class="slide meditation">Why do we need <code>opt</code>?</p>
       </section>
       <section class="slide">	
