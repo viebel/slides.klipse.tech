@@ -120,9 +120,9 @@
 	<p>For the upcoming parts, we need to require two additional namespaces</p>
 	<pre><code class="clojure">
 	    (ns my.playground
-	    (:require [clojure.spec :as s]
-	    [clojure.spec.test :as stest]
-            [clojure.spec.impl.gen :as gen]))
+	    (:require [clojure.spec.alpha :as s]
+	    [clojure.spec.test.alpha :as stest]
+            [clojure.spec.gen.alpha :as gen]))
 	</code></pre>
 	<p>We can generate data samples out of our specs:</p>
 	<pre><code class="clojure">
@@ -168,11 +168,11 @@
 	  <p> You can describe the shape of the args and return value of your functions </p>
 	  <p> Let's imagine we have an addition function where the result is bounded: </p>
 	  <pre><code class="clojure">
-	      (defn bounded-addition [a b {:keys [upper lower]}]
-	      (-> (+ a b)
-	      (max lower)
-	      (min upper)))
-	</code></pre>
+	(defn bounded-addition [a b {:keys [upper lower]}]
+  (cond-> (+ a b)
+    lower (max lower)
+    upper (min upper)))
+</code></pre>
     </div>
     <div class="slide">
       <p> Here are the initial specifications of our function: </p>
@@ -187,14 +187,14 @@
       <p> What happens when one passes the wrong arguments? </p>
       <pre><code class="clojure">
 	  (stest/instrument `bounded-addition)
-	  (bounded-addition 1)
+	  (bounded-addition 1 2 {})
       </code></pre>
     </div>
     <div class="slide">
       <p> You can <code>instrument</code> and <code>unstrument</code>:</p>
       <pre><code class="clojure">
 	  (stest/unstrument `bounded-addition)
-	  (bounded-addition 1)
+	  (bounded-addition 1 2 {})
       </code></pre>
     </div>
     <div class="slide">
@@ -214,7 +214,7 @@
       <p> We can also specify:</p>
       <ol>
 	<li>The returned value - <strong><em>a number</em></strong></li>
-	<li> The relationships between different parts of the input - <strong><em>upper bound not smaller than lowe bound</em></strong></li>
+	<li> The relationships between different parts of the input - <strong><em>upper bound not smaller than lower bound</em></strong></li>
 	<li> The relationships between the input and the returned value -  <strong><em>returned value between lower and upper bounds</em></strong></li>
       </ol>
       <div class="slide">
