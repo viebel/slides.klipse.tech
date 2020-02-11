@@ -442,9 +442,26 @@
 	      (s/conform ::fn-args '[a b & c])
 	  </code></pre>
 	</div>
-	<div class="slide">
-	  <p class="meditation">What's the difference between <code>s/alt</code> and <code>s/or</code>?</p>
-	</div>
+      </section>
+      <section class="slide">	
+	<h2> <code>s/alt</code> vs. <code>s/or</code> </h2>
+<p> Usually inside the spec of a sequence, we use <code>s/alt</code>:
+	<pre><code class="clojure">
+(s/def ::seq-alt (s/cat :str string?
+                  :numbers-alt-string (s/alt :nums (s/* number?)
+                                             :strs (s/* string?))))
+(s/conform ::seq-alt ["hello" 1 2 3])
+	</code></pre>
+<div class="slide">
+<p> When we need part of the sequence to be nested, we use <code>s/or</code>:
+	<pre><code class="clojure">
+(s/def ::seq-or (s/cat :str string?
+                  :numbers-or-string (s/or :nums (s/* number?) 
+                                           :strs (s/* string?))))
+(s/conform ::seq-or ["hello" [1 2 3]])
+	</code></pre>
+
+</div>
       </section>
       <section class="slide">	
 	<h2>One last thing...</h2>
