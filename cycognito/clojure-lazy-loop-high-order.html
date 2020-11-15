@@ -1,0 +1,542 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+    <meta name="viewport" content="width=1024, user-scalable=no">
+
+    <link rel="shortcut icon" href="./favicon.png">
+    <title>Clojure - Level 2</title>
+
+
+    <!-- Required stylesheet -->
+    <link rel="stylesheet" media="screen" href="http://slides.klipse.tech/includes/deckjs/core/deck.core.css">
+
+    <!-- Extension CSS files go here. Remove or add as needed. -->
+    <link rel="stylesheet" media="screen" href="http://slides.klipse.tech/includes/deckjs/extensions/goto/deck.goto.css">
+    <link rel="stylesheet" media="screen" href="http://slides.klipse.tech/includes/deckjs/extensions/menu/deck.menu.css">
+    <link rel="stylesheet" media="screen" href="http://slides.klipse.tech/includes/deckjs/extensions/navigation/deck.navigation.css">
+    <link rel="stylesheet" media="screen" href="http://slides.klipse.tech/includes/deckjs/extensions/status/deck.status.css">
+    <link rel="stylesheet" media="screen" href="http://slides.klipse.tech/includes/deckjs/extensions/scale/deck.scale.css">
+
+    <link rel="stylesheet" media="screen" href="http://slides.klipse.tech/includes/deckjs/themes/style/klipse.css">
+    <link rel="stylesheet" media="screen" href="./main.css">
+
+    <link rel="stylesheet" media="screen" href="http://slides.klipse.tech/includes/deckjs/themes/transition/horizontal-slide.css">
+
+    <link rel="stylesheet" type="text/css" href="https://storage.googleapis.com/app.klipse.tech/css/codemirror.css">
+    <!-- Required Modernizr file -->
+    <script src="http://slides.klipse.tech/includes/deckjs/modernizr.custom.js"></script>
+  </head>
+  <body>
+    <style>
+    </style>
+    <div class="deck-container">
+
+      <section class="slide">
+        <h2>Clojure - Level 2</h2>
+	<ul>
+	  <li> Extending our knowledge of the basics</li>
+	  <li> Starting a real project </li>
+	  <li> Building a http server with authentication (e.g JWT) and CRUD movies, expenses, customers, products...</li>
+	  <li> Database of your choice: MongoDB, SQL ... </li>
+	  <li> Unit Tests in Clojure is really simple (clojure.test, midje, test.check)</li>
+	  <li class="challenge"> Frontend with ClojureScript: reagent, re-frame, om.next </li>
+	  </ul>
+      </section>
+
+      <section class="slide">
+        <h2>Tools</h2>
+        <table>
+          <tr>
+            <td style="width:60%">
+              <ul>
+                <li><a href="http://app.klipse.tech/?eval_only=1">Klipse: Clojure REPL online</a></li>
+                <li><a href="https://clojuredocs.org/">ClojureDocs: Documentation with Examples</a></li>
+                <li><a href="http://clojurescriptkoans.com/">Clojurescript koans</a></li>
+                <li><a href="http://clojurians.net/">Clojurians: Slack Channel</a></li>
+                <li><a href="https://groups.google.com/forum/#!forum/clojure">Clojure Google group</a></li>
+              </ul>
+            </td>
+            <td style="width:40%"><img src="http://slides.klipse.tech/img/tools.jpg" alt=""></td>
+      </tr></table></section>
+      <section class="slide">
+        <h2>Topics</h2>
+        <table>
+          <tr>
+            <td style="width: 80%;">
+              <ul>
+                <li>Functions on collections</li>
+                <li>High order functions</li>
+                <li class="challenge">Lazy sequences</li>
+                <li>Loop/Recur</li>
+              </ul>
+            </td>
+            <td style="width: 80%;">
+              <img src="http://slides.klipse.tech/img/clojure-logo.png" alt="">
+            </td>
+      </tr></table></section>
+
+      <section class="slide">
+        <h2>Topics for later</h2>
+        <ul>
+          <li>Destructuring</li>
+          <li>multi-arity functions</li>
+          <li>Walk/Prewalk</li>
+          <li>Macros</li>
+        </ul>
+      </section>
+      <section class="slide">
+        <h2>Functions on collections</h2>
+        <p>Collections play a central role in <code>clojure</code><br>
+          The collections share a common interface.
+        </p>
+        <br>
+        <img src="./img/stamps.jpg" alt="">
+        <br>
+        <p> In <code>clojure</code>, collections are called sequences. <br>
+          Usually, sequences are lazy. </p>
+      </section>
+      <section class="slide">
+        <h2>Sequences - interface</h2>
+        <p> Here are a couple of functions available on sequences and here is <a href="http://clojure.org/reference/sequences">the full interface for sequences</a><p>
+          <div class="slide">
+            <p><code>count</code></p>
+            <pre><code class="clojure">(count (zipmap (range 100) (range 200))) </code></pre>
+          </div>
+          <div class="slide">
+            <p><code>seq</code> is useful when we need to test whether a sequence is empty</p>
+            <pre><code class="clojure">[(seq [1 2 3])
+		(seq [])]</code></pre>
+          </div>
+          <div class="slide">
+            <p>We can take a few elements - even from an infinite sequence:</p>
+            <pre><code class="clojure">(take 10 (range))</code></pre>
+          </div>
+          <div class="slide">
+            <p>We can take elements while a predicate holds:</p>
+            <pre><code class="clojure">(take-while (partial > 10) (range))</code></pre>
+          </div>
+          <div class="slide">
+            <p>We can also take the last elements of a list - but don't try that on an infinite list!</p>
+            <pre><code class="clojure">(take-last 10 (range 100))</code></pre>
+          </div>
+          <div class="slide">
+	    <p>Practice</p>
+            <p>Play also with <code>drop</code> <code>drop-last</code> and <code>drop-while</code>...</p>
+          </div>
+      </section>
+      <section class="slide">
+        <h2>Sequences - high order functions</h2>
+        <div class="slide">
+          <p>map</p>
+          <code class="clojure">(map inc [1 2 3])</code>
+        </div>
+        <div class="slide">
+          <p>filter</p>
+          <pre><code class="clojure">(filter even? (range 10))</code></pre>    </div>
+        <div class="slide">
+          <p>remove</p>
+          <pre><code class="clojure">(remove even? (range 10))</code></pre>    </div>
+        <div class="slide">
+          <p>reduce</p>
+          <pre><code class="clojure">(reduce (fn [res x] (* res x)) 1 (range 1 11))</code></pre></div>
+      </section>
+      <section class="slide">
+        <h2 class="challenge">Map, filter and reduce</h2>
+        <p>Compose a string from the letters whose ascii values are odd numbers</p>
+        <p class="slide">We are going to implement this in several ways, improving our code style at each stage:</p>
+
+        <div class="slide">
+          <h3>The worst way:</h3>
+          <pre><code class="clojure">(reduce (fn [res i]
+              (if (odd? i) (str res (char i)) res))
+              "" (range 97 123))</code></pre>
+          <p class="slide meditation">Why is it bad?</p>
+        </div>
+
+        <div class="slide">
+          <h3>Giving each stage a name:</h3>
+          <pre><code class="clojure">(let [lst (range 97 123)
+              f-lst (filter odd? lst)
+              m-lst (map char f-lst)]
+              (reduce str "" m-lst))</code></pre>
+        </div>
+
+        <div class="slide">
+          <h3>Using the <a href="https://clojuredocs.org/clojure.core/as-%3E"><code>as-></code> </a> threading macro</h3>
+          <pre><code class="clojure">(identity (as-> (range 97 123) $
+              (filter odd? $)
+              (map char $)
+              (reduce str "" $)))</code></pre>
+        </div>
+        <div class="slide">
+          <h3>Using the <a href="https://clojuredocs.org/clojure.core/-%3E%3E"><code>->></code></a>threading macro:</h3>
+          <pre><code class="clojure">(->> (range 97 123)
+              (filter odd?)
+              (map char)
+              (reduce str ""))</code></pre>
+        </div>       
+      </section>
+      <section class="slide">
+        <h2>Sequences - Practice</h2>
+        <p>Write by yourself the following funtions of <code>clojure.core</code></p>
+        <div class="slide">
+          <p><a href="https://clojuredocs.org/clojure.core/frequencies">frequencies</a></p>
+          <pre><code class="clojure">
+	      (defn my-frequencies [coll])
+	  </code></pre>
+	  <pre><code class="clojure">
+	      (assert (= (my-frequencies ['a 'b 'a 'a]) '{a 3, b 1}))
+	  </code></pre>
+        </div>
+        <div class="slide">
+          <p><a href="https://clojuredocs.org/clojure.core/group-by">group-by</a></p>
+          <pre><code class="clojure">
+	      (defn my-group-by [f coll])	      
+	  </code></pre>
+	  <pre><code class="clojure">
+	      (assert (= (my-group-by count ["a" "as" "asd" "aa" "asdf" "qwer"]) {1 ["a"], 2 ["as" "aa"], 3 ["asd"], 4 ["asdf" "qwer"]}))	      
+	  </code></pre>
+        </div>
+      </section>
+
+      <section class="slide">
+        <h2 class="challenge"> Advanced Practice</h2>
+        <div>
+          <p class="challenge">Write a <code>clojure</code> version of <code>spark</code>'s function <code>reduceByKey</code>: receives a list of <code>(K, V)</code> pairs and a function <code>f</code> and returns a list of <code>(K, V)</code> pairs where the values for each key are aggregated using the given reduce function <code>f</code> </p>
+          <pre><code class="clojure">
+	      (defn reduce-by-key [f lst])
+	  </code></pre>
+	  <pre><code class="clojure">
+	      (assert (= (reduce-by-key + '((a 1)) ) '((a 1))))
+	      (assert  (= (reduce-by-key + '((a 1) (a 3))) '((a 4))))
+	      (assert  (= (reduce-by-key + '((a 1) (a 3) (b 1) (a 5) (b 6))) '((a 9) (b 7))))
+	  </code></pre>
+	</div>
+	<div class="slide">
+	  <p> The solution:</p>
+	  <pre><code class="clojure">
+(defn reduce-by-key-solution [f lst]
+  (->> (reduce (fn [res [k v]]
+            (assoc res k (f v (get res k 0)))) 
+          {} lst)
+      (into ()))
+  )
+	  </code></pre>
+</div>
+
+      </section>
+
+      <section class="slide">
+        <h2>High order functions</h2>
+        <p>Function that receives function[s] and return a function</p>
+        <img src="./img/pyramid.jpg" style="width:80%;" alt="">
+      </section>
+
+      <section class="slide">
+        <h2>High order functions</h2>
+        <div class="slide">
+          <p>apply</p>
+          <pre><code class="clojure">(apply + (range 10))</code></pre>
+        </div>
+        <div class="slide">
+          <p>comp</p>
+          <pre><code class="clojure">((comp list inc) 9)</code></pre>
+        </div>
+        <div class="slide">
+          <p class="meditation">You can call <code>apply</code> on <code>comp</code>. For instance:</p>
+          <pre><code class="clojure">((apply comp [inc inc inc]) 3)</code></pre>
+        </div>
+        <div class="slide">
+          <p>partial</p>
+          <pre><code class="clojure">(def match-aa (partial re-matches #"aa"))
+              [(match-aa "aaaa")
+              (match-aa "aa")]</code></pre>
+        </div>
+      </section>
+      <section class="slide">
+        <h2> High order functions (cont.)</h2>
+        <div class="slide">
+          <p>memoize</p>
+          <p>First, a non-memoized function that print its arguments</p>
+          <p> When called twice with the same argument, it prints twice</p>
+          <pre><code class="clojure">(defn foo[x] (println "foo called with: " x))
+	      
+              (foo 1)
+              (foo 1)
+	  </code></pre>
+          <p> With memoization, the function is called only once, the other calls are cached:</p>
+          <pre><code class="clojure">(def foo-memo (memoize foo))
+              (foo-memo 1)
+              (foo-memo 1)</code></pre>
+        </div>
+        <div class="slide">
+          <p>juxt</p>
+          <pre><code class="clojure">((juxt inc dec (partial * 10) even?) 1)</code></pre>
+        </div>
+      </section>
+      <section class="slide">
+        <h2>High Order Functions - Practice</h2>
+        <p>Write by yourself the following funtions of <code>clojure.core</code></p>
+        <div class="slide">
+          <p><a href="https://clojuredocs.org/clojure.core/comp">comp</a> (only with 2 functions)</p>
+          <pre><code class="clojure">
+	      (defn comp-2 [f g] identity)
+	  </code></pre>	  
+          <pre><code class="clojure">
+	      (assert (= ((comp-2 first rest) (range 10)) 1))
+	  </code></pre>
+        </div>
+        <div class="slide">
+          <p><a href="https://clojuredocs.org/clojure.core/partial">partial</a> (only supporting functions with 2 arguments)</p>
+          <pre><code class="clojure">
+	      (defn partial-2 [f a] identity) 
+	  </code></pre>
+	  <pre><code class="clojure">
+	      (assert (= ((partial-2 + 2) 3) 5)) 
+	  </code></pre>
+        </div>
+      </section>
+      <section class="slide">
+	<h2 class="challenge"> High Order Functions - Practice </h2>
+        <div>
+          <p><a href="https://clojuredocs.org/clojure.core/comp">comp</a> with no limit on the number of functions</p>
+          <pre><code class="clojure">
+	      (defn comp-all [& fns] (first fns))    
+	  </code></pre>
+	  <pre><code class="clojure">
+	      (assert (= ((comp-all inc inc inc) 5) 8)) 	      
+	  </code></pre>
+        </div>
+        <div class="slide">
+          <p><a href="https://clojuredocs.org/clojure.core/partial">partial</a> supporting functions of any number of arguments</p>
+          <pre><code class="clojure">
+	      (defn partial-all [f & args] identity)	      
+	  </code></pre>
+
+	  <pre><code class="clojure">
+	      (assert (= ((partial-all assoc {} :a) 1) {:a 1})) 	      
+	  </code></pre>
+        </div>
+
+      </section>
+
+
+      <section class="slide">
+        <h2>Lazy Sequences</h2>
+        <p>Elements are evaluated only when we really need them</p>
+        <br>
+        <img src="./img/lazy.png" alt="">
+        <br>
+        <p> The sequences returned by a lot of <code>clojure</code> functions are lazy: <code>map</code>, <code>filter</code>, <code>concat</code>, <code>range</code>, <code>take</code>...</p>
+      </section>
+
+      <section class="slide">
+        <h2>Lazy Sequences - Examples</h2>
+        <div class="slide">
+          <p>Infinite range of numbers:</p>
+          <pre><code class="clojure">(take 10 (range))</code></pre>
+        </div>
+
+        <div class="slide">
+          <p>Infinite repetition of an element:</p>
+          <pre><code class="clojure">(take 10 (repeat 1))</code></pre>
+        </div>
+        <div class="slide">
+          <p>Infinite repetition of a sequence:</p>
+          <pre><code class="clojure">(take 15 (cycle [1 2 3]))</code></pre>
+        </div>
+        <div class="slide">
+          <p>Infinite repetition of a function call:</p>
+          <pre><code class="clojure">(take 10 (repeatedly (partial rand-int 100)))</code></pre>
+        </div>
+      </section>
+      <section class="slide">
+        <h2>Lazy Sequences - creation</h2>
+        <p>There is a handy macro <code>lazy-seq</code> that makes it easy to create lazy sequences. <br>Let's see it in action, by writing code that receives a sequece and increment each of its elements - without using <code>map</code>:</p>
+        <div class="slide">
+          <h3>First a non-lazy implementation - with an infinite recursion</h3>
+          <pre><code class="clojure">(defn inc-seq [s]
+              (cons (inc (first s))
+              (inc-seq (rest s))))
+              (take 10 (inc-seq (range 100)))</code></pre>
+        </div>
+        <div class="slide">
+          <p>Let's fix our code - by ending the recursion when the list is empty</p>
+          <pre><code class="clojure">(defn inc-seq [s]
+              (when (seq s)
+              (cons (inc (first s))
+              (inc-seq (rest s)))))
+              (take 10 (inc-seq (range 100)))</code></pre>
+        </div>
+        <div class="slide">
+          <h3>And now the lazy implementation:</h3>
+	  <p><code>lazy-seq</code> is a macro that wraps a <code>cons</code> statement where instead of the <code>rest</code> you pass a function that returns the rest of the lazy sequence</p>
+          <pre><code class="clojure">(defn inc-seq-lazy [s]
+              (lazy-seq
+              (cons (inc (first s))
+              (inc-seq-lazy (rest s)))))
+              (take 10 (inc-seq-lazy (range 100)))</code></pre>
+        </div>
+        <div class="slide">
+          <p>We can even pass an infinite lazy sequence to our function:</p>
+          <pre><code class="clojure">(take 10 (inc-seq-lazy (range)))</code></pre>
+        </div>
+      </section>
+      <section class="slide">
+        <h2 class="challenge">Lazy sequences - Practice</h2>
+        <div class="slide">
+          <p>Write a function that creates an infinite lazy sequence of the positive integers</p>
+	  <h3> Part 1</h3>
+          <p> First write a function <code>numbers-starting-at</code> that receives a number <code>n</code> and returns all the numbers starting at <code>n</code></p>
+          <pre><code class="clojure">(defn numbers-starting-at [n] )
+	  </code></pre>
+	  <pre><code class="clojure">
+	      (assert (= (take 3 (numbers-starting-at 5)) '(5 6 7)))
+	  </code></pre>
+        </div>
+        <div class="slide">
+	  <h3> Part 2</h3>
+          <p>Now write a function <code>numbers</code> that receive no arguments and return all the positive integers. Try to use <code>partial</code></p>
+          <pre><code class="clojure">
+	      (defn numbers [])
+	  </code></pre>
+	  <pre><code class="clojure">
+	      (assert (= (take 3 (numbers)) '(1 2 3)))
+	  </code></pre>
+        </div>
+      </section>
+      <section class="slide">
+        <h2>Tail Call Recursion</h2>
+        <p>Regular recursions are dangerous as they might cause stack overflow. <br>In clojure, there is a semantic support for <a href="https://en.wikipedia.org/wiki/Tail_call">tail call recursion</a>.</p>
+        <br>
+        <img src="./img/dog.jpg" style="width:30%;">
+        <br>
+        <p> At first, it's less intuitive...<br> But when you get used to it, it's very convenient...</p>
+      </section>
+      <section class="slide">
+	<h2>Tail Call Recursion - Basics</h2>
+        <div class="slide">
+          <h3>Stack overflow with regular recursion</h3>
+          <pre><code class="clojure">(defn count-recursive [s]
+              (if (empty? s) 0
+              (inc (count-recursive (rest s)))))
+              
+              (count-recursive (range 1000))</code></pre>
+          <p>Looks good right?<br> Increment the size of <code>s</code> up to 1000000 and see what happens.</p>
+	</div>
+        <div class="slide">
+	  <h3>Preventing the stack overflow</h3>
+          <p>The solution is to use <a href="https://en.wikipedia.org/wiki/Tail_call">tail call recursion</a>. Like this: </p>
+          <pre><code class="clojure">(defn count-tail-recursive [s]
+              (loop [s s res 0]
+              (if (empty? s) res
+              (recur (rest s) (inc res)))))
+              
+              (count-tail-recursive (range 10000))</code></pre>
+          <p>It works fine with 1000000 elements</p>
+	</div>
+        <div class="slide">
+          <p>The hard thing when writing tail call recursion is that you are not allowed to do anything after the <code>recur</code>. Trying to do that will cause an exception at compile time.</p>
+          <pre><code class="clojure">(loop [s (range 100)]
+              (if (empty? s)
+              10
+              (inc (recur (rest s)))))</code></pre>
+	</div>
+        <div class="slide">
+          <p>Here are <a href="http://clojure.org/about/functional_programming#_recursive_looping">more details </a>about <code>recur</code> in clojure</p>
+        </div>
+      </section>
+      <section class="slide">
+        <h2>Tail Call Recursion - Practice</h2>
+        <div class="slide">
+          <p>Write a function that checks whether an element is present in a list</p>
+          <pre><code class="clojure">(defn present? [lst x])</code></pre>
+        </div>
+        <div class="slide">
+          <p>Write a function that sums up the elements of a sequence. The proper solution is to use <code>reduce</code>. But here, we want to practice <code>recur</code></p>
+          <pre><code class="clojure">
+	      (defn sum [lst])
+	  </code></pre>
+	  <pre><code class="clojure">
+	      (assert (= (sum [1 2 3]) 6))
+	  </code></pre>
+        </div>
+        <div class="slide">
+          <p class="challenge">Write a function that receives a sequence of sequences and returns their concatanation. The proper solution would be to use <code>(apply concat s)</code>; but here we want to practice <code>recur</code></p>
+          <pre><code class="clojure">
+	      (defn concat-seqs [seqs])
+	  </code></pre>
+	  <pre><code class="clojure">
+	      (assert (= (concat-seqs [[1 2 3] [4 5 6] [7 8 9]]) [1 2 3 4 5 6 7 8 9]))
+	  </code></pre>
+        </div>
+
+      </section>
+
+      <section class="slide">
+        <h2>Congratulations</h2>
+        <img src="./img/congrats.jpg" alt="">
+        <br>
+        <p> Now, you are familiar with: </p>
+        <ul>
+          <li>Functions on collections</li>
+          <li>High order functions</li>
+          <li class="challenge">Lazy sequences</li>
+          <li>Tail call recursion</li>
+        </ul>
+
+      </section>
+      <!-- deck.status snippet -->
+      <p class="deck-status" aria-role="status">
+	<span> powered by <a href="https://github.com/viebel/klipse">KLIPSE</a> </span>
+	<span class="deck-status-current"></span>
+	/
+	<span class="deck-status-total"></span>
+      </p>
+      <div aria-role="navigation">
+	<a href="#" class="deck-prev-link" title="Previous">&#8592;</a>
+	<a href="#" class="deck-next-link" title="Next">&#8594;</a>
+      </div>
+      <!-- End extension snippets. -->
+    </div>
+
+    <!-- Required JS files. -->
+    <script src="http://slides.klipse.tech/includes/deckjs/jquery.min.js"></script>
+    <script src="http://slides.klipse.tech/includes/deckjs/core/deck.core.js"></script>
+
+    <!-- Extension JS files. Add or remove as needed. -->
+    <script src="http://slides.klipse.tech/includes/deckjs/extensions/menu/deck.menu.js"></script>
+    <script src="http://slides.klipse.tech/includes/deckjs/extensions/status/deck.status.js"></script>
+    <script src="http://slides.klipse.tech/includes/deckjs/extensions/navigation/deck.navigation.js"></script>    
+    <script src="http://slides.klipse.tech/includes/deckjs/extensions/fullscreen/deck.fullscreen.js"></script>
+
+    <script>
+      $(function() {
+      $.deck('.slide', {
+      countNested: false
+      });
+      });
+    </script>
+
+    <script>
+      window.klipse_settings = {
+      selector: '.clojure',
+      codemirror_options_in: {
+      lineWrapping: true,
+      autoCloseBrackets: true
+      },
+      codemirror_options_out: {
+      lineWrapping: true
+      }
+      };
+    </script>
+
+
+
+    <script src="https://storage.googleapis.com/app.klipse.tech/plugin/js/klipse_plugin.js?aa1"></script>
+    <!-- <script src="http://localhost:5014/plugin/js/klipse_plugin.js"></script> -->
+
+  </body>
+</html>
