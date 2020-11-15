@@ -1,0 +1,198 @@
+= The Value of Unit tests
+:copyright: Yehonathan Sharvit
+:license: Eclipse Public License http://www.eclipse.org/legal/epl-v10.html
+include::slide.attrs[]
+
+
+== The Value of Unit tests
+
+
+== The story of the man with the wrong suitcase
+
+[.fragment.left]
+image::heavy-suitcase.png[width=500px]
+
+[.fragment.left]
+image::light-suitcase.png[width=500px]
+
+== Different levels of Automatic testing
+
+
+|===
+|Level of test| Purpose | Writing | Maintenance
+
+|Integration tests | Prevent regression | Hard | 😰
+|Component tests   | Check functionality | Reasonable | 😕
+|Unit tests       | Code quality        | Easy  | 🙂
+|===
+
+== Common Objections against automatic testing
+
+[.fragment]
+Q: The unit tests rarely catch bugs
+[.fragment]
+A: It's not the purpose of unit tests to catch bugs!
+
+[.fragment]
+Q: We have a very good QA team. Why do we need to write tests?
+[.fragment]
+A: It's not the purpose of unit tests to catch bugs!
+
+[.fragment]
+Q: Even if the unit tests pass, we need to test manually.
+[.fragment]
+A: It's not the purpose of unit tests to catch bugs!
+
+== What is code quality?
+
+[%step]
+. Code that looks good
+. Code that handles edge cases properly
+
+== Common objections against unit tests
+
+[.fragment]
+Q: We spend too much time writing unit tests
+[.fragment]
+A: Catching edge cases requires efforts
+
+[.fragment]
+Q: The code works: Why should I waste time on writing a unit test?
+[.fragment]
+A: The code works: Why should I code review it?
+
+[.fragment]
+Q: The code works: Why should I waste time on writing a unit test?
+[.fragment]
+A: The code works: Why should I refactor it?
+
+
+== Unit tests improve quality: design
+
+[.fragment]
+--
+> Code quality criteria: how easy is it to test the code.
+--
+
+[.fragment]
+--
+[source.eval-javascript, javascript]
+function helloWorld(name) {
+  console.log("Hello " + name + "!");
+}
+--
+
+== Unit tests improve quality: edge cases
+
+[.fragment]
+--
+[source.eval-javascript, javascript]
+function caseInsensitiveMatch(text, query) {
+  return text.match(new RegExp(query, 'i')) !== null;
+}
+--
+
+[.fragment]
+--
+Let's test it!
+--
+
+[.fragment]
+--
+[source.eval-javascript, javascript]
+caseInsensitiveMatch("hello", "hell") === true
+--
+
+[.fragment]
+--
+[source.eval-javascript, javascript]
+caseInsensitiveMatch("hello", "Hell") === true
+--
+
+[.fragment]
+--
+[source.eval-javascript, javascript]
+caseInsensitiveMatch("hello", "Halo") === false
+--
+
+[.fragment]
+--
+[source.eval-javascript, javascript]
+caseInsensitiveMatch("hello", "h.lo") === false
+
+
+Oops...
+--
+
+
+== To mock or not to mock
+
+If you need to mock, there are chances that you have an opportunity to improve the code quality.
+
+
+== How many test cases?
+
+
+[source, javascript]
+function foo(a,b) {
+  return [bar(a), kale(b)];
+}
+
+Assume that `a` can take 5 different values and `b` can take `7` different values.
+
+How many test cases should we write?
+
+== Don't be paranoid!
+
+> When you test a function `foo` that calls a function `bar`, you assume that `bar` works properly.
+
+
+== What code should we test?
+[%step]
+
+. Try to test everything.
+
+. If it's too complicated, try to refactor.
+
+. If it doesn't help, write a minimal test case.
+
+. If it's too complicated, do not write a test.
+
+
+
+== Should we test inner functions?
+
+On one hand it's easier to test small functions.
+
+On the other hand inner functions API might change, then it involves updating the unit tests.
+
+
+== The child shower syndrome
+
+[.left.w40]
+--
+Each time a child needs to get in the shower, he complains.
+
+Once he is in the shower, he doesn't want to get out.
+--
+
+[.left.w40]
+image::happy-shower.png[width=55%]
+
+== Summary
+
+. Unit tests objectives: code quality
+.. Code looks good
+.. Handle edge cases
+. Writing unit tests should be a pleasure 🧳
+.. Refactor your code to make unit tests easier to write
+.. Do not write too many test cases
+.. Do not write test for code that is assumed to work
+. Don't be too lazy 🚿
+
+== Questions
+
+
+[.left.w50]
+image::questions.jpg[width=75%]
+

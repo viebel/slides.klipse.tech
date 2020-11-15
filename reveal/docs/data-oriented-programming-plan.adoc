@@ -1,0 +1,23 @@
+
+
+== TALK TITLE
+Principles of data oriented programming
+Moving away from Clojure and moving back to Clojure
+
+== TAKE AWAYS
+
+. The essence of Clojure (the features of Clojure)
+. Language agnostic principles
+
+== SCENARIOS
+
+=== Scenarios
+=== Obstacles
+
+== DIAGRAMS AND IMAGES
+
+== PREREQUISITES
+
+== NEW SUPPORTING CONCEPTS
+
+== IDEAS

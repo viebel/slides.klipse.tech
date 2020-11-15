@@ -1,0 +1,154 @@
+<!DOCTYPE html><html lang="en"><head><meta charset="utf-8"><meta name="copyright" content="Yehonathan Sharvit"><title>The Value of Unit tests</title><meta content="yes" name="apple-mobile-web-app-capable"><meta content="black-translucent" name="apple-mobile-web-app-status-bar-style"><meta content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, minimal-ui" name="viewport"><link href="reveal.js/css/reveal.css" rel="stylesheet"><link rel="stylesheet" href="reveal.js/css/theme/simple.css" id="theme"><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.3.0/css/font-awesome.min.css"><link href="reveal.js/lib/css/zenburn.css" rel="stylesheet"><script>var link = document.createElement( 'link' );
+link.rel = 'stylesheet';
+link.type = 'text/css';
+link.href = window.location.search.match( /print-pdf/gi ) ? "reveal.js/css/print/pdf.css" : "reveal.js/css/print/paper.css";
+document.getElementsByTagName( 'head' )[0].appendChild( link );</script><!--[if lt IE 9]><script src="reveal.js/lib/js/html5shiv.js"></script><![endif]--><link rel="shortcut icon" type="image/x-icon" href="img/favicon.png">
+<link href="https://fonts.googleapis.com/css?family=Cormorant+Garamond&display=swap" rel="stylesheet"><link rel="stylesheet" href="slides.css"></head><body><div class="reveal"><div class="slides"><section id="the_value_of_unit_tests"><h2>The Value of Unit tests</h2></section>
+<section id="the_story_of_the_man_with_the_wrong_suitcase"><h2>The story of the man with the wrong suitcase</h2><div class="imageblock fragment left" style=""><img src="img/heavy-suitcase.png" alt="heavy suitcase" width="500px"></div>
+<div class="imageblock fragment left" style=""><img src="img/light-suitcase.png" alt="light suitcase" width="500px"></div></section>
+<section id="different_levels_of_automatic_testing"><h2>Different levels of Automatic testing</h2><table class="tableblock frame-all grid-all" style="width:100%"><colgroup><col style="width:25%"><col style="width:25%"><col style="width:25%"><col style="width:25%"></colgroup><thead><tr><th class="tableblock halign-left valign-top">Level of test</th><th class="tableblock halign-left valign-top">Purpose</th><th class="tableblock halign-left valign-top">Writing</th><th class="tableblock halign-left valign-top">Maintenance</th></tr><tbody><tr><td class="tableblock halign-left valign-top"><p class="tableblock">Integration tests</p></td><td class="tableblock halign-left valign-top"><p class="tableblock">Prevent regression</p></td><td class="tableblock halign-left valign-top"><p class="tableblock">Hard</p></td><td class="tableblock halign-left valign-top"><p class="tableblock">😰</p></td></tr><tr><td class="tableblock halign-left valign-top"><p class="tableblock">Component tests</p></td><td class="tableblock halign-left valign-top"><p class="tableblock">Check functionality</p></td><td class="tableblock halign-left valign-top"><p class="tableblock">Reasonable</p></td><td class="tableblock halign-left valign-top"><p class="tableblock">😕</p></td></tr><tr><td class="tableblock halign-left valign-top"><p class="tableblock">Unit tests</p></td><td class="tableblock halign-left valign-top"><p class="tableblock">Code quality</p></td><td class="tableblock halign-left valign-top"><p class="tableblock">Easy</p></td><td class="tableblock halign-left valign-top"><p class="tableblock">🙂</p></td></tr></table></section>
+<section id="common_objections_against_automatic_testing"><h2>Common Objections against automatic testing</h2><div class="paragraph fragment"><p>Q: The unit tests rarely catch bugs</p></div>
+<div class="paragraph fragment"><p>A: It&#8217;s not the purpose of unit tests to catch bugs!</p></div>
+<div class="paragraph fragment"><p>Q: We have a very good QA team. Why do we need to write tests?</p></div>
+<div class="paragraph fragment"><p>A: It&#8217;s not the purpose of unit tests to catch bugs!</p></div>
+<div class="paragraph fragment"><p>Q: Even if the unit tests pass, we need to test manually.</p></div>
+<div class="paragraph fragment"><p>A: It&#8217;s not the purpose of unit tests to catch bugs!</p></div></section>
+<section id="what_is_code_quality"><h2>What is code quality?</h2><div class="olist arabic"><ol class="arabic"><li class="fragment"><p>Code that looks good</p></li><li class="fragment"><p>Code that handles edge cases properly</p></li></ol></div></section>
+<section id="common_objections_against_unit_tests"><h2>Common objections against unit tests</h2><div class="paragraph fragment"><p>Q: We spend too much time writing unit tests</p></div>
+<div class="paragraph fragment"><p>A: Catching edge cases requires efforts</p></div>
+<div class="paragraph fragment"><p>Q: The code works: Why should I waste time on writing a unit test?</p></div>
+<div class="paragraph fragment"><p>A: The code works: Why should I code review it?</p></div>
+<div class="paragraph fragment"><p>Q: The code works: Why should I waste time on writing a unit test?</p></div>
+<div class="paragraph fragment"><p>A: The code works: Why should I refactor it?</p></div></section>
+<section id="unit_tests_improve_quality_design"><h2>Unit tests improve quality: design</h2><div class="openblock fragment"><div class="content"><div class="quoteblock"><blockquote><div class="paragraph"><p>Code quality criteria: how easy is it to test the code.</p></div></blockquote></div></div></div>
+<div class="openblock fragment"><div class="content"><div class="listingblock eval-javascript"><div class="content"><pre class="highlight"><code data-noescape class="javascript language-javascript">function helloWorld(name) {
+  console.log("Hello " + name + "!");
+}</code></pre></div></div></div></div></section>
+<section id="unit_tests_improve_quality_edge_cases"><h2>Unit tests improve quality: edge cases</h2><div class="openblock fragment"><div class="content"><div class="listingblock eval-javascript"><div class="content"><pre class="highlight"><code data-noescape class="javascript language-javascript">function caseInsensitiveMatch(text, query) {
+  return text.match(new RegExp(query, 'i')) !== null;
+}</code></pre></div></div></div></div>
+<div class="openblock fragment"><div class="content"><div class="paragraph"><p>Let&#8217;s test it!</p></div></div></div>
+<div class="openblock fragment"><div class="content"><div class="listingblock eval-javascript"><div class="content"><pre class="highlight"><code data-noescape class="javascript language-javascript">caseInsensitiveMatch("hello", "hell") === true</code></pre></div></div></div></div>
+<div class="openblock fragment"><div class="content"><div class="listingblock eval-javascript"><div class="content"><pre class="highlight"><code data-noescape class="javascript language-javascript">caseInsensitiveMatch("hello", "Hell") === true</code></pre></div></div></div></div>
+<div class="openblock fragment"><div class="content"><div class="listingblock eval-javascript"><div class="content"><pre class="highlight"><code data-noescape class="javascript language-javascript">caseInsensitiveMatch("hello", "Halo") === false</code></pre></div></div></div></div>
+<div class="openblock fragment"><div class="content"><div class="listingblock eval-javascript"><div class="content"><pre class="highlight"><code data-noescape class="javascript language-javascript">caseInsensitiveMatch("hello", "h.lo") === false</code></pre></div></div>
+<div class="paragraph"><p>Oops&#8230;&#8203;</p></div></div></div></section>
+<section id="to_mock_or_not_to_mock"><h2>To mock or not to mock</h2><div class="paragraph"><p>If you need to mock, there are chances that you have an opportunity to improve the code quality.</p></div></section>
+<section id="how_many_test_cases"><h2>How many test cases?</h2><div class="listingblock"><div class="content"><pre class="highlight"><code data-noescape class="javascript language-javascript">function foo(a,b) {
+  return [bar(a), kale(b)];
+}</code></pre></div></div>
+<div class="paragraph"><p>Assume that <code>a</code> can take 5 different values and <code>b</code> can take <code>7</code> different values.</p></div>
+<div class="paragraph"><p>How many test cases should we write?</p></div></section>
+<section id="dont_be_paranoid"><h2>Don&#8217;t be paranoid!</h2><div class="quoteblock"><blockquote><div class="paragraph"><p>When you test a function <code>foo</code> that calls a function <code>bar</code>, you assume that <code>bar</code> works properly.</p></div></blockquote></div></section>
+<section id="what_code_should_we_test"><h2>What code should we test?</h2><div class="olist arabic"><ol class="arabic"><li class="fragment"><p>Try to test everything.</p></li><li class="fragment"><p>If it&#8217;s too complicated, try to refactor.</p></li><li class="fragment"><p>If it doesn&#8217;t help, write a minimal test case.</p></li><li class="fragment"><p>If it&#8217;s too complicated, do not write a test.</p></li></ol></div></section>
+<section id="should_we_test_inner_functions"><h2>Should we test inner functions?</h2><div class="paragraph"><p>On one hand it&#8217;s easier to test small functions.</p></div>
+<div class="paragraph"><p>On the other hand inner functions API might change, then it involves updating the unit tests.</p></div></section>
+<section id="the_child_shower_syndrome"><h2>The child shower syndrome</h2><div class="openblock left w40"><div class="content"><div class="paragraph"><p>Each time a child needs to get in the shower, he complains.</p></div>
+<div class="paragraph"><p>Once he is in the shower, he doesn&#8217;t want to get out.</p></div></div></div>
+<div class="imageblock left w40" style=""><img src="img/happy-shower.png" alt="happy shower" width="55%"></div></section>
+<section id="summary"><h2>Summary</h2><div class="olist arabic"><ol class="arabic"><li><p>Unit tests objectives: code quality</p><div class="olist loweralpha"><ol class="loweralpha" type="a"><li><p>Code looks good</p></li><li><p>Handle edge cases</p></li></ol></div></li><li><p>Writing unit tests should be a pleasure 🧳</p><div class="olist loweralpha"><ol class="loweralpha" type="a"><li><p>Refactor your code to make unit tests easier to write</p></li><li><p>Do not write too many test cases</p></li><li><p>Do not write test for code that is assumed to work</p></li></ol></div></li><li><p>Don&#8217;t be too lazy 🚿</p></li></ol></div></section>
+<section id="questions"><h2>Questions</h2><div class="imageblock left w50" style=""><img src="img/questions.jpg" alt="questions" width="75%"></div></section></div></div><script src="reveal.js/lib/js/head.min.js"></script><script src="reveal.js/js/reveal.js"></script><script>// See https://github.com/hakimel/reveal.js#configuration for a full list of configuration options
+Reveal.initialize({
+  // Display controls in the bottom right corner
+  controls: true,
+  // Display a presentation progress bar
+  progress: true,
+  // Set a per-slide timing for speaker notes, null means none
+  defaultTiming: null,
+  // Display the page number of the current slide
+  slideNumber: true,
+  // Push each slide change to the browser history
+  history: true,
+  // Enable keyboard shortcuts for navigation
+  keyboard: true,
+  // Enable the slide overview mode
+  overview: true,
+  // Vertical centering of slides
+  center: false,
+  // Enables touch navigation on devices with touch input
+  touch: true,
+  // Loop the presentation
+  loop: false,
+  // Change the presentation direction to be RTL
+  rtl: false,
+  // Randomizes the order of slides each time the presentation loads
+  shuffle: false,
+  // Turns fragments on and off globally
+  fragments: true,
+  // Flags if the presentation is running in an embedded mode,
+  // i.e. contained within a limited portion of the screen
+  embedded: false,
+  // Flags if we should show a help overlay when the questionmark
+  // key is pressed
+  help: true,
+  // Flags if speaker notes should be visible to all viewers
+  showNotes: false,
+  // Global override for autolaying embedded media (video/audio/iframe)
+  // - null: Media will only autoplay if data-autoplay is present
+  // - true: All media will autoplay, regardless of individual setting
+  // - false: No media will autoplay, regardless of individual setting
+  autoPlayMedia: null,
+  // Number of milliseconds between automatically proceeding to the
+  // next slide, disabled when set to 0, this value can be overwritten
+  // by using a data-autoslide attribute on your slides
+  autoSlide: 0,
+  // Stop auto-sliding after user input
+  autoSlideStoppable: true,
+  // Enable slide navigation via mouse wheel
+  mouseWheel: false,
+  // Hides the address bar on mobile devices
+  hideAddressBar: true,
+  // Opens links in an iframe preview overlay
+  previewLinks: false,
+  // Theme (e.g., beige, black, league, night, serif, simple, sky, solarized, white)
+  // NOTE setting the theme in the config no longer works in reveal.js 3.x
+  //theme: Reveal.getQueryHash().theme || 'simple',
+  // Transition style (e.g., none, fade, slide, convex, concave, zoom)
+  transition: Reveal.getQueryHash().transition || 'slide',
+  // Transition speed (e.g., default, fast, slow)
+  transitionSpeed: 'default',
+  // Transition style for full page slide backgrounds (e.g., none, fade, slide, convex, concave, zoom)
+  backgroundTransition: 'fade',
+  // Number of slides away from the current that are visible
+  viewDistance: 3,
+  // Parallax background image (e.g., "'https://s3.amazonaws.com/hakim-static/reveal-js/reveal-parallax-1.jpg'")
+  parallaxBackgroundImage: '',
+  // Parallax background size in CSS syntax (e.g., "2100px 900px")
+  parallaxBackgroundSize: '',
+
+  // The "normal" size of the presentation, aspect ratio will be preserved
+  // when the presentation is scaled to fit different resolutions. Can be
+  // specified using percentage units.
+  width: "100%",
+  height: "100%",
+
+  // Factor of the display size that should remain empty around the content
+  margin: 0.1,
+
+  // Bounds for smallest/largest possible scale to apply to content
+  minScale: 1.0,
+  maxScale: 1.0,
+
+  // Optional libraries used to extend on reveal.js
+  dependencies: [
+      { src: 'reveal.js/lib/js/classList.js', condition: function() { return !document.body.classList; } },
+      { src: 'reveal.js/plugin/markdown/marked.js', condition: function() { return !!document.querySelector( '[data-markdown]' ); } },
+      { src: 'reveal.js/plugin/markdown/markdown.js', condition: function() { return !!document.querySelector( '[data-markdown]' ); } },
+      { src: 'reveal.js/plugin/highlight/highlight.js', async: true, callback: function() { hljs.initHighlightingOnLoad(); } },
+      { src: 'reveal.js/plugin/zoom-js/zoom.js', async: true },
+      { src: 'reveal.js/plugin/notes/notes.js', async: true }
+  ]
+});</script><link rel="stylesheet" type="text/css" href="https://storage.googleapis.com/app.klipse.tech/css/codemirror.css">
+<script>
+    window.klipse_settings = {
+        selector: '.eval-clojure',
+	selector_eval_js: '.eval-javascript',
+	selector_eval_html: '.eval-html'
+    };
+</script>
+<script src="https://storage.googleapis.com/app.klipse.tech/plugin/js/klipse_plugin.js"></script>
+<script>
+    Reveal.addEventListener( 'slidechanged', function() {
+        window.dispatchEvent(new Event('resize'));
+    } );
+</script></body></html>

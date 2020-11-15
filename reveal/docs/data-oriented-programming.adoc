@@ -1,0 +1,908 @@
+= Clojure made easy
+:copyright: Yehonathan Sharvit
+include::slide.attrs[]
+
+
+== Clojure made easy
+
+[.hidden]
+--
+[source.eval-clojure, clojure]
+(ns fun.clj
+  (:require-macros [klipse-clj.macros :refer-macros [dbg]])
+  (:require
+   [clojure.string :refer [join upper-case]]
+   [clojure.test
+    :refer-macros [deftest is are]]))
+--
+
+
+
+
+[.left.w30.p20]
+--
+Interactive Slides
+
+image::https://chart.googleapis.com/chart?cht=qr&chl=https%3A%2F%2Fslides.klipse.tech%2Freveal%2Fsite%2Feasy-clojure.html&chs=300x300[width=300px]
+
+[.medium-font]
+https://tinyurl.com/easy-clj
+
+--
+
+[.left.w30]
+--
+
+[.p10]
+image::clj-logo.png[clj]
+
+Yehonathan Sharvit
+
+--
+
+
+[.clear.p20.w60]
+--
+
+++++
+<div class="listingblock eval-clojure" data-loop-msec="1000">
+     <pre class="highlight">
+        <code data-noescape class="clojure language-clojure">
+	(str (js/Date.))
+	</code>
+     </pre>
+</div>
+++++
+
+--
+
+ 
+== Who am I?
+
+
+[.left.w70]
+--
+- A pragmatic theorist
+- A freak of interactivity
+- Author of https://github.com/viebel/klipse[Klipse]: a client side code evaluator pluggable on any web page 
+- Running a small consulting company
+- Sparking the joy of Clojure at Cycognito, Audyx and Nextjournal
+--
+
+[.left]
+image::yehonathan_profile.jpeg[me]
+Yehonathan Sharvit https://twitter.com/viebel[@viebel]
+
+== Begin with the End in Mind
+
+[.fragment]
+1. You are motivated to learn Clojure
+[.fragment]
+2. You look differently at your existing Software knowledge 
+[.fragment]
+3. You feel you had a fun time
+
+[.fragment]
+
+--
+You want to read my book on Clojure 💸
+
+[.left.w30]
+
+image::https://chart.googleapis.com/chart?cht=qr&chl=https%3A%2F%2Fwww.getprogrammingwithclojure.com%2F&chs=300x300[width=300px]
+
+[.left]
+image::book.jpg[width=45%]
+
+--
+
+== Three+One wishes
+
+[.left.w50]
+[%step]
+. _I wish I could express myself clearly_
+. _I wish I could code in a simple way_
+. _I wish I could write (and read) code that is predictable_
+. _I wish I could get more wishes_
+
+
+[.fragment.left.p20.w30]
+image::genie.png[genie]
+
+== Power of expressions
+
+image::express-yourself.jpg[width=90%]
+  
+=== The lack of power of expressions
+
+[.fragment]
+--
+We cannot assign the result of an `if` or a `switch` statement to a variable.
+[source.eval-javascript, javascript]
+var a = if (true) { 5 } else {42};
+--
+
+[cols="2*", frame=none, grid=none]
+|===
+a|[.fragment]
+--
+We cannot comment out an expression.
+[source.eval-javascript, javascript]
+----
+function foo() {
+ // if (true) {
+ //   return 5;
+ // } else {
+ //   return 42;
+ // }
+  return 7;
+}
+----
+--
+
+a|[.fragment]
+--
+The syntax is not uniform: operator, statements, function calls, function definition, classes...
+[source.eval-javascript, javascript]
+----
+function foo(z) {
+return z + Math.sqrt(z);
+}
+----
+--
+|===
+
+=== The power of expressions
+
+[.fragment]
+TIP: Every part of the language is an expression, with the same structure
+
+
+[.fragment]
+[cols="2*", frame=none, grid=none]
+|===
+
+a|[.fragment]
+--
+arithmetic operation
+[source.eval-clojure, clojure]
+(+ 1 2)
+--
+
+a|[.fragment]
+--
+boolean operation
+[source.eval-clojure, clojure]
+(and true false)
+--
+
+a|[.fragment]
+--
+local bindings
+[source.eval-clojure, clojure]
+(let [a 42]
+  (+ a 5))
+--
+
+a|[.fragment]
+--
+variable assignment
+[source.eval-clojure, clojure]
+(def my-num 42)
+--
+
+a|[.fragment]
+--
+`if` expression
+[source.eval-clojure, clojure]
+(if my-num "happy" "sad")
+--
+
+a|[.fragment]
+--
+function call
+[source.eval-clojure, clojure]
+(inc 42)
+--
+
+a|[.fragment]
+--
+function definition
+[source.eval-clojure, clojure]
+(defn add-42 [x]
+  (+ x 42))
+--
+|===
+
+
+=== The power of expressions - Javascript vs. Clojure
+
+|===
+
+|Javascript|Clojure
+
+a|
+--
+[source, javascript]
+foo(1, 2)
+--
+a|
+--
+[source, clojure]
+(foo 1 2)
+--
+
+a|
+--
+[source, javascript]
+2 + 3
+--
+a|
+--
+[source, clojure]
+(+ 2 3)
+--
+
+a|
+--
+[source, javascript]
+if (x > 2) {
+  return 3;
+} else {
+  return 5;
+}
+--
+a|
+--
+[source, clojure]
+(if (> x 2)
+    3
+    5)
+--
+
+a|
+--
+[source, javascript]
+var myNum = 42
+--
+a|
+--
+[source, clojure]
+(def my-num 42)
+--
+|===
+
+=== The power of expressions - the rules
+
+[%step]
+. An expression is enclosed into opening and closing parenthesis: `()`, `[]` or `{}`
+. First element inside the parentheses is the name of the expression: `def`, `if`, `+`...
+. Other elements inside the parentheses are the arguments to be passed to the expression, either a primitive or an expression
+. When one of the arguments is itself an expression, it follows the same syntactic rules (recursively)
+
+[.fragment]
+--
+[source.eval-clojure, clojure]
+(defn foo [x y]
+  (if (= x (+ y y))
+    (* x y)
+    (inc x)))
+(foo 42 20)
+--
+
+=== The power of expressions - if expressions
+
+We can assign the result of an `if` expression into a variable
+
+[source.eval-clojure, clojure]
+--
+(def my-mood (if my-num "happy" "sad"))
+my-mood
+--
+
+=== The power of expressions - comments
+
+We can comment out a single expression out of a big piece of code
+[source.eval-clojure, clojure]
+--
+(defn print-moods [num]
+  (println "happy")
+  #_(if (= num 42)
+    (println "furious")
+    (println "angry"))
+  (println "sad"))
+
+(print-moods 42)
+--
+
+=== The power of expressions - macros
+
+We can write code that receives source code and genenerates another code.
+
+
+== Pure functions are helpful
+
+++++
+<br><br>
+++++
+[quote]
+--
+**Challenge 1** +
+
+Write a function that receives a `name` and prints to the console +
+Hello <name>! +
+
+_You may use the language of your choice._
+--
+
+=== Hello Javascript
+
+[.fragment]
+--
+[source.eval-javascript, javascript]
+function hello(name) {
+console.log(`Hello, ${name}!`);
+}
+hello('Javascript');
+--
+
+[.fragment]
+--
+Thoughts 🤔 
+[%step]
+. Can you write a unit test?
+. Can you compose?
+. Can you cache?
+--
+
+=== Hello Clojure
+
+[.fragment]
+--
+We are going to separate:
+
+* Computation (concatenation of `"Hello"` and `name`)
+* Side effects (print to the console)
+--
+
+=== Hello Clojure
+
+[.fragment]
+--
+We create a function named `hello-str` that receives `name` +
+and "computes" the concatenation of `"Hello"` and `name`
+
+[source.eval-clojure, clojure]
+(defn hello-str [name]
+  (str "Hello, " name "!"))
+--
+
+[.fragment]
+--
+The `hello` function that does the side effect (print) uses `hello-str`:
+
+[source.eval-clojure, clojure]
+(defn hello [name]
+  (println (hello-str name)))
+--
+
+[.fragment]
+--
+[source.eval-clojure, clojure]
+(hello "Clojure")
+--
+
+
+=== Pure functions vs. side effects
+
+[.fragment]
+--
+A *pure* function
+[.centered]
+image::hello.png[width=65%]
+--
+
+[.fragment]
+--
+A function with *side effects*
+[.centered]
+image::println.png[width=65%]
+--
+
+=== Key idea: separate side effects from computation
+
+++++
+<br><br>
+++++
+--
+image::print-hello.png[]
+--
+
+=== The value of pure functions
+
+[%step]
+. Testable
+. Composable
+. Cachable
+
+=== Testable
+
+[.fragment]
+--
+A trivial test case
+[source.eval-clojure, clojure]
+(deftest test-hello-clojure
+   (is (= (hello-str "Clojure")
+          "Hello, Clojure!"))) 
+--
+
+[.fragment]
+--
+Check
+[source.eval-clojure, clojure]
+(test-hello-clojure)
+--
+
+[.fragment]
+--
+🤔 Can you test the function you wrote to solve the challenge?
+--
+
+
+=== Composable
+
+[quote]
+--
+We can use our functions as building blocks 🧱  for other functions.
+--
+
+[.fragment]
+--
+[cols="1,2", frame=none, grid=none]
+|===
+|We compose as we wish
+a|[source.eval-clojure, clojure]
+(defn hello-cap [name]
+  (upper-case (hello-str name)))
+
+|===
+--
+
+[.fragment]
+--
+[cols="1,2", frame=none, grid=none]
+|===
+|It returns a composed string
+a|[source.eval-clojure, clojure]
+(hello-cap "Clojure")
+|===
+--
+
+[.fragment]
+--
+[cols="1,2", frame=none, grid=none]
+|===
+|We print it, later
+a|["Clojure" "Python" "Javascript" "Java"]
+[source.eval-clojure, clojure]
+(println (hello-cap "Clojure"))
+|===
+--
+
+[.fragment]
+--
+🤔 Can you compose the function you wrote without modifying its code?
+--
+
+
+=== Hello worlds
+
+Handle sequences
+[.fragment]
+--
+Let's handle sequence of names
+[source.eval-clojure, clojure, width=500]
+(map hello-str ["Clojure" "Python" "Javascript" "Java"])
+--
+
+[.fragment]
+--
+[cols="1,2", frame=none, grid=none]
+|===
+|Let's combine the elements of the sequence, into a string
+a|[source.eval-clojure, clojure]
+(defn multiple-hellos [names]
+  (join " " (map hello names)))
+|===
+--
+
+[.fragment]
+--
+We print, later
+[source.eval-clojure, clojure]
+(println (multiple-hellos ["Clojure" "Python" "Javascript" "Java"]))
+--
+
+
+=== Cachable
+
+[.fragment]
+--
+[cols="2"]
+|===
+|Imagine that string concatenation were a heavy operation.
+a|[source.eval-clojure, clojure]
+(defn hello-print [name]
+  (println (str "Hello, " name "!")))
+|===
+--
+
+
+[quote.fragment]
+--
+We would like to cache the function +
+Next time we call it, it returns the result immediately 
+--
+
+
+[.fragment]
+--
+[cols="2"]
+|===
+|🤪  It makes no sense to cache a function with side effects!
+a|[source.eval-clojure, clojure]
+(def memoized-print (memoize println))
+(memoized-print "Hello!")
+(memoized-print "Hello!")
+(memoized-print "Good bye!")
+|===
+--
+
+== Interlude: A brief history of Functional Programming
+
+image::history.png[width=85%]
+
+=== 1930: Lambda Calculus
+
+* Alonzo Church discovers the https://en.wikipedia.org/wiki/Lambda_calculus[λ-calculus]
+* Everything is an anonymous function with a single argument 
+* No names in the language - only function argument
+* Even numbers are expressed as functions
+** 0 := λfλx.x
+** 1 := λfλx.fx
+** 2 := λfλx.f(fx)
+
+=== 1958: LISP
+
+* John McCarthy invents https://en.wikipedia.org/wiki/Lisp_(programming_language)[LISP]
+* It is the 1st FP language
+* The data is expressed as S-Expressions: `(1 2 3)`, `(a b (c d))` etc...
+* The code is made of S-Expressions: `(+ 1 2 3)`, `(if true 1 42)` etc...
+
+=== 1995: Javascript the language of the browser
+
+* Brendan Eich is recruited by Netscape to do "scheme in the browser"
+* Eventually, he invents Javascript
+* Functions are 1st class citizens
+* JSON data format is similar to S-Expressions
+
+=== 2000s: Clojure
+
+[%step]
+* 2007 - Rich Hickey invents Clojure - A practical dialect of LISP on top of JVM
+* 2011 - ClojureScript - Clojure rocks, Javascript Reaches!
+* 2013 - Facebook creates react.js - A functional javascript frontend framework
+* 2015 - Dan Abramov invents http://redux.js.org/[redux] - A javascript library that imposes FP constraints on a frontend app
+
+
+== Dealing with Data is valuable
+
+[.p20]
+image::time-money.jpg[width=60%]
+
+=== The value of values
+
+++++
+<br>
+++++
+[quote]
+--
+**Challenge 2** +
+
+Read carefuly the following piece of code and tell me what is the value of x?
+
+_You may convert the code to the language of your choice._
+--
+
+++++
+<br>
+++++
+
+[.hidden]
+--
+[source.eval-javascript, javascript]
+function calcSomethingUseful(x) {
+return Math.sin(x);
+}
+--
+
+[.p25.w50]
+--
+[source.eval-javascript, javascript]
+const x = 42;
+calcSomethingUseful(x);
+//x
+--
+
+
+=== The value of values
+
+++++
+<br>
+++++
+[quote]
+--
+**Challenge 3** +
+
+Read carefuly the following piece of code and tell me what is the value of y?
+
+_You may convert the code to the language of your choice._
+--
+
+[.hidden]
+--
+[source.eval-javascript, javascript]
+function calcVeryUseful(arr) {
+  return arr.push(42);
+}
+--
+
+[.p25.w50]
+--
+[source.eval-javascript, javascript]
+const arr = [5, 99, 1230];
+const z = calcVeryUseful(arr);
+const y = arr.length;
+//y
+--
+
+
+=== Welcome immutability
+
+[.p20.w70]
+image::dreams-come-true.jpg[imm]
+
+
+=== What is immutability?
+
+Immutability means that data collections are treated like values. +
+**Values never change!**
+
+[cols="2*", frame=none, grid=none]
+|===
+a|[.fragment]
+--
+In the realm of numbers
+[source.eval-clojure, clojure]
+(def my-num 42)
+(inc my-num)
+#_my-num
+--
+
+a|[.fragment]
+--
+In the realm of strings
+[source.eval-clojure, clojure]
+(def my-str "Hello")
+(str my-str " Clojure!")
+#_my-str
+--
+
+a|[.fragment]
+--
+In the realm of vectors
+[source.eval-clojure, clojure]
+(def my-vec [42 400 532])
+(assoc my-vec 1 54)
+#_my-vec
+--
+
+a|[.fragment]
+--
+In the realm of maps
+[source.eval-clojure, clojure]
+(def my-map {:name "Franck"})
+(assoc my-map :metadata 12321321)
+#_my-map
+--
+|===
+
+=== The value of immutability
+
+++++
+<br>
+++++
+[.fragment.left.w40]
+image::immutability.jpg[imm]
+
+[.left.p10.w50]
+[%step]
+. Code is predictable
+. No "by reference" or "by value" headache
+. Equality check is fast
+. Concurrency friendly wihtout locks
+
+=== Beyond immutability
+
+[.centered]
+image::beyond-infinity.jpg[inf]
+
+=== Atoms
+
+[cols="2*", frame=none, grid=none]
+|===
+a|[.fragment]
+--
+[source.eval-clojure, clojure]
+(def my-state (atom {}))
+--
+
+a|[.fragment]
+--
+[source.eval-clojure, clojure]
+(swap! my-state assoc :money 1000)
+--
+|===
+
+++++
+<br>
+++++
+
+[cols="2*", frame=none, grid=none]
+|===
+a|[.fragment]
+--
+[source.eval-clojure, clojure]
+@my-state
+--
+
+a|[.fragment]
+--
+[source.eval-clojure, clojure]
+my-state
+--
+
+|===
+
+
+== Extend the language with macros
+
+[%step]
+. It would be cool to write asynchronous code that looks synchronous
+. It would be fun to add debugging capabilities
+. It would be productive to write code that disappears on production
+. It would be nice to pass data to data manipulation functions sequentially
+
+
+=== Custom debugging
+
+[.fragment]
+--
+[source.eval-clojure, clojure]
+(defn complex-stuff [x & forms]
+  (loop [x x forms forms]
+    (if forms
+      (let [form (dbg (first forms))
+            threaded (list (first form) (first (next form)) x)]
+        (recur threaded (next forms)))
+      x)))
+--
+
+++++
+<br>
+
+++++
+[.fragment]
+--
+[source.eval-clojure, clojure]
+(complex-stuff 10 [1 2] [4 5])
+--
+
+
+
+
+=== Pipeline instead of wrapping
+
+[cols="2*", frame=none, grid=none]
+|===
+a|[.fragment]
+--
+Wrapping functions become hard to read
+[source.eval-clojure, clojure]
+(reduce + 
+        (filter odd? 
+                (map inc (range 100))))
+--
+
+a|[.fragment]
+--
+Use pipelines
+[source.eval-clojure, clojure]
+(->>
+                (range 100) 
+                (map inc )
+                (filter odd? )
+                (reduce + ))
+--
+|===
+
+[.fragment]
+--
+It's a macro
+[source.eval-clojure, clojure]
+(macroexpand '(->>
+                (range 100) 
+                (map inc)
+                (filter odd?)
+                (reduce +)))
+--
+
+
+=== Macros Internals
+
+image::warning.jpg[warning, width=80%]
+
+=== Macros Internals
+
+
+[.fragment]
+--
+[source.eval-clojure, clojure]
+(defn transform [x & forms]
+  (loop [x x forms forms]
+    (if forms
+      (let [form (first forms)
+            threaded (list (first form) (first (next form)) x)]
+        (recur threaded (next forms)))
+      x)))
+--
+
+[.fragment]
+--
+[source.eval-clojure, clojure]
+(transform '(range 100) 
+           '(map inc)
+           '(filter odd?)
+           '(reduce +))
+--
+	     
+== Wishes come true
+
+[.left.w50]
+image::dreams-come-true.jpg[dreams]
+
+[%step]
+[.left.w50]
+. _I wish I could express myself clearly_ +
+The power of expressions
+. _I wish I could code in a simple way_ +
+Pure functions
+. _I wish I could write (and read) code that is predictable_ +
+Immutability
+. _I wish I could get more wishes_ +
+Macros
+
+
+
+== Questions
+
+
+[.left.w50]
+image::questions.jpg[width=75%]
+
+[.left.w30]
+image::book.jpg[width=75%]
+
+[.left.w20]
+image::https://chart.googleapis.com/chart?cht=qr&chl=https%3A%2F%2Fwww.getprogrammingwithclojure.com%2F&chs=200x200[width=200px]
+
