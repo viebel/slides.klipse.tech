@@ -1,0 +1,45 @@
+@startwbs
++ catalog
+++ booksByIsbn
++++ 978-1779501127
+++++ isbn
++++++_ 978-1779501127
++++- title
++++++_ Watchmen
+++++ publicationYear
++++++_ 1987
++++- authorIds
++++++ 0
+++++++_ alan-moore
+++++- 1
+++++++_ dave-gibbons
+++++ bookItems
++++++ 0
+++++++ id
++++++++_ book-item-1
+++++++ rackId
++++++++_ rack-17
+++++++ isLent
++++++++_ true
+++++- 1
+++++++ id
++++++++_ book-item-2
+++++++ rackId
++++++++_ rack-17
+++++++ isLent
++++++++_ false
+++ authorsById
++++ alan-moore
+++++ name
++++++_ Alan Moore
+++++ bookIsbns
++++++ 0
++++++_ 978-1779501127
++++ dave-gibbons
+++++ name
++++++_ Dave Gibbons
+++++ bookIsbns
++++++ 0
++++++_ 978-1779501127
+
+@endwbs

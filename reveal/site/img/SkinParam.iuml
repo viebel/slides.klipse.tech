@@ -1,0 +1,23 @@
+<style>
+mindmapDiagram {
+  node {
+    LineColor blue
+    FontSize  24
+  }
+  arrow {
+    LineColor blue
+    LineThickness 3
+  }
+  .orange {
+    BackgroundColor orange
+  }
+  .red {
+    BackgroundColor red
+  }
+
+  .green {
+    BackgroundColor lightgreen
+  }
+
+}
+</style>

@@ -1,0 +1,8 @@
+@startmindmap
+!include SkinParam.iuml
+* Separate Code from Data
+** Code modules
+*** Stateless Functions
+** Data entities
+*** Only members
+@endmindmap

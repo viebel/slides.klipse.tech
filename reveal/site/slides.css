@@ -1,11 +1,19 @@
-pre code.hljs {
+.reveal section code.hljs {
     background-color: white;
-    border: none;
     display: block;
     background: white;
     color: #4d4d4c;
     padding: 10px;
+    border: solid 1px;
+    font-size: 0.8em;
+}
 
+
+.reveal section h2 {
+  color: #5B80D4;
+}
+.reveal a {
+  text-decoration: underline;
 }
 
 .highlight {
@@ -13,17 +21,43 @@ pre code.hljs {
     border: none;
 }
 
+.reveal code {
+  background-color: #E1E1E1;
+}
+
 .hidden {
     visibility: hidden;
     height:0px;
 }
 
-section > .centered {
-    width: 50%;
-    padding-left: 25%;
-    text-align: center;
+.reveal section > .bordered {
+  /* border: solid; */
+  padding: 10px 10px 10px 10px;
+  font-family: 'Cormorant Garamond', serif;
+  box-shadow: 0px 5px 12px rgb(91, 128, 212);
 
 }
+
+.reveal section > .centered90 {
+  width: 90%;
+  margin-left: 5%;
+  text-align: center;
+}
+
+.reveal section > .centered {
+    width: 50%;
+    margin-left: 25%;
+    text-align: center;
+}
+
+.reveal section > .centered p {
+  text-align: center;
+}
+
+.reveal .big-text {
+  font-size: 1.4em;
+}
+
 .text-centered {
     text-align: center;
 }
@@ -57,37 +91,60 @@ section .medium-font {
     font-size: 0.8em;
 }
 
-.w30 {
-    width: 30%;
+.wsmall {
+  width: 50px;
 }
 
-.w50 {
-    width: 50%;
+.w10 {
+  width: 10%;
+}
+
+.w20 {
+  width: 20%;
+}
+
+.w30 {
+    width: 30%;
 }
 
 .w40 {
     width: 40%;
 }
 
+.w50 {
+    width: 50%;
+}
+
 .w60 {
     width: 60%;
 }
+
 .w70 {
     width: 70%;
 }
 
-.margin-left {
+.w80 {
+  width: 80%;
+}
+
+.w90 {
+  width: 90%;
+}
+
+
+.reveal .margin-left {
     margin-left: 10px;
 }
 
-.margin-right {
+.reveal .margin-right {
     margin-right: 10px;
 }
-.margin-top {
+
+.reveal .margin-top {
     margin-top: 10px;
 }
 
-.margin-bottom {
+.reveal .margin-bottom {
     margin-bottom: 10px;
 }
 
@@ -110,7 +167,11 @@ section .medium-font {
 
 
 .reveal table th, .reveal table td {
-    padding: 0 0.5em 0 0.5em; 
+  padding: 0 0.5em 0 0.5em;
+}
+
+.reveal table {
+  margin: 0 0 0 0;
 }
 
 .reveal table.grid-none td { /* some theme css files override border-bottom without respecting the table attributes */
@@ -144,7 +205,8 @@ section .medium-font {
 
 .reveal section img {
   margin: 0;
-  border: 1px solid #5B80D4;
+  border: none;
+  box-shadow: none;
 }
 
 .reveal section p, h1, h2, div {

@@ -1,0 +1,73 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?><svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" contentScriptType="application/ecmascript" contentStyleType="text/css" height="223px" preserveAspectRatio="none" style="width:1577px;height:223px;" version="1.1" viewBox="0 0 1577 223" width="1577px" zoomAndPan="magnify"><defs><filter height="300%" id="fe5mbonqthfox" width="300%" x="-1" y="-1"><feGaussianBlur result="blurOut" stdDeviation="2.0"/><feColorMatrix in="blurOut" result="blurOut2" type="matrix" values="0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 .4 0"/><feOffset dx="4.0" dy="4.0" in="blurOut2" result="blurOut3"/><feBlend in="SourceGraphic" in2="blurOut3" mode="normal"/></filter></defs><g><rect fill="#FEFECE" filter="url(#fe5mbonqthfox)" height="48.2656" rx="12.5" ry="12.5" style="stroke: #0000FF; stroke-width: 1.5;" width="229" x="577" y="88.2656"/><text fill="#000000" font-family="sans-serif" font-size="24" lengthAdjust="spacingAndGlyphs" textLength="209" x="587" y="121.4688">Application of DO</text><rect fill="#FEFECE" filter="url(#fe5mbonqthfox)" height="48.2656" rx="12.5" ry="12.5" style="stroke: #0000FF; stroke-width: 1.5;" width="233" x="856" y="88.2656"/><text fill="#000000" font-family="sans-serif" font-size="24" lengthAdjust="spacingAndGlyphs" textLength="213" x="866" y="121.4688">Dynamically typed</text><rect fill="#FEFECE" filter="url(#fe5mbonqthfox)" height="48.2656" rx="12.5" ry="12.5" style="stroke: #0000FF; stroke-width: 1.5;" width="104" x="1139" y="20"/><text fill="#000000" font-family="sans-serif" font-size="24" lengthAdjust="spacingAndGlyphs" textLength="84" x="1149" y="53.2031">Clojure</text><rect fill="#90EE90" filter="url(#fe5mbonqthfox)" height="48.2656" rx="12.5" ry="12.5" style="stroke: #0000FF; stroke-width: 1.5;" width="120" x="1293" y="20"/><text fill="#000000" font-family="sans-serif" font-size="24" lengthAdjust="spacingAndGlyphs" textLength="92" x="1303" y="53.2031">Records</text><path d="M1243,44.1328 L1253,44.1328 C1268,44.1328 1268,44.1328 1283,44.1328 L1293,44.1328 " fill="none" style="stroke: #0000FF; stroke-width: 3.0;"/><path d="M1089,112.3984 L1099,112.3984 C1114,112.3984 1114,44.1328 1129,44.1328 L1139,44.1328 " fill="none" style="stroke: #0000FF; stroke-width: 3.0;"/><rect fill="#FEFECE" filter="url(#fe5mbonqthfox)" height="48.2656" rx="12.5" ry="12.5" style="stroke: #0000FF; stroke-width: 1.5;" width="98" x="1139" y="122.3984"/><text fill="#000000" font-family="sans-serif" font-size="24" lengthAdjust="spacingAndGlyphs" textLength="78" x="1149" y="155.6016">Others</text><rect fill="#FEFECE" filter="url(#fe5mbonqthfox)" height="48.2656" rx="12.5" ry="12.5" style="stroke: #0000FF; stroke-width: 1.5;" width="271" x="1287" y="88.2656"/><text fill="#000000" font-family="sans-serif" font-size="24" lengthAdjust="spacingAndGlyphs" textLength="251" x="1297" y="121.4688">Data manipulation lib</text><path d="M1237,146.5313 L1247,146.5313 C1262,146.5313 1262,112.3984 1277,112.3984 L1287,112.3984 " fill="none" style="stroke: #0000FF; stroke-width: 3.0;"/><rect fill="#FEFECE" filter="url(#fe5mbonqthfox)" height="48.2656" rx="12.5" ry="12.5" style="stroke: #0000FF; stroke-width: 1.5;" width="180" x="1287" y="156.5313"/><text fill="#000000" font-family="sans-serif" font-size="24" lengthAdjust="spacingAndGlyphs" textLength="160" x="1297" y="189.7344">Immutable lib</text><path d="M1237,146.5313 L1247,146.5313 C1262,146.5313 1262,180.6641 1277,180.6641 L1287,180.6641 " fill="none" style="stroke: #0000FF; stroke-width: 3.0;"/><path d="M1089,112.3984 L1099,112.3984 C1114,112.3984 1114,146.5313 1129,146.5313 L1139,146.5313 " fill="none" style="stroke: #0000FF; stroke-width: 3.0;"/><path d="M806,112.3984 L816,112.3984 C831,112.3984 831,112.3984 846,112.3984 L856,112.3984 " fill="none" style="stroke: #0000FF; stroke-width: 3.0;"/><rect fill="#FEFECE" filter="url(#fe5mbonqthfox)" height="48.2656" rx="12.5" ry="12.5" style="stroke: #0000FF; stroke-width: 1.5;" width="196" x="331" y="88.2656"/><text fill="#000000" font-family="sans-serif" font-size="24" lengthAdjust="spacingAndGlyphs" textLength="176" x="341" y="121.4688">Statically typed</text><rect fill="#FEFECE" filter="url(#fe5mbonqthfox)" height="48.2656" rx="12.5" ry="12.5" style="stroke: #0000FF; stroke-width: 1.5;" width="271" x="10" y="20"/><text fill="#000000" font-family="sans-serif" font-size="24" lengthAdjust="spacingAndGlyphs" textLength="251" x="20" y="53.2031">Data manipulation lib</text><path d="M331,112.3984 L321,112.3984 C306,112.3984 306,44.1328 291,44.1328 L281,44.1328 " fill="none" style="stroke: #0000FF; stroke-width: 3.0;"/><rect fill="#FEFECE" filter="url(#fe5mbonqthfox)" height="48.2656" rx="12.5" ry="12.5" style="stroke: #0000FF; stroke-width: 1.5;" width="180" x="101" y="88.2656"/><text fill="#000000" font-family="sans-serif" font-size="24" lengthAdjust="spacingAndGlyphs" textLength="160" x="111" y="121.4688">Immutable lib</text><path d="M331,112.3984 L321,112.3984 C306,112.3984 306,112.3984 291,112.3984 L281,112.3984 " fill="none" style="stroke: #0000FF; stroke-width: 3.0;"/><rect fill="#FFA500" filter="url(#fe5mbonqthfox)" height="48.2656" rx="12.5" ry="12.5" style="stroke: #0000FF; stroke-width: 1.5;" width="145" x="136" y="156.5313"/><text fill="#000000" font-family="sans-serif" font-size="24" lengthAdjust="spacingAndGlyphs" textLength="117" x="146" y="189.7344">Static cast</text><path d="M331,112.3984 L321,112.3984 C306,112.3984 306,180.6641 291,180.6641 L281,180.6641 " fill="none" style="stroke: #0000FF; stroke-width: 3.0;"/><path d="M577,112.3984 L567,112.3984 C552,112.3984 552,112.3984 537,112.3984 L527,112.3984 " fill="none" style="stroke: #0000FF; stroke-width: 3.0;"/><!--MD5=[4d5d6e715b8ea0ae023c60d6b45078db]
+@startmindmap
+!include SkinParam.iuml
+
+* Application of DO
+** Dynamically typed
+*** Clojure
+**** Records <<green>>
+*** Others
+**** Data manipulation lib
+**** Immutable lib
+
+left side
+
+** Statically typed
+*** Data manipulation lib
+*** Immutable lib
+*** Static cast <<orange>>
+
+
+@endmindmap
+
+@startmindmap
+<style>
+mindmapDiagram {
+  node {
+    LineColor blue
+    FontSize  24
+  }
+  arrow {
+    LineColor blue
+    LineThickness 3
+  }
+  .orange {
+    BackgroundColor orange
+  }
+  .red {
+    BackgroundColor red
+  }
+
+  .green {
+    BackgroundColor lightgreen
+  }
+
+}
+</style>
+
+* Application of DO
+** Dynamically typed
+*** Clojure
+**** Records <<green>>
+*** Others
+**** Data manipulation lib
+**** Immutable lib
+
+left side
+
+** Statically typed
+*** Data manipulation lib
+*** Immutable lib
+*** Static cast <<orange>>
+
+
+@endmindmap
+
+PlantUML version 1.2020.15(Sun Jun 28 14:39:45 IDT 2020)
+(GPL source distribution)
+Java Runtime: Java(TM) SE Runtime Environment
+JVM: Java HotSpot(TM) 64-Bit Server VM
+Default Encoding: US-ASCII
+Language: en
+Country: IL
+--></g></svg>

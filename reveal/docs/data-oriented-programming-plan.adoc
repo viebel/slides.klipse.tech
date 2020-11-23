@@ -2,21 +2,76 @@
 
 == TALK TITLE
 Principles of data oriented programming
-Moving away from Clojure and moving back to Clojure
+What makes Clojure system less complex
 
 == TAKE AWAYS
 
-. The essence of Clojure (the features of Clojure)
-. Language agnostic principles
+. The reason why Clojure systems tend to be less complex
+. How to explain to non-Clojure friends what's great about Clojure
+. How to apply DO principles to other programming languages
+. What is the price of applying DO principles
+. The audience is interested in buying my book
 
 == SCENARIOS
 
+Try to avoid code snippets.
+Put mostly diagrams in the slides and try to avoid too much text in the slides.
+
+Do not spend too much time on immutability.
+
 === Scenarios
+. The essence of Clojure (the features of Clojure)
+.. Homoiconic
+... Extensibility of the language
+... Structural editing (Paredit, Parinfer)
+.. Functional
+... Power of expression
+.. REPL
+... Short feedback loop
+... Code exploration
+.. Data oriented
+... Reduce complexity of the system
+. Simplifying a class diagram by separating code from data
+. Weak dependency between code and data
+. Universal access to data
+. The price of DO
+.. The genius of Clojure records
+.. Applying DO principles to other languages
+.. Data manipulation libs
+... Lodash in all languages
+.. Dynamic
+... Immutable data structures are not native
+.. Static
+... Immutable data structures are not native
+... Requires static casting
+. Data as a first class citizen
 === Obstacles
+. DO is the same as FP
+. DO is only applicable in dynamically typed languages
 
 == DIAGRAMS AND IMAGES
 
+.Simplify a class diagram
+image::complex-class-relation.svg[] ✓
+image::data-code-relation.svg[]✓
+
+.The essence of Clojure
+image::clojure-essence.svg[]✓
+
+.Representing records
+image:data-building-blocks.svg[]
+.Principles of Data oriented programming
+image::do-principles-journey.svg[] ✓
+image::principle1-nutshell.svg[]✓
+.Visualize the system data
+image::library-data.svg[]✓
+
+MAYBE: Lyrics for Imagine
+
 == PREREQUISITES
+. They are familiar with Clojure
+. They enjoy programming in Clojure
+. They know another programming language
 
 == NEW SUPPORTING CONCEPTS
 

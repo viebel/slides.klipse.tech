@@ -1,0 +1,14 @@
+@startmindmap
+!include SkinParam.iuml
+
+* SYSTEM
+** CODE
+*** FP<&thumb-up>
+*** OOP<&thumb-up>
+** DATA
+*** <s>SPECIFIC</s><&thumb-down> <<red>>
+*** GENERIC<&thumb-up>
+**** <s>MUTABLE</s><&thumb-down> <<red>>
+**** IMMUTABLE<&thumb-up>
+
+@endmindmap

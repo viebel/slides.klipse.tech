@@ -1,0 +1,15 @@
+@startmindmap
+!include SkinParam.iuml
+
+* Data Representation
+** Record
+*** Heterogeneous Map
+** Collection
+*** Linked List
+*** Array
+*** Set
+*** Vector
+** Index
+*** Homogeneous Map
+
+@endmindmap

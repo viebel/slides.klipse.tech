@@ -1,0 +1,42 @@
+@startuml
+!include SkinParamClass.iuml
+
+LibraryCode      ..> CatalogCode
+CatalogCode      ..> LibrarianCode
+
+
+MemberData      *-- "*" BookLendingData
+MemberCode      ..> BookItemCode
+
+LibrarianCode    ..> BookLendingCode
+LibrarianCode    ..> BookItemCode
+LibrarianCode    ..> MemberCode
+
+class LibraryCode << (S, lightblue) >>
+class CatalogCode << (S, lightblue) >>
+class LibrarianCode << (S, lightblue) >>
+class MemberCode << (S, lightblue) >>
+class BookLendingCode << (S, lightblue) >>
+class BookItemCode << (S, lightblue) >>
+
+LibraryData      *-- CatalogData
+LibraryData      *-- "*" LibrarianData
+LibraryData      *-- "*" MemberData
+
+CatalogData      *-- "*" BookData
+
+BookData         *-- "*" BookItemData
+BookData         "*" o--o "*" AuthorData
+
+BookItemData     *-- BookLendingData
+
+class LibraryData << (D, orchid) >>
+class LibrarianData << (D, orchid) >>
+class MemberData << (D, orchid) >>
+class CatalogData << (D, orchid) >>
+class BookData << (D, orchid) >>
+class BookItemData << (D, orchid) >>
+class AuthorData << (D, orchid) >>
+class BookLendingData << (D, orchid) >>
+
+@enduml

@@ -3,11 +3,22 @@ link.rel = 'stylesheet';
 link.type = 'text/css';
 link.href = window.location.search.match( /print-pdf/gi ) ? "reveal.js/css/print/pdf.css" : "reveal.js/css/print/paper.css";
 document.getElementsByTagName( 'head' )[0].appendChild( link );</script><!--[if lt IE 9]><script src="reveal.js/lib/js/html5shiv.js"></script><![endif]--></head><body><div class="reveal"><div class="slides"><section id="talk_title"><h2>TALK TITLE</h2><div class="paragraph"><p>Principles of data oriented programming
-Moving away from Clojure and moving back to Clojure</p></div></section>
-<section id="take_aways"><h2>TAKE AWAYS</h2><div class="olist arabic"><ol class="arabic"><li><p>The essence of Clojure (the features of Clojure)</p></li><li><p>Language agnostic principles</p></li></ol></div></section>
-<section><section id="scenarios"><h2>SCENARIOS</h2></section><section id="scenarios_2"><h2>Scenarios</h2></section><section id="obstacles"><h2>Obstacles</h2></section></section>
-<section id="diagrams_and_images"><h2>DIAGRAMS AND IMAGES</h2></section>
-<section id="prerequisites"><h2>PREREQUISITES</h2></section>
+What makes Clojure system less complex</p></div></section>
+<section id="take_aways"><h2>TAKE AWAYS</h2><div class="olist arabic"><ol class="arabic"><li><p>The reason why Clojure systems tend to be less complex</p></li><li><p>How to explain to non-Clojure friends what&#8217;s great about Clojure</p></li><li><p>How to apply DO principles to other programming languages</p></li><li><p>What is the price of applying DO principles</p></li><li><p>The audience is interested in buying my book</p></li></ol></div></section>
+<section><section id="scenarios"><h2>SCENARIOS</h2><div class="paragraph"><p>Try to avoid code snippets.
+Put mostly diagrams in the slides and try to avoid too much text in the slides.</p></div><div class="paragraph"><p>Do not spend too much time on immutability.</p></div></section><section id="scenarios_2"><h2>Scenarios</h2><div class="olist arabic"><ol class="arabic"><li><p>The essence of Clojure (the features of Clojure)</p><div class="olist loweralpha"><ol class="loweralpha" type="a"><li><p>Homoiconic</p><div class="olist lowerroman"><ol class="lowerroman" type="i"><li><p>Extensibility of the language</p></li><li><p>Structural editing (Paredit, Parinfer)</p></li></ol></div></li><li><p>Functional</p><div class="olist lowerroman"><ol class="lowerroman" type="i"><li><p>Power of expression</p></li></ol></div></li><li><p>REPL</p><div class="olist lowerroman"><ol class="lowerroman" type="i"><li><p>Short feedback loop</p></li><li><p>Code exploration</p></li></ol></div></li><li><p>Data oriented</p><div class="olist lowerroman"><ol class="lowerroman" type="i"><li><p>Reduce complexity of the system</p></li></ol></div></li></ol></div></li><li><p>Simplifying a class diagram by separating code from data</p></li><li><p>Weak dependency between code and data</p></li><li><p>Universal access to data</p></li><li><p>The price of DO</p><div class="olist loweralpha"><ol class="loweralpha" type="a"><li><p>The genius of Clojure records</p></li><li><p>Applying DO principles to other languages</p></li><li><p>Data manipulation libs</p><div class="olist lowerroman"><ol class="lowerroman" type="i"><li><p>Lodash in all languages</p></li></ol></div></li><li><p>Dynamic</p><div class="olist lowerroman"><ol class="lowerroman" type="i"><li><p>Immutable data structures are not native</p></li></ol></div></li><li><p>Static</p><div class="olist lowerroman"><ol class="lowerroman" type="i"><li><p>Immutable data structures are not native</p></li><li><p>Requires static casting</p></li></ol></div></li></ol></div></li><li><p>Data as a first class citizen
+=== Obstacles</p></li><li><p>DO is the same as FP</p></li><li><p>DO is only applicable in dynamically typed languages</p></li></ol></div></section></section>
+<section id="diagrams_and_images"><h2>DIAGRAMS AND IMAGES</h2><div class="paragraph"><div class="title">Simplify a class diagram</div><p>image::complex-class-relation.svg[] ✓
+image::data-code-relation.svg[]✓</p></div>
+<div class="paragraph"><div class="title">The essence of Clojure</div><p>image::clojure-essence.svg[]✓</p></div>
+<div class="paragraph"><div class="title">Representing records</div><p><span class="image"><img src="data-building-blocks.svg" alt="data building blocks"></span>
+.Principles of Data oriented programming
+image::do-principles-journey.svg[] ✓
+image::principle1-nutshell.svg[]✓
+.Visualize the system data
+image::library-data.svg[]✓</p></div>
+<div class="paragraph"><p>MAYBE: Lyrics for Imagine</p></div></section>
+<section id="prerequisites"><h2>PREREQUISITES</h2><div class="olist arabic"><ol class="arabic"><li><p>They are familiar with Clojure</p></li><li><p>They enjoy programming in Clojure</p></li><li><p>They know another programming language</p></li></ol></div></section>
 <section id="new_supporting_concepts"><h2>NEW SUPPORTING CONCEPTS</h2></section>
 <section id="ideas"><h2>IDEAS</h2></section></div></div><script src="reveal.js/lib/js/head.min.js"></script><script src="reveal.js/js/reveal.js"></script><script>// See https://github.com/hakimel/reveal.js#configuration for a full list of configuration options
 Reveal.initialize({

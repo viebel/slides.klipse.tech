@@ -1,0 +1,25 @@
+@startuml
+!include SkinParamClass.iuml
+
+Library      *-- Catalog
+Library      *-r- "*" Librarian
+Library      *-r- "*" Member
+
+Catalog      ..> Librarian
+Catalog      *-- "*" Book
+
+Book         *-- "*" BookItem
+Book         "*" o--o "*" Author
+
+BookItem     *-- BookLending
+
+Member       -u-> User
+Member       *-- "*" BookLending
+Member       ..> BookItem
+
+Librarian    -u-> User
+Librarian    ..> BookLending
+Librarian    ..> BookItem
+Librarian    ..> Member
+
+@enduml

@@ -1,0 +1,4 @@
+skinparam class {
+  ArrowColor Blue
+  BorderColor Blue
+}

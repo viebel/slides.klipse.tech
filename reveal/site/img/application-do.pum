@@ -1,0 +1,20 @@
+@startmindmap
+!include SkinParam.iuml
+
+* Application of DO
+** Dynamically typed
+*** Clojure
+**** Records <<green>>
+*** Others
+**** Data manipulation lib
+**** Immutable lib
+
+left side
+
+** Statically typed
+*** Data manipulation lib
+*** Immutable lib
+*** Static cast <<orange>>
+
+
+@endmindmap
