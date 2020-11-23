@@ -2,8 +2,8 @@
 !include SkinParam.iuml
 
 * Data Representation
-** Record
-*** Heterogeneous Map
+** Record <<green>>
+*** Heterogeneous Map <<green>>
 ** Collection
 *** Linked List
 *** Array

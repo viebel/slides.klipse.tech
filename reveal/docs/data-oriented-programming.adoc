@@ -17,14 +17,14 @@ include::slide.attrs[]
 *Data oriented programming*
 
 
-_The secret ingredient that makes Clojure system less complex_
+_The secret 🍝 sauce 🍝 that makes Clojure systems less complex_
 
 
 Yehonathan Sharvit
 --
 
 
-== Why we love Clojure
+== 💖Why we love Clojure
 
 
 {bl}
@@ -34,20 +34,22 @@ Yehonathan Sharvit
 image::clojure-essence.svg[width=100%]
 
 {bl}
+{bl}
+[.centered90]
+NOTE: *Complexity* in this context is defined as what makes systems *hard to understand*.
 
-[.centered]
-NOTE: *Complex* means: _hard to understand_
+
 
 == {principle} Principles of Data Oriented programming
 
+{bl}
+{bl}
 [.centered.bordered]
 Data is a *first class citizen*
 
 {bl}
 {bl}
 
-[.left.wsmall]
-{bl}
 [.fragment]
 [.left.w50.bordered]
 [%step]
@@ -63,7 +65,7 @@ Data is a *first class citizen*
 ** OO and FP
 ** Statically or dynamically typed
 * Applicable in isolation
-* Synergy
+* Powerful when combined
 
 
 
@@ -98,42 +100,50 @@ image::complex-class-relation.svg[width=100%]
 == {principle} Principle #1: Separate Code from Data
 
 {bl}
-{bl}
 
 [.fragment]
 [.centered]
 image::principle1-nutshell.svg[width=100%]
 
+
 [.fragment]
 [.left.w50]
 --
 [source, javascript]
-class Author {
+function createAuthor(firstName, lastName) {
+  return {
+    fullName: function() {
+      return firstName + " " + lastName;
+    }
+  };
+}
+
+
+[.huge-text]
+{dislike} {dislike} {dislike} {dislike} {dislike} {dislike}
+
+--
+
+[.left.w50]
+[.fragment]
+--
+[source, javascript]
+class AuthorData {
   constructor(firstName, lastName) {
     this.firstName = firstName;
     this.lastName = lastName;
   }
-  fullName() {
-    return this.firstName + " "
-               + this.lastName;
+}
+
+[source,javascript]
+class NameCalculation {
+  static fullName(data) {
+    return data.firstName + " " + data.lastName;
   }
 }
---
 
-[.fragment]
---
-[.left.w50]
-[source, javascript]
-function createAuthorData(firstName, lastName) {
-  return {
-    firstName: firstName,
-    lastName: lastName
-  };
-}
-function fullName(data) {
-  return data.firstName + " " +
-  data.lastName;
-}
+[.huge-text]
+{like} {like} {like} {like} {like} {like}
 
 --
 
@@ -149,37 +159,89 @@ image::complex-class-relation.svg[]
 image::data-code-relation.svg[]
 
 
-[.left]
-[.fragment]
+[.left.w30]
 --
+[.fragment]
 {meditation}What makes this system _less complex_?
+
+[.fragment]
+* Separation of concerns
+* Code diagram constraint
+** Stateless (static)
+** Only usage relation
+* Data diagram constraint
+** Only association and composition
 --
 
-* Separation of concerns
-. Code diagram constraint
-.. Stateless (static)
-.. No inheritance
-.. Only usage relation
-. Data diagram constraint
-.. Only association and composition
-[.left.w20]
-== {principle}Principle #2:Represent records as maps
-image:data-building-blocks.svg[]
+== {principle}Principle #2: Represent data as data
+
+[.fragment]
+[.centered]
+image:data-building-blocks.svg[width=70%]
+
+[.fragment]
+--
+[.left.w50]
+[source,javascript]
+class Book {
+    isbn;
+    title;
+    constructor(isbn, title {
+        this.isbn = isbn;
+        this.title = title;
+    }
+}
+var watchmenBook = new Book("978-1779501127",
+                            "Watchmen");
+--
+
+[.fragment]
+--
+[.left.w50]
+[source,javascript]
+var watchmenBook = {
+    isbn: "978-1779501127",
+    title: "Watchmen"
+ };
+--
+
 
 === {benefit}Reduction of System Complexity even more
 
 [.fragment]
-[.left.w30]
-image::data-code-relation.svg[]
+[.left.w40]
+image::data-code-relation.svg[width=100%]
 
 [.fragment]
-[.left.w60]
-image::data-code-relation.svg[]
+[.left.w20]
+image::code-only.svg[width=100%]
+
+
+[.left.w40]
+--
+[.fragment]
+{meditation}What makes this system _less complex_?
+
+[.fragment]
+* *Weak dependency* between code and data
+* *Flexible* data model
+* *Generic* data manipulation functions
+--
 
 
 === {benefit} Visualize the system data
 
-image::library-data.svg[]
+[.fragment]
+[.left.w50]
+image::library-data.svg[width=100%]
+
+
+[.fragment]
+[.left.w50]
+* Information *path* (e.g. `["catalog", "authorsById", "alan-moore", "name"]`)
+* *Display* data on console
+* *Serialization* for free
+* *Reflection* for free
 
 
 == {principle} Principle #3: Do not mutate Data
@@ -204,15 +266,57 @@ image::do-principles-journey.svg[width=90%]
 
 == 🎹Imagine
 
-== Questions
+[.left.w60]
+video::T2hvkPyiAFE[youtube, width=100%, height=750]
+
+[.left.w40.tiny-text.italic]
+--
+[.fragment]
+Imagine there's no *objects* +
+It's easy if you try +
+No *classes* below us +
+Above us only *information* +
+Imagine all the entities being only *data* +
+
+[.fragment]
+Imagine there's no *mutation* +
+It isn't hard to do +
+Nothing to protect with a *mutex* +
+And no *deadlock* too +
+Imagine all the *entities* being only *data* +
+
+[.fragment]
+You may say I'm a dreamer +
+But I'm not the only one +
+I hope some day *OO* will join us +
+And the world will be as one +
+
+[.fragment]
+Imagine no *code* is *locked* +
+I wonder if you can +
+No need for *methods* and *inheritance* +
+A brotherhood of *input* and *output* +
+Imagine all the code being *pure functions* +
+
+[.fragment]
+You may say I'm a dreamer +
+But I'm not the only one +
+I hope some day *OO* will join us +
+And the world will be as one +
+--
+
+
+
+
+== 🤔Questions
 
 
 [.left.w50]
-image::questions.jpg[width=75%]
+image::questions.jpg[width=70%]
 
 [.left.w50]
 
-Data Oriented Programming book
+📖Data Oriented Programming book
 
 https://tinyurl.com/dop-book[]
 

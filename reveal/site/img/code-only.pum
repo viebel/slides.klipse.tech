@@ -1,0 +1,22 @@
+@startuml
+!include SkinParamClass.iuml
+
+LibraryCode      ..> CatalogCode
+CatalogCode      ..> LibrarianCode
+
+
+MemberCode      ..> BookItemCode
+
+LibrarianCode    ..> BookLendingCode
+LibrarianCode    ..> BookItemCode
+LibrarianCode    ..> MemberCode
+
+class LibraryCode << (S, lightblue) >>
+class CatalogCode << (S, lightblue) >>
+class LibrarianCode << (S, lightblue) >>
+class MemberCode << (S, lightblue) >>
+class BookLendingCode << (S, lightblue) >>
+class BookItemCode << (S, lightblue) >>
+
+
+@enduml
