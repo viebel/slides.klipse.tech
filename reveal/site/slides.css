@@ -34,7 +34,7 @@
     height:0px;
 }
 
-.reveal section > .bordered {
+.reveal section .bordered {
   /* border: solid; */
   padding: 10px 10px 10px 10px;
   margin: 10px 10px 10px 10px;
@@ -60,7 +60,7 @@
 }
 
 .reveal .huge-text {
-  font-size: 2.4em;
+  font-size: 2em;
 }
 .reveal .big-text {
   font-size: 1.4em;
@@ -280,4 +280,27 @@ html.title body {
 .CodeMirror-scroll {
   padding-bottom: 30px !important;
   margin-bottom: -30px !important;
+}
+
+.reveal section .speech-bubble {
+	position: relative;
+	background: #5B80D4;
+	border-radius: .4em;
+  color: white;
+  padding: 10px 10px 10px 10px;
+}
+
+.reveal section .speech-bubble:after {
+	content: '';
+	position: absolute;
+	bottom: 0;
+	left: 15%;
+	width: 0;
+	height: 0;
+	border: 20px solid transparent;
+	border-top-color: #5B80D4;
+	border-bottom: 0;
+	border-left: 0;
+	margin-left: -10px;
+	margin-bottom: -20px;
 }

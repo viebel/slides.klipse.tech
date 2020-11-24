@@ -4,7 +4,7 @@
 * Application of DO
 ** Dynamically typed
 *** Clojure
-**** Records <<green>>
+**** Records <&warning> <<green>>
 *** Others
 **** Data manipulation lib
 **** Immutable lib

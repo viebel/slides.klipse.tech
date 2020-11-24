@@ -50,29 +50,39 @@ document.getElementsByTagName( 'head' )[0].appendChild( link );</script><!--[if 
     return data.firstName + " " + data.lastName;
   }
 }</code></pre></div></div>
-<div class="paragraph huge-text"><p>👍 👍 👍 👍 👍 👍</p></div></div></div></section><section id="reduction_of_system_complexity"><h2>🏅Reduction of System Complexity</h2><div class="imageblock fragment left w20" style=""><img src="img/complex-class-relation.svg" alt="complex class relation"></div>
-<div class="imageblock fragment left w50" style=""><img src="img/data-code-relation.svg" alt="data code relation"></div>
-<div class="openblock left w30"><div class="content"><div class="paragraph fragment"><p>☕What makes this system <em>less complex</em>?</p></div>
-<div class="ulist fragment"><ul><li><p>Separation of concerns</p></li><li><p>Code diagram constraint</p><div class="ulist"><ul><li><p>Stateless (static)</p></li><li><p>Only usage relation</p></li></ul></div></li><li><p>Data diagram constraint</p><div class="ulist"><ul><li><p>Only association and composition</p></li></ul></div></li></ul></div></div></div></section></section>
-<section><section id="principle_2_represent_data_as_data"><h2>💡Principle #2: Represent data as data</h2><div class="paragraph fragment centered"><p><span class="image"><img src="img/data-building-blocks.svg" alt="data building blocks" width="70%"></span></p></div><div class="openblock fragment"><div class="content"><div class="listingblock left w50"><div class="content"><pre class="highlight"><code data-noescape class="javascript language-javascript">class Book {
-    isbn;
-    title;
-    constructor(isbn, title {
+<div class="paragraph huge-text"><p>👍 👍 👍 👍 👍 👍</p></div></div></div></section><section id="reduction_of_system_complexity"><h2>🏅Reduction of System Complexity</h2><div class="openblock fragment left w20"><div class="content"><div class="imageblock bordered" style=""><img src="img/complex-class-relation.svg" alt="complex class relation" height="415px"></div>
+<div class="paragraph huge-text"><p>👎 👎 👎</p></div></div></div>
+<div class="openblock fragment left w40"><div class="content"><div class="imageblock bordered" style=""><img src="img/data-code-relation.svg" alt="data code relation" width="100%"></div>
+<div class="paragraph huge-text"><p>👍 👍 👍</p></div></div></div>
+<div class="openblock left w30 margin-left"><div class="content"><div class="paragraph fragment"><p>☕What makes this system <em>less complex</em>?</p></div>
+<div class="ulist fragment"><ul><li><p><strong>Separation</strong> of concerns</p></li><li><p>Code diagram <strong>constraints</strong></p><div class="ulist"><ul><li><p>Stateless (static)</p></li><li><p>Only usage relation</p></li></ul></div></li><li><p>Data diagram <strong>constraints</strong></p><div class="ulist"><ul><li><p>Only association and composition</p></li></ul></div></li></ul></div></div></div></section></section>
+<section><section id="principle_2_represent_data_as_data"><h2>💡Principle #2: Represent data as data</h2><div class="paragraph fragment centered"><p><span class="image"><img src="img/data-building-blocks.svg" alt="data building blocks" width="70%"></span></p></div><div class="openblock fragment left w50"><div class="content"><div class="listingblock"><div class="content"><pre class="highlight"><code data-noescape class="javascript language-javascript">class Book {
+    isbn; title;
+    constructor(isbn, title) {
         this.isbn = isbn;
         this.title = title;
     }
 }
 var watchmenBook = new Book("978-1779501127",
-                            "Watchmen");</code></pre></div></div></div></div><div class="openblock fragment"><div class="content"><div class="listingblock left w50"><div class="content"><pre class="highlight"><code data-noescape class="javascript language-javascript">var watchmenBook = {
+                            "Watchmen");</code></pre></div></div>
+<div class="paragraph huge-text"><p>👎 👎 👎 👎 👎 👎</p></div></div></div><div class="openblock fragment left w50"><div class="content"><div class="listingblock"><div class="content"><pre class="highlight"><code data-noescape class="javascript language-javascript">var watchmenBook = {
     isbn: "978-1779501127",
     title: "Watchmen"
- };</code></pre></div></div></div></div></section><section id="reduction_of_system_complexity_even_more"><h2>🏅Reduction of System Complexity even more</h2><div class="imageblock fragment left w40" style=""><img src="img/data-code-relation.svg" alt="data code relation" width="100%"></div>
-<div class="imageblock fragment left w20" style=""><img src="img/code-only.svg" alt="code only" width="100%"></div>
+ };</code></pre></div></div>
+<div class="paragraph huge-text"><p>👍 👍 👍 👍 👍 👍</p></div></div></div></section><section id="reduction_of_system_complexity_even_more"><h2>🏅Reduction of System Complexity even more</h2><div class="openblock fragment left w40"><div class="content"><div class="imageblock bordered" style=""><img src="img/data-code-relation.svg" alt="data code relation" width="100%"></div>
+<div class="paragraph huge-text"><p>👎 👎 👎</p></div></div></div>
+<div class="openblock fragment left w20"><div class="content"><div class="imageblock bordered" style=""><img src="img/code-only.svg" alt="code only" width="100%" height="415px"></div>
+<div class="paragraph huge-text"><p>👍 👍 👍</p></div></div></div>
 <div class="openblock left w40"><div class="content"><div class="paragraph fragment"><p>☕What makes this system <em>less complex</em>?</p></div>
 <div class="ulist fragment"><ul><li><p><strong>Weak dependency</strong> between code and data</p></li><li><p><strong>Flexible</strong> data model</p></li><li><p><strong>Generic</strong> data manipulation functions</p></li></ul></div></div></div></section><section id="visualize_the_system_data"><h2>🏅 Visualize the system data</h2><div class="imageblock fragment left w50" style=""><img src="img/library-data.svg" alt="library data" width="100%"></div>
 <div class="ulist fragment left w50"><ul><li><p>Information <strong>path</strong> (e.g. <code>["catalog", "authorsById", "alan-moore", "name"]</code>)</p></li><li><p><strong>Display</strong> data on console</p></li><li><p><strong>Serialization</strong> for free</p></li><li><p><strong>Reflection</strong> for free</p></li></ul></div></section></section>
-<section id="principle_3_do_not_mutate_data"><h2>💡 Principle #3: Do not mutate Data</h2><div class="paragraph"><p>It&#8217;s obvious!</p></div>
-<div class="imageblock" style=""><img src="https://i.imgflip.com/411lb0.png" alt="411lb0"></div></section>
+<section id="principle_3_do_not_mutate_data"><h2>💡 Principle #3: Do not mutate Data</h2><div class="paragraph"><p><br>
+<br>
+<br>
+<br></p></div>
+<div class="paragraph left w40"><p><br></p></div>
+<div class="openblock left"><div class="content"><div class="imageblock" style=""><img src="https://i.imgflip.com/411lb0.png" alt="411lb0"></div></div></div>
+<div class="paragraph left speech-bubble"><p>Mutation is bad!</p></div></section>
 <section id="application_of_do_principles"><h2>👨‍💻Application of DO principles</h2><div class="paragraph"><p><br>
 <br>
 <br>
@@ -85,25 +95,25 @@ var watchmenBook = new Book("978-1779501127",
 It&#8217;s easy if you try<br>
 No <strong>classes</strong> below us<br>
 Above us only <strong>information</strong><br>
-Imagine all the entities being only <strong>data</strong><br></p></div>
+Imagine all the entities being only <strong>data</strong></p></div>
 <div class="paragraph fragment"><p>Imagine there&#8217;s no <strong>mutation</strong><br>
 It isn&#8217;t hard to do<br>
 Nothing to protect with a <strong>mutex</strong><br>
 And no <strong>deadlock</strong> too<br>
-Imagine all the <strong>entities</strong> being only <strong>data</strong><br></p></div>
+Imagine all the <strong>entities</strong> being only <strong>data</strong></p></div>
 <div class="paragraph fragment"><p>You may say I&#8217;m a dreamer<br>
 But I&#8217;m not the only one<br>
 I hope some day <strong>OO</strong> will join us<br>
-And the world will be as one<br></p></div>
+And the world will be as one</p></div>
 <div class="paragraph fragment"><p>Imagine no <strong>code</strong> is <strong>locked</strong><br>
 I wonder if you can<br>
 No need for <strong>methods</strong> and <strong>inheritance</strong><br>
 A brotherhood of <strong>input</strong> and <strong>output</strong><br>
-Imagine all the code being <strong>pure functions</strong><br></p></div>
+Imagine all the code being <strong>pure functions</strong></p></div>
 <div class="paragraph fragment"><p>You may say I&#8217;m a dreamer<br>
 But I&#8217;m not the only one<br>
 I hope some day <strong>OO</strong> will join us<br>
-And the world will be as one<br></p></div></div></div></section>
+And the world will be as one</p></div></div></div></section>
 <section id="questions"><h2>🤔Questions</h2><div class="imageblock left w50" style=""><img src="img/questions.jpg" alt="questions" width="70%"></div>
 <div class="paragraph left w50"><p>📖Data Oriented Programming book</p></div>
 <div class="paragraph"><p><a href="https://tinyurl.com/dop-book" class="bare">https://tinyurl.com/dop-book</a></p></div>
