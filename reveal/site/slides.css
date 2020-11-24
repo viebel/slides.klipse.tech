@@ -16,8 +16,9 @@
 .reveal section h2 {
   color: #5B80D4;
 }
-.reveal a {
+.reveal section a {
   text-decoration: underline;
+  color: #5B80D4;
 }
 
 .highlight {

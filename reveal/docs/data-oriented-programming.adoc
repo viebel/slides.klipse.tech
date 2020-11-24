@@ -372,11 +372,18 @@ And the world will be as one
 image::questions.jpg[width=70%]
 
 [.left.w50]
+--
 
-📖Data Oriented Programming book
+icon:book[] Data Oriented Programming book
 
 https://tinyurl.com/dop-book[]
 
 
-[.left.w20]
 image::https://chart.googleapis.com/chart?cht=qr&chl=https://tinyletter.com/data-oriented-programming/subscribe&chs=400x400[]
+
+
+icon:edit[] https://blog.klipse.tech
+
+icon:twitter[] @viebel
+
+--
