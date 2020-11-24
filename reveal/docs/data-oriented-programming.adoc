@@ -54,7 +54,7 @@ Data is a *first class citizen*
 [.left.w50.bordered]
 [%step]
 . *Separate* Code from Data
-. *Represent* records as maps
+. *Represent* Data with *generic* data structures
 . Do not *mutate* data
 
 [.left.wsmall]
@@ -183,7 +183,7 @@ image::data-code-relation.svg[width=100%]
 ** Only association and composition
 --
 
-== {principle}Principle #2: Represent data as data
+== {principle}Principle #2: Represent Data with generic data structures
 
 [.fragment]
 [.centered]
@@ -302,7 +302,19 @@ Mutation is bad!
 image::application-do.svg[width=100%]
 
 == ⏳Summary
+
+{bl}
+{bl}
+{bl}
+{bl}
+[.left.w50]
 image::do-principles-journey.svg[width=90%]
+
+[.left.w40.bordered]
+. *Separate* Code from Data
+. *Represent* Data with *generic* data structures
+. Do not *mutate* data
+
 
 == 🎹Imagine
 

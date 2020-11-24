@@ -24,7 +24,7 @@ document.getElementsByTagName( 'head' )[0].appendChild( link );</script><!--[if 
 <div class="paragraph centered bordered"><p>Data is a <strong>first class citizen</strong></p></div>
 <div class="paragraph"><p><br>
 <br></p></div>
-<div class="olist arabic fragment left w50 bordered"><ol class="arabic"><li class="fragment"><p><strong>Separate</strong> Code from Data</p></li><li class="fragment"><p><strong>Represent</strong> records as maps</p></li><li class="fragment"><p>Do not <strong>mutate</strong> data</p></li></ol></div>
+<div class="olist arabic fragment left w50 bordered"><ol class="arabic"><li class="fragment"><p><strong>Separate</strong> Code from Data</p></li><li class="fragment"><p><strong>Represent</strong> Data with <strong>generic</strong> data structures</p></li><li class="fragment"><p>Do not <strong>mutate</strong> data</p></li></ol></div>
 <div class="paragraph left wsmall"><p><br></p></div>
 <div class="ulist fragment left w40 bordered"><ul><li><p>Language agnostic</p><div class="ulist"><ul><li><p>OO and FP</p></li><li><p>Statically or dynamically typed</p></li></ul></div></li><li><p>Applicable in isolation</p></li><li><p>Powerful when combined</p></li></ul></div></section>
 <section id="design_a_library_management_system"><h2>📚Design a library management system</h2><div class="imageblock fragment left w30" style=""><img src="img/watchmen-library.png" alt="watchmen library"></div>
@@ -56,7 +56,7 @@ document.getElementsByTagName( 'head' )[0].appendChild( link );</script><!--[if 
 <div class="paragraph huge-text"><p>👍 👍 👍</p></div></div></div>
 <div class="openblock left w30 margin-left"><div class="content"><div class="paragraph fragment"><p>☕What makes this system <em>less complex</em>?</p></div>
 <div class="ulist fragment"><ul><li><p><strong>Separation</strong> of concerns</p></li><li><p>Code diagram <strong>constraints</strong></p><div class="ulist"><ul><li><p>Stateless (static)</p></li><li><p>Only usage relation</p></li></ul></div></li><li><p>Data diagram <strong>constraints</strong></p><div class="ulist"><ul><li><p>Only association and composition</p></li></ul></div></li></ul></div></div></div></section></section>
-<section><section id="principle_2_represent_data_as_data"><h2>💡Principle #2: Represent data as data</h2><div class="paragraph fragment centered"><p><span class="image"><img src="img/data-building-blocks.svg" alt="data building blocks" width="70%"></span></p></div><div class="openblock fragment left w50"><div class="content"><div class="listingblock"><div class="content"><pre class="highlight"><code data-noescape class="javascript language-javascript">class Book {
+<section><section id="principle_2_represent_data_with_generic_data_structures"><h2>💡Principle #2: Represent Data with generic data structures</h2><div class="paragraph fragment centered"><p><span class="image"><img src="img/data-building-blocks.svg" alt="data building blocks" width="70%"></span></p></div><div class="openblock fragment left w50"><div class="content"><div class="listingblock"><div class="content"><pre class="highlight"><code data-noescape class="javascript language-javascript">class Book {
     isbn; title;
     constructor(isbn, title) {
         this.isbn = isbn;
@@ -89,7 +89,12 @@ var watchmenBook = new Book("978-1779501127",
 <br>
 <br></p></div>
 <div class="imageblock centered90" style=""><img src="img/application-do.svg" alt="application do" width="100%"></div></section>
-<section id="summary"><h2>⏳Summary</h2><div class="imageblock" style=""><img src="img/do-principles-journey.svg" alt="do principles journey" width="90%"></div></section>
+<section id="summary"><h2>⏳Summary</h2><div class="paragraph"><p><br>
+<br>
+<br>
+<br></p></div>
+<div class="imageblock left w50" style=""><img src="img/do-principles-journey.svg" alt="do principles journey" width="90%"></div>
+<div class="olist arabic left w40 bordered"><ol class="arabic"><li><p><strong>Separate</strong> Code from Data</p></li><li><p><strong>Represent</strong> Data with <strong>generic</strong> data structures</p></li><li><p>Do not <strong>mutate</strong> data</p></li></ol></div></section>
 <section id="imagine"><h2>🎹Imagine</h2><div class="videoblock left w60"><iframe width="100%" height="750" src="https://www.youtube.com/embed/T2hvkPyiAFE?rel=0" frameborder="0" allowfullscreen></iframe></div>
 <div class="openblock left w40 tiny-text italic"><div class="content"><div class="paragraph fragment"><p>Imagine there&#8217;s no <strong>objects</strong><br>
 It&#8217;s easy if you try<br>
