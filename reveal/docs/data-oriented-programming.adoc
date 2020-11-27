@@ -5,6 +5,7 @@ include::slide.attrs[]
 [%notitle]
 == Data oriented programming
 
+
 [.centered]
 --
 {bl}
@@ -25,6 +26,7 @@ Yehonathan Sharvit
 
 
 == 💖Why we love Clojure
+
 
 
 {bl}
@@ -68,6 +70,15 @@ Data is a *first class citizen*
 * Powerful when combined
 
 
+[.notes]
+--
+* Explain what is data oriented programming
+
+* Explicitly mention that I assume you like the fact that Clojure is dynamically typed
+
+* It's not about a war between static and dynamic types
+
+--
 
 == 📚Design a library management system
 
@@ -321,44 +332,61 @@ image::do-principles-journey.svg[width=90%]
 [.left.w60]
 video::T2hvkPyiAFE[youtube, width=100%, height=750]
 
-[.left.w40.tiny-text.italic]
+[%hardbreaks.left.w30.tiny-text.italic.compact]
 --
 [.fragment]
-[%hardbreaks]
 Imagine there's no *objects*
+[.fragment]
 It's easy if you try
+[.fragment]
 No *classes* below us
+[.fragment]
 Above us only *information*
+[.fragment]
 Imagine all the entities being only *data*
 
+{bl}
 [.fragment]
-[%hardbreaks]
 Imagine there's no *mutation*
+[.fragment]
 It isn't hard to do
+[.fragment]
 Nothing to protect with a *mutex*
+[.fragment]
 And no *deadlock* too
+[.fragment]
 Imagine all the *entities* being only *data*
 
+{bl}
 [.fragment]
-[%hardbreaks]
 You may say I'm a dreamer
+[.fragment]
 But I'm not the only one
+[.fragment]
 I hope some day *OO* will join us
+[.fragment]
 And the world will be as one
 
+{bl}
 [.fragment]
-[%hardbreaks]
 Imagine no *code* is *locked*
+[.fragment]
 I wonder if you can
+[.fragment]
 No need for *methods* and *inheritance*
+[.fragment]
 A brotherhood of *input* and *output*
+[.fragment]
 Imagine all the code being *pure functions*
 
+{bl}
 [.fragment]
-[%hardbreaks]
 You may say I'm a dreamer
+[.fragment]
 But I'm not the only one
+[.fragment]
 I hope some day *OO* will join us
+[.fragment]
 And the world will be as one
 --
 

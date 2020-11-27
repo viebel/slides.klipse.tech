@@ -60,6 +60,10 @@
   text-align: center;
 }
 
+.reveal section > .compact p {
+  line-height: 0.3em;
+}
+
 .reveal .huge-text {
   font-size: 2em;
 }
@@ -141,7 +145,7 @@ section .medium-font {
 }
 
 
-.reveal .margin-left {
+.reveal section .margin-left {
     margin-left: 10px;
 }
 

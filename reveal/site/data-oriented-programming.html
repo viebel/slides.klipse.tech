@@ -26,7 +26,8 @@ document.getElementsByTagName( 'head' )[0].appendChild( link );</script><!--[if 
 <br></p></div>
 <div class="olist arabic fragment left w50 bordered"><ol class="arabic"><li class="fragment"><p><strong>Separate</strong> Code from Data</p></li><li class="fragment"><p><strong>Represent</strong> Data with <strong>generic</strong> data structures</p></li><li class="fragment"><p>Do not <strong>mutate</strong> data</p></li></ol></div>
 <div class="paragraph left wsmall"><p><br></p></div>
-<div class="ulist fragment left w40 bordered"><ul><li><p>Language agnostic</p><div class="ulist"><ul><li><p>OO and FP</p></li><li><p>Statically or dynamically typed</p></li></ul></div></li><li><p>Applicable in isolation</p></li><li><p>Powerful when combined</p></li></ul></div></section>
+<div class="ulist fragment left w40 bordered"><ul><li><p>Language agnostic</p><div class="ulist"><ul><li><p>OO and FP</p></li><li><p>Statically or dynamically typed</p></li></ul></div></li><li><p>Applicable in isolation</p></li><li><p>Powerful when combined</p></li></ul></div>
+<div class="openblock notes"><div class="content"><div class="ulist"><ul><li><p>Explain what is data oriented programming</p></li><li><p>Explicitly mention that I assume you like the fact that Clojure is dynamically typed</p></li><li><p>It&#8217;s not about a war between static and dynamic types</p></li></ul></div></div></div></section>
 <section id="design_a_library_management_system"><h2>📚Design a library management system</h2><div class="imageblock fragment left w30" style=""><img src="img/watchmen-library.png" alt="watchmen library"></div>
 <div class="paragraph left w10"><p><br></p></div>
 <div class="imageblock fragment left w30" style=""><img src="img/complex-class-relation.svg" alt="complex class relation" width="100%"></div>
@@ -96,29 +97,33 @@ var watchmenBook = new Book("978-1779501127",
 <div class="imageblock left w50" style=""><img src="img/do-principles-journey.svg" alt="do principles journey" width="90%"></div>
 <div class="olist arabic left w40 bordered"><ol class="arabic"><li><p><strong>Separate</strong> Code from Data</p></li><li><p><strong>Represent</strong> Data with <strong>generic</strong> data structures</p></li><li><p>Do not <strong>mutate</strong> data</p></li></ol></div></section>
 <section id="imagine"><h2>🎹Imagine</h2><div class="videoblock left w60"><iframe width="100%" height="750" src="https://www.youtube.com/embed/T2hvkPyiAFE?rel=0" frameborder="0" allowfullscreen></iframe></div>
-<div class="openblock left w40 tiny-text italic"><div class="content"><div class="paragraph fragment"><p>Imagine there&#8217;s no <strong>objects</strong><br>
-It&#8217;s easy if you try<br>
-No <strong>classes</strong> below us<br>
-Above us only <strong>information</strong><br>
-Imagine all the entities being only <strong>data</strong></p></div>
-<div class="paragraph fragment"><p>Imagine there&#8217;s no <strong>mutation</strong><br>
-It isn&#8217;t hard to do<br>
-Nothing to protect with a <strong>mutex</strong><br>
-And no <strong>deadlock</strong> too<br>
-Imagine all the <strong>entities</strong> being only <strong>data</strong></p></div>
-<div class="paragraph fragment"><p>You may say I&#8217;m a dreamer<br>
-But I&#8217;m not the only one<br>
-I hope some day <strong>OO</strong> will join us<br>
-And the world will be as one</p></div>
-<div class="paragraph fragment"><p>Imagine no <strong>code</strong> is <strong>locked</strong><br>
-I wonder if you can<br>
-No need for <strong>methods</strong> and <strong>inheritance</strong><br>
-A brotherhood of <strong>input</strong> and <strong>output</strong><br>
-Imagine all the code being <strong>pure functions</strong></p></div>
-<div class="paragraph fragment"><p>You may say I&#8217;m a dreamer<br>
-But I&#8217;m not the only one<br>
-I hope some day <strong>OO</strong> will join us<br>
-And the world will be as one</p></div></div></div></section>
+<div class="openblock left w30 tiny-text italic compact"><div class="content"><div class="paragraph fragment"><p>Imagine there&#8217;s no <strong>objects</strong></p></div>
+<div class="paragraph fragment"><p>It&#8217;s easy if you try</p></div>
+<div class="paragraph fragment"><p>No <strong>classes</strong> below us</p></div>
+<div class="paragraph fragment"><p>Above us only <strong>information</strong></p></div>
+<div class="paragraph fragment"><p>Imagine all the entities being only <strong>data</strong></p></div>
+<div class="paragraph"><p><br></p></div>
+<div class="paragraph fragment"><p>Imagine there&#8217;s no <strong>mutation</strong></p></div>
+<div class="paragraph fragment"><p>It isn&#8217;t hard to do</p></div>
+<div class="paragraph fragment"><p>Nothing to protect with a <strong>mutex</strong></p></div>
+<div class="paragraph fragment"><p>And no <strong>deadlock</strong> too</p></div>
+<div class="paragraph fragment"><p>Imagine all the <strong>entities</strong> being only <strong>data</strong></p></div>
+<div class="paragraph"><p><br></p></div>
+<div class="paragraph fragment"><p>You may say I&#8217;m a dreamer</p></div>
+<div class="paragraph fragment"><p>But I&#8217;m not the only one</p></div>
+<div class="paragraph fragment"><p>I hope some day <strong>OO</strong> will join us</p></div>
+<div class="paragraph fragment"><p>And the world will be as one</p></div>
+<div class="paragraph"><p><br></p></div>
+<div class="paragraph fragment"><p>Imagine no <strong>code</strong> is <strong>locked</strong></p></div>
+<div class="paragraph fragment"><p>I wonder if you can</p></div>
+<div class="paragraph fragment"><p>No need for <strong>methods</strong> and <strong>inheritance</strong></p></div>
+<div class="paragraph fragment"><p>A brotherhood of <strong>input</strong> and <strong>output</strong></p></div>
+<div class="paragraph fragment"><p>Imagine all the code being <strong>pure functions</strong></p></div>
+<div class="paragraph"><p><br></p></div>
+<div class="paragraph fragment"><p>You may say I&#8217;m a dreamer</p></div>
+<div class="paragraph fragment"><p>But I&#8217;m not the only one</p></div>
+<div class="paragraph fragment"><p>I hope some day <strong>OO</strong> will join us</p></div>
+<div class="paragraph fragment"><p>And the world will be as one</p></div></div></div></section>
 <section id="questions"><h2>🤔Questions</h2><div class="imageblock left w50" style=""><img src="img/questions.jpg" alt="questions" width="70%"></div>
 <div class="openblock left w50"><div class="content"><div class="paragraph"><p><span class="icon"><i class="fa fa-book"></i></span> Data Oriented Programming book</p></div>
 <div class="paragraph"><p><a href="https://tinyurl.com/dop-book" class="bare">https://tinyurl.com/dop-book</a></p></div>
