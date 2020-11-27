@@ -44,6 +44,7 @@ NOTE: *Complexity* in this context is defined as what makes systems *hard to und
 
 == {principle} Principles of Data Oriented programming
 
+
 {bl}
 {bl}
 [.centered.bordered]
@@ -69,16 +70,6 @@ Data is a *first class citizen*
 * Applicable in isolation
 * Powerful when combined
 
-
-[.notes]
---
-* Explain what is data oriented programming
-
-* Explicitly mention that I assume you like the fact that Clojure is dynamically typed
-
-* It's not about a war between static and dynamic types
-
---
 
 == 📚Design a library management system
 
