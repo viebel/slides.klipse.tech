@@ -13,11 +13,11 @@ Book         "*" o--o "*" Author
 
 BookItem     *-- BookLending
 
-Member       -u-> User
+Member       -u-|> User
 Member       *-- "*" BookLending
 Member       ..> BookItem
 
-Librarian    -u-> User
+Librarian    -u-|> User
 Librarian    ..> BookLending
 Librarian    ..> BookItem
 Librarian    ..> Member

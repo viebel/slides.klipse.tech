@@ -1,0 +1,16 @@
+* Ideas
+** Ask folks to join Data-Oriented programming channel on Clojure's
+** Motivate people to purchase the book
+** Motivate people to contribute to Wikipedia
+** Prize: Free copy of the book
+** Add a link to the twitter poll
+* Objective
+** Give tools to convince non-clojurists to use data
+** Just use maps
+** Records in Clojure
+* Contents
+** Implementation challenges in Java
+** 
+* TODOs
+** TODO Add link to out of the tar pit
+** TODO Mention the book from the beginning
