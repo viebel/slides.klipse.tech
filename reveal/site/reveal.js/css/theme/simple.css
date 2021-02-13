@@ -18,7 +18,7 @@ body {
   background-color: #fff; }
 
 .reveal {
-  font-family: "Lato", sans-serif;
+  font-family: "fangsong";
   font-size: 40px;
   font-weight: normal;
   color: #000; }
@@ -49,7 +49,7 @@ body {
 .reveal h6 {
   margin: 0 0 20px 0;
   color: #000;
-  font-family: "News Cycle", Impact, sans-serif;
+  //font-family: "News Cycle", Impact;
   font-weight: normal;
   line-height: 1.2;
   letter-spacing: normal;
