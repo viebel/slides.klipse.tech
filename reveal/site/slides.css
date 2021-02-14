@@ -304,3 +304,7 @@ html.title body {
 	margin-left: -10px;
 	margin-bottom: -20px;
 }
+
+.reveal section .marginleft40 {
+    margin-left: 40%;
+}

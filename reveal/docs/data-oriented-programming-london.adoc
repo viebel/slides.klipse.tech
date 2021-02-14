@@ -9,12 +9,6 @@ include::slide.attrs[]
 [.centered]
 --
 {bl}
-{bl}
-{bl}
-{bl}
-{bl}
-{bl}
-
 [..big-text]
 *Data-Oriented programming*
 
@@ -22,11 +16,14 @@ include::slide.attrs[]
 _The secret 🍝 sauce 🍝 that makes Clojure systems less complex_
 
 
-Yehonathan Sharvit
 
-icon:twitter[]  viebel
+[.marginleft40]
+image::ldnclj.png[width=40%]
+
+February 15, 2021
+
+Yehonathan Sharvit icon:twitter[]  viebel
 --
-
 
 == 👋Who am I?
 
@@ -35,7 +32,7 @@ icon:twitter[]  viebel
 * 💻 Developer since 2001 (Clojure since 2012)
 * 🎁️Maintainer of Klipse
 * 📖 Author of Data-Oriented programming
-* 📝] Blogger at https://blog.klipse.tech/[blog.klipse.tech]
+* 📝 Blogger at https://blog.klipse.tech/[blog.klipse.tech]
 --
 
 [.left.w50]
@@ -44,21 +41,76 @@ image::dop-book.png[width=65%]
 --
 
 
-== 💖Why we love Clojure
+== 📓 Definitions
 
-image::clojure-essence.svg[width=100%]
 
 [.fragment]
 [quote]
 --
-❗ The type of *complexity* we are discussing here is that which makes large systems *hard to understand*.
+*🍝 Secret sauce*
+
+An element, quality, ability, or practice that makes something or someone *successful* or *distinctive*.
+
+_Merriam-Webster dictionary_
+--
+
+[.fragment]
+[quote]
+--
+😰*Complexity*
+
+What makes large systems *hard to understand*.
 
 _Out of the Tar Pit (2006)_
 --
 
-== 💡The main ideas of LISP
+
+== 🤔 What makes Clojure distinctive?
+
+{bl}
+{bl}
+{bl}
+{bl}
+
+image::clojure-essence.svg[width=100%]
 
 
+
+==  ⌛ A brief history of Data-Oriented programming
+
+[.left.w80]
+--
+{bl}
+
+[.fragment]
+1936 👉 λ-calculus (Alonzo Church)
+
+[.fragment]
+1958 👉 LISP (John McCarthy)
+
+[.fragment]
+2000 👉 Ideal Hash trees (Phil Bagwell)
+
+[.fragment]
+2007 👉 Clojure (Rich Hickey)
+
+[.fragment]
+2006 👉 Out of the Tar Pit  (Ben Moseley and Peter Marks)
+
+[.fragment]
+2021? 👉 Wikipedia article about Data-Oriented programming (Help wanted)
+
+--
+
+[.left.w20]
+image::zen.jpeg[width=100%]
+
+
+== 💎The main ideas of LISP
+
+
+[.fragment]
+--
 [cols=2,frame="all"]
 |===
 |*Data-Oriented*
@@ -81,41 +133,14 @@ The function `eval`  +
 |===
 
 _History of Lisp, John McCarthy 1979_
-
-
-==  A brief history of Data-Oriented programming
-
-[.left.w80]
 --
-{bl}
-
-[.fragment]
-1936 👉 λ-calculus (Alonzo Church)
-
-[.fragment]
-1958 👉 LISP (John McCarthy)
-
-[.fragment]
-2000 👉 Ideal Hash trees (Phil Bagwell)
-
-[.fragment]
-2007 👉 Clojure (Rich Hickey)
-
-[.fragment]
-2021? 👉 Wikipedia article about Data-Oriented programming (Help wanted)
-
---
-
-[.left.w20]
-image::zen.jpeg[width=100%]
-
 
 
 == {principle} Principles of Data-Oriented programming
 
 
 [.centered.bordered]
-Data is a *first class citizen*
+Data is a *first class citizen*  ✈️
 
 {bl}
 {bl}
