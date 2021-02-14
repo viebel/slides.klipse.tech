@@ -120,7 +120,8 @@
 	<p>For the upcoming parts, we need to require two additional namespaces</p>
 	<pre><code class="clojure">
 	    (ns my.playground
-	    (:require [clojure.spec.alpha :as s]
+	    (:require clojure.test.check.generators
+	    [clojure.spec.alpha :as s]
 	    [clojure.spec.test.alpha :as stest]
             [clojure.spec.gen.alpha :as gen]))
 	</code></pre>
