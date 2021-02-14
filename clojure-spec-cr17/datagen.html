@@ -244,10 +244,9 @@
       <div class="slide">
 	<p> Let's test our function (Test generation for free!): </p>
 	<pre><code class="clojure">
-	    (-> (stest/check `bounded-multiplication)
-	    first
-	    stest/abbrev-result
-	    :failure)
+(-> (stest/check `bounded-multiplication {::tc/opts {:num-tests 10}})   
+  first
+  stest/abbrev-result)  
 	</code></pre>
       </div>
       <div class="slide">
