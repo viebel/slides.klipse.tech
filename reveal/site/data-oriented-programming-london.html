@@ -45,7 +45,8 @@ Representation of information by lists</p></td><td class="tableblock halign-left
 <div class="imageblock fragment left w30" style=""><img src="img/complex-class-relation.svg" alt="complex class relation" width="100%"></div>
 <div class="openblock fragment"><div class="content"><div class="paragraph"><p>🕸️What makes this system <em>complex</em>?</p></div></div></div>
 <div class="ulist fragment"><ul><li><p>Nodes with many edges</p></li><li><p>Many kind of arrows</p><div class="ulist"><ul><li><p>Association</p></li><li><p>Composition</p></li><li><p>Inheritance</p></li><li><p>Usage</p></li></ul></div></li></ul></div></section>
-<section><section id="principle_1_separate_code_from_data"><h2>💡 Principle #1: Separate Code from Data</h2><div class="imageblock fragment centered" style=""><img src="img/principle1-nutshell.svg" alt="principle1 nutshell" width="100%"></div><div class="openblock fragment left w50"><div class="content"><div class="listingblock"><div class="title">Breaking the principle in FP 👎</div><div class="content"><pre class="highlight"><code data-noescape class="javascript language-javascript">function createAuthor(firstName, lastName) {
+<section><section id="principle_1_separate_code_from_data"><h2>💡 Principle #1: Separate Code from Data</h2><div class="imageblock fragment centered" style=""><img src="img/principle1-nutshell.svg" alt="principle1 nutshell" width="100%"></div><div class="openblock fragment left w50"><div class="content"><div class="listingblock"><div class="title">Breaking the principle in FP 👎</div><div class="content"><pre class="highlight"><code data-noescape class="javascript language-javascript">function createAuthor(firstName,
+                      lastName) {
   return {
     fullName: function() {
       return firstName + " " + lastName;
@@ -59,12 +60,10 @@ Representation of information by lists</p></td><td class="tableblock halign-left
 }</code></pre></div></div>
 <div class="listingblock"><div class="content"><pre class="highlight"><code data-noescape class="javascript language-javascript">class NameCalculation {
   static fullName(data) {
-    return data.firstName + " " + data.lastName;
+    return data.firstName + " "
+           + data.lastName;
   }
-}</code></pre></div></div></div></div></section><section id="reduction_of_system_complexity"><h2>🏅Reduction of System Complexity</h2><div class="openblock fragment left w20"><div class="content"><div class="imageblock bordered" style=""><img src="img/complex-class-relation.svg" alt="complex class relation" height="415px"></div>
-<div class="paragraph huge-text"><p>👎 👎 👎</p></div></div></div>
-<div class="openblock fragment left w40"><div class="content"><div class="imageblock bordered" style=""><img src="img/data-code-relation.svg" alt="data code relation" width="100%"></div>
-<div class="paragraph huge-text"><p>👍 👍 👍</p></div></div></div>
+}</code></pre></div></div></div></div></section><section id="reduction_of_system_complexity"><h2>🏅Reduction of System Complexity</h2><div class="openblock fragment"><div class="content"><div class="imageblock bordered w65 left" style=""><img src="img/from-oop-to-dop.png" alt="from oop to dop" width="100%"></div></div></div>
 <div class="openblock left w30 margin-left"><div class="content"><div class="paragraph fragment"><p>☕What makes this system <em>less complex</em>?</p></div>
 <div class="ulist fragment"><ul><li><p><strong>Separation</strong> of concerns</p></li><li><p>Code diagram <strong>constraints</strong></p><div class="ulist"><ul><li><p>Stateless (static)</p></li><li><p>Only usage relation</p></li></ul></div></li><li><p>Data diagram <strong>constraints</strong></p><div class="ulist"><ul><li><p>Only association and composition</p></li></ul></div></li></ul></div></div></div></section></section>
 <section><section id="principle_2_represent_data_with_generic_data_structures"><h2>💡Principle #2: Represent Data with generic data structures</h2><div class="openblock fragment left w40"><div class="content"><div class="paragraph"><p><br>

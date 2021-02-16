@@ -203,7 +203,8 @@ image::principle1-nutshell.svg[width=100%]
 --
 .Breaking the principle in FP {dislike}
 [source, javascript]
-function createAuthor(firstName, lastName) {
+function createAuthor(firstName,
+                      lastName) {
   return {
     fullName: function() {
       return firstName + " " + lastName;
@@ -228,7 +229,8 @@ class AuthorData {
 [source,javascript]
 class NameCalculation {
   static fullName(data) {
-    return data.firstName + " " + data.lastName;
+    return data.firstName + " "
+           + data.lastName;
   }
 }
 
@@ -240,23 +242,10 @@ class NameCalculation {
 === {benefit}Reduction of System Complexity
 
 [.fragment]
-[.left.w20]
 --
-[.bordered]
-image::complex-class-relation.svg[height=415px]
-[.huge-text]
-{dislike} {dislike} {dislike}
+[.bordered.w65.left]
+image::from-oop-to-dop.png[width=100%]
 --
-
-[.fragment]
-[.left.w40]
---
-[.bordered]
-image::data-code-relation.svg[width=100%]
-[.huge-text]
-{like} {like} {like}
---
-
 
 [.left.w30.margin-left]
 --
