@@ -1,0 +1,47 @@
+* TITLE
+  Data-Oriented programming in Java
+  
+  How to reduce the complexity of Object-Oriented programming
+  The last design pattern you'll need to learn
+* TAKEAWAYS
+  - It's very hard to find the appropriate (non-complex) OO design
+  - We reduce complexity when we separate code from data
+  - Flexibility at the high level of the system
+  - Immutability is your friend
+* CHALLENGES
+** Design a system
+** Compute data and send a JSON response
+*** Class for transient data 
+*** Serialization requires reflection
+*** Weak dependency
+** Manage concurrency
+*** Detect if the system state has changed
+** How to represent a data only class
+*** Records
+*** Boilerplate code
+*** Persistent map
+* POSSIBLE SOLUTIONS
+* DIAGRAMS
+  1. DOP in JAVA mindmap
+* IMAGES
+* ASSUMPTIONS
+* NEW CONCEPTS
+  - data-only aggregates
+    - the fields, just the fields, and nothing but the fields.
+* Presentation layout
+** The principles of DOP 
+1. Separate code from data
+2. Immutable data
+3. Flexible data access 
+
+** Separating code from data in Java
+** How to represent immutable data in Java
+   A small library catalog
+*** Data annotations
+*** Records
+*** Persistent string maps
+** Flexible data access in Java?
+*** Weak dependency between code and data
+*** Information path
+*** Rename keys
+*** Merge data

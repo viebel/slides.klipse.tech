@@ -1,0 +1,200 @@
+<!DOCTYPE html><html lang="en"><head><meta charset="utf-8"><title>Data-Oriented programming in Java</title><meta content="yes" name="apple-mobile-web-app-capable"><meta content="black-translucent" name="apple-mobile-web-app-status-bar-style"><meta content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, minimal-ui" name="viewport"><link href="reveal.js/css/reveal.css" rel="stylesheet"><link rel="stylesheet" href="reveal.js/css/theme/simple.css" id="theme"><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.3.0/css/font-awesome.min.css"><link href="reveal.js/lib/css/zenburn.css" rel="stylesheet"><script>var link = document.createElement( 'link' );
+link.rel = 'stylesheet';
+link.type = 'text/css';
+link.href = window.location.search.match( /print-pdf/gi ) ? "reveal.js/css/print/pdf.css" : "reveal.js/css/print/paper.css";
+document.getElementsByTagName( 'head' )[0].appendChild( link );</script><!--[if lt IE 9]><script src="reveal.js/lib/js/html5shiv.js"></script><![endif]--><link rel="shortcut icon" type="image/x-icon" href="img/favicon.png">
+<link href="https://fonts.googleapis.com/css?family=Cormorant+Garamond&display=swap" rel="stylesheet"><link rel="stylesheet" href="slides.css"></head><body><div class="reveal"><div class="slides"><section id="data_oriented_programming_in_java" data-state="title"><div class="openblock centered"><div class="content"><div class="paragraph"><p><br>
+<br>
+<br></p></div>
+<div class="paragraph big-text"><p><strong>Data-Oriented programming in Java</strong></p></div>
+<div class="paragraph"><p><br></p></div>
+<div class="paragraph"><p><em>How to build less complex systems</em></p></div>
+<div class="imageblock marginleft40" style=""><img src="http://www.conf42.com/assets/conf42/conf42_logo_black_small.png" alt="conf42 logo black small" width="40%"></div>
+<div class="paragraph"><p><br></p></div>
+<div class="paragraph"><p>March 2021</p></div>
+<div class="paragraph"><p>Yehonathan Sharvit <span class="icon"><i class="fa fa-twitter"></i></span>  viebel</p></div></div></div></section>
+<section id="who_am_i"><h2>👋Who am I?</h2><div class="openblock left w40"><div class="content"><div class="ulist"><ul><li><p>💻 Developer since 2001 (C++, Java, JavaScript, Ruby, Clojure)</p></li><li><p>📖 Author of Data-Oriented programming</p></li><li><p>📝 Blogger at <a href="https://blog.klipse.tech/">blog.klipse.tech</a></p></li></ul></div></div></div>
+<div class="openblock left w50"><div class="content"><div class="imageblock" style=""><img src="img/dop-book.png" alt="dop book" width="65%"></div></div></div></section>
+<section id="what_is_complexity"><h2>📓 What is complexity?</h2><div class="quoteblock fragment"><blockquote><div class="paragraph"><p><strong>⚙️Computational complexity</strong></p></div>
+<div class="paragraph"><p>The amount of <strong>machine resources</strong> (e.g. CPU, memory) required to <strong>run</strong> a program.</p></div></blockquote></div>
+<div class="quoteblock fragment"><blockquote><div class="paragraph"><p><strong>😰 System Complexity</strong></p></div>
+<div class="paragraph"><p>The amount of <strong>brain resources</strong> required to <strong>understand</strong> a system.</p></div></blockquote></div></section>
+<section id="what_makes_a_system_complex"><h2>🤔 What makes a system complex?</h2><div class="imageblock fragment left w30" style=""><img src="img/watchmen-library.png" alt="watchmen library"></div>
+<div class="paragraph left w10"><p><br></p></div>
+<div class="imageblock fragment left w30" style=""><img src="img/complex-class-relation.svg" alt="complex class relation" width="100%"></div>
+<div class="openblock fragment"><div class="content"><div class="paragraph"><p>🕸️Sources of complexity</p></div></div></div>
+<div class="ulist fragment"><ul><li><p>Nodes with many edges</p></li><li><p>Many kind of arrows</p><div class="ulist"><ul><li><p>Association</p></li><li><p>Composition</p></li><li><p>Inheritance</p></li><li><p>Usage</p></li></ul></div></li></ul></div></section>
+<section id="principle_1_separate_code_from_data"><h2>💡 Principle #1: Separate Code from Data</h2><div class="openblock fragment"><div class="content"><div class="imageblock bordered w65 left" style=""><img src="img/from-oop-to-dop.png" alt="from oop to dop" width="100%"></div></div></div>
+<div class="openblock left w30 margin-left"><div class="content"><div class="paragraph fragment"><p>☕What makes this system <em>less complex</em>?</p></div>
+<div class="ulist fragment"><ul><li><p><strong>Separation</strong> of concerns</p></li><li><p>Code diagram <strong>constraints</strong></p><div class="ulist"><ul><li><p>Stateless (static)</p></li><li><p>Only usage relation</p></li></ul></div></li><li><p>Data diagram <strong>constraints</strong></p><div class="ulist"><ul><li><p>Only association and composition</p></li></ul></div></li></ul></div></div></div></section>
+<section id="what_makes_code_hard_to_understand"><h2>🤔 What makes code hard to understand?</h2><div class="openblock left w60"><div class="content"><div class="listingblock"><div class="content"><pre class="highlight"><code data-noescape class="java language-java">class MemberData {
+    private boolean blocked;
+    public Member() {
+        this.blocked = false;
+    }
+    public void setBlocked(boolean blocked) {
+        this.blocked = blocked;
+    }
+    public boolean isBlocked() {
+        return this.blocked;
+    }
+}</code></pre></div></div>
+<div class="listingblock"><div class="content"><pre class="highlight"><code data-noescape class="java language-java">class MemberBehaviour {
+    static restrictedAction(MemberData member) {
+        if(!member.isBlocked()) {
+            System.out.println(member.isBlocked());
+        }
+    }
+}</code></pre></div></div></div></div></section>
+<section><section id="principle_2_represent_data_with_generic_data_structures"><h2>💡Principle #2: Represent Data with generic data structures</h2><div class="openblock fragment left w40"><div class="content"><div class="paragraph"><p><br>
+<br>
+<br>
+<span class="image"><img src="img/data-building-blocks.svg" alt="data building blocks" width="100%"></span></p></div></div></div><div class="openblock left w60"><div class="content"><div class="listingblock fragment"><div class="title">Breaking the principle 👎</div><div class="content"><pre class="highlight"><code data-noescape class="javascript language-javascript">class Book {
+    isbn; title;
+    constructor(publicationYear, title) {
+        this.publicationYear = publicationYear;
+        this.title = title;
+    }
+}
+var watchmenBook = new Book("978-1779501127",
+                            "Watchmen");</code></pre></div></div>
+<div class="listingblock fragment"><div class="title">Adhering to the principle 👍</div><div class="content"><pre class="highlight"><code data-noescape class="javascript language-javascript">var watchmenBook = new Map([
+    ["publicationYear", 1986],
+    ["title", "Watchmen"]
+    ]);</code></pre></div></div></div></div></section><section id="reduction_of_system_complexity_even_more"><h2>🏅Reduction of System Complexity even more</h2><div class="openblock fragment left w40"><div class="content"><div class="imageblock bordered" style=""><img src="img/data-code-relation.svg" alt="data code relation" width="100%"></div>
+<div class="paragraph huge-text"><p>👎 👎 👎</p></div></div></div>
+<div class="openblock fragment left w20"><div class="content"><div class="imageblock bordered" style=""><img src="img/code-only.svg" alt="code only" width="100%" height="415px"></div>
+<div class="paragraph huge-text"><p>👍 👍 👍</p></div></div></div>
+<div class="openblock left w40"><div class="content"><div class="paragraph fragment"><p>☕What makes this system <em>less complex</em>?</p></div>
+<div class="ulist fragment"><ul><li><p><strong>Weak dependency</strong> between code and data</p></li><li><p><strong>Flexible</strong> data model</p></li><li><p><strong>Generic</strong> data manipulation functions</p></li></ul></div></div></div></section><section id="visualize_the_system_data"><h2>🏅 Visualize the system data</h2><div class="imageblock fragment left w50" style=""><img src="img/library-data.svg" alt="library data" width="100%"></div>
+<div class="ulist fragment left w50"><ul><li><p>Information <strong>path</strong> (e.g. <code>["catalog", "authorsById", "alan-moore", "name"]</code>)</p></li><li><p><strong>Display</strong> data on console</p></li><li><p><strong>Serialization</strong> for free</p></li><li><p><strong>Reflection</strong> for free</p></li></ul></div></section></section>
+<section id="principle_3_do_not_mutate_data"><h2>💡 Principle #3: Do not mutate Data</h2><div class="paragraph"><p><br>
+<br>
+<br>
+<br></p></div>
+<div class="paragraph left w40"><p><br></p></div>
+<div class="openblock left"><div class="content"><div class="imageblock" style=""><img src="https://i.imgflip.com/411lb0.png" alt="411lb0"></div></div></div>
+<div class="paragraph left speech-bubble"><p>Mutation is bad!</p></div></section>
+<section><section id="application_of_do_principles"><h2>👨‍💻Application of DO principles</h2><div class="paragraph"><p><br>
+<br>
+<br>
+<br>
+<br></p></div><div class="imageblock centered90" style=""><img src="img/application-do.svg" alt="application do" width="100%"></div></section><section id="application_of_do_principles_in_java"><h2>‍🤪Application of DO principles in Java</h2><div class="paragraph"><p>What we need:</p></div>
+<div class="olist arabic"><ol class="arabic"><li><p>Efficient persistent data structures</p></li><li><p>Atoms</p></li><li><p>Parse JSON into a map</p></li><li><p>Manipulate "<em>untyped</em>" primitives</p></li><li><p>Database driver that works with maps</p></li></ol></div></section></section>
+<section id="summary"><h2>⏳Summary</h2><div class="paragraph"><p><br>
+<br>
+<br>
+<br></p></div>
+<div class="imageblock left w50" style=""><img src="img/do-principles-journey.svg" alt="do principles journey" width="90%"></div>
+<div class="olist arabic left w40 bordered"><ol class="arabic"><li><p><strong>Separate</strong> Code from Data</p></li><li><p><strong>Represent</strong> Data with <strong>generic</strong> data structures</p></li><li><p>Do not <strong>mutate</strong> data</p></li></ol></div></section>
+<section id="imagine"><h2>🎹Imagine</h2><div class="videoblock"><iframe width="100%" height="750" src="https://www.youtube.com/embed/EDRRbuWuUbQ?rel=0" frameborder="0" allowfullscreen></iframe></div></section>
+<section id="collaborate"><h2>🤝Collaborate</h2><div class="imageblock left w50" style=""><img src="img/dop-book.png" alt="dop book" width="65%"></div>
+<div class="openblock left w50"><div class="content"><div class="paragraph"><p>🤑 50% discount: mlsharvit2</p></div>
+<div class="paragraph"><p><a href="https://tinyurl.com/dop-book" class="bare">https://tinyurl.com/dop-book</a></p></div>
+<div class="imageblock" style=""><img src="https://chart.googleapis.com/chart?cht=qr&chl=https://tinyurl.com/yweme6kn&chs=400x400" alt="yweme6kn&chs=400x400" width="40%"></div>
+<div class="paragraph"><p><a href="https://en.wikipedia.org/wiki/Draft:Data-oriented_programming">Wikipedia article</a>: Data-Oriented programming</p></div>
+<div class="paragraph"><p>#data-oriented-programming on Clojurians</p></div></div></div></section></div></div><script src="reveal.js/lib/js/head.min.js"></script><script src="reveal.js/js/reveal.js"></script><script>// See https://github.com/hakimel/reveal.js#configuration for a full list of configuration options
+Reveal.initialize({
+  // Display controls in the bottom right corner
+  controls: true,
+  // Display a presentation progress bar
+  progress: true,
+  // Set a per-slide timing for speaker notes, null means none
+  defaultTiming: null,
+  // Display the page number of the current slide
+  slideNumber: true,
+  // Push each slide change to the browser history
+  history: true,
+  // Enable keyboard shortcuts for navigation
+  keyboard: true,
+  // Enable the slide overview mode
+  overview: true,
+  // Vertical centering of slides
+  center: false,
+  // Enables touch navigation on devices with touch input
+  touch: true,
+  // Loop the presentation
+  loop: false,
+  // Change the presentation direction to be RTL
+  rtl: false,
+  // Randomizes the order of slides each time the presentation loads
+  shuffle: false,
+  // Turns fragments on and off globally
+  fragments: true,
+  // Flags if the presentation is running in an embedded mode,
+  // i.e. contained within a limited portion of the screen
+  embedded: false,
+  // Flags if we should show a help overlay when the questionmark
+  // key is pressed
+  help: true,
+  // Flags if speaker notes should be visible to all viewers
+  showNotes: false,
+  // Global override for autolaying embedded media (video/audio/iframe)
+  // - null: Media will only autoplay if data-autoplay is present
+  // - true: All media will autoplay, regardless of individual setting
+  // - false: No media will autoplay, regardless of individual setting
+  autoPlayMedia: null,
+  // Number of milliseconds between automatically proceeding to the
+  // next slide, disabled when set to 0, this value can be overwritten
+  // by using a data-autoslide attribute on your slides
+  autoSlide: 0,
+  // Stop auto-sliding after user input
+  autoSlideStoppable: true,
+  // Enable slide navigation via mouse wheel
+  mouseWheel: false,
+  // Hides the address bar on mobile devices
+  hideAddressBar: true,
+  // Opens links in an iframe preview overlay
+  previewLinks: false,
+  // Theme (e.g., beige, black, league, night, serif, simple, sky, solarized, white)
+  // NOTE setting the theme in the config no longer works in reveal.js 3.x
+  //theme: Reveal.getQueryHash().theme || 'simple',
+  // Transition style (e.g., none, fade, slide, convex, concave, zoom)
+  transition: Reveal.getQueryHash().transition || 'slide',
+  // Transition speed (e.g., default, fast, slow)
+  transitionSpeed: 'default',
+  // Transition style for full page slide backgrounds (e.g., none, fade, slide, convex, concave, zoom)
+  backgroundTransition: 'fade',
+  // Number of slides away from the current that are visible
+  viewDistance: 3,
+  // Parallax background image (e.g., "'https://s3.amazonaws.com/hakim-static/reveal-js/reveal-parallax-1.jpg'")
+  parallaxBackgroundImage: '',
+  // Parallax background size in CSS syntax (e.g., "2100px 900px")
+  parallaxBackgroundSize: '',
+
+  // The "normal" size of the presentation, aspect ratio will be preserved
+  // when the presentation is scaled to fit different resolutions. Can be
+  // specified using percentage units.
+  width: "100%",
+  height: "100%",
+
+  // Factor of the display size that should remain empty around the content
+  margin: 0.1,
+
+  // Bounds for smallest/largest possible scale to apply to content
+  minScale: 1.0,
+  maxScale: 1.0,
+
+  // Optional libraries used to extend on reveal.js
+  dependencies: [
+      { src: 'reveal.js/lib/js/classList.js', condition: function() { return !document.body.classList; } },
+      { src: 'reveal.js/plugin/markdown/marked.js', condition: function() { return !!document.querySelector( '[data-markdown]' ); } },
+      { src: 'reveal.js/plugin/markdown/markdown.js', condition: function() { return !!document.querySelector( '[data-markdown]' ); } },
+      { src: 'reveal.js/plugin/highlight/highlight.js', async: true, callback: function() { hljs.initHighlightingOnLoad(); } },
+      { src: 'reveal.js/plugin/zoom-js/zoom.js', async: true },
+      { src: 'reveal.js/plugin/notes/notes.js', async: true }
+  ]
+});</script><link rel="stylesheet" type="text/css" href="https://storage.googleapis.com/app.klipse.tech/css/codemirror.css">
+<script>
+    window.klipse_settings = {
+      selector: '.eval-clojure',
+	    selector_eval_js: '.eval-javascript',
+	    selector_eval_html: '.eval-html'
+    };
+</script>
+<script src="https://storage.googleapis.com/app.klipse.tech/plugin/js/klipse_plugin.js"></script>
+<script>
+    Reveal.addEventListener( 'slidechanged', function() {
+        window.dispatchEvent(new Event('resize'));
+    } );
+</script></body></html>

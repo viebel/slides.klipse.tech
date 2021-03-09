@@ -1,14 +1,16 @@
 @startmindmap
 !include SkinParam.iuml
 
-* SYSTEM
+*:DATA-ORIENTED PROGRAMMING
+                    IN JAVA;
 ** CODE
-*** FP<&thumb-up>
-*** OOP<&thumb-up>
+*** STATIC METHODS<&thumb-up> <<green>>
+*** INSTANCE METHODS<&thumb-down> <<red>>
 ** DATA
-*** <s>SPECIFIC</s><&thumb-down> <<red>>
-*** GENERIC<&thumb-up>
-**** <s>MUTABLE</s><&thumb-down> <<red>>
-**** IMMUTABLE<&thumb-up>
+*** IMMUTABLE<&thumb-up> <<green>>
+**** RECORDS<&thumb-up> <<green>>
+**** @Value<&thumb-up> <<green>>
+**** PERSISTENT MAPS<&thumb-up> <<green>>
+*** <s>MUTABLE</s><&thumb-down> <<red>>
 
 @endmindmap
