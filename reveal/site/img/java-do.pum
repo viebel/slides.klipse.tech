@@ -1,0 +1,16 @@
+@startmindmap
+!include SkinParam.iuml
+
+*:DATA-ORIENTED PROGRAMMING
+                    IN JAVA;
+** CODE
+*** STATIC METHODS<&thumb-up> <<green>>
+*** INSTANCE METHODS<&thumb-down> <<red>>
+** DATA
+*** IMMUTABLE<&thumb-up> <<green>>
+**** RECORDS<&thumb-up> <<green>>
+**** @Value<&thumb-up> <<green>>
+**** PERSISTENT COLLECTIONS<&thumb-up> <<green>>
+*** <s>MUTABLE</s><&thumb-down> <<red>>
+
+@endmindmap

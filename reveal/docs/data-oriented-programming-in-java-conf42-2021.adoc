@@ -17,14 +17,13 @@ include::slide.attrs[]
 
 {bl}
 
-_How to build less complex systems_
+_Liberate yourself from the complexity of objects_
 
 
-
+{bl}
 [.marginleft40]
 image::http://www.conf42.com/assets/conf42/conf42_logo_black_small.png[width=40%]
 
-{bl}
 
 March 2021
 
@@ -46,6 +45,7 @@ image::dop-book.png[width=65%]
 --
 
 
+== 🤔 What is Data-Oriented Programming?
 == 📓 What is complexity?
 
 
@@ -65,6 +65,7 @@ The amount of *machine resources* (e.g. CPU, memory) required to *run* a program
 The amount of *brain resources* required to *understand* a system.
 
 --
+
 
 
 == 🤔 What makes a system complex?
@@ -95,7 +96,7 @@ image::complex-class-relation.svg[width=100%]
 ** Usage
 
 
-== {principle} Principle #1: Separate Code from Data
+== {principle} Separate Code from Data
 [.fragment]
 --
 [.bordered.w65.left]
@@ -116,8 +117,40 @@ image::from-oop-to-dop.png[width=100%]
 ** Only association and composition
 --
 
+== {application} Separate Code from Data in Java
+
+
+[.left.w50]
+[source,java]
+class AuthorData {
+    private String firstName;
+    private String lastName;
+    // setters
+    // getters
+}
+
+
+[.left.w50]
+[source,java]
+class AuthorCode {
+    static String fullName(AuthorData author) {
+        return author.firstName() +
+            " " + author.lastName();
+    }
+}
+
+[.left.w50]
+[source,java]
+----
+var asimov = new AuthorData("Isaac", "Asimov");
+AuthorCode.fullName(asimov); // "Isaac Asimov"
+----
+
 == 🤔 What makes code hard to understand?
 
+Thread safety
+
+[fragment]
 [.left.w60]
 --
 [source,java]
@@ -125,65 +158,179 @@ image::from-oop-to-dop.png[width=100%]
 
 class MemberData {
     private boolean blocked;
-    public Member() {
-        this.blocked = false;
-    }
-    public void setBlocked(boolean blocked) {
-        this.blocked = blocked;
-    }
-    public boolean isBlocked() {
-        return this.blocked;
-    }
+    private String firstName;
+    private String lastName;
+   // getters and setters
 }
 ----
 [source,java]
 ----
-class MemberBehaviour {
-    static restrictedAction(MemberData member) {
+class MemberCode {
+    static borrow(MemberData member, String bookId) {
         if(!member.isBlocked()) {
-            System.out.println(member.isBlocked());
+            System.out.println("The book is yours!");
         }
     }
 }
 ----
 --
 
+[fragment]
+[.left.w40]
+[%step]
+. ⚠️This code is not thread safe!
+. 🔒 We add lock mechanisms.
+. 😱 It makes the code hard to understand.
 
-== {principle}Principle #2: Represent Data with generic data structures
+== 🤔 What makes code hard to understand?
 
-[.fragment]
-[.left.w40.]
+
+By reference or by value?
+
+[fragment]
 --
-{bl}
-{bl}
-{bl}
-image:data-building-blocks.svg[width=100%]
+[quote]
+In Java, object references are passed by value
+--
+
+
+
+[fragment]
+--
+[.left.w50]
+[source,java]
+----
+var asimov = new AuthorData("Isaac", "Asimov");
+var asimov2 = AuthorCode.toUpperLastName(asimov);
+asimov2.lastName() // "ASIMOV"
+asimov.lastName() // ??
+----
+--
+
+[fragment]
+[.left.w50]
+--
+. ⚠ We could trust the implementation
+. 🔒 We protect ourselves by copying the object
+. 😱 It makes the code hard to understand
+
+--
+
+
+== {principle} Do not mutate data
+
+
+[quote]
+Treat data as a value. Values never change. 
+
+Main benefits of immutable data
+
+[%step]
+. Inherently Thread-safe
+. No side-effects
+
+== {application} Immutable data in Java
+
+
+[fragment]
+--
+[quote]
+We can solve any problem in Java with Java annotations (anonymous)
+--
+
+[fragment]
+--
+`@value` annotation by Project Lombok
+--
+
+[.left.w50]
+[fragment]
+--
+[source,java]
+@value class AuthorData {
+    String firstName;
+    String lastName;
+}
+--
+
+[.left.w50]
+[fragment]
+--
+Auto generation of:
+
+* constructor, immutable private fields
+* getters,  setters
+* `toString()`, `hashCode()`, `equals()`
+--
+
+== {application} Immutable data in Java
+
+Java 14 records
+
+[.left.w50]
+[fragment]
+--
+
+[source,java]
+public record AuthorData (String firstName,
+                          String lastName) {}
+--
+
+[.left.w50]
+[fragment]
+--
+Native implementation of:
+
+* constructor, immutable private fields
+* getters,  setters
+* `toString()`, `hashCode()`, `equals()`
+--
+
+
+== {benefit} Benefits of Immutable data in Java
+
+
+[.left.w60]
+[fragment]
+--
+[source,java]
+----
+var asimov = new AuthorData("Isaac", "Asimov");
+var asimov2 = AuthorCode.toUpperLastName(asimov);
+asimov.lastName() // "asimov"
+----
+--
+
+[.left.w40]
+[fragment]
+--
+. No mutations!
+. No unpleasant surprises
+. No need to protect!
 --
 
 [.left.w60]
+[fragment]
 --
-[.fragment]
-.Breaking the principle {dislike}
-[source,javascript]
+[source,java]
 ----
-class Book {
-    isbn; title;
-    constructor(publicationYear, title) {
-        this.publicationYear = publicationYear;
-        this.title = title;
+class MemberCode {
+    static borrow(MemberData member, String bookId) {
+        if(!member.isBlocked()) {
+            System.out.println("The book is yours!");
+        }
     }
 }
-var watchmenBook = new Book("978-1779501127",
-                            "Watchmen");
 ----
+--
 
-[.fragment]
-.Adhering to the principle {like}
-[source,javascript]
-var watchmenBook = new Map([
-    ["publicationYear", 1986],
-    ["title", "Watchmen"]
-    ]);
+[.left.w40]
+[fragment]
+--
+
+. Thread-safe!
+. No race conditions!
+. No need to protect!
 --
 
 
@@ -236,47 +383,7 @@ image::library-data.svg[width=100%]
 * *Reflection* for free
 
 
-== {principle} Principle #3: Do not mutate Data
-
-
-{bl}
-{bl}
-{bl}
-{bl}
-[.left.w40]
-{bl}
-[.left]
---
-
-image::https://i.imgflip.com/411lb0.png[]
---
-
-[.left]
-[.speech-bubble]
-Mutation is bad!
-
-
-== 👨‍💻Application of DO principles
-
-{bl}
-{bl}
-{bl}
-{bl}
-{bl}
-
-[.centered90]
-image::application-do.svg[width=100%]
-
-=== ‍🤪Application of DO principles in Java
-
-
-What we need:
-
-. Efficient persistent data structures
-. Atoms
-. Parse JSON into a map
-. Manipulate "_untyped_" primitives
-. Database driver that works with maps
+== 🤔 What about immutable collections?
 
 == ⏳Summary
 
@@ -284,38 +391,7 @@ What we need:
 {bl}
 {bl}
 {bl}
-[.left.w50]
-image::do-principles-journey.svg[width=90%]
-
-[.left.w40.bordered]
-. *Separate* Code from Data
-. *Represent* Data with *generic* data structures
-. Do not *mutate* data
+[.centered90]
+image::java-do.png[]
 
 
-== 🎹Imagine
-
-video::EDRRbuWuUbQ[youtube, width=100%, height=750]
-
-
-== 🤝Collaborate
-
-
-[.left.w50]
-image::dop-book.png[width=65%]
-
-[.left.w50]
---
-
-🤑 50% discount: mlsharvit2
-
-https://tinyurl.com/dop-book[]
-
-image::https://chart.googleapis.com/chart?cht=qr&chl=https://tinyurl.com/yweme6kn&chs=400x400[width=40%]
-
-https://en.wikipedia.org/wiki/Draft:Data-oriented_programming[Wikipedia article]: Data-Oriented programming
-
-#data-oriented-programming on Clojurians
-
-
---
