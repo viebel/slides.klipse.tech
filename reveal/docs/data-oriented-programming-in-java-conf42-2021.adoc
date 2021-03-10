@@ -32,20 +32,29 @@ Yehonathan Sharvit icon:twitter[]  viebel
 
 == 👋Who am I?
 
-[.left.w40]
+[.left.w50]
 --
 * 💻 Developer since 2001 (C++, Java, JavaScript, Ruby, Clojure)
 * 📖 Author of Data-Oriented programming
 * 📝 Blogger at https://blog.klipse.tech/[blog.klipse.tech]
 --
 
-[.left.w50]
+[.left.w40]
 --
-image::dop-book.png[width=65%]
+image::dop-book.png[width=85%]
 --
 
 
 == 🤔 What is Data-Oriented Programming?
+
+{bl}
+{bl}
+{bl}
+{bl}
+[quote]
+Reduce *system complexity* by treating *data* as a first-class citizen
+
+
 == 📓 What is complexity?
 
 
@@ -120,6 +129,8 @@ image::from-oop-to-dop.png[width=100%]
 == {application} Separate Code from Data in Java
 
 
+[fragment]
+--
 [.left.w50]
 [source,java]
 class AuthorData {
@@ -138,17 +149,58 @@ class AuthorCode {
             " " + author.lastName();
     }
 }
+--
 
+[fragment]
+--
 [.left.w50]
 [source,java]
 ----
 var asimov = new AuthorData("Isaac", "Asimov");
 AuthorCode.fullName(asimov); // "Isaac Asimov"
 ----
+--
 
 == 🤔 What makes code hard to understand?
 
-Thread safety
+
+By reference or by value?
+
+[fragment]
+--
+[quote]
+In Java, object references are passed by value
+--
+{bl}
+{bl}
+{bl}
+
+
+[fragment]
+--
+[.left.w50]
+[source,java]
+----
+var asimov = new AuthorData("Isaac", "Asimov");
+var asimov2 = AuthorCode.toUpperLastName(asimov);
+asimov2.lastName() // "ASIMOV"
+asimov.lastName() // ??
+----
+--
+
+[fragment]
+[.left.w50]
+--
+. ⚠ We could trust the implementation
+. 🔒 We protect ourselves by copying the object
+. 😱 It makes the code hard to understand
+
+--
+
+
+== 🤔 What makes code hard to understand?
+
+Thread-safety
 
 [fragment]
 [.left.w60]
@@ -177,45 +229,13 @@ class MemberCode {
 
 [fragment]
 [.left.w40]
+{bl}
+{bl}
+{bl}
 [%step]
 . ⚠️This code is not thread safe!
 . 🔒 We add lock mechanisms.
 . 😱 It makes the code hard to understand.
-
-== 🤔 What makes code hard to understand?
-
-
-By reference or by value?
-
-[fragment]
---
-[quote]
-In Java, object references are passed by value
---
-
-
-
-[fragment]
---
-[.left.w50]
-[source,java]
-----
-var asimov = new AuthorData("Isaac", "Asimov");
-var asimov2 = AuthorCode.toUpperLastName(asimov);
-asimov2.lastName() // "ASIMOV"
-asimov.lastName() // ??
-----
---
-
-[fragment]
-[.left.w50]
---
-. ⚠ We could trust the implementation
-. 🔒 We protect ourselves by copying the object
-. 😱 It makes the code hard to understand
-
---
-
 
 == {principle} Do not mutate data
 
@@ -223,11 +243,16 @@ asimov.lastName() // ??
 [quote]
 Treat data as a value. Values never change. 
 
+{bl}
+{bl}
+{bl}
+[fragment]
+--
 Main benefits of immutable data
 
-[%step]
 . Inherently Thread-safe
 . No side-effects
+--
 
 == {application} Immutable data in Java
 
@@ -256,7 +281,7 @@ We can solve any problem in Java with Java annotations (anonymous)
 [.left.w50]
 [fragment]
 --
-Auto generation of:
+*Auto generation* of:
 
 * constructor, immutable private fields
 * getters,  setters
@@ -265,7 +290,7 @@ Auto generation of:
 
 == {application} Immutable data in Java
 
-Java 14 records
+Java records (Only since Java 14!)
 
 [.left.w50]
 [fragment]
@@ -279,7 +304,7 @@ public record AuthorData (String firstName,
 [.left.w50]
 [fragment]
 --
-Native implementation of:
+*Native implementation* of:
 
 * constructor, immutable private fields
 * getters,  setters
@@ -306,7 +331,7 @@ asimov.lastName() // "asimov"
 --
 . No mutations!
 . No unpleasant surprises
-. No need to protect!
+. No need to do a defensive copy!
 --
 
 [.left.w60]
@@ -330,68 +355,45 @@ class MemberCode {
 
 . Thread-safe!
 . No race conditions!
-. No need to protect!
+. No need to protect with a lock!
 --
 
 
+== 🤔 What else in the book?
 
-=== {benefit}Reduction of System Complexity even more
-
-[.fragment]
-[.left.w40]
---
-[.bordered]
-image::data-code-relation.svg[width=100%]
-[.huge-text]
-{dislike} {dislike} {dislike}
---
-
-[.fragment]
-[.left.w20]
---
-[.bordered]
-image::code-only.svg[width=100%, height=415px]
-[.huge-text]
-{like} {like} {like}
---
-
-
-[.left.w40]
---
-[.fragment]
-{meditation}What makes this system _less complex_?
-
-[.fragment]
-* *Weak dependency* between code and data
-* *Flexible* data model
-* *Generic* data manipulation functions
---
-
-
-=== {benefit} Visualize the system data
-
-[.fragment]
 [.left.w50]
-image::library-data.svg[width=100%]
 
+* *Efficient* immutable collections 
+* Represent data with maps 
+* *Polymorphism* without inheritance
+* Manage the *application state* 
+* *Highly-scalable* concurrent systems
+*  Flexible access to the *database* 
 
-[.fragment]
 [.left.w50]
-* Information *path* (e.g. `["catalog", "authorsById", "alan-moore", "name"]`)
-* *Display* data on console
-* *Serialization* for free
-* *Reflection* for free
+image::dop-book.png[width=65%]
 
-
-== 🤔 What about immutable collections?
 
 == ⏳Summary
 
-{bl}
-{bl}
-{bl}
-{bl}
-[.centered90]
+
+[.left.w60]
+--
+
 image::java-do.png[]
 
+[.left.w50]
+{bl}
+{bl}
+🤑 50% discount: mlsharvit2
+https://tinyurl.com/dop-book[]
+
+[.left.w50]
+image::https://chart.googleapis.com/chart?cht=qr&chl=https://tinyurl.com/yweme6kn&chs=400x400[width=75%]
+
+--
+
+
+[.left.w40]
+image::dop-book.png[width=85%]
 

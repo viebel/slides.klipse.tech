@@ -13,9 +13,13 @@ document.getElementsByTagName( 'head' )[0].appendChild( link );</script><!--[if 
 <div class="imageblock marginleft40" style=""><img src="http://www.conf42.com/assets/conf42/conf42_logo_black_small.png" alt="conf42 logo black small" width="40%"></div>
 <div class="paragraph"><p>March 2021</p></div>
 <div class="paragraph"><p>Yehonathan Sharvit <span class="icon"><i class="fa fa-twitter"></i></span>  viebel</p></div></div></div></section>
-<section id="who_am_i"><h2>👋Who am I?</h2><div class="openblock left w40"><div class="content"><div class="ulist"><ul><li><p>💻 Developer since 2001 (C++, Java, JavaScript, Ruby, Clojure)</p></li><li><p>📖 Author of Data-Oriented programming</p></li><li><p>📝 Blogger at <a href="https://blog.klipse.tech/">blog.klipse.tech</a></p></li></ul></div></div></div>
-<div class="openblock left w50"><div class="content"><div class="imageblock" style=""><img src="img/dop-book.png" alt="dop book" width="65%"></div></div></div></section>
-<section id="what_is_data_oriented_programming"><h2>🤔 What is Data-Oriented Programming?</h2></section>
+<section id="who_am_i"><h2>👋Who am I?</h2><div class="openblock left w50"><div class="content"><div class="ulist"><ul><li><p>💻 Developer since 2001 (C++, Java, JavaScript, Ruby, Clojure)</p></li><li><p>📖 Author of Data-Oriented programming</p></li><li><p>📝 Blogger at <a href="https://blog.klipse.tech/">blog.klipse.tech</a></p></li></ul></div></div></div>
+<div class="openblock left w40"><div class="content"><div class="imageblock" style=""><img src="img/dop-book.png" alt="dop book" width="85%"></div></div></div></section>
+<section id="what_is_data_oriented_programming"><h2>🤔 What is Data-Oriented Programming?</h2><div class="paragraph"><p><br>
+<br>
+<br>
+<br></p></div>
+<div class="quoteblock"><blockquote>Reduce <strong>system complexity</strong> by treating <strong>data</strong> as a first-class citizen</blockquote></div></section>
 <section id="what_is_complexity"><h2>📓 What is complexity?</h2><div class="quoteblock fragment"><blockquote><div class="paragraph"><p><strong>⚙️Computational complexity</strong></p></div>
 <div class="paragraph"><p>The amount of <strong>machine resources</strong> (e.g. CPU, memory) required to <strong>run</strong> a program.</p></div></blockquote></div>
 <div class="quoteblock fragment"><blockquote><div class="paragraph"><p><strong>😰 System Complexity</strong></p></div>
@@ -28,7 +32,7 @@ document.getElementsByTagName( 'head' )[0].appendChild( link );</script><!--[if 
 <section id="separate_code_from_data"><h2>💡 Separate Code from Data</h2><div class="openblock fragment"><div class="content"><div class="imageblock bordered w65 left" style=""><img src="img/from-oop-to-dop.png" alt="from oop to dop" width="100%"></div></div></div>
 <div class="openblock left w30 margin-left"><div class="content"><div class="paragraph fragment"><p>☕What makes this system <em>less complex</em>?</p></div>
 <div class="ulist fragment"><ul><li><p><strong>Separation</strong> of concerns</p></li><li><p>Code diagram <strong>constraints</strong></p><div class="ulist"><ul><li><p>Stateless (static)</p></li><li><p>Only usage relation</p></li></ul></div></li><li><p>Data diagram <strong>constraints</strong></p><div class="ulist"><ul><li><p>Only association and composition</p></li></ul></div></li></ul></div></div></div></section>
-<section id="separate_code_from_data_in_java"><h2>👩🏻‍💻 Separate Code from Data in Java</h2><div class="listingblock left w50"><div class="content"><pre class="highlight"><code data-noescape class="java language-java">class AuthorData {
+<section id="separate_code_from_data_in_java"><h2>👩🏻‍💻 Separate Code from Data in Java</h2><div class="openblock fragment"><div class="content"><div class="listingblock left w50"><div class="content"><pre class="highlight"><code data-noescape class="java language-java">class AuthorData {
     private String firstName;
     private String lastName;
     // setters
@@ -39,10 +43,20 @@ document.getElementsByTagName( 'head' )[0].appendChild( link );</script><!--[if 
         return author.firstName() +
             " " + author.lastName();
     }
-}</code></pre></div></div>
-<div class="listingblock left w50"><div class="content"><pre class="highlight"><code data-noescape class="java language-java">var asimov = new AuthorData("Isaac", "Asimov");
-AuthorCode.fullName(asimov); // "Isaac Asimov"</code></pre></div></div></section>
-<section id="what_makes_code_hard_to_understand"><h2>🤔 What makes code hard to understand?</h2><div class="paragraph"><p>Thread safety</p></div>
+}</code></pre></div></div></div></div>
+<div class="openblock fragment"><div class="content"><div class="listingblock left w50"><div class="content"><pre class="highlight"><code data-noescape class="java language-java">var asimov = new AuthorData("Isaac", "Asimov");
+AuthorCode.fullName(asimov); // "Isaac Asimov"</code></pre></div></div></div></div></section>
+<section id="what_makes_code_hard_to_understand"><h2>🤔 What makes code hard to understand?</h2><div class="paragraph"><p>By reference or by value?</p></div>
+<div class="openblock fragment"><div class="content"><div class="quoteblock"><blockquote>In Java, object references are passed by value</blockquote></div></div></div>
+<div class="paragraph"><p><br>
+<br>
+<br></p></div>
+<div class="openblock fragment"><div class="content"><div class="listingblock left w50"><div class="content"><pre class="highlight"><code data-noescape class="java language-java">var asimov = new AuthorData("Isaac", "Asimov");
+var asimov2 = AuthorCode.toUpperLastName(asimov);
+asimov2.lastName() // "ASIMOV"
+asimov.lastName() // ??</code></pre></div></div></div></div>
+<div class="openblock fragment left w50"><div class="content"><div class="olist arabic"><ol class="arabic"><li><p>⚠ We could trust the implementation</p></li><li><p>🔒 We protect ourselves by copying the object</p></li><li><p>😱 It makes the code hard to understand</p></li></ol></div></div></div></section>
+<section id="what_makes_code_hard_to_understand_2"><h2>🤔 What makes code hard to understand?</h2><div class="paragraph"><p>Thread-safety</p></div>
 <div class="openblock fragment left w60"><div class="content"><div class="listingblock"><div class="content"><pre class="highlight"><code data-noescape class="java language-java">class MemberData {
     private boolean blocked;
     private String firstName;
@@ -56,51 +70,50 @@ AuthorCode.fullName(asimov); // "Isaac Asimov"</code></pre></div></div></section
         }
     }
 }</code></pre></div></div></div></div>
-<div class="olist fragment left w40"><ol class="fragment"><li class="fragment"><p>⚠️This code is not thread safe!</p></li><li class="fragment"><p>🔒 We add lock mechanisms.</p></li><li class="fragment"><p>😱 It makes the code hard to understand.</p></li></ol></div></section>
-<section id="what_makes_code_hard_to_understand_2"><h2>🤔 What makes code hard to understand?</h2><div class="paragraph"><p>By reference or by value?</p></div>
-<div class="openblock fragment"><div class="content"><div class="quoteblock"><blockquote>In Java, object references are passed by value</blockquote></div></div></div>
-<div class="openblock fragment"><div class="content"><div class="listingblock left w50"><div class="content"><pre class="highlight"><code data-noescape class="java language-java">var asimov = new AuthorData("Isaac", "Asimov");
-var asimov2 = AuthorCode.toUpperLastName(asimov);
-asimov2.lastName() // "ASIMOV"
-asimov.lastName() // ??</code></pre></div></div></div></div>
-<div class="openblock fragment left w50"><div class="content"><div class="olist arabic"><ol class="arabic"><li><p>⚠ We could trust the implementation</p></li><li><p>🔒 We protect ourselves by copying the object</p></li><li><p>😱 It makes the code hard to understand</p></li></ol></div></div></div></section>
+<div class="paragraph left w40"><p><br>
+<br>
+<br></p></div>
+<div class="olist arabic"><ol class="arabic"><li class="fragment"><p>⚠️This code is not thread safe!</p></li><li class="fragment"><p>🔒 We add lock mechanisms.</p></li><li class="fragment"><p>😱 It makes the code hard to understand.</p></li></ol></div></section>
 <section id="do_not_mutate_data"><h2>💡 Do not mutate data</h2><div class="quoteblock"><blockquote>Treat data as a value. Values never change.</blockquote></div>
-<div class="paragraph"><p>Main benefits of immutable data</p></div>
-<div class="olist arabic"><ol class="arabic"><li class="fragment"><p>Inherently Thread-safe</p></li><li class="fragment"><p>No side-effects</p></li></ol></div></section>
+<div class="paragraph"><p><br>
+<br>
+<br></p></div>
+<div class="openblock fragment"><div class="content"><div class="paragraph"><p>Main benefits of immutable data</p></div>
+<div class="olist arabic"><ol class="arabic"><li><p>Inherently Thread-safe</p></li><li><p>No side-effects</p></li></ol></div></div></div></section>
 <section id="immutable_data_in_java"><h2>👩🏻‍💻 Immutable data in Java</h2><div class="openblock fragment"><div class="content"><div class="quoteblock"><blockquote>We can solve any problem in Java with Java annotations (anonymous)</blockquote></div></div></div>
 <div class="openblock fragment"><div class="content"><div class="paragraph"><p><code>@value</code> annotation by Project Lombok</p></div></div></div>
 <div class="openblock fragment left w50"><div class="content"><div class="listingblock"><div class="content"><pre class="highlight"><code data-noescape class="java language-java">@value class AuthorData {
     String firstName;
     String lastName;
 }</code></pre></div></div></div></div>
-<div class="openblock fragment left w50"><div class="content"><div class="paragraph"><p>Auto generation of:</p></div>
+<div class="openblock fragment left w50"><div class="content"><div class="paragraph"><p><strong>Auto generation</strong> of:</p></div>
 <div class="ulist"><ul><li><p>constructor, immutable private fields</p></li><li><p>getters,  setters</p></li><li><p><code>toString()</code>, <code>hashCode()</code>, <code>equals()</code></p></li></ul></div></div></div></section>
-<section id="immutable_data_in_java_2"><h2>👩🏻‍💻 Immutable data in Java</h2><div class="paragraph"><p>Java 14 records</p></div>
+<section id="immutable_data_in_java_2"><h2>👩🏻‍💻 Immutable data in Java</h2><div class="paragraph"><p>Java records (Only since Java 14!)</p></div>
 <div class="openblock fragment left w50"><div class="content"><div class="listingblock"><div class="content"><pre class="highlight"><code data-noescape class="java language-java">public record AuthorData (String firstName,
                           String lastName) {}</code></pre></div></div></div></div>
-<div class="openblock fragment left w50"><div class="content"><div class="paragraph"><p>Native implementation of:</p></div>
+<div class="openblock fragment left w50"><div class="content"><div class="paragraph"><p><strong>Native implementation</strong> of:</p></div>
 <div class="ulist"><ul><li><p>constructor, immutable private fields</p></li><li><p>getters,  setters</p></li><li><p><code>toString()</code>, <code>hashCode()</code>, <code>equals()</code></p></li></ul></div></div></div></section>
-<section><section id="benefits_of_immutable_data_in_java"><h2>🏅 Benefits of Immutable data in Java</h2><div class="openblock fragment left w60"><div class="content"><div class="listingblock"><div class="content"><pre class="highlight"><code data-noescape class="java language-java">var asimov = new AuthorData("Isaac", "Asimov");
+<section id="benefits_of_immutable_data_in_java"><h2>🏅 Benefits of Immutable data in Java</h2><div class="openblock fragment left w60"><div class="content"><div class="listingblock"><div class="content"><pre class="highlight"><code data-noescape class="java language-java">var asimov = new AuthorData("Isaac", "Asimov");
 var asimov2 = AuthorCode.toUpperLastName(asimov);
-asimov.lastName() // "asimov"</code></pre></div></div></div></div><div class="openblock fragment left w40"><div class="content"><div class="olist arabic"><ol class="arabic"><li><p>No mutations!</p></li><li><p>No unpleasant surprises</p></li><li><p>No need to protect!</p></li></ol></div></div></div><div class="openblock fragment left w60"><div class="content"><div class="listingblock"><div class="content"><pre class="highlight"><code data-noescape class="java language-java">class MemberCode {
+asimov.lastName() // "asimov"</code></pre></div></div></div></div>
+<div class="openblock fragment left w40"><div class="content"><div class="olist arabic"><ol class="arabic"><li><p>No mutations!</p></li><li><p>No unpleasant surprises</p></li><li><p>No need to do a defensive copy!</p></li></ol></div></div></div>
+<div class="openblock fragment left w60"><div class="content"><div class="listingblock"><div class="content"><pre class="highlight"><code data-noescape class="java language-java">class MemberCode {
     static borrow(MemberData member, String bookId) {
         if(!member.isBlocked()) {
             System.out.println("The book is yours!");
         }
     }
-}</code></pre></div></div></div></div><div class="openblock fragment left w40"><div class="content"><div class="olist arabic"><ol class="arabic"><li><p>Thread-safe!</p></li><li><p>No race conditions!</p></li><li><p>No need to protect!</p></li></ol></div></div></div></section><section id="reduction_of_system_complexity_even_more"><h2>🏅Reduction of System Complexity even more</h2><div class="openblock fragment left w40"><div class="content"><div class="imageblock bordered" style=""><img src="img/data-code-relation.svg" alt="data code relation" width="100%"></div>
-<div class="paragraph huge-text"><p>👎 👎 👎</p></div></div></div>
-<div class="openblock fragment left w20"><div class="content"><div class="imageblock bordered" style=""><img src="img/code-only.svg" alt="code only" width="100%" height="415px"></div>
-<div class="paragraph huge-text"><p>👍 👍 👍</p></div></div></div>
-<div class="openblock left w40"><div class="content"><div class="paragraph fragment"><p>☕What makes this system <em>less complex</em>?</p></div>
-<div class="ulist fragment"><ul><li><p><strong>Weak dependency</strong> between code and data</p></li><li><p><strong>Flexible</strong> data model</p></li><li><p><strong>Generic</strong> data manipulation functions</p></li></ul></div></div></div></section><section id="visualize_the_system_data"><h2>🏅 Visualize the system data</h2><div class="imageblock fragment left w50" style=""><img src="img/library-data.svg" alt="library data" width="100%"></div>
-<div class="ulist fragment left w50"><ul><li><p>Information <strong>path</strong> (e.g. <code>["catalog", "authorsById", "alan-moore", "name"]</code>)</p></li><li><p><strong>Display</strong> data on console</p></li><li><p><strong>Serialization</strong> for free</p></li><li><p><strong>Reflection</strong> for free</p></li></ul></div></section></section>
-<section id="what_about_immutable_collections"><h2>🤔 What about immutable collections?</h2></section>
-<section id="summary"><h2>⏳Summary</h2><div class="paragraph"><p><br>
+}</code></pre></div></div></div></div>
+<div class="openblock fragment left w40"><div class="content"><div class="olist arabic"><ol class="arabic"><li><p>Thread-safe!</p></li><li><p>No race conditions!</p></li><li><p>No need to protect with a lock!</p></li></ol></div></div></div></section>
+<section id="what_else_in_the_book"><h2>🤔 What else in the book?</h2><div class="ulist left w50"><ul><li><p><strong>Efficient</strong> immutable collections</p></li><li><p>Represent data with maps</p></li><li><p><strong>Polymorphism</strong> without inheritance</p></li><li><p>Manage the <strong>application state</strong></p></li><li><p><strong>Highly-scalable</strong> concurrent systems</p></li><li><p>Flexible access to the <strong>database</strong></p></li></ul></div>
+<div class="imageblock left w50" style=""><img src="img/dop-book.png" alt="dop book" width="65%"></div></section>
+<section id="summary"><h2>⏳Summary</h2><div class="openblock left w60"><div class="content"><div class="imageblock" style=""><img src="img/java-do.png" alt="java do"></div>
+<div class="paragraph left w50"><p><br>
 <br>
-<br>
-<br></p></div>
-<div class="imageblock centered90" style=""><img src="img/java-do.png" alt="java do"></div></section></div></div><script src="reveal.js/lib/js/head.min.js"></script><script src="reveal.js/js/reveal.js"></script><script>// See https://github.com/hakimel/reveal.js#configuration for a full list of configuration options
+🤑 50% discount: mlsharvit2
+<a href="https://tinyurl.com/dop-book" class="bare">https://tinyurl.com/dop-book</a></p></div>
+<div class="imageblock left w50" style=""><img src="https://chart.googleapis.com/chart?cht=qr&chl=https://tinyurl.com/yweme6kn&chs=400x400" alt="yweme6kn&chs=400x400" width="75%"></div></div></div>
+<div class="imageblock left w40" style=""><img src="img/dop-book.png" alt="dop book" width="85%"></div></section></div></div><script src="reveal.js/lib/js/head.min.js"></script><script src="reveal.js/js/reveal.js"></script><script>// See https://github.com/hakimel/reveal.js#configuration for a full list of configuration options
 Reveal.initialize({
   // Display controls in the bottom right corner
   controls: true,
