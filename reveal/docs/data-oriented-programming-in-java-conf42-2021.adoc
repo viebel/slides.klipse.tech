@@ -386,7 +386,7 @@ image::java-do.png[]
 {bl}
 {bl}
 🤑 50% discount: mlsharvit2
-https://tinyurl.com/dop-book[]
+https://tinyurl.com/dop-conf42[]
 
 [.left.w50]
 image::https://chart.googleapis.com/chart?cht=qr&chl=https://tinyurl.com/yweme6kn&chs=400x400[width=75%]
