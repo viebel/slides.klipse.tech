@@ -1,0 +1,418 @@
+= Data-Oriented programming in Java
+include::slide.attrs[]
+
+[state=title]
+[%notitle]
+== Data-Oriented programming in Java
+
+
+[.centered]
+--
+{bl}
+[..big-text]
+Reduce system complexity in Java +
+with +
+Data-Oriented programming +
+
+
+{bl}
+
+_Taming objects_
+
+
+{bl}
+[.marginleft40]
+image::sou-java.png[width=40%]
+
+
+April 2021
+
+Yehonathan Sharvit icon:twitter[]  viebel
+--
+
+== 👋Who am I?
+
+[.left.w50]
+--
+* 💻 Developer since 2001 (C++, Java, JavaScript, Ruby, Clojure)
+* 📖 Author of Data-Oriented programming
+* 📝 Blogger at https://blog.klipse.tech/[blog.klipse.tech]
+--
+
+[.left.w40]
+--
+image::dop-book.png[width=85%]
+--
+
+
+== 🤔 What is Data-Oriented Programming?
+
+{bl}
+{bl}
+{bl}
+{bl}
+[quote]
+Set of best practices that 
+reduce *complexity* of *information systems* by 
+treating *data* as a first-class citizen 
+
+
+== 📓 What is complexity?
+
+
+[.fragment]
+[quote]
+--
+*⚙️Computational complexity*
+
+The amount of *machine resources* (e.g. CPU, memory) required to *run* a program.
+--
+
+[.fragment]
+[quote]
+--
+*😰 System Complexity*
+
+The amount of *brain resources* required to *understand* a system.
+--
+
+== 📊 Information systems
+
+[quote]
+Systems that manipulate *information* in various ways.
+
+{bl}
+{bl}
+{bl}
+
+Examples of *information systems*:
+
+* *Web services* that fetch data from the database and serves it as JSON
+* *Web workers* that listen to events and enrich event data from multiple data sources
+* *Front end applications* that store application state
+
+== 🤔 What makes an information system complex?
+
+[.fragment]
+[.left.w30]
+image::watchmen-library.png[]
+
+[.left.w10]
+{bl}
+
+[.fragment]
+[.left.w30]
+image::complex-class-relation.svg[width=100%]
+
+
+[.fragment]
+--
+🕸️Sources of complexity
+--
+
+[.fragment]
+* Nodes with many edges
+* Many kind of arrows
+** Association
+** Composition
+** Inheritance
+** Usage
+
+
+== {principle} Separate Code from Data
+[.fragment]
+--
+[.bordered.w65.left]
+image::from-oop-to-dop.png[width=100%]
+--
+
+[.left.w30.margin-left]
+--
+[.fragment]
+{meditation}What makes this system _less complex_?
+
+[.fragment]
+* *Separation* of concerns
+* Code diagram *constraints*
+** Stateless (static)
+** Only usage relation
+* Data diagram *constraints*
+** Only association and composition
+--
+
+== {application} Separate Code from Data in Java
+
+
+[fragment]
+--
+[.left.w50]
+[source,java]
+class AuthorData {
+    private String firstName;
+    private String lastName;
+    // setters
+    // getters
+}
+
+
+[.left.w50]
+[source,java]
+class AuthorCode {
+    static String fullName(AuthorData author) {
+        return author.firstName() +
+            " " + author.lastName();
+    }
+}
+--
+
+[fragment]
+--
+[.left.w50]
+[source,java]
+----
+var asimov = new AuthorData("Isaac", "Asimov");
+AuthorCode.fullName(asimov); // "Isaac Asimov"
+----
+--
+
+== 🤔 What makes code hard to understand?
+
+
+By reference or by value?
+
+[fragment]
+--
+[quote]
+In Java, object references are passed by value
+--
+{bl}
+{bl}
+{bl}
+
+
+[fragment]
+--
+[.left.w50]
+[source,java]
+----
+var asimov = new AuthorData("Isaac", "Asimov");
+var asimov2 = AuthorCode.toUpperLastName(asimov);
+asimov2.lastName() // "ASIMOV"
+asimov.lastName() // ??
+----
+--
+
+[fragment]
+[.left.w50]
+--
+. ⚠️We could trust the implementation
+. 🔒 We protect ourselves by copying the object
+. 😱 It makes the code hard to understand
+
+--
+
+
+== 🤔 What makes code hard to understand?
+
+Thread-safety
+
+[fragment]
+[.left.w60]
+--
+[source,java]
+----
+
+class MemberData {
+    private boolean blocked;
+    private String firstName;
+    private String lastName;
+   // getters and setters
+}
+----
+[source,java]
+----
+class MemberCode {
+    static borrow(MemberData member, String bookId) {
+        if(!member.isBlocked()) {
+            System.out.println("The book is yours!");
+        }
+    }
+}
+----
+--
+
+[fragment]
+[.left.w40]
+{bl}
+{bl}
+{bl}
+[%step]
+. ⚠️This code is not thread safe!
+. 🔒 We add lock mechanisms.
+. 😱 It makes the code hard to understand.
+
+== {principle} Do not mutate data
+
+
+[quote]
+Treat data as a value. Values never change. 
+
+{bl}
+{bl}
+{bl}
+[fragment]
+--
+Main benefits of immutable data
+
+. Inherently Thread-safe
+. No side-effects
+--
+
+== {application} Immutable data in Java
+
+
+[fragment]
+--
+[quote]
+We can solve any problem in Java with Java annotations (anonymous)
+--
+
+[fragment]
+--
+`@value` annotation by Project Lombok
+--
+
+[.left.w50]
+[fragment]
+--
+[source,java]
+@value class AuthorData {
+    String firstName;
+    String lastName;
+}
+--
+
+[.left.w50]
+[fragment]
+--
+*Auto generation* of:
+
+* constructor, immutable private fields
+* getters,  setters
+* `toString()`, `hashCode()`, `equals()`
+--
+
+== {application} Immutable data in Java
+
+Java records (Only since Java 14!)
+
+[.left.w50]
+[fragment]
+--
+
+[source,java]
+public record AuthorData (String firstName,
+                          String lastName) {}
+--
+
+[.left.w50]
+[fragment]
+--
+*Native implementation* of:
+
+* constructor, immutable private fields
+* getters,  setters
+* `toString()`, `hashCode()`, `equals()`
+--
+
+
+== {benefit} Benefits of Immutable data in Java
+
+
+[.left.w60]
+[fragment]
+--
+[source,java]
+----
+var asimov = new AuthorData("Isaac", "Asimov");
+var asimov2 = AuthorCode.toUpperLastName(asimov);
+asimov.lastName() // "asimov"
+----
+--
+
+[.left.w40]
+[fragment]
+--
+. No mutations!
+. No unpleasant surprises
+. No need to do a defensive copy!
+--
+
+[.left.w60]
+[fragment]
+--
+[source,java]
+----
+class MemberCode {
+    static borrow(MemberData member, String bookId) {
+        if(!member.isBlocked()) {
+            System.out.println("The book is yours!");
+        }
+    }
+}
+----
+--
+
+[.left.w40]
+[fragment]
+--
+
+. Thread-safe!
+. No race conditions!
+. No need to protect with a lock!
+--
+== 🎉 Java libraries that embrace Data-Oriented programming
+
+* https://github.com/google/gson[gson]: Convert Objects into JSON and back
+* https://github.com/npgall/cqengine[cqengine]: Ultra-fast SQL-like queries on collections
+* https://github.com/GlenKPeterson/Paguro[Paguro]: Immutable Collections and Functional Transformations
+* https://github.com/lacuna/bifurcan[bifurcan]: Functional, durable data structures
+
+
+== 🤔 What else in the book?
+
+[.left.w50]
+
+* *Efficient* immutable collections 
+* Represent record with *immutable maps* 
+* *Polymorphism* without inheritance
+* Manage the *application state* 
+* *Highly-scalable* concurrent systems
+*  Flexible access to the *database* 
+
+[.left.w50]
+image::dop-book.png[width=65%]
+
+
+== ⏳Summary
+
+
+[.left.w60]
+--
+
+image::java-do.png[]
+
+[.left.w50]
+{bl}
+{bl}
+https://tinyurl.com/dop-sou
+
+[.left.w50]
+image::https://chart.googleapis.com/chart?cht=qr&chl=https://tinyurl.com/dop-sou&chs=400x400[width=75%]
+
+--
+
+
+[.left.w40]
+image::dop-book.png[width=85%]
+
