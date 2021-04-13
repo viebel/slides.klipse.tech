@@ -414,7 +414,7 @@ image::dop-book.png[width=65%]
 
 https://tinyurl.com/dop-clojure
 
-image::https://chart.googleapis.com/chart?cht=qr&chl=https://tinyurl.com/dop-book&chs=400x400[width=40%]
+image::https://chart.googleapis.com/chart?cht=qr&chl=https://tinyurl.com/dop-clojure&chs=400x400[width=40%]
 
 https://en.wikipedia.org/wiki/Draft:Data-oriented_programming[Wikipedia article]: Data-Oriented programming
 
