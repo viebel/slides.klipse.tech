@@ -1,0 +1,30 @@
+* TITLE
+  Data-Oriented programming in JavaScript
+  JavaScript: The Great Parts
+
+* OBJECTIVES
+
+* IDEAS
+  - 35% discount code: mtpnodejs21
+  
+** Benefits on immutable data in a single-threaded environment
+   - rename map keys
+   - setTimeout
+   - time travel
+   - highly-scalable concurrency
+
+** Two ways to preserve immutability
+*** Structural sharing
+*** immutable functions
+    - Ramda
+    - Lodash
+    - custom implementation
+*** immutable data structures
+    - shallow copy
+    - proxy
+*** mention: imber
+     
+** Manage state with immutable data
+* CONTENTS
+
+* TODOs

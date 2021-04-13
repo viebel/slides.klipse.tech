@@ -12,5 +12,7 @@
 ** Implementation challenges in Java
 ** 
 * TODOs
-** TODO Add link to out of the tar pit
-** TODO Mention the book from the beginning
+** DONE Add link to out of the tar pit
+   CLOSED: [2021-04-07 Wed 05:55]
+** DONE Mention the book from the beginning
+   CLOSED: [2021-04-07 Wed 05:55]

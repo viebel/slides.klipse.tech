@@ -9,18 +9,21 @@ include::slide.attrs[]
 [.centered]
 --
 {bl}
+{bl}
+{bl}
+{bl}
+
+
+
 [..big-text]
 *Data-Oriented programming*
 
 
 _The secret 🍝 sauce 🍝 that makes Clojure systems less complex_
 
-
-
-[.marginleft40]
-image::ldnclj.png[width=40%]
-
-February 15, 2021
+{bl}
+{bl}
+{bl}
 
 Yehonathan Sharvit icon:twitter[]  viebel
 --
@@ -92,10 +95,10 @@ image::clojure-essence.svg[width=100%]
 2000 👉 Ideal Hash trees (Phil Bagwell)
 
 [.fragment]
-2007 👉 Clojure (Rich Hickey)
+2006 👉 Out of the Tar Pit  (Ben Moseley and Peter Marks)
 
 [.fragment]
-2006 👉 Out of the Tar Pit  (Ben Moseley and Peter Marks)
+2007 👉 Clojure (Rich Hickey)
 
 [.fragment]
 2021? 👉 Wikipedia article about Data-Oriented programming (Help wanted)
@@ -140,7 +143,7 @@ _History of Lisp, John McCarthy 1979_
 
 
 [.centered.bordered]
-Data is a *first class citizen*  ✈️
+Data is a *first-class citizen*  ✈️
 
 {bl}
 {bl}
@@ -328,6 +331,7 @@ image::code-only.svg[width=100%, height=415px]
 
 [.fragment]
 * *Weak dependency* between code and data
+* *Loose coupling* between components
 * *Flexible* data model
 * *Generic* data manipulation functions
 --
@@ -379,17 +383,6 @@ Mutation is bad!
 [.centered90]
 image::application-do.svg[width=100%]
 
-=== ‍🤪Application of DO principles in Java
-
-
-What we need:
-
-. Efficient persistent data structures
-. Atoms
-. Parse JSON into a map
-. Manipulate "_untyped_" primitives
-. Database driver that works with maps
-
 == ⏳Summary
 
 {bl}
@@ -419,15 +412,15 @@ image::dop-book.png[width=65%]
 [.left.w50]
 --
 
-🤑 50% discount: mlsharvit2
+https://tinyurl.com/dop-clojure
 
-https://tinyurl.com/dop-book[]
-
-image::https://chart.googleapis.com/chart?cht=qr&chl=https://tinyurl.com/yweme6kn&chs=400x400[width=40%]
+image::https://chart.googleapis.com/chart?cht=qr&chl=https://tinyurl.com/dop-book&chs=400x400[width=40%]
 
 https://en.wikipedia.org/wiki/Draft:Data-oriented_programming[Wikipedia article]: Data-Oriented programming
 
 #data-oriented-programming on Clojurians
 
+https://github.com/viebel/data-oriented-programming/tree/main/challenges[DOP Challenges]
 
+https://github.com/viebel/data-oriented-programming/wiki/Interpretation-of-programming-related-concepts-according-to-Data-Oriented-programming[Wiki: Concepts behind Data Oriented programming]
 --
