@@ -83,13 +83,15 @@ image::clojure-essence.svg[width=100%]
 
 [.left.w80]
 --
-{bl}
-
 [.fragment]
 1936 👉 λ-calculus (Alonzo Church)
 
 [.fragment]
 1958 👉 LISP (John McCarthy)
+
+[.fragment]
+
+1981 👉 Values and Objects in Programming Languages (Bruce MacLennan)
 
 [.fragment]
 2000 👉 Ideal Hash trees (Phil Bagwell)
