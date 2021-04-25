@@ -1,20 +1,28 @@
 * TITLE
-  Data-Oriented programming in JavaScript
+  Data-Oriented programming 
   JavaScript: The Great Parts
-
+  
 * OBJECTIVES
+** Do not use classes
+** Do not mutate data
+** Avoid language parts that tend to increase complexity
+
+** Enjoy language parts that tend to reduce complexity
+
+** Add language parts that are missing
 
 * IDEAS
-  - 35% discount code: mtpnodejs21
-  
-** Benefits on immutable data in a single-threaded environment
+** DONE Benefits on immutable data in a single-threaded environment
+   CLOSED: [2021-04-23 Fri 09:53]
    - rename map keys
    - setTimeout
    - time travel
    - highly-scalable concurrency
 
-** Two ways to preserve immutability
+** DONE Many ways to preserve immutability
+   CLOSED: [2021-04-23 Fri 09:53]
 *** Structural sharing
+    - scale well
 *** immutable functions
     - Ramda
     - Lodash
@@ -23,8 +31,63 @@
     - shallow copy
     - proxy
 *** mention: imber
-     
-** Manage state with immutable data
-* CONTENTS
+*** Object.freeze
+** DONE Manage state with immutable data
+   CLOSED: [2021-04-23 Fri 09:56]
 
-* TODOs
+** DONE Object vs. state
+   CLOSED: [2021-04-23 Fri 09:56]
+
+** DONE Records vs indexes
+   CLOSED: [2021-04-23 Fri 09:54]
+   Two distinct use cases for maps
+   - collection-like maps
+     - homogeneous, potentially large
+   - information-like maps
+     - heterogeneous, keys are names, usually small
+
+   Records come to JavaScript
+
+** DONE TypeScript
+   CLOSED: [2021-04-23 Fri 09:53]
+
+** DONE JSON schema
+   CLOSED: [2021-04-23 Fri 09:53]
+
+** DONE Data lives outside our programs
+   CLOSED: [2021-04-23 Fri 09:55]
+
+** DONE Debug without a debugger
+   CLOSED: [2021-04-23 Fri 09:54]
+
+** DONE A typical nodejs app
+   CLOSED: [2021-04-23 Fri 09:56]
+
+* CONTENTS
+** What's an information system?
+   - data lives outside the program
+** Benefits of immutability
+   - time travel
+   - debug without a debugger
+** Immutability for associative collections and for records
+** Data shape
+   - TypeScript
+   - JSON schema
+** State management
+* Objections
+  - We already manipulate data generically. What's the big deal?
+  - Why do we need immutability in nodejs? We don't have internal state and we are not multi-threaded!
+
+* REFERENCES
+
+  - https://github.com/tc39/proposal-record-tuple
+  -
+Our 35% discount code (good for all our products in all formats) :
+
+mtpnodejs21
+
+3x free eBook codes for Data-Oriented Programming:
+
+dtop-E1D9
+dtop-8EA5
+dtop-F6C6

@@ -1,0 +1,452 @@
+= Data-Oriented programming
+include::slide.attrs[]
+
+[state=title]
+[%notitle]
+== Data-Oriented programming
+
+
+[.centered]
+--
+{bl}
+{bl}
+{bl}
+{bl}
+
+
+
+[..big-text]
+*Data-Oriented programming in JavaScript*
+
+
+_Why and how to achieve immutability?_
+
+{bl}
+{bl}
+{bl}
+
+Yehonathan Sharvit icon:twitter[]  viebel
+--
+
+== 👋Who am I?
+
+[.left.w40]
+--
+* 💻 Developer since 2001 (JavaScript since 2009, Clojure since 2012)
+* 🎁️Maintainer of Klipse
+* 📖 Author of Data-Oriented programming
+* 📝 Blogger at https://blog.klipse.tech/[blog.klipse.tech]
+--
+
+[.left.w50]
+--
+image::dop-book.png[width=65%]
+--
+
+== 📓 What is complexity?
+
+
+[.fragment]
+[quote]
+--
+*⚙️Computational complexity*
+
+The amount of *machine resources* (e.g. CPU, memory) required to *run* a program.
+--
+
+[.fragment]
+[quote]
+--
+*😰 System Complexity*
+
+The amount of *brain resources* required to *understand* a system.
+--
+
+== 📊 Information systems
+
+[quote]
+Systems that manipulate *information* in various ways.
+
+{bl}
+{bl}
+{bl}
+
+Examples of *information systems*:
+
+* *Web services* that fetch data from the database and serves it as JSON
+* *Web workers* that listen to events and enrich event data from multiple data sources
+* *Front end applications* that store application state
+
+
+== 🤔 What's so special with JavaScript?
+
+image::js-good-parts.png[height=80%]
+
+
+
+== {principle} Principles of Data-Oriented programming
+
+
+[.centered.bordered]
+Treat data as a *first-class citizen*  ✈️
+
+{bl}
+{bl}
+
+[.fragment]
+[.left.w50.bordered]
+[%step]
+. *Separate* code from data
+. Represent data with *generic* data structures
+. Do not *mutate* data
+
+[.left.wsmall]
+{bl}
+[.fragment]
+[.left.w40.bordered]
+. Do not use classes
+. Do not use lexical scopes
+. Invent some magic tricks
+
+== Why immutability in general?
+- Avoid hidden side effects
+- Thread safety
+- Values never change
+
+== Why immutability in JavaScript?
+
+==  Data is modified by functions
+[cols="2*", frame=none, grid=none]
+|===
+a| [.fragment]
+--
+
+[source.eval-javascript, javascript]
+var myData = {
+firstName: "John",
+lastName: "Doe"
+}
+myAdditionalData = {
+ skills: ["firstName", "lastName"]
+}
+Object.assign(myData, myAdditionalData)
+
+--
+
+a|[.fragment]
+--
+What happens to `myData`?
+[source.eval-javascript, javascript]
+  myDat
+--
+|===
+
+
+==  weird bugs (setTimeout)
+
+[cols="2*", frame=none, grid=none]
+|===
+a| [.fragment]
+--
+[source.eval-javascript, javascript]
+----
+var person = {
+  firstName: "John",
+  lastName: "Doe",
+  details: {
+  }
+}
+
+var a = 1000*Math.random();
+var b = 1000*Math.random();
+
+
+setTimeout(() => {
+  if(person.details.skill) {
+    console.log(`${person.firstName} has a skill: ${person.details.skill}`);
+  } else {
+    console.log(`${person.firstName} has no skills.`);
+  }
+}, a);
+
+setTimeout(() => {
+  person.details.skill = "Music";
+}, b); 
+               
+[a,b]         
+----
+
+--
+
+a|[.fragment]
+--
+
+[source.eval-javascript, javascript]
+
+--
+|===
+
+
+
+- testability
+   - easier to test results than side-effects 
+   - order of tests might have an impact on test results
+- development time
+   - reproducibility 
+- state management
+   - optimistic locking
+   - fast deep equality
+   - time travel
+   - work on a snapshot
+
+== How to achieve immutability in JavaScript?
+
+- Freeze
+- Deep clone
+- Nested spread operators
+- Lodash FP
+- Immer
+- Immutable.js
+- JavaScript Records
+
+== Freeze
+
+From https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Object/freeze
+
+[cols="2*", frame=none, grid=none]
+|===
+a| [.fragment]
+--
+[source.eval-javascript, javascript]
+function deepFreeze(object) {
+    const propNames = Object.getOwnPropertyNames(object);
+    for (const name of propNames) {
+       const value = object[name];
+        if (value && typeof value === "object") {
+            deepFreeze(value);
+        }
+    }
+    return Object.freeze(object);
+}
+--
+
+a|[.fragment]
+--
+[source.eval-javascript, javascript]
+----
+var kelly = {
+  email: "kelly@doe.com",
+  details: {
+    books: 0,
+    preferences: {
+      theme: "dark"
+    }
+  },
+  history: [/*huge array*/]
+}
+----
+--
+a|[.fragment]
+--
+In non-strict mode
+[source.eval-javascript, javascript]
+----
+var frozenKelly = deepFreeze(kelly);
+frozenKelly.details.preferences.theme = "light";
+frozenKelly.details.preferences.theme
+----
+--
+
+a|[.fragment]
+--
+In strict mode
+[source.eval-javascript, javascript]
+----
+"use strict"
+
+var frozenKelly = deepFreeze(kelly);
+frozenKelly.details.preferences.theme = "light";
+frozenKelly.details.preferences.theme
+----
+--
+
+|===
+
+
+== Deep clone
+
+The old LISP way!
+
+[cols="2*", frame=none, grid=none]
+|===
+a| [.fragment]
+--
+
+[source.eval-javascript, javascript]
+----
+function deepClone(x) {
+  return JSON.parse(JSON.stringify(x));
+}
+----
+--
+
+a|[.fragment]
+--
+[source.eval-javascript, javascript]
+var kelly = {
+  email: "kelly@doe.com",
+  details: {
+    books: 0,
+    preferences: {
+      theme: "dark"
+    }
+  },
+  history: [/*huge array*/]
+}
+--
+
+a|[.fragment]
+--
+Let's clone!
+[source.eval-javascript, javascript]
+var updatedKelly = deepClone(kelly);
+updatedKelly.details.preferences.theme = "light";
+--
+
+a|[.fragment]
+--
+kelly is untouched
+[source.eval-javascript, javascript]
+kelly
+--
+|===
+
+
+== Structural sharing
+
+[.left.w50]
+[.fragment]
+--
+When data is immutable, we can safely share it.
+
+image::share-kelly.png[]
+--
+
+[.fragment]
+[.left.w50]
+--
+[source.eval-javascript, javascript]
+var kelly = {
+  email: "kelly@doe.com", history: [/*huge array*/],
+  details: {
+    books: 0, preferences: {
+      theme: "dark", notifications: true
+    }
+  }
+}
+
+Share data with spread operator
+[source.eval-javascript, javascript]
+updatedKelly = {
+  ...kelly, details: {
+    ...kelly.details, preferences: {
+      ...kelly.details.preferences, theme: "light"
+    }
+  }
+}
+--
+
+== Dynamic structural sharing with Lodash FP
+
+[cols="2*", frame=none, grid=none]
+|===
+a| [.fragment]
+--
+
+[source.eval-javascript, javascript]
+var kelly = {
+  email: "kelly@doe.com",
+  history: [/*huge array*/],
+  details: {
+    books: 0,
+    preferences: {
+                  theme: "dark",
+                  notifications: true
+                  }
+  }
+}
+
+--
+
+a|[.fragment]
+--
+[source.eval-javascript, javascript]
+updatedKelly = _fp.set(kelly, ["details", "preferences", "theme"], "light")
+
+--
+a|[.fragment]
+--
+kelly is untouched
+[source.eval-javascript, javascript]
+kelly
+
+--
+a|[.fragment]
+--
+kelly is untouched
+[source.eval-javascript, javascript]
+kelly
+
+--
+
+
+|===
+
+
+== Dynamic type safe structural sharing with Immer
+== Native immutable objects
+
+== Same name for two different use cases
+
+- Records vs Associative arrays
+
+== Is it bullet proof?
+- Immutable.js and proxy
+- Does it worth it?
+- ClojureScript?
+== ⏳Summary
+
+{bl}
+{bl}
+{bl}
+{bl}
+[.left.w50]
+image::do-principles-journey.svg[width=90%]
+
+[.left.w40.bordered]
+. *Separate* Code from Data
+. *Represent* Data with *generic* data structures
+. Do not *mutate* data
+
+
+++++
+<script src='https://cdn.jsdelivr.net/g/lodash@4(lodash.min.js+lodash.fp.min.js)'></script>
+<script>
+var fp = _.noConflict();
+// Every option is `true` by default.
+var _fp = fp.convert({
+  // Specify capping iteratee arguments.
+  'cap': false,
+  // Specify currying.
+  'curry': false,
+  // Specify fixed arity.
+  'fixed': false,
+  // Specify immutable operations.
+  'immutable': true,
+  // Specify rearranging arguments.
+  'rearg': false
+});
+
+</script>
+++++
+

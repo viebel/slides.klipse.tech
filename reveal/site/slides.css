@@ -13,6 +13,11 @@
   font-size: 1.8em;
   font-weight: bold;
 }
+
+.reveal section .CodeMirror {
+    font-size: 0.5em;
+}
+
 .reveal section a {
   text-decoration: underline;
   color: #5B80D4;
@@ -311,4 +316,8 @@ html.title body {
 
 .reveal section .marginleft40 {
     margin-left: 40%;
+}
+
+.CodeMirror-wrap pre {
+    word-break: break-word;
 }

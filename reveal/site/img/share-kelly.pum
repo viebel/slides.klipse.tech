@@ -1,0 +1,48 @@
+@startuml
+top to bottom direction
+skinparam packageStyle rectangle
+skinparam usecase {
+  BackgroundColor White
+  BorderColor Blue
+
+  BackgroundColor<< Original >> LightYellow
+  BackgroundColor<< Next >> LightBlue
+  BackgroundColor<< Shared >> LightGreen
+
+  ArrowColor Blue
+}
+
+
+usecase kelly << Original >>
+usecase email <<Shared>>
+usecase details << Original >>
+usecase books <<Shared>>
+usecase preferences << Original >>
+usecase theme << Original >>
+usecase history <<Shared>>
+usecase notifications <<Shared>>
+
+usecase updatedKelly << Next >>
+usecase updatedDetails << Next >>
+usecase updatedPreferences << Next >>
+usecase updatedTheme << Next >>
+
+kelly --> email
+kelly --> details
+kelly --> history
+details --> books
+details --> preferences
+preferences --> theme
+preferences --> notifications
+
+
+updatedKelly --> email
+updatedKelly --> updatedDetails
+updatedKelly --> history
+updatedDetails --> books
+updatedDetails --> updatedPreferences
+updatedPreferences --> updatedTheme
+updatedPreferences --> notifications
+
+@enduml
+
