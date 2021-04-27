@@ -19,7 +19,7 @@ include::slide.attrs[]
 *Data-Oriented programming in JavaScript*
 
 
-_The path to data immutability_
+_To Immutability and Beyond_ 
 
 {bl}
 {bl}
@@ -221,13 +221,11 @@ a| [.fragment]
 var kelly = {
   email: "kelly@doe.com",
   details: {
-    books: 0,
     preferences: {
       theme: "dark"
     }
-  },
+  }
 }
-
 setBackgroundColor("white");
 
 var a = 1000*(1 + Math.random());
@@ -248,8 +246,8 @@ setTimeout(() => {
 a|[.fragment]
 --
 [#book-list]
-* Watchmen
-* Seven Habits of Highly Effective People
+Watchmen +
+Seven Habits of Highly Effective People
 --
 |===
 

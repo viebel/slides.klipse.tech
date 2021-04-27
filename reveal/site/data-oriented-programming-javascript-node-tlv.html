@@ -8,7 +8,7 @@ document.getElementsByTagName( 'head' )[0].appendChild( link );</script><!--[if 
 <br>
 <br></p></div>
 <div class="paragraph big-text"><p><strong>Data-Oriented programming in JavaScript</strong></p></div>
-<div class="paragraph"><p><em>The path to data immutability</em></p></div>
+<div class="paragraph"><p><em>To Immutability and Beyond</em></p></div>
 <div class="paragraph"><p><br>
 <br>
 <br></p></div>
@@ -70,13 +70,11 @@ updatedKelly = Object.assign(kelly, additionalData)</code></pre></div></div></di
 <section id="concurrency_management"><h2>Concurrency management</h2><table class="tableblock frame-none grid-none" style="width:100%"><colgroup><col style="width:50%"><col style="width:50%"></colgroup><tbody><tr><td class="tableblock halign-left valign-top"><div><div class="openblock fragment"><div class="content"><div class="listingblock eval-javascript"><div class="content"><pre class="highlight"><code data-noescape class="javascript language-javascript">var kelly = {
   email: "kelly@doe.com",
   details: {
-    books: 0,
     preferences: {
       theme: "dark"
     }
-  },
+  }
 }
-
 setBackgroundColor("white");
 
 var a = 1000*(1 + Math.random());
@@ -90,7 +88,8 @@ setTimeout(() =&gt; {
   kelly.details.preferences.theme = "light";
 }, b);
 
-[a,b]</code></pre></div></div></div></div></div></td><td class="tableblock halign-left valign-top"><div><div class="openblock fragment"><div class="content"><div class="ulist" id="book-list"><ul><li><p>Watchmen</p></li><li><p>Seven Habits of Highly Effective People</p></li></ul></div></div></div></div></td></tr></table></section>
+[a,b]</code></pre></div></div></div></div></div></td><td class="tableblock halign-left valign-top"><div><div class="openblock fragment"><div class="content"><div class="paragraph" id="book-list"><p>Watchmen<br>
+Seven Habits of Highly Effective People</p></div></div></div></div></td></tr></table></section>
 <section id="how_to_achieve_immutability_in_javascript"><h2>How to achieve immutability in JavaScript?</h2><div class="quoteblock fragment"><blockquote><div class="paragraph"><p>The fundamental theorem of JavaScript:</p></div>
 <div class="paragraph fragment"><p><em>We can solve any problem in JavaScript with a library</em></p></div>
 <div class="paragraph fragment"><p><em>and a couple of changes to ECMAScript</em></p></div></blockquote></div></section>
