@@ -27,15 +27,12 @@ document.getElementsByTagName( 'head' )[0].appendChild( link );</script><!--[if 
 <div class="openblock fragment"><div class="content"><div class="paragraph"><p>Examples of <strong>information systems</strong>:</p></div>
 <div class="ulist"><ul><li><p><strong>Web services</strong> that fetch data from data sources and serves it as JSON</p></li><li><p><strong>Web workers</strong> that listen to events and enrich event data from multiple data sources</p></li><li><p><strong>Front end applications</strong> that communicate with a back end</p></li></ul></div></div></div></section>
 <section id="what_is_data_oriented_programming"><h2>💡 What is Data-Oriented programming?</h2><div class="paragraph centered bordered"><p>A programming paradigm aimed at<br>
-reducing complexity by<br>
-treating data as a <strong>first-class citizen</strong>  ✈️</p></div>
+reducing <strong>complexity</strong> of <strong>information systems</strong> by<br>
+treating <strong>data</strong> as a first-class citizen ️</p></div>
 <div class="paragraph"><p><br>
 <br></p></div>
-<div class="openblock fragment left w50 bordered"><div class="content"><div class="paragraph"><p>Principles</p></div>
-<div class="olist arabic"><ol class="arabic"><li><p><strong>Separate</strong> code from data</p></li><li><p>Represent data with <strong>generic</strong> data structures</p></li><li><p>Do not <strong>mutate</strong> data</p></li></ol></div></div></div>
-<div class="paragraph left wsmall"><p><br></p></div>
-<div class="openblock fragment left w40 bordered"><div class="content"><div class="paragraph"><p>In JavaScript</p></div>
-<div class="olist arabic"><ol class="arabic"><li><p>Do not use classes</p></li><li><p>Do not use lexical scopes</p></li><li><p>Use some magic tricks</p></li></ol></div></div></div></section>
+<div class="openblock fragment centered bordered"><div class="content"><div class="paragraph"><p>Principles</p></div>
+<div class="olist arabic"><ol class="arabic"><li><p><strong>Separate</strong> code from data</p></li><li><p>Represent data with <strong>generic</strong> data structures</p></li><li><p>Do not <strong>mutate</strong> data</p></li></ol></div></div></div></section>
 <section id="why_immutability_in_general"><h2>Why immutability in general?</h2><div class="openblock left w50"><div class="content"><div class="ulist"><ul><li><p>Avoid hidden side effects</p></li><li><p>Thread safety without locks</p></li><li><p>Simpler state management</p><div class="ulist"><ul><li><p>Optimistic locking</p></li><li><p>Time travel</p></li><li><p>Work on a snapshot</p></li></ul></div></li><li><p>Values never change</p><div class="ulist"><ul><li><p>Fast equality check</p></li></ul></div></li></ul></div></div></div>
 <div class="openblock left w50"><div class="content"><div class="ulist"><ul><li><p>Testability</p><div class="ulist"><ul><li><p>Easier to test results than side-effects</p></li><li><p>Order of tests might have an impact on test results</p></li></ul></div></li><li><p>Development time</p><div class="ulist"><ul><li><p>Reproducibility</p></li></ul></div></li></ul></div></div></div></section>
 <section id="do_we_need_immutability_in_node_js"><h2>🤔 Do we need immutability in Node.js?</h2><div class="ulist"><ul><li><p>JavaScript is single threaded</p></li><li><p>Services are usually stateless</p></li></ul></div>
@@ -145,13 +142,14 @@ var updatedKelly = {
   }
 }</code></pre></div></div></div></div></div></td><td class="tableblock halign-left valign-top"><div><div class="openblock fragment"><div class="content"><div class="paragraph"><p>Create new version</p></div>
 <div class="listingblock eval-javascript"><div class="content"><pre class="highlight"><code data-noescape class="javascript language-javascript">var updatedKelly = _fp.set(kelly,
-                       ["details", "preferences", "theme"],
+                       ["details", "preferences",
+                       "theme"],
                        "light")
 updatedKelly.details.preferences.theme</code></pre></div></div></div></div></div></td></tr><tr><td class="tableblock halign-left valign-top"><div><div class="openblock fragment"><div class="content"><div class="paragraph"><p>Original version is untouched</p></div>
 <div class="listingblock eval-javascript"><div class="content"><pre class="highlight"><code data-noescape class="javascript language-javascript">kelly.details.preferences.theme</code></pre></div></div></div></div></div></td><td class="tableblock halign-left valign-top"><div><div class="openblock fragment"><div class="content"><div class="paragraph"><p>Data in common is shared</p></div>
 <div class="listingblock eval-javascript"><div class="content"><pre class="highlight"><code data-noescape class="javascript language-javascript">updatedKelly.history == kelly.history</code></pre></div></div></div></div></div></td></tr></table>
-<div class="openblock fragment"><div class="content"><div class="paragraph"><p>⚠️Not TypeScript friendly</p></div>
-<div class="paragraph"><p>⚠️Mutations could happen by accident</p></div></div></div></section>
+<div class="openblock fragment"><div class="content"><div class="paragraph"><p>⚠️Mutations could happen by accident</p></div>
+<div class="paragraph"><p>⚠️Not IDE/TypeScript friendly</p></div></div></div></section>
 <section id="freeze"><h2>🧊 Freeze</h2><div class="paragraph"><p>From <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Object/freeze" class="bare">https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Object/freeze</a></p></div>
 <table class="tableblock frame-none grid-none" style="width:100%"><colgroup><col style="width:50%"><col style="width:50%"></colgroup><tbody><tr><td class="tableblock halign-left valign-top"><div><div class="openblock fragment"><div class="content"><div class="listingblock eval-javascript"><div class="content"><pre class="highlight"><code data-noescape class="javascript language-javascript">function deepFreeze(o) {
   const propNames = Object.getOwnPropertyNames(o);
@@ -218,10 +216,10 @@ updatedKelly.details.preferences.theme = "dark";</code></pre></div></div></div><
 }</code></pre></div></div></div></div></div></td></tr></table></section>
 <section id="a_bit_of_javascript_history"><h2>A bit of JavaScript history</h2><blockquote class="twitter-tweet"><p lang="en" dir="ltr">Economizing on mechanisms and concepts for want of time, as I&#39;ve discussed with many over the years. See the HOPL IV paper (<a href="https://t.co/T067GT5DOn">https://t.co/T067GT5DOn</a>) or my interview with Lex Fridman (<a href="https://t.co/7Jr8AVkyOl">https://t.co/7Jr8AVkyOl</a>).</p>&mdash; BrendanEich (@BrendanEich) <a href="https://twitter.com/BrendanEich/status/1385437947852333056?ref_src=twsrc%5Etfw">April 23, 2021</a></blockquote> <script async src="https://platform.twitter.com/widgets.js" charset="utf-8"></script>
 <blockquote class="twitter-tweet" data-conversation="none"><p lang="en" dir="ltr">&quot;... plurality should not be posited without necessity&quot; (Ockham)</p>&mdash; BrendanEich (@BrendanEich) <a href="https://twitter.com/BrendanEich/status/1386000607052386305?ref_src=twsrc%5Etfw">April 24, 2021</a></blockquote> <script async src="https://platform.twitter.com/widgets.js" charset="utf-8"></script></section>
-<section id="the_limit_of_the_tricks"><h2>The limit of the tricks</h2><div class="openblock fragment"><div class="content"><div class="paragraph"><p>Structural sharing doesn&#8217;t scale with associative arrays</p></div>
+<section id="the_limits_of_the_tricks"><h2>The limits of the tricks</h2><div class="openblock fragment"><div class="content"><div class="paragraph"><p>Structural sharing doesn&#8217;t scale with associative arrays</p></div>
 <div class="paragraph"><p>Shallow copying becomes expensive</p></div>
 <div class="paragraph"><p>Welcome HAMT and Immutable.js</p></div></div></div></section>
-<section id="advanced_structural_sharing"><h2>Advanced structural sharing</h2><div class="imageblock fragment left w50" style=""><img src="img/persistent-vector.png" alt="persistent vector"></div>
+<section id="beyond_infinity_advanced_structural_sharing"><h2>Beyond Infinity: Advanced structural sharing</h2><div class="imageblock fragment left w50" style=""><img src="img/persistent-vector.png" alt="persistent vector"></div>
 <div class="openblock fragment left w50"><div class="content"><div class="paragraph"><p><br>
 <br></p></div>
 <div class="listingblock"><div class="content"><pre class="highlight"><code data-noescape class="javascript language-javascript">var brown = Immutable.List([0, 1, 2, 3, 4, 5, 6, 7, 8])</code></pre></div></div>

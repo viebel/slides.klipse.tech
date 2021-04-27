@@ -58,8 +58,12 @@
     text-align: center;
 }
 
-.reveal section > .centered p {
+.reveal section > .centered > p {
   text-align: center;
+}
+
+.reveal section > .centered li  {
+    text-align: left;
 }
 
 .reveal section > .compact p {
