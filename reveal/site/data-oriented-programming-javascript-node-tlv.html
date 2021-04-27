@@ -8,78 +8,66 @@ document.getElementsByTagName( 'head' )[0].appendChild( link );</script><!--[if 
 <br>
 <br></p></div>
 <div class="paragraph big-text"><p><strong>Data-Oriented programming in JavaScript</strong></p></div>
-<div class="paragraph"><p><em>Why and how to achieve immutability?</em></p></div>
+<div class="paragraph"><p><em>The path to data immutability</em></p></div>
 <div class="paragraph"><p><br>
 <br>
 <br></p></div>
 <div class="paragraph"><p>Yehonathan Sharvit <span class="icon"><i class="fa fa-twitter"></i></span>  viebel</p></div></div></div></section>
-<section id="who_am_i"><h2>👋Who am I?</h2><div class="openblock left w40"><div class="content"><div class="ulist"><ul><li><p>💻 Developer since 2001 (JavaScript since 2009, Clojure since 2012)</p></li><li><p>🎁️Maintainer of Klipse</p></li><li><p>📖 Author of Data-Oriented programming</p></li><li><p>📝 Blogger at <a href="https://blog.klipse.tech/">blog.klipse.tech</a></p></li></ul></div></div></div>
+<section id="who_am_i"><h2>👋Who am I?</h2><div class="openblock left w50"><div class="content"><div class="ulist"><ul><li><p>💻 Developer since 2001 (JavaScript since 2009, Clojure since 2012)</p></li><li><p>🎁️Maintainer of Klipse</p></li><li><p>📖 Author of Data-Oriented programming</p></li><li><p>📝 Blogger at <a href="https://blog.klipse.tech/">blog.klipse.tech</a></p></li><li><p>👷Software architect at Cycognito (we are hiring)</p></li></ul></div></div></div>
 <div class="openblock left w50"><div class="content"><div class="imageblock" style=""><img src="img/dop-book.png" alt="dop book" width="65%"></div></div></div></section>
+<section id="agenda"><h2>Agenda</h2><div class="olist arabic"><ol class="arabic"><li><p>Complexity of information systems</p></li><li><p>Principles of Data-Oriented programming</p></li><li><p>Various ways to achieve data immutability in JavaScript</p></li></ol></div></section>
 <section id="what_is_complexity"><h2>📓 What is complexity?</h2><div class="quoteblock fragment"><blockquote><div class="paragraph"><p><strong>⚙️Computational complexity</strong></p></div>
 <div class="paragraph"><p>The amount of <strong>machine resources</strong> (e.g. CPU, memory) required to <strong>run</strong> a program.</p></div></blockquote></div>
 <div class="quoteblock fragment"><blockquote><div class="paragraph"><p><strong>😰 System Complexity</strong></p></div>
 <div class="paragraph"><p>The amount of <strong>brain resources</strong> required to <strong>understand</strong> a system.</p></div></blockquote></div></section>
-<section id="information_systems"><h2>📊 Information systems</h2><div class="quoteblock"><blockquote>Systems that manipulate <strong>information</strong> in various ways.</blockquote></div>
+<section id="information_systems"><h2>📊 Information systems</h2><div class="quoteblock"><blockquote>Systems that manipulate <strong>real-word information</strong> and activity.</blockquote></div>
 <div class="paragraph"><p><br>
 <br>
 <br></p></div>
-<div class="paragraph"><p>Examples of <strong>information systems</strong>:</p></div>
-<div class="ulist"><ul><li><p><strong>Web services</strong> that fetch data from the database and serves it as JSON</p></li><li><p><strong>Web workers</strong> that listen to events and enrich event data from multiple data sources</p></li><li><p><strong>Front end applications</strong> that store application state</p></li></ul></div></section>
-<section id="whats_so_special_with_javascript"><h2>🤔 What&#8217;s so special with JavaScript?</h2><div class="imageblock" style=""><img src="img/js-good-parts.png" alt="js good parts" height="80%"></div></section>
-<section id="principles_of_data_oriented_programming"><h2>💡 Principles of Data-Oriented programming</h2><div class="paragraph centered bordered"><p>Treat data as a <strong>first-class citizen</strong>  ✈️</p></div>
+<div class="openblock fragment"><div class="content"><div class="paragraph"><p>Examples of <strong>information systems</strong>:</p></div>
+<div class="ulist"><ul><li><p><strong>Web services</strong> that fetch data from data sources and serves it as JSON</p></li><li><p><strong>Web workers</strong> that listen to events and enrich event data from multiple data sources</p></li><li><p><strong>Front end applications</strong> that communicate with a back end</p></li></ul></div></div></div></section>
+<section id="what_is_data_oriented_programming"><h2>💡 What is Data-Oriented programming?</h2><div class="paragraph centered bordered"><p>A programming paradigm aimed at<br>
+reducing complexity by<br>
+treating data as a <strong>first-class citizen</strong>  ✈️</p></div>
 <div class="paragraph"><p><br>
 <br></p></div>
-<div class="olist arabic fragment left w50 bordered"><ol class="arabic"><li class="fragment"><p><strong>Separate</strong> code from data</p></li><li class="fragment"><p>Represent data with <strong>generic</strong> data structures</p></li><li class="fragment"><p>Do not <strong>mutate</strong> data</p></li></ol></div>
+<div class="openblock fragment left w50 bordered"><div class="content"><div class="paragraph"><p>Principles</p></div>
+<div class="olist arabic"><ol class="arabic"><li><p><strong>Separate</strong> code from data</p></li><li><p>Represent data with <strong>generic</strong> data structures</p></li><li><p>Do not <strong>mutate</strong> data</p></li></ol></div></div></div>
 <div class="paragraph left wsmall"><p><br></p></div>
-<div class="olist arabic fragment left w40 bordered"><ol class="arabic"><li><p>Do not use classes</p></li><li><p>Do not use lexical scopes</p></li><li><p>Invent some magic tricks</p></li></ol></div></section>
-<section id="why_immutability_in_general"><h2>Why immutability in general?</h2><div class="ulist"><ul><li><p>Avoid hidden side effects</p></li><li><p>Thread safety</p></li><li><p>Values never change</p></li></ul></div></section>
-<section id="why_immutability_in_javascript"><h2>Why immutability in JavaScript?</h2></section>
-<section id="data_is_modified_by_functions"><h2>Data is modified by functions</h2><table class="tableblock frame-none grid-none" style="width:100%"><colgroup><col style="width:50%"><col style="width:50%"></colgroup><tbody><tr><td class="tableblock halign-left valign-top"><div><div class="openblock fragment"><div class="content"><div class="listingblock eval-javascript"><div class="content"><pre class="highlight"><code data-noescape class="javascript language-javascript">var myData = {
-firstName: "John",
-lastName: "Doe"
+<div class="openblock fragment left w40 bordered"><div class="content"><div class="paragraph"><p>In JavaScript</p></div>
+<div class="olist arabic"><ol class="arabic"><li><p>Do not use classes</p></li><li><p>Do not use lexical scopes</p></li><li><p>Use some magic tricks</p></li></ol></div></div></div></section>
+<section id="why_immutability_in_general"><h2>Why immutability in general?</h2><div class="openblock left w50"><div class="content"><div class="ulist"><ul><li><p>Avoid hidden side effects</p></li><li><p>Thread safety without locks</p></li><li><p>Simpler state management</p><div class="ulist"><ul><li><p>Optimistic locking</p></li><li><p>Time travel</p></li><li><p>Work on a snapshot</p></li></ul></div></li><li><p>Values never change</p><div class="ulist"><ul><li><p>Fast equality check</p></li></ul></div></li></ul></div></div></div>
+<div class="openblock left w50"><div class="content"><div class="ulist"><ul><li><p>Testability</p><div class="ulist"><ul><li><p>Easier to test results than side-effects</p></li><li><p>Order of tests might have an impact on test results</p></li></ul></div></li><li><p>Development time</p><div class="ulist"><ul><li><p>Reproducibility</p></li></ul></div></li></ul></div></div></div></section>
+<section id="do_we_need_immutability_in_node_js"><h2>🤔 Do we need immutability in Node.js?</h2><div class="ulist"><ul><li><p>JavaScript is single threaded</p></li><li><p>Services are usually stateless</p></li></ul></div>
+<pre class="hidden">
+<code class="eval-javascript">
+function setBackgroundColor(color) {
+  var elem = document.getElementById("book-list");
+  elem.style.backgroundColor = color;
 }
-myAdditionalData = {
- skills: ["firstName", "lastName"]
-}
-Object.assign(myData, myAdditionalData)</code></pre></div></div></div></div></div></td><td class="tableblock halign-left valign-top"><div><div class="openblock fragment"><div class="content"><div class="paragraph"><p>What happens to <code>myData</code>?</p></div>
-<div class="listingblock eval-javascript"><div class="content"><pre class="highlight"><code data-noescape class="javascript language-javascript">  myDat</code></pre></div></div></div></div></div></td></tr></table></section>
-<section id="weird_bugs_settimeout"><h2>weird bugs (setTimeout)</h2><table class="tableblock frame-none grid-none" style="width:100%"><colgroup><col style="width:50%"><col style="width:50%"></colgroup><tbody><tr><td class="tableblock halign-left valign-top"><div><div class="openblock fragment"><div class="content"><div class="listingblock eval-javascript"><div class="content"><pre class="highlight"><code data-noescape class="javascript language-javascript">var person = {
-  firstName: "John",
-  lastName: "Doe",
-  details: {
+</code>
+</pre>
+<pre class="hidden">
+<code class="eval-javascript">
+function benchmark(iterations, f) {
+  var start = new Date();
+  for (var i = 0; i < iterations; i++) {
+    f();
   }
+  var end = new Date();
+  return "Elapsed time: " + (end - start) + " msec";
 }
-
-var a = 1000*Math.random();
-var b = 1000*Math.random();
-
-
-setTimeout(() =&gt; {
-  if(person.details.skill) {
-    console.log(`${person.firstName} has a skill: ${person.details.skill}`);
-  } else {
-    console.log(`${person.firstName} has no skills.`);
-  }
-}, a);
-
-setTimeout(() =&gt; {
-  person.details.skill = "Music";
-}, b);
-
-[a,b]</code></pre></div></div></div></div></div></td><td class="tableblock halign-left valign-top"><div><div class="openblock fragment"><div class="content"></div></div></div></td></tr></table>
-<div class="ulist"><ul><li><p>testability</p></li><li><p>easier to test results than side-effects</p></li><li><p>order of tests might have an impact on test results</p></li><li><p>development time</p></li><li><p>reproducibility</p></li><li><p>state management</p></li><li><p>optimistic locking</p></li><li><p>fast deep equality</p></li><li><p>time travel</p></li><li><p>work on a snapshot</p></li></ul></div></section>
-<section id="how_to_achieve_immutability_in_javascript"><h2>How to achieve immutability in JavaScript?</h2><div class="ulist"><ul><li><p>Freeze</p></li><li><p>Deep clone</p></li><li><p>Nested spread operators</p></li><li><p>Lodash FP</p></li><li><p>Immer</p></li><li><p>Immutable.js</p></li><li><p>JavaScript Records</p></li></ul></div></section>
-<section id="freeze"><h2>Freeze</h2><div class="paragraph"><p>From <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Object/freeze" class="bare">https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Object/freeze</a></p></div>
-<table class="tableblock frame-none grid-none" style="width:100%"><colgroup><col style="width:50%"><col style="width:50%"></colgroup><tbody><tr><td class="tableblock halign-left valign-top"><div><div class="openblock fragment"><div class="content"><div class="listingblock eval-javascript"><div class="content"><pre class="highlight"><code data-noescape class="javascript language-javascript">function deepFreeze(object) {
-    const propNames = Object.getOwnPropertyNames(object);
-    for (const name of propNames) {
-       const value = object[name];
-        if (value &amp;&amp; typeof value === "object") {
-            deepFreeze(value);
-        }
-    }
-    return Object.freeze(object);
-}</code></pre></div></div></div></div></div></td><td class="tableblock halign-left valign-top"><div><div class="openblock fragment"><div class="content"><div class="listingblock eval-javascript"><div class="content"><pre class="highlight"><code data-noescape class="javascript language-javascript">var kelly = {
+</code>
+</pre></section>
+<section id="who_moved_my_data"><h2>🧀 Who moved my data?</h2><table class="tableblock frame-none grid-none" style="width:100%"><colgroup><col style="width:50%"><col style="width:50%"></colgroup><tbody><tr><td class="tableblock halign-left valign-top"><div><div class="openblock fragment"><div class="content"><div class="paragraph"><p>A member of an online library</p></div>
+<div class="listingblock eval-javascript"><div class="content"><pre class="highlight"><code data-noescape class="javascript language-javascript">var kelly = {
+  email: "kelly@doe.com",
+}</code></pre></div></div></div></div></div></td><td class="tableblock halign-left valign-top"><div><div class="openblock fragment"><div class="content"><div class="paragraph"><p>Data enrichment</p></div>
+<div class="listingblock eval-javascript"><div class="content"><pre class="highlight"><code data-noescape class="javascript language-javascript">var additionalData = {
+  email: "kelly2@doe.com"
+};
+updatedKelly = Object.assign(kelly, additionalData)</code></pre></div></div></div></div></div></td></tr><tr><td class="tableblock halign-left valign-top"><div><div class="openblock fragment"><div class="content"><div class="paragraph"><p>What happened to <code>kelly</code>?</p></div></div></div></div></td><td class="tableblock halign-left valign-top"><div><div class="openblock fragment"><div class="content"><div class="listingblock eval-javascript"><div class="content"><pre class="highlight"><code data-noescape class="javascript language-javascript">kelly.email</code></pre></div></div></div></div></div></td></tr></table></section>
+<section id="concurrency_management"><h2>Concurrency management</h2><table class="tableblock frame-none grid-none" style="width:100%"><colgroup><col style="width:50%"><col style="width:50%"></colgroup><tbody><tr><td class="tableblock halign-left valign-top"><div><div class="openblock fragment"><div class="content"><div class="listingblock eval-javascript"><div class="content"><pre class="highlight"><code data-noescape class="javascript language-javascript">var kelly = {
   email: "kelly@doe.com",
   details: {
     books: 0,
@@ -87,16 +75,25 @@ setTimeout(() =&gt; {
       theme: "dark"
     }
   },
-  history: [/*huge array*/]
-}</code></pre></div></div></div></div></div></td></tr><tr><td class="tableblock halign-left valign-top"><div><div class="openblock fragment"><div class="content"><div class="paragraph"><p>In non-strict mode</p></div>
-<div class="listingblock eval-javascript"><div class="content"><pre class="highlight"><code data-noescape class="javascript language-javascript">var frozenKelly = deepFreeze(kelly);
-frozenKelly.details.preferences.theme = "light";
-frozenKelly.details.preferences.theme</code></pre></div></div></div></div></div></td><td class="tableblock halign-left valign-top"><div><div class="openblock fragment"><div class="content"><div class="paragraph"><p>In strict mode</p></div>
-<div class="listingblock eval-javascript"><div class="content"><pre class="highlight"><code data-noescape class="javascript language-javascript">"use strict"
+}
 
-var frozenKelly = deepFreeze(kelly);
-frozenKelly.details.preferences.theme = "light";
-frozenKelly.details.preferences.theme</code></pre></div></div></div></div></div></td></tr></table></section>
+setBackgroundColor("white");
+
+var a = 1000*(1 + Math.random());
+var b = 1000*(1 + Math.random());
+
+setTimeout(() =&gt; {
+setBackgroundColor(kelly.details.preferences.theme + "blue");
+                 }, a);
+
+setTimeout(() =&gt; {
+  kelly.details.preferences.theme = "light";
+}, b);
+
+[a,b]</code></pre></div></div></div></div></div></td><td class="tableblock halign-left valign-top"><div><div class="openblock fragment"><div class="content"><div class="ulist" id="book-list"><ul><li><p>Watchmen</p></li><li><p>Seven Habits of Highly Effective People</p></li></ul></div></div></div></div></td></tr></table></section>
+<section id="how_to_achieve_immutability_in_javascript"><h2>How to achieve immutability in JavaScript?</h2><div class="quoteblock fragment"><blockquote><div class="paragraph"><p>The fundamental theorem of JavaScript:</p></div>
+<div class="paragraph fragment"><p><em>We can solve any problem in JavaScript with a library</em></p></div>
+<div class="paragraph fragment"><p><em>and a couple of changes to ECMAScript</em></p></div></blockquote></div></section>
 <section id="deep_clone"><h2>Deep clone</h2><div class="paragraph"><p>The old LISP way!</p></div>
 <table class="tableblock frame-none grid-none" style="width:100%"><colgroup><col style="width:50%"><col style="width:50%"></colgroup><tbody><tr><td class="tableblock halign-left valign-top"><div><div class="openblock fragment"><div class="content"><div class="listingblock eval-javascript"><div class="content"><pre class="highlight"><code data-noescape class="javascript language-javascript">function deepClone(x) {
   return JSON.parse(JSON.stringify(x));
@@ -112,9 +109,12 @@ frozenKelly.details.preferences.theme</code></pre></div></div></div></div></div>
 }</code></pre></div></div></div></div></div></td></tr><tr><td class="tableblock halign-left valign-top"><div><div class="openblock fragment"><div class="content"><div class="paragraph"><p>Let&#8217;s clone!</p></div>
 <div class="listingblock eval-javascript"><div class="content"><pre class="highlight"><code data-noescape class="javascript language-javascript">var updatedKelly = deepClone(kelly);
 updatedKelly.details.preferences.theme = "light";</code></pre></div></div></div></div></div></td><td class="tableblock halign-left valign-top"><div><div class="openblock fragment"><div class="content"><div class="paragraph"><p>kelly is untouched</p></div>
-<div class="listingblock eval-javascript"><div class="content"><pre class="highlight"><code data-noescape class="javascript language-javascript">kelly</code></pre></div></div></div></div></div></td></tr></table></section>
-<section id="structural_sharing"><h2>Structural sharing</h2><div class="openblock left w50 fragment"><div class="content"><div class="paragraph"><p>When data is immutable, we can safely share it.</p></div>
-<div class="imageblock" style=""><img src="img/share-kelly.png" alt="share kelly"></div></div></div>
+<div class="listingblock eval-javascript"><div class="content"><pre class="highlight"><code data-noescape class="javascript language-javascript">kelly.details.preferences.theme</code></pre></div></div></div></div></div></td></tr></table>
+<div class="openblock fragment"><div class="content"><div class="paragraph"><p>⚠️Performance issues: Memory consumption, CPU consumption</p></div></div></div></section>
+<section id="structural_sharing"><h2>Structural sharing</h2><div class="quoteblock fragment"><blockquote><div class="paragraph"><p>The fundamental theorem of data immutability:<br>
+<em>It is safe to share immutable data.</em></p></div></blockquote></div>
+<div class="paragraph"><p><br></p></div>
+<div class="openblock left w50 fragment"><div class="content"><div class="imageblock" style=""><img src="img/share-kelly.png" alt="share kelly"></div></div></div>
 <div class="openblock fragment left w50"><div class="content"><div class="listingblock eval-javascript"><div class="content"><pre class="highlight"><code data-noescape class="javascript language-javascript">var kelly = {
   email: "kelly@doe.com", history: [/*huge array*/],
   details: {
@@ -122,16 +122,19 @@ updatedKelly.details.preferences.theme = "light";</code></pre></div></div></div>
       theme: "dark", notifications: true
     }
   }
-}</code></pre></div></div>
-<div class="paragraph"><p>Share data with spread operator</p></div>
-<div class="listingblock eval-javascript"><div class="content"><pre class="highlight"><code data-noescape class="javascript language-javascript">updatedKelly = {
-  ...kelly, details: {
-    ...kelly.details, preferences: {
-      ...kelly.details.preferences, theme: "light"
+}
+var updatedKelly = {
+  ...kelly,
+  details: {
+    ...kelly.details,
+    preferences: {
+      ...kelly.details.preferences,
+      theme: "light"
     }
   }
 }</code></pre></div></div></div></div></section>
-<section id="dynamic_structural_sharing_with_lodash_fp"><h2>Dynamic structural sharing with Lodash FP</h2><table class="tableblock frame-none grid-none" style="width:100%"><colgroup><col style="width:50%"><col style="width:50%"></colgroup><tbody><tr><td class="tableblock halign-left valign-top"><div><div class="openblock fragment"><div class="content"><div class="listingblock eval-javascript"><div class="content"><pre class="highlight"><code data-noescape class="javascript language-javascript">var kelly = {
+<section id="dynamic_structural_sharing_with_lodash_fp"><h2>Dynamic structural sharing with Lodash FP</h2><table class="tableblock frame-none grid-none" style="width:100%"><colgroup><col style="width:50%"><col style="width:50%"></colgroup><tbody><tr><td class="tableblock halign-left valign-top"><div><div class="openblock fragment"><div class="content"><div class="paragraph"><p>Original version</p></div>
+<div class="listingblock eval-javascript"><div class="content"><pre class="highlight"><code data-noescape class="javascript language-javascript">var kelly = {
   email: "kelly@doe.com",
   history: [/*huge array*/],
   details: {
@@ -141,20 +144,159 @@ updatedKelly.details.preferences.theme = "light";</code></pre></div></div></div>
                   notifications: true
                   }
   }
-}</code></pre></div></div></div></div></div></td><td class="tableblock halign-left valign-top"><div><div class="openblock fragment"><div class="content"><div class="listingblock eval-javascript"><div class="content"><pre class="highlight"><code data-noescape class="javascript language-javascript">updatedKelly = _fp.set(kelly, ["details", "preferences", "theme"], "light")</code></pre></div></div></div></div></div></td></tr><tr><td class="tableblock halign-left valign-top"><div><div class="openblock fragment"><div class="content"><div class="paragraph"><p>kelly is untouched</p></div>
-<div class="listingblock eval-javascript"><div class="content"><pre class="highlight"><code data-noescape class="javascript language-javascript">kelly</code></pre></div></div></div></div></div></td><td class="tableblock halign-left valign-top"><div><div class="openblock fragment"><div class="content"><div class="paragraph"><p>kelly is untouched</p></div>
-<div class="listingblock eval-javascript"><div class="content"><pre class="highlight"><code data-noescape class="javascript language-javascript">kelly</code></pre></div></div></div></div></div></td></tr></table></section>
-<section id="dynamic_type_safe_structural_sharing_with_immer"><h2>Dynamic type safe structural sharing with Immer</h2></section>
-<section id="native_immutable_objects"><h2>Native immutable objects</h2></section>
-<section id="same_name_for_two_different_use_cases"><h2>Same name for two different use cases</h2><div class="ulist"><ul><li><p>Records vs Associative arrays</p></li></ul></div></section>
-<section id="is_it_bullet_proof"><h2>Is it bullet proof?</h2><div class="ulist"><ul><li><p>Immutable.js and proxy</p></li><li><p>Does it worth it?</p></li><li><p>ClojureScript?
-== ⏳Summary</p></li></ul></div>
-<div class="paragraph"><p><br>
-<br>
-<br>
+}</code></pre></div></div></div></div></div></td><td class="tableblock halign-left valign-top"><div><div class="openblock fragment"><div class="content"><div class="paragraph"><p>Create new version</p></div>
+<div class="listingblock eval-javascript"><div class="content"><pre class="highlight"><code data-noescape class="javascript language-javascript">var updatedKelly = _fp.set(kelly,
+                       ["details", "preferences", "theme"],
+                       "light")
+updatedKelly.details.preferences.theme</code></pre></div></div></div></div></div></td></tr><tr><td class="tableblock halign-left valign-top"><div><div class="openblock fragment"><div class="content"><div class="paragraph"><p>Original version is untouched</p></div>
+<div class="listingblock eval-javascript"><div class="content"><pre class="highlight"><code data-noescape class="javascript language-javascript">kelly.details.preferences.theme</code></pre></div></div></div></div></div></td><td class="tableblock halign-left valign-top"><div><div class="openblock fragment"><div class="content"><div class="paragraph"><p>Data in common is shared</p></div>
+<div class="listingblock eval-javascript"><div class="content"><pre class="highlight"><code data-noescape class="javascript language-javascript">updatedKelly.history == kelly.history</code></pre></div></div></div></div></div></td></tr></table>
+<div class="openblock fragment"><div class="content"><div class="paragraph"><p>⚠️Not TypeScript friendly</p></div>
+<div class="paragraph"><p>⚠️Mutations could happen by accident</p></div></div></div></section>
+<section id="freeze"><h2>🧊 Freeze</h2><div class="paragraph"><p>From <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Object/freeze" class="bare">https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Object/freeze</a></p></div>
+<table class="tableblock frame-none grid-none" style="width:100%"><colgroup><col style="width:50%"><col style="width:50%"></colgroup><tbody><tr><td class="tableblock halign-left valign-top"><div><div class="openblock fragment"><div class="content"><div class="listingblock eval-javascript"><div class="content"><pre class="highlight"><code data-noescape class="javascript language-javascript">function deepFreeze(o) {
+  const propNames = Object.getOwnPropertyNames(o);
+  for (const name of propNames) {
+    const value = o[name];
+    if (value &amp;&amp; typeof value === "object") {
+      deepFreeze(value);
+    }
+  }
+  return Object.freeze(o);
+}</code></pre></div></div></div></div></div></td><td class="tableblock halign-left valign-top"><div><div class="openblock fragment"><div class="content"><div class="listingblock eval-javascript"><div class="content"><pre class="highlight"><code data-noescape class="javascript language-javascript">var kelly = {
+  email: "kelly@doe.com",
+  details: {
+    books: 0,
+    preferences: {
+      theme: "dark"
+    }
+  },
+  history: [/*huge array*/]
+}
+var frozenKelly = deepFreeze(kelly);</code></pre></div></div></div></div></div></td></tr><tr><td class="tableblock halign-left valign-top"><div><div class="openblock fragment"><div class="content"><div class="paragraph"><p>In non-strict mode</p></div>
+<div class="listingblock eval-javascript"><div class="content"><pre class="highlight"><code data-noescape class="javascript language-javascript">frozenKelly.details.preferences.theme = "light";
+frozenKelly.details.preferences.theme</code></pre></div></div></div></div></div></td><td class="tableblock halign-left valign-top"><div><div class="openblock fragment"><div class="content"><div class="paragraph"><p>In strict mode</p></div>
+<div class="listingblock eval-javascript"><div class="content"><pre class="highlight"><code data-noescape class="javascript language-javascript">"use strict"
+frozenKelly.details.preferences.theme = "light";
+frozenKelly.details.preferences.theme</code></pre></div></div></div></div></div></td></tr></table>
+<div class="paragraph fragment"><p>⚠️We need to remember to freeze</p></div></section>
+<section id="type_friendly_structural_sharing_with_immer"><h2>Type friendly structural sharing with Immer</h2><table class="tableblock frame-none grid-none" style="width:100%"><colgroup><col style="width:50%"><col style="width:50%"></colgroup><tbody><tr><td class="tableblock halign-left valign-top"><div><div class="openblock fragment"><div class="content"><div class="paragraph"><p>Original version</p></div>
+<div class="listingblock eval-javascript"><div class="content"><pre class="highlight"><code data-noescape class="javascript language-javascript">var kelly = {
+  email: "kelly@doe.com",
+  history: [/*huge array*/],
+  details: {
+    books: 0,
+    preferences: {
+                  theme: "dark",
+                  notifications: true
+                  }
+  }
+}</code></pre></div></div></div></div></div></td><td class="tableblock halign-left valign-top"><div><div class="openblock fragment"><div class="content"><div class="paragraph"><p>Create new version</p></div>
+<div class="listingblock eval-javascript"><div class="content"><pre class="highlight"><code data-noescape class="javascript language-javascript">updatedKelly = immer.produce(kelly, draftKelly =&gt; {
+draftKelly.details.preferences.theme = "light";
+})
+updatedKelly.details.preferences.theme</code></pre></div></div></div></div></div></td></tr><tr><td class="tableblock halign-left valign-top"><div><div class="openblock fragment"><div class="content"><div class="paragraph"><p>Original version is untouched</p></div>
+<div class="listingblock eval-javascript"><div class="content"><pre class="highlight"><code data-noescape class="javascript language-javascript">kelly.details.preferences.theme</code></pre></div></div></div></div></div></td><td class="tableblock halign-left valign-top"><div><div class="openblock fragment"><div class="content"><div class="paragraph"><p>New version is frozen</p></div>
+<div class="listingblock eval-javascript"><div class="content"><pre class="highlight"><code data-noescape class="javascript language-javascript">"use strict";
+updatedKelly.details.preferences.theme = "dark";</code></pre></div></div></div></div></div></td></tr></table></section>
+<section id="two_kind_of_maps"><h2>Two kind of maps</h2><table class="tableblock frame-none grid-none" style="width:100%"><colgroup><col style="width:50%"><col style="width:50%"></colgroup><tbody><tr><td class="tableblock halign-left valign-top"><div><div class="openblock fragment"><div class="content"><div class="paragraph"><p>Records</p></div>
+<div class="listingblock"><div class="content"><pre class="highlight"><code data-noescape class="javascript language-javascript">{
+  email: "kelly@doe.com",
+  history: [/*huge array*/],
+  details: {
+    books: 0,
+    preferences: {
+       theme: "dark",
+       notifications: true
+    }
+  }
+}</code></pre></div></div></div></div></div></td><td class="tableblock halign-left valign-top"><div><div class="openblock fragment"><div class="content"><div class="paragraph"><p>Associative arrays</p></div>
+<div class="listingblock"><div class="content"><pre class="highlight"><code data-noescape class="javascript language-javascript">{
+"user-123": {...},
+"user-124": {...},
+"user-125": {...},
+...
+}</code></pre></div></div></div></div></div></td></tr></table></section>
+<section id="a_bit_of_javascript_history"><h2>A bit of JavaScript history</h2><blockquote class="twitter-tweet"><p lang="en" dir="ltr">Economizing on mechanisms and concepts for want of time, as I&#39;ve discussed with many over the years. See the HOPL IV paper (<a href="https://t.co/T067GT5DOn">https://t.co/T067GT5DOn</a>) or my interview with Lex Fridman (<a href="https://t.co/7Jr8AVkyOl">https://t.co/7Jr8AVkyOl</a>).</p>&mdash; BrendanEich (@BrendanEich) <a href="https://twitter.com/BrendanEich/status/1385437947852333056?ref_src=twsrc%5Etfw">April 23, 2021</a></blockquote> <script async src="https://platform.twitter.com/widgets.js" charset="utf-8"></script>
+<blockquote class="twitter-tweet" data-conversation="none"><p lang="en" dir="ltr">&quot;... plurality should not be posited without necessity&quot; (Ockham)</p>&mdash; BrendanEich (@BrendanEich) <a href="https://twitter.com/BrendanEich/status/1386000607052386305?ref_src=twsrc%5Etfw">April 24, 2021</a></blockquote> <script async src="https://platform.twitter.com/widgets.js" charset="utf-8"></script></section>
+<section id="the_limit_of_the_tricks"><h2>The limit of the tricks</h2><div class="openblock fragment"><div class="content"><div class="paragraph"><p>Structural sharing doesn&#8217;t scale with associative arrays</p></div>
+<div class="paragraph"><p>Shallow copying becomes expensive</p></div>
+<div class="paragraph"><p>Welcome HAMT and Immutable.js</p></div></div></div></section>
+<section id="advanced_structural_sharing"><h2>Advanced structural sharing</h2><div class="imageblock fragment left w50" style=""><img src="img/persistent-vector.png" alt="persistent vector"></div>
+<div class="openblock fragment left w50"><div class="content"><div class="paragraph"><p><br>
 <br></p></div>
-<div class="imageblock left w50" style=""><img src="img/do-principles-journey.svg" alt="do principles journey" width="90%"></div>
-<div class="olist arabic left w40 bordered"><ol class="arabic"><li><p><strong>Separate</strong> Code from Data</p></li><li><p><strong>Represent</strong> Data with <strong>generic</strong> data structures</p></li><li><p>Do not <strong>mutate</strong> data</p></li></ol></div>
+<div class="listingblock"><div class="content"><pre class="highlight"><code data-noescape class="javascript language-javascript">var brown = Immutable.List([0, 1, 2, 3, 4, 5, 6, 7, 8])</code></pre></div></div>
+<div class="paragraph"><p><br>
+<br></p></div>
+<div class="listingblock"><div class="content"><pre class="highlight"><code data-noescape class="javascript language-javascript">var blue = brown.set(5, "beef")</code></pre></div></div></div></div></section>
+<section id="advanced_structural_sharing_with_immutable_js"><h2>Advanced structural sharing with Immutable.js</h2><table class="tableblock frame-none grid-none" style="width:100%"><colgroup><col style="width:50%"><col style="width:50%"></colgroup><tbody><tr><td class="tableblock halign-left valign-top"><div><div class="openblock fragment"><div class="content"><div class="paragraph"><p>A big native object</p></div>
+<div class="listingblock eval-javascript"><div class="content"><pre class="highlight"><code data-noescape class="javascript language-javascript">var bigMap = Array.from(Array(10000).keys()).reduce(function(res, i)  {
+  res["hello-" + i] = Math.random(); return res;
+}, {});
+Object.keys(bigMap).length</code></pre></div></div></div></div></div></td><td class="tableblock halign-left valign-top"><div><div class="openblock fragment"><div class="content"><div class="paragraph"><p>A big immutable map</p></div>
+<div class="listingblock eval-javascript"><div class="content"><pre class="highlight"><code data-noescape class="javascript language-javascript">var bigMapImmutable = Immutable.fromJS(bigMap);</code></pre></div></div></div></div></div></td></tr><tr><td class="tableblock halign-left valign-top"><div><div class="openblock fragment"><div class="content"><div class="paragraph"><p>Perfs on shallow copying</p></div>
+<div class="listingblock eval-javascript"><div class="content"><pre class="highlight"><code data-noescape class="javascript language-javascript">benchmark(10, function() {
+  updatedMap = {...bigMap, "hello-10": 10};
+})</code></pre></div></div></div></div></div></td><td class="tableblock halign-left valign-top"><div><div class="openblock fragment"><div class="content"><div class="paragraph"><p>Perfs of advanced structural sharing</p></div>
+<div class="listingblock eval-javascript"><div class="content"><pre class="highlight"><code data-noescape class="javascript language-javascript">benchmark(10000, function() {
+  updatedMapImmutable = bigMapImmutable.set("hello-10", 10);
+})</code></pre></div></div></div></div></div></td></tr></table>
+<div class="openblock fragment"><div class="content"><div class="paragraph"><p>⚠️CPU consumption during conversion to native Objects</p></div></div></div></section>
+<section id="proxies_again"><h2>Proxies again</h2><table class="tableblock frame-none grid-none" style="width:100%"><colgroup><col style="width:50%"><col style="width:50%"></colgroup><tbody><tr><td class="tableblock halign-left valign-top"><div><div class="openblock fragment"><div class="content"><div class="listingblock eval-javascript"><div class="content"><pre class="highlight"><code data-noescape class="javascript language-javascript">var kelly = {
+  email: "kelly@doe.com",
+  history: [/*huge array*/],
+  details: {
+    books: 0,
+    preferences: {
+      theme: "dark",
+      notifications: true
+    }
+  }
+}</code></pre></div></div></div></div></div></td><td class="tableblock halign-left valign-top"><div><div class="openblock fragment"><div class="content"><div class="listingblock eval-javascript"><div class="content"><pre class="highlight"><code data-noescape class="javascript language-javascript">var users = {"kelly" : kelly};
+var immutableUsers = Immutable.fromJS(users);
+immutableUsers["kelly"].details.preferences.theme</code></pre></div></div></div></div></div></td></tr><tr><td class="tableblock halign-left valign-top"><div><div class="openblock fragment"><div class="content"><div class="paragraph"><p>Fake it&#8230;&#8203;</p></div>
+<div class="listingblock eval-javascript"><div class="content"><pre class="highlight"><code data-noescape class="javascript language-javascript">function fake(c) {
+  return new Proxy(c, {
+    get(target, property, receiver) {
+      var value = target.get(property);
+      if (Immutable.isImmutable(value)) {
+        return fake(value);
+      }
+      return value;
+    }
+  });
+}</code></pre></div></div></div></div></div></td><td class="tableblock halign-left valign-top"><div><div class="openblock fragment"><div class="content"><div class="paragraph"><p>... until you make it</p></div>
+<div class="listingblock eval-javascript"><div class="content"><pre class="highlight"><code data-noescape class="javascript language-javascript">fake(immutableUsers)["kelly"].details.preferences.theme</code></pre></div></div></div></div></div></td></tr></table></section>
+<section id="native_javascript_immutable_objects"><h2>Native JavaScript immutable objects</h2><div class="paragraph"><p>Proposal: <a href="https://github.com/tc39/proposal-record-tuple" class="bare">https://github.com/tc39/proposal-record-tuple</a></p></div>
+<table class="tableblock frame-none grid-none" style="width:100%"><colgroup><col style="width:50%"><col style="width:50%"></colgroup><tbody><tr><td class="tableblock halign-left valign-top"><div><div class="openblock fragment"><div class="content"><div class="listingblock"><div class="content"><pre class="highlight"><code data-noescape class="javascript language-javascript">var kelly = #{
+  email: "kelly@doe.com",
+  history: #[/*huge array*/],
+  details: #{
+    books: 0,
+    preferences: #{
+       theme: "dark",
+       notifications: true
+    }
+  }
+}</code></pre></div></div></div></div></div></td><td class="tableblock halign-left valign-top"><div><div class="openblock fragment"><div class="content"><div class="listingblock"><div class="content"><pre class="highlight"><code data-noescape class="javascript language-javascript">var updatedKelly = #{
+  ...kelly,
+  details: #{
+    ...kelly.details,
+    preferences: #{
+      ...kelly.details.preferences,
+      theme: "light"
+    }
+  }
+}</code></pre></div></div></div></div></div></td></tr><tr><td class="tableblock halign-left valign-top"><div><div class="openblock fragment"><div class="content"><div class="paragraph"><p>Equality is defined by value</p></div>
+<div class="listingblock"><div class="content"><pre class="highlight"><code data-noescape class="javascript language-javascript">assert(#{ a: 1 } === #{ a: 1 });
+assert(#[1, 2] === #[1, 2]);</code></pre></div></div></div></div></div></td><td class="tableblock halign-left valign-top"><div><div class="openblock fragment"><div class="content"><div class="paragraph"><p>Data cannot me accidentally mutated</p></div>
+<div class="listingblock"><div class="content"><pre class="highlight"><code data-noescape class="javascript language-javascript">kelly.details.preferences.theme = "dark";
+/* throws an exception! */</code></pre></div></div></div></div></div></td></tr></table></section>
+<section id="summary"><h2>Summary</h2><div class="openblock left w50"><div class="content"><div class="paragraph"><p>Various ways to achieve immutability:</p></div>
+<div class="ulist"><ul><li><p>Spread operator</p></li><li><p>Lodash FP</p></li><li><p>Immer</p></li><li><p>Immutable.js</p></li><li><p>JavaScript Records</p></li></ul></div>
+<div class="paragraph"><p>Parameters to consider:</p></div>
+<div class="ulist"><ul><li><p>State management</p></li><li><p>Associative arrays or records</p></li></ul></div></div></div>
+<div class="openblock left w50"><div class="content"><div class="imageblock" style=""><img src="img/dop-book.png" alt="dop book" width="65%"></div></div></div>
 <script src='https://cdn.jsdelivr.net/g/lodash@4(lodash.min.js+lodash.fp.min.js)'></script>
 <script>
 var fp = _.noConflict();
@@ -172,7 +314,10 @@ var _fp = fp.convert({
   'rearg': false
 });
 
-</script></section></div></div><script src="reveal.js/lib/js/head.min.js"></script><script src="reveal.js/js/reveal.js"></script><script>// See https://github.com/hakimel/reveal.js#configuration for a full list of configuration options
+</script>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/immer/9.0.2/immer.umd.development.js" integrity="sha512-7pM/bg9svoTf1gIjpXztSn6CbyW4SKHm8R88Fyh8NgnQ82V0PbYVD6AOcgpYBkVFHjOGoJWCTeOZqx0HWvWEbw==" crossorigin="anonymous"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/immutable/4.0.0-rc.12/immutable.min.js" integrity="sha512-OA48phPVdkQE2u9b6nhv71zeq9zvwc6oLq3IVWLw8WfRlcRO/+6zhUcWZxfXi75agm3bfqCxIdstBfK/g6fYvw==" crossorigin="anonymous"></script></section></div></div><script src="reveal.js/lib/js/head.min.js"></script><script src="reveal.js/js/reveal.js"></script><script>// See https://github.com/hakimel/reveal.js#configuration for a full list of configuration options
 Reveal.initialize({
   // Display controls in the bottom right corner
   controls: true,
