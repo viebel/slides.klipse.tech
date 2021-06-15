@@ -15,7 +15,7 @@ include::slide.attrs[]
 
 
 
-[..big-text]
+[.big-text]
 *Data-Oriented programming*
 
 
