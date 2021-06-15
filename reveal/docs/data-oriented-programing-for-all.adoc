@@ -1,0 +1,397 @@
+= Data-Oriented programming
+include::slide.attrs[]
+
+[state=title]
+[%notitle]
+== Data-Oriented programming
+
+
+[.centered]
+--
+{bl}
+{bl}
+{bl}
+{bl}
+
+
+
+[..big-text]
+*Data-Oriented programming*
+
+
+_Reducing 🕸 complexity 🕸 of information systems_
+
+{bl}
+{bl}
+{bl}
+
+Yehonathan Sharvit icon:twitter[]  viebel
+--
+
+== 👋Who am I?
+[.left.w60]
+
+--
+* 💻 Developer since 2001 (Clojure since 2012)
+* 🎁️Maintainer of Klipse
+* 📖 Author of Data-Oriented programming
+* 📝 Blogger at https://blog.klipse.tech/[blog.klipse.tech]
+* 🧙 Clojure wizard at Cycognito
+--
+
+[.left.w40]
+--
+image::dop-book.png[width=65%]
+--
+
+== 🕸 What is complexity?
+
+{bl}
+{bl}
+
+[.fragment]
+[quote]
+--
+*⚙️Computational complexity*
+
+The amount of *machine resources* (e.g. CPU, memory) required to *run* a program.
+--
+
+[.fragment]
+[quote]
+--
+*😰 System Complexity*
+
+The amount of *brain resources* required to *understand* a system.
+--
+
+{bl}
+[.fragment]
+
+Our goal is to reduce *system* complexity.
+
+== 📊 Information systems
+
+[quote]
+Systems that manipulate *information* in various ways.
+
+{bl}
+{bl}
+{bl}
+
+Examples of *information systems*:
+
+* *Web services* that fetch data from the database and serves it as JSON
+* *Web workers* that listen to events and enrich them with data from multiple data sources
+* *Front end applications* that manage an application state
+
+
+
+==  ⌛ A brief history of Data-Oriented programming
+
+[.left.w80]
+--
+[.fragment]
+1936 👉 λ-calculus (Alonzo Church)
+
+[.fragment]
+1958 👉 LISP (John McCarthy)
+
+[.fragment]
+
+1981 👉 Values and Objects in Programming Languages (Bruce MacLennan)
+
+[.fragment]
+2000 👉 Ideal Hash trees (Phil Bagwell)
+
+[.fragment]
+2006 👉 Out of the Tar Pit  (Ben Moseley and Peter Marks)
+
+[.fragment]
+2007 👉 Clojure (Rich Hickey)
+
+[.fragment]
+2021? 👉 Wikipedia article about Data-Oriented programming (Help wanted)
+
+--
+
+[.left.w20]
+image::zen.jpeg[width=100%]
+
+
+== {principle} Principles of Data-Oriented programming
+
+
+[.centered.bordered]
+Data is a *first-class citizen*  ✈️
+
+{bl}
+{bl}
+
+[.fragment]
+[.left.w50.bordered]
+[%step]
+. *Separate* code from data
+. *Represent* data with *generic* data structures
+. Do not *mutate* data
+
+[.left.wsmall]
+{bl}
+[.fragment]
+[.left.w40.bordered]
+* Language agnostic
+** OO and FP
+** Statically or dynamically typed
+* Applicable in isolation
+* Powerful when combined
+
+
+== 🤔 What makes a software system complex?
+
+[.fragment]
+[.left.w30]
+image::watchmen-library.png[]
+
+[.left.w10]
+{bl}
+
+[.fragment]
+[.left.w30]
+image::complex-class-relation.svg[width=100%]
+
+
+[.fragment]
+--
+🕸️Sources of complexity
+--
+
+[.fragment]
+* Nodes with many edges
+* Many kinds of arrows
+** Association
+** Composition
+** Inheritance
+** Usage
+
+
+== {principle} Principle #1: Separate Code from Data
+
+[.fragment]
+[.centered]
+image::principle1-nutshell-v2.svg[width=100%]
+
+
+[.left.w50]
+[.fragment]
+--
+.Adhering to the principle in OOP  {like} 
+
+[source, javascript]
+class AuthorData {
+  constructor(firstName, lastName) {
+    this.firstName = firstName;
+    this.lastName = lastName;
+  }
+}
+
+[source,javascript]
+class NameCalculation {
+  static fullName(data) {
+    return data.firstName + " "
+           + data.lastName;
+  }
+}
+
+--
+[.fragment]
+[.left.w50]
+--
+.Breaking the principle in FP {dislike}
+[source, javascript]
+function createAuthor(firstName,
+                      lastName) {
+  return {
+    fullName: function() {
+      return firstName + " " + lastName;
+    }
+  };
+}
+--
+
+
+
+=== {benefit}Reduction of System Complexity
+
+[.fragment]
+--
+[.bordered.w65.left]
+image::from-oop-to-dop.png[width=100%]
+--
+
+[.left.w30.margin-left]
+--
+[.fragment]
+{meditation}What makes this system _less complex_?
+
+[.fragment]
+* *Separation* of concerns
+* Code diagram *constraints*
+** Stateless (static)
+** Only usage relation
+* Data diagram *constraints*
+** Only association and composition
+--
+
+== {principle}Principle #2: Represent Data with generic data structures
+
+[quote]
+In DOP, we represent a *record* as a *heterogeneous map*
+
+{bl}
+{bl}
+
+[.left.w50]
+--
+[.fragment]
+.Adhering to the principle {like}
+[source,javascript]
+var watchmenBook = new Map([
+    ["publicationYear", 1986],
+    ["title", "Watchmen"]
+    ]);
+--
+
+
+[.left.w50]
+--
+[.fragment]
+.Breaking the principle {dislike}
+[source,javascript]
+----
+class Book {
+    isbn; title;
+    constructor(publicationYear, title) {
+        this.publicationYear = publicationYear;
+        this.title = title;
+    }
+}
+var watchmenBook = new Book("978-1779501127",
+                            "Watchmen");
+----
+--
+
+
+=== {benefit}Reduction of System Complexity even more
+
+[.fragment]
+[.left.w40]
+--
+[.bordered]
+image::data-code-relation.svg[width=100%]
+[.huge-text]
+{dislike} {dislike} {dislike}
+--
+
+[.fragment]
+[.left.w20]
+--
+[.bordered]
+image::code-only.svg[width=100%, height=415px]
+[.huge-text]
+{like} {like} {like}
+--
+
+
+[.left.w40]
+--
+[.fragment]
+{meditation}What makes this system _less complex_?
+
+[.fragment]
+* *Weak dependency* between code and data
+* *Loose coupling* between components
+* *Flexible* data model
+* *Generic* data manipulation functions
+--
+
+
+=== {benefit} Data is represented as data
+
+image::zen4.jpg[width=70%]
+
+
+=== {benefit} Data is represented as data
+
+[.fragment]
+[.left.w50]
+image::library-data.svg[width=100%]
+
+
+[.fragment]
+[.left.w50]
+* *Visualize* the whole system data
+* *Display* data on console
+* *Serialization* for free
+* *Reflection* for free
+* Information *path* (e.g. `["catalog", "authorsById", "alan-moore", "name"]`)
+
+
+
+== {principle} Principle #3: Do not mutate Data
+
+[.fragment]
+--
+[.left.w60]
+image::structural-sharing.svg[width=100%]
+
+[.left.w40]
+Update the value associated with +
+`["catalog", "booksByIsbn", "watchmen"]` +
+to `1986`.
+
+
+Most of the nodes are shared!
+--
+
+== Immutability in practice
+* Immutability in Java
+** `@value` annotation from Project Lombok
+** Records (since Java 14)
+* Immutability in JavaScript
+** Naive structural sharing with: Lodash, Ramda, Immer
+** Advanced structural sharing with: Immutable.js
+** EcmaScript https://github.com/tc39/proposal-record-tuple[Proposal] for record and tuple 
+
+== ⏳Summary
+
+{bl}
+{bl}
+{bl}
+{bl}
+[.left.w50]
+image::do-principles-journey.svg[width=90%]
+
+[.left.w40.bordered]
+. *Separate* Code from Data
+. *Represent* Data with *generic* data structures
+. Do not *mutate* data
+
+
+== 🎹Imagine
+
+video::EDRRbuWuUbQ[youtube, width=100%, height=750]
+
+
+== 🙋 Questions 
+
+
+[.left.w50]
+image::dop-book.png[width=65%]
+
+[.left.w50]
+--
+
+https://tinyurl.com/dop-clojure
+
+image::https://chart.googleapis.com/chart?cht=qr&chl=https://tinyurl.com/dop-clojure&chs=400x400[width=40%]
+--

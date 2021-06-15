@@ -17,4 +17,4 @@ DEPENDENCIES
   concurrent-ruby
 
 BUNDLED WITH
-   1.16.2
+   2.2.3

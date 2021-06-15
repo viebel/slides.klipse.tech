@@ -1,0 +1,54 @@
+@startuml
+top to bottom direction
+skinparam packageStyle rectangle
+skinparam usecase {
+  BackgroundColor White
+  BorderColor Blue
+
+  BackgroundColor<< Next >> LightPink
+
+  ArrowColor Blue
+}
+
+
+usecase Library
+usecase Catalog
+usecase UserManagement
+usecase ... as users
+usecase authorsById
+usecase ... as authors
+usecase booksByIsbn
+usecase watchmen
+usecase "title:Watchmen" as title
+usecase "publicationYear:1987" as publicationYear
+usecase authorIds
+usecase ... as watchmenAuthors
+
+usecase Library as lib2 << Next >>
+usecase Catalog as catalog2 << Next >>
+usecase booksByIsbn as books2 << Next >>
+usecase watchmen as watchmen2 << Next >>
+usecase "publicationYear:1986" as publicationYear2 << Next >>
+
+Library --> UserManagement
+UserManagement --> users
+Library --> Catalog
+Catalog --> authorsById
+authorsById --> authors
+Catalog --> booksByIsbn
+booksByIsbn --> watchmen
+watchmen --> title
+watchmen --> publicationYear
+watchmen --> authorIds
+authorIds --> watchmenAuthors
+
+lib2 --> UserManagement
+lib2 --> catalog2
+catalog2 --> authorsById
+catalog2 --> books2
+books2 --> watchmen2
+watchmen2 --> title
+watchmen2 --> authorIds
+watchmen2 --> publicationYear2
+
+@enduml
