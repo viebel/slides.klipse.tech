@@ -182,8 +182,9 @@ public record Book (String title,
 [source, javascript]
 function createBook(title, publicationYear) {
   return {
-  "title": title,
-  "publicationYear": publicationYear
+    "title": title,
+    "publicationYear": publicationYear
+  };
 }
 --
 

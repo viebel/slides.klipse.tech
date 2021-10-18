@@ -52,8 +52,9 @@ document.getElementsByTagName( 'head' )[0].appendChild( link );</script><!--[if 
                     int publicationYear) {}</code></pre></div></div></div></div>
 <div class="openblock left w50"><div class="content"><div class="listingblock fragment"><div class="title">String maps</div><div class="content"><pre class="highlight"><code data-noescape class="javascript language-javascript">function createBook(title, publicationYear) {
   return {
-  "title": title,
-  "publicationYear": publicationYear
+    "title": title,
+    "publicationYear": publicationYear
+  };
 }</code></pre></div></div></div></div></section>
 <section><section id="principle_1_separate_code_from_data_code"><h2>💡 Principle #1: Separate Code from Data (Code)</h2><div class="imageblock fragment centered" style=""><img src="img/principle1-nutshell-code-v3.svg" alt="principle1 nutshell code v3" width="100%"></div><div class="listingblock left w50 fragment"><div class="title">Classes with static methods</div><div class="content"><pre class="highlight"><code data-noescape class="javascript language-javascript">class BookBusinessLogic {
   static bookInfo(Book book) {
