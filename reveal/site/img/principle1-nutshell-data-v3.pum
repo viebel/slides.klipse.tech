@@ -1,0 +1,9 @@
+@startmindmap
+!include SkinParam.iuml
+* Data
+** Classes with members only
+** Records
+** String maps
+@endmindmap
+
+

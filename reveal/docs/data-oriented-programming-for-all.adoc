@@ -87,43 +87,11 @@ Examples of *information systems*:
 
 
 
-==  ⌛ A brief history of Data-Oriented programming
-
-[.left.w80]
---
-[.fragment]
-1936 👉 λ-calculus (Alonzo Church)
-
-[.fragment]
-1958 👉 LISP (John McCarthy)
-
-[.fragment]
-
-1981 👉 Values and Objects in Programming Languages (Bruce MacLennan)
-
-[.fragment]
-2000 👉 Ideal Hash trees (Phil Bagwell)
-
-[.fragment]
-2006 👉 Out of the Tar Pit  (Ben Moseley and Peter Marks)
-
-[.fragment]
-2007 👉 Clojure (Rich Hickey)
-
-[.fragment]
-2021? 👉 Wikipedia article about Data-Oriented programming (Help wanted)
-
---
-
-[.left.w20]
-image::zen.jpeg[width=100%]
-
-
 == {principle} Principles of Data-Oriented programming
 
 
 [.centered.bordered]
-Data is a *first-class citizen*  ✈️
+Treat *data* as a *value*
 
 {bl}
 {bl}
@@ -134,6 +102,7 @@ Data is a *first-class citizen*  ✈️
 . *Separate* code from data
 . *Represent* data with *generic* data structures
 . Do not *mutate* data
+. Separate data *schema* from data *representation*
 
 [.left.wsmall]
 {bl}
@@ -174,50 +143,78 @@ image::complex-class-relation.svg[width=100%]
 ** Usage
 
 
-== {principle} Principle #1: Separate Code from Data
+== {principle} Principle #1: Separate Code from Data 
 
 [.fragment]
 [.centered]
-image::principle1-nutshell-v2.svg[width=100%]
+image::principle1-nutshell-v3.svg[width=100%]
+
+== {principle} Principle #1: Separate Code from Data (Data)
+
+[.fragment]
+[.centered]
+image::principle1-nutshell-data-v3.svg[width=100%]
 
 
 [.left.w50]
-[.fragment]
 --
-.Adhering to the principle in OOP  {like} 
-
-[source, javascript]
-class AuthorData {
-  constructor(firstName, lastName) {
-    this.firstName = firstName;
-    this.lastName = lastName;
+[.fragment]
+.Classes with members only
+[source, java]
+class Book {
+  constructor(String title, int publicationYear) {
+    this.title = title;
+    this.publicationYear = publicationYear;
   }
 }
 
-[source,javascript]
-class NameCalculation {
-  static fullName(data) {
-    return data.firstName + " "
-           + data.lastName;
-  }
-}
-
---
 [.fragment]
+.Records
+[source, java]
+public record Book (String title,
+                    int publicationYear) {}
+--
+
 [.left.w50]
 --
-.Breaking the principle in FP {dislike}
+[.fragment]
+.String maps
 [source, javascript]
-function createAuthor(firstName,
-                      lastName) {
+function createBook(title, publicationYear) {
   return {
-    fullName: function() {
-      return firstName + " " + lastName;
-    }
-  };
+  "title": title,
+  "publicationYear": publicationYear
 }
 --
 
+== {principle} Principle #1: Separate Code from Data (Code)
+
+[.fragment]
+[.centered]
+image::principle1-nutshell-code-v3.svg[width=100%]
+
+
+[.left.w50]
+[.fragment]
+.Classes with static methods
+[source,javascript]
+class BookBusinessLogic {
+  static bookInfo(Book book) {
+    return book.title + 
+      " was published in: "
+      + book.publicationYear;
+  }
+}
+
+[.left.w50]
+[.fragment]
+.Stateless functions
+[source,javascript]
+function bookInfo(Book book) {
+    return book.title + 
+      " was published in: "
+      + book.publicationYear;
+}
 
 
 === {benefit}Reduction of System Complexity
@@ -253,30 +250,25 @@ In DOP, we represent a *record* as a *heterogeneous map*
 [.left.w50]
 --
 [.fragment]
-.Adhering to the principle {like}
+.Map constructor {like}
 [source,javascript]
 var watchmenBook = new Map([
-    ["publicationYear", 1986],
-    ["title", "Watchmen"]
-    ]);
+    ["title", "Watchmen"],
+    ["publicationYear", 1986]
+]);
 --
 
 
 [.left.w50]
 --
 [.fragment]
-.Breaking the principle {dislike}
+.Map literal {like}
 [source,javascript]
 ----
-class Book {
-    isbn; title;
-    constructor(publicationYear, title) {
-        this.publicationYear = publicationYear;
-        this.title = title;
-    }
-}
-var watchmenBook = new Book("978-1779501127",
-                            "Watchmen");
+var watchmenBook = {
+  "title": "Watchmen",
+  "publicationYear": 1986
+};
 ----
 --
 
@@ -332,9 +324,9 @@ image::library-data.svg[width=100%]
 * *Visualize* the whole system data
 * *Display* data on console
 * *Serialization* for free
+* *Generic* data manipulation functions (`sortBy`, `groupBy`, `select`...)
 * *Reflection* for free
 * Information *path* (e.g. `["catalog", "authorsById", "alan-moore", "name"]`)
-
 
 
 == {principle} Principle #3: Do not mutate Data
@@ -353,14 +345,139 @@ to `1986`.
 Most of the nodes are shared!
 --
 
-== Immutability in practice
-* Immutability in Java
+== Immutability in practice (native data structures)
+
+* JavaScript
+** Naive structural sharing with: Lodash, Ramda, Immer
+** EcmaScript https://github.com/tc39/proposal-record-tuple[Proposal] for record and tuple 
+* Java
 ** `@value` annotation from Project Lombok
 ** Records (since Java 14)
-* Immutability in JavaScript
-** Naive structural sharing with: Lodash, Ramda, Immer
-** Advanced structural sharing with: Immutable.js
-** EcmaScript https://github.com/tc39/proposal-record-tuple[Proposal] for record and tuple 
+
+== Immutability in practice (persistent data structures)
+
+|===
+| Language   | Library
+
+| JavaScript | Immutable.js
+| Java       | Paguro
+| Go         | Peds 
+| Clojure    | provided by the language
+| C#         | provided by the language
+| Python     | Pyrsistent
+| Ruby       | Hamster
+|===
+
+
+== What about data validation?
+
+{bl}
+{bl}
+[.left.w50]
+--
+[.fragment]
+[source,javascript]
+var invalidBook = new Map([
+    ["theTitle", "Watchmen"],
+    ["publicationYear", 1986]
+]);
+
+[.fragment]
+[source,javascript]
+bookInfo(invalidBook);
+--
+
+[.left.w50]
+--
+[.fragment]
+[source]
+ was published in: 1986
+--
+
+== Data validation (JSON Schema)
+
+.book-schema.json
+[.fragment]
+[.centered.w50]
+[source,json]
+--
+{
+  "type": "object",
+  "required": ["title", "publicationYear"], 
+  "properties": {
+    "title": {"type": "string"},
+    "publicationYear": {"type": "integer"}
+  }
+}
+--
+
+[.left.w50]
+--
+[.fragment]
+Ajv JSON schema validator in JavaScript
+
+[.fragment]
+[source,javascript]
+var ajv = new Ajv({allErrors: true}); 
+var bookSchema = parseJSONFile("book-schema.json");
+
+[.fragment]
+[source,javascript]
+function bookInfo(book) {
+  if(!ajv.validate(bookSchema, book)) {
+    throw "bookInfo called with invalid args: " + 
+      ajv.errorsText(ajv.errors);
+  }
+  return book.title + 
+    " was published in: "
+    + book.publicationYear;
+}
+--
+
+[.left.w50]
+--
+{bl}
+{bl}
+
+[.fragment]
+[source,javascript]
+var invalidBook = new Map([
+    ["theTitle", "Watchmen"],
+    ["publicationYear", 1986]
+]);
+
+[.fragment]
+[source,javascript]
+bookInfo(invalidBook);
+
+[.fragment]
+[source]
+data should have required property 'title'
+--
+
+==  ⌛ A brief history of Data-Oriented programming
+
+[.fragment]
+[.left.w80]
+--
+1936 👉 λ-calculus (Alonzo Church)
+
+1958 👉 LISP (John McCarthy)
+
+1981 👉 Values and Objects in Programming Languages (Bruce MacLennan)
+
+2000 👉 Ideal Hash trees (Phil Bagwell)
+
+2006 👉 Out of the Tar Pit  (Ben Moseley and Peter Marks)
+
+2007 👉 Clojure (Rich Hickey)
+
+2021 👉 Data-Oriented Programming (Yehonathan Sharvit)
+--
+
+[.left.w20]
+image::zen.jpeg[width=100%]
+
 
 == ⏳Summary
 
@@ -369,12 +486,13 @@ Most of the nodes are shared!
 {bl}
 {bl}
 [.left.w50]
-image::do-principles-journey.svg[width=90%]
+image::do-principles-journey-v2.svg[width=90%]
 
 [.left.w40.bordered]
 . *Separate* Code from Data
 . *Represent* Data with *generic* data structures
 . Do not *mutate* data
+. Separate data *schema* from data *representation*
 
 
 == 🎹Imagine

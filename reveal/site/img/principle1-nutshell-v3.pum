@@ -1,0 +1,12 @@
+@startmindmap
+!include SkinParam.iuml
+* Separate Code from Data
+** Data
+*** Classes with members only
+*** Records
+*** String maps
+** Code
+*** Classes with static methods
+*** Stateless Functions
+@endmindmap
+

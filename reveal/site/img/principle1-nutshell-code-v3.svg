@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?><svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" contentScriptType="application/ecmascript" contentStyleType="text/css" height="157px" preserveAspectRatio="none" style="width:508px;height:157px;background:#FFFFFF;" version="1.1" viewBox="0 0 508 157" width="508px" zoomAndPan="magnify"><defs><filter height="300%" id="f1t3lk9rhg9oyj" width="300%" x="-1" y="-1"><feGaussianBlur result="blurOut" stdDeviation="2.0"/><feColorMatrix in="blurOut" result="blurOut2" type="matrix" values="0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 .4 0"/><feOffset dx="4.0" dy="4.0" in="blurOut2" result="blurOut3"/><feBlend in="SourceGraphic" in2="blurOut3" mode="normal"/></filter></defs><g><rect fill="#FEFECE" filter="url(#f1t3lk9rhg9oyj)" height="47.9375" rx="12.5" ry="12.5" style="stroke:#0000FF;stroke-width:1.5;" width="80" x="10" y="53.9688"/><text fill="#000000" font-family="sans-serif" font-size="24" lengthAdjust="spacing" textLength="60" x="20" y="86.2461">Code</text><rect fill="#FEFECE" filter="url(#f1t3lk9rhg9oyj)" height="47.9375" rx="12.5" ry="12.5" style="stroke:#0000FF;stroke-width:1.5;" width="349" x="140" y="20"/><text fill="#000000" font-family="sans-serif" font-size="24" lengthAdjust="spacing" textLength="329" x="150" y="52.2773">Classes with static methods</text><path d="M90,77.9375 L100,77.9375 C115,77.9375 115,43.9688 130,43.9688 L140,43.9688 " fill="none" style="stroke:#0000FF;stroke-width:3.0;"/><rect fill="#FEFECE" filter="url(#f1t3lk9rhg9oyj)" height="47.9375" rx="12.5" ry="12.5" style="stroke:#0000FF;stroke-width:1.5;" width="247" x="140" y="87.9375"/><text fill="#000000" font-family="sans-serif" font-size="24" lengthAdjust="spacing" textLength="227" x="150" y="120.2148">Stateless Functions</text><path d="M90,77.9375 L100,77.9375 C115,77.9375 115,111.9063 130,111.9063 L140,111.9063 " fill="none" style="stroke:#0000FF;stroke-width:3.0;"/><!--MD5=[b1b1393be1d5d7156353cba75129a60a]
+@startmindmap
+!include SkinParam.iuml
+* Code
+** Classes with static methods
+** Stateless Functions
+@endmindmap
+
+@startmindmap
+<style>
+mindmapDiagram {
+  node {
+    LineColor blue
+    FontSize  24
+  }
+  arrow {
+    LineColor blue
+    LineThickness 3
+  }
+  .orange {
+    BackgroundColor orange
+  }
+  .red {
+    BackgroundColor red
+  }
+
+  .green {
+    BackgroundColor lightgreen
+  }
+
+}
+</style>
+* Code
+** Classes with static methods
+** Stateless Functions
+@endmindmap
+
+PlantUML version 1.2021.7(Sun May 23 15:40:07 IDT 2021)
+(GPL source distribution)
+Java Runtime: OpenJDK Runtime Environment
+JVM: OpenJDK 64-Bit Server VM
+Default Encoding: UTF-8
+Language: en
+Country: IL
+--></g></svg>

@@ -1,0 +1,8 @@
+@startmindmap
+!include SkinParam.iuml
+* Code
+** Classes with static methods
+** Stateless Functions
+@endmindmap
+
+

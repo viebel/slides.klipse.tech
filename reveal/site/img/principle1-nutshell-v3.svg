@@ -1,0 +1,55 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?><svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" contentScriptType="application/ecmascript" contentStyleType="text/css" height="361px" preserveAspectRatio="none" style="width:878px;height:361px;background:#FFFFFF;" version="1.1" viewBox="0 0 878 361" width="878px" zoomAndPan="magnify"><defs><filter height="300%" id="fv06flluc046l" width="300%" x="-1" y="-1"><feGaussianBlur result="blurOut" stdDeviation="2.0"/><feColorMatrix in="blurOut" result="blurOut2" type="matrix" values="0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 .4 0"/><feOffset dx="4.0" dy="4.0" in="blurOut2" result="blurOut3"/><feBlend in="SourceGraphic" in2="blurOut3" mode="normal"/></filter></defs><g><rect fill="#FEFECE" filter="url(#fv06flluc046l)" height="47.9375" rx="12.5" ry="12.5" style="stroke:#0000FF;stroke-width:1.5;" width="320" x="10" y="155.875"/><text fill="#000000" font-family="sans-serif" font-size="24" lengthAdjust="spacing" textLength="300" x="20" y="188.1523">Separate Code from Data</text><rect fill="#FEFECE" filter="url(#fv06flluc046l)" height="47.9375" rx="12.5" ry="12.5" style="stroke:#0000FF;stroke-width:1.5;" width="75" x="380" y="87.9375"/><text fill="#000000" font-family="sans-serif" font-size="24" lengthAdjust="spacing" textLength="55" x="390" y="120.2148">Data</text><rect fill="#FEFECE" filter="url(#fv06flluc046l)" height="47.9375" rx="12.5" ry="12.5" style="stroke:#0000FF;stroke-width:1.5;" width="345" x="505" y="20"/><text fill="#000000" font-family="sans-serif" font-size="24" lengthAdjust="spacing" textLength="325" x="515" y="52.2773">Classes with members only</text><path d="M455,111.9063 L465,111.9063 C480,111.9063 480,43.9688 495,43.9688 L505,43.9688 " fill="none" style="stroke:#0000FF;stroke-width:3.0;"/><rect fill="#FEFECE" filter="url(#fv06flluc046l)" height="47.9375" rx="12.5" ry="12.5" style="stroke:#0000FF;stroke-width:1.5;" width="115" x="505" y="87.9375"/><text fill="#000000" font-family="sans-serif" font-size="24" lengthAdjust="spacing" textLength="95" x="515" y="120.2148">Records</text><path d="M455,111.9063 L465,111.9063 C480,111.9063 480,111.9063 495,111.9063 L505,111.9063 " fill="none" style="stroke:#0000FF;stroke-width:3.0;"/><rect fill="#FEFECE" filter="url(#fv06flluc046l)" height="47.9375" rx="12.5" ry="12.5" style="stroke:#0000FF;stroke-width:1.5;" width="164" x="505" y="155.875"/><text fill="#000000" font-family="sans-serif" font-size="24" lengthAdjust="spacing" textLength="144" x="515" y="188.1523">String maps</text><path d="M455,111.9063 L465,111.9063 C480,111.9063 480,179.8438 495,179.8438 L505,179.8438 " fill="none" style="stroke:#0000FF;stroke-width:3.0;"/><path d="M330,179.8438 L340,179.8438 C355,179.8438 355,111.9063 370,111.9063 L380,111.9063 " fill="none" style="stroke:#0000FF;stroke-width:3.0;"/><rect fill="#FEFECE" filter="url(#fv06flluc046l)" height="47.9375" rx="12.5" ry="12.5" style="stroke:#0000FF;stroke-width:1.5;" width="80" x="380" y="257.7813"/><text fill="#000000" font-family="sans-serif" font-size="24" lengthAdjust="spacing" textLength="60" x="390" y="290.0586">Code</text><rect fill="#FEFECE" filter="url(#fv06flluc046l)" height="47.9375" rx="12.5" ry="12.5" style="stroke:#0000FF;stroke-width:1.5;" width="349" x="510" y="223.8125"/><text fill="#000000" font-family="sans-serif" font-size="24" lengthAdjust="spacing" textLength="329" x="520" y="256.0898">Classes with static methods</text><path d="M460,281.75 L470,281.75 C485,281.75 485,247.7813 500,247.7813 L510,247.7813 " fill="none" style="stroke:#0000FF;stroke-width:3.0;"/><rect fill="#FEFECE" filter="url(#fv06flluc046l)" height="47.9375" rx="12.5" ry="12.5" style="stroke:#0000FF;stroke-width:1.5;" width="247" x="510" y="291.75"/><text fill="#000000" font-family="sans-serif" font-size="24" lengthAdjust="spacing" textLength="227" x="520" y="324.0273">Stateless Functions</text><path d="M460,281.75 L470,281.75 C485,281.75 485,315.7188 500,315.7188 L510,315.7188 " fill="none" style="stroke:#0000FF;stroke-width:3.0;"/><path d="M330,179.8438 L340,179.8438 C355,179.8438 355,281.75 370,281.75 L380,281.75 " fill="none" style="stroke:#0000FF;stroke-width:3.0;"/><!--MD5=[7f01b628d30c9b443b9712687187b304]
+@startmindmap
+!include SkinParam.iuml
+* Separate Code from Data
+** Data
+*** Classes with members only
+*** Records
+*** String maps
+** Code
+*** Classes with static methods
+*** Stateless Functions
+@endmindmap
+
+@startmindmap
+<style>
+mindmapDiagram {
+  node {
+    LineColor blue
+    FontSize  24
+  }
+  arrow {
+    LineColor blue
+    LineThickness 3
+  }
+  .orange {
+    BackgroundColor orange
+  }
+  .red {
+    BackgroundColor red
+  }
+
+  .green {
+    BackgroundColor lightgreen
+  }
+
+}
+</style>
+* Separate Code from Data
+** Data
+*** Classes with members only
+*** Records
+*** String maps
+** Code
+*** Classes with static methods
+*** Stateless Functions
+@endmindmap
+
+PlantUML version 1.2021.7(Sun May 23 15:40:07 IDT 2021)
+(GPL source distribution)
+Java Runtime: OpenJDK Runtime Environment
+JVM: OpenJDK 64-Bit Server VM
+Default Encoding: UTF-8
+Language: en
+Country: IL
+--></g></svg>

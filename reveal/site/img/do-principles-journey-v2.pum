@@ -1,0 +1,17 @@
+@startmindmap
+!include SkinParam.iuml
+* SYSTEM
+** CODE
+*** FP <&thumb-up{scale=1.2}>
+*** OOP <&thumb-up{scale=1.2}>
+** DATA
+*** REPRESENTATION
+**** <s>SPECIFIC</s> <&thumb-down{scale=1.2}>
+**** GENERIC <&thumb-up{scale=1.2}>
+***** <s>MUTABLE</s> <&thumb-down{scale=1.2}>
+***** IMMUTABLE <&thumb-up{scale=1.2}>
+*** SCHEMA
+
+@endmindmap
+
+
