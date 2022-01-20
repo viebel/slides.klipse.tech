@@ -8,12 +8,12 @@ document.getElementsByTagName( 'head' )[0].appendChild( link );</script><!--[if 
 <br>
 <br></p></div>
 <div class="paragraph big-text"><p><strong>Data-Oriented programming</strong></p></div>
-<div class="paragraph"><p><em>Reducing 🕸 complexity 🕸 of information systems</em></p></div>
+<div class="paragraph"><p><em>Reducing 🕸complexity 🕸 of information systems</em></p></div>
 <div class="paragraph"><p><br>
 <br>
 <br></p></div>
 <div class="paragraph"><p>Yehonathan Sharvit <span class="icon"><i class="fa fa-twitter"></i></span>  viebel</p></div></div></div></section>
-<section id="who_am_i"><h2>👋Who am I?</h2><div class="openblock left w60"><div class="content"><div class="ulist"><ul><li><p>💻 Developer since 2001 (Clojure since 2012)</p></li><li><p>🎁️Maintainer of Klipse</p></li><li><p>📖 Author of Data-Oriented programming</p></li><li><p>📝 Blogger at <a href="https://blog.klipse.tech/">blog.klipse.tech</a></p></li><li><p>🧙 Clojure wizard at Cycognito</p></li></ul></div></div></div>
+<section id="who_am_i"><h2>👋Who am I?</h2><div class="openblock left w60"><div class="content"><div class="ulist"><ul><li><p>💻 Developer since 2001 (Clojure since 2012)</p></li><li><p>📖 Author of Data-Oriented programming</p></li><li><p>📝 Blogger at <a href="https://blog.klipse.tech/">blog.klipse.tech</a></p></li><li><p>🧙 Clojure wizard at Cycognito</p></li><li><p>🎁️ Maintainer of Klipse</p></li></ul></div></div></div>
 <div class="openblock left w40"><div class="content"><div class="imageblock" style=""><img src="img/dop-book.png" alt="dop book" width="65%"></div></div></div></section>
 <section id="what_is_complexity"><h2>🕸 What is complexity?</h2><div class="paragraph"><p><br>
 <br></p></div>
@@ -22,26 +22,25 @@ document.getElementsByTagName( 'head' )[0].appendChild( link );</script><!--[if 
 <div class="quoteblock fragment"><blockquote><div class="paragraph"><p><strong>😰 System Complexity</strong></p></div>
 <div class="paragraph"><p>The amount of <strong>brain resources</strong> required to <strong>understand</strong> a system.</p></div></blockquote></div>
 <div class="paragraph"><p><br></p></div>
-<div class="paragraph fragment"><p>Our goal is to reduce <strong>system</strong> complexity.</p></div></section>
+<div class="openblock fragment"><div class="content"><div class="paragraph"><p>Our goal is to reduce <strong>system</strong> complexity.</p></div>
+<div class="paragraph"><p>"Programs must be written for people to read, and only incidentally for machines to execute" (SICP, 1986)</p></div></div></div></section>
 <section id="information_systems"><h2>📊 Information systems</h2><div class="quoteblock"><blockquote>Systems that manipulate <strong>information</strong> in various ways.</blockquote></div>
 <div class="paragraph"><p><br>
 <br>
 <br></p></div>
 <div class="paragraph"><p>Examples of <strong>information systems</strong>:</p></div>
-<div class="ulist"><ul><li><p><strong>Web services</strong> that fetch data from the database and serves it as JSON</p></li><li><p><strong>Web workers</strong> that listen to events and enrich them with data from multiple data sources</p></li><li><p><strong>Front end applications</strong> that manage an application state</p></li></ul></div></section>
-<section id="principles_of_data_oriented_programming"><h2>💡 Principles of Data-Oriented programming</h2><div class="paragraph centered bordered"><p>Treat <strong>data</strong> as a <strong>value</strong></p></div>
+<div class="ulist"><ul><li><p><strong>Web services</strong> that fetch data from the database and serves it as JSON</p></li><li><p><strong>Web workers</strong> that listen to events and enrich them with data from multiple data sources (Data pipeline, ETL)</p></li><li><p><strong>Front end applications</strong> that manage an application state</p></li></ul></div></section>
+<section id="principles_of_data_oriented_programming"><h2>💡 Principles of Data-Oriented programming</h2><div class="paragraph fragment centered bordered"><p>Treat <strong>data</strong> as a <strong>value</strong></p></div>
 <div class="paragraph"><p><br>
 <br></p></div>
-<div class="olist arabic fragment left w50 bordered"><ol class="arabic"><li class="fragment"><p><strong>Separate</strong> code from data</p></li><li class="fragment"><p><strong>Represent</strong> data with <strong>generic</strong> data structures</p></li><li class="fragment"><p>Do not <strong>mutate</strong> data</p></li><li class="fragment"><p>Separate data <strong>schema</strong> from data <strong>representation</strong></p></li></ol></div>
-<div class="paragraph left wsmall"><p><br></p></div>
-<div class="ulist fragment left w40 bordered"><ul><li><p>Language agnostic</p><div class="ulist"><ul><li><p>OO and FP</p></li><li><p>Statically or dynamically typed</p></li></ul></div></li><li><p>Applicable in isolation</p></li><li><p>Powerful when combined</p></li></ul></div></section>
+<div class="olist arabic fragment centered bordered"><ol class="arabic"><li><p><strong>Separate</strong> code from data</p></li><li><p><strong>Represent</strong> data with <strong>generic</strong> data structures</p></li><li><p>Do not <strong>mutate</strong> data</p></li><li><p>Separate data <strong>schema</strong> from data <strong>representation</strong></p></li></ol></div></section>
 <section id="what_makes_a_software_system_complex"><h2>🤔 What makes a software system complex?</h2><div class="imageblock fragment left w30" style=""><img src="img/watchmen-library.png" alt="watchmen library"></div>
 <div class="paragraph left w10"><p><br></p></div>
 <div class="imageblock fragment left w30" style=""><img src="img/complex-class-relation.svg" alt="complex class relation" width="100%"></div>
 <div class="openblock fragment"><div class="content"><div class="paragraph"><p>🕸️Sources of complexity</p></div></div></div>
 <div class="ulist fragment"><ul><li><p>Nodes with many edges</p></li><li><p>Many kinds of arrows</p><div class="ulist"><ul><li><p>Association</p></li><li><p>Composition</p></li><li><p>Inheritance</p></li><li><p>Usage</p></li></ul></div></li></ul></div></section>
 <section id="principle_1_separate_code_from_data"><h2>💡 Principle #1: Separate Code from Data</h2><div class="imageblock fragment centered" style=""><img src="img/principle1-nutshell-v3.svg" alt="principle1 nutshell v3" width="100%"></div></section>
-<section id="principle_1_separate_code_from_data_data"><h2>💡 Principle #1: Separate Code from Data (Data)</h2><div class="imageblock fragment centered" style=""><img src="img/principle1-nutshell-data-v3.svg" alt="principle1 nutshell data v3" width="100%"></div>
+<section id="principle_1_separate_code_from_data_data"><h2>💡 Principle #1: Separate Code from Data (Data)</h2><div class="imageblock centered" style=""><img src="img/principle1-nutshell-data-v3.svg" alt="principle1 nutshell data v3" width="100%"></div>
 <div class="openblock left w50"><div class="content"><div class="listingblock fragment"><div class="title">Classes with members only</div><div class="content"><pre class="highlight"><code data-noescape class="java language-java">class Book {
   constructor(String title, int publicationYear) {
     this.title = title;
@@ -56,48 +55,80 @@ document.getElementsByTagName( 'head' )[0].appendChild( link );</script><!--[if 
     "publicationYear": publicationYear
   };
 }</code></pre></div></div></div></div></section>
-<section><section id="principle_1_separate_code_from_data_code"><h2>💡 Principle #1: Separate Code from Data (Code)</h2><div class="imageblock fragment centered" style=""><img src="img/principle1-nutshell-code-v3.svg" alt="principle1 nutshell code v3" width="100%"></div><div class="listingblock left w50 fragment"><div class="title">Classes with static methods</div><div class="content"><pre class="highlight"><code data-noescape class="javascript language-javascript">class BookBusinessLogic {
+<section id="principle_1_separate_code_from_data_code"><h2>💡 Principle #1: Separate Code from Data (Code)</h2><div class="imageblock centered" style=""><img src="img/principle1-nutshell-code-v3.svg" alt="principle1 nutshell code v3" width="100%"></div>
+<div class="openblock fragment left w50"><div class="content"><div class="listingblock"><div class="title">Classes with static methods</div><div class="content"><pre class="highlight"><code data-noescape class="javascript language-javascript">class BookBusinessLogic {
   static bookInfo(Book book) {
     return book.title +
       " was published in: "
       + book.publicationYear;
   }
-}</code></pre></div></div><div class="listingblock left w50 fragment"><div class="title">Stateless functions</div><div class="content"><pre class="highlight"><code data-noescape class="javascript language-javascript">function bookInfo(Book book) {
+}</code></pre></div></div></div></div>
+<div class="openblock fragment left w50"><div class="content"><div class="listingblock"><div class="title">Stateless functions aaaa</div><div class="content"><pre class="highlight"><code data-noescape class="javascript language-javascript">function bookInfo(Book book) {
     return book.title +
       " was published in: "
       + book.publicationYear;
-}</code></pre></div></div></section><section id="reduction_of_system_complexity"><h2>🏅Reduction of System Complexity</h2><div class="openblock fragment"><div class="content"><div class="imageblock bordered w65 left" style=""><img src="img/from-oop-to-dop.png" alt="from oop to dop" width="100%"></div></div></div>
+}</code></pre></div></div></div></div>
+<div class="openblock fragment left w90"><div class="content"><div class="paragraph"><p><br>
+<br></p></div>
+<div class="admonitionblock tip"><table><tr><td class="icon"><i class="fa fa-lightbulb-o" title="Tip"></i></td><td class="content">Functions receive data they manipulate as an <strong>explicit</strong> argument</td></tr></table></div></div></div></section>
+<section id="reduction_of_system_complexity"><h2>🏅Reduction of System Complexity</h2><div class="openblock fragment"><div class="content"><div class="imageblock bordered w65 left" style=""><img src="img/from-oop-to-dop.png" alt="from oop to dop" width="100%"></div></div></div>
 <div class="openblock left w30 margin-left"><div class="content"><div class="paragraph fragment"><p>☕What makes this system <em>less complex</em>?</p></div>
-<div class="ulist fragment"><ul><li><p><strong>Separation</strong> of concerns</p></li><li><p>Code diagram <strong>constraints</strong></p><div class="ulist"><ul><li><p>Stateless (static)</p></li><li><p>Only usage relation</p></li></ul></div></li><li><p>Data diagram <strong>constraints</strong></p><div class="ulist"><ul><li><p>Only association and composition</p></li></ul></div></li></ul></div></div></div></section></section>
-<section><section id="principle_2_represent_data_with_generic_data_structures"><h2>💡Principle #2: Represent Data with generic data structures</h2><div class="quoteblock"><blockquote>In DOP, we represent a <strong>record</strong> as a <strong>heterogeneous map</strong></blockquote></div><div class="paragraph"><p><br>
-<br></p></div><div class="openblock left w50"><div class="content"><div class="listingblock fragment"><div class="title">Map constructor 👍</div><div class="content"><pre class="highlight"><code data-noescape class="javascript language-javascript">var watchmenBook = new Map([
+<div class="ulist fragment"><ul><li><p><strong>Separation</strong> of concerns</p></li><li><p>Code diagram <strong>constraints</strong></p><div class="ulist"><ul><li><p>Stateless (static)</p></li><li><p>Only usage relation</p></li></ul></div></li><li><p>Data diagram <strong>constraints</strong></p><div class="ulist"><ul><li><p>Only association and composition</p></li></ul></div></li></ul></div></div></div></section>
+<section id="principle_2_represent_data_with_generic_data_structures"><h2>💡Principle #2: Represent Data with generic data structures</h2><div class="paragraph"><p><br>
+<br></p></div>
+<div class="openblock left w50"><div class="content"><div class="listingblock fragment"><div class="title">Map constructor 👍</div><div class="content"><pre class="highlight"><code data-noescape class="javascript language-javascript">var watchmenBook = new Map([
     ["title", "Watchmen"],
     ["publicationYear", 1986]
-]);</code></pre></div></div></div></div><div class="openblock left w50"><div class="content"><div class="listingblock fragment"><div class="title">Map literal 👍</div><div class="content"><pre class="highlight"><code data-noescape class="javascript language-javascript">var watchmenBook = {
+]);</code></pre></div></div></div></div>
+<div class="openblock left w50"><div class="content"><div class="listingblock fragment"><div class="title">Map literal 👍</div><div class="content"><pre class="highlight"><code data-noescape class="javascript language-javascript">var watchmenBook = {
   "title": "Watchmen",
   "publicationYear": 1986
-};</code></pre></div></div></div></div></section><section id="reduction_of_system_complexity_even_more"><h2>🏅Reduction of System Complexity even more</h2><div class="openblock fragment left w40"><div class="content"><div class="imageblock bordered" style=""><img src="img/data-code-relation.svg" alt="data code relation" width="100%"></div>
+};</code></pre></div></div></div></div></section>
+<section id="reduction_of_system_complexity_even_more"><h2>🏅Reduction of System Complexity even more</h2><div class="openblock fragment left w40"><div class="content"><div class="imageblock bordered" style=""><img src="img/data-code-relation.svg" alt="data code relation" width="100%"></div>
 <div class="paragraph huge-text"><p>👎 👎 👎</p></div></div></div>
 <div class="openblock fragment left w20"><div class="content"><div class="imageblock bordered" style=""><img src="img/code-only.svg" alt="code only" width="100%" height="415px"></div>
 <div class="paragraph huge-text"><p>👍 👍 👍</p></div></div></div>
 <div class="openblock left w40"><div class="content"><div class="paragraph fragment"><p>☕What makes this system <em>less complex</em>?</p></div>
-<div class="ulist fragment"><ul><li><p><strong>Weak dependency</strong> between code and data</p></li><li><p><strong>Loose coupling</strong> between components</p></li><li><p><strong>Flexible</strong> data model</p></li><li><p><strong>Generic</strong> data manipulation functions</p></li></ul></div></div></div></section><section id="data_is_represented_as_data"><h2>🏅 Data is represented as data</h2><div class="imageblock" style=""><img src="img/zen4.jpg" alt="zen4" width="70%"></div></section><section id="data_is_represented_as_data_2"><h2>🏅 Data is represented as data</h2><div class="imageblock fragment left w50" style=""><img src="img/library-data.svg" alt="library data" width="100%"></div>
-<div class="ulist fragment left w50"><ul><li><p><strong>Visualize</strong> the whole system data</p></li><li><p><strong>Display</strong> data on console</p></li><li><p><strong>Serialization</strong> for free</p></li><li><p><strong>Generic</strong> data manipulation functions (<code>sortBy</code>, <code>groupBy</code>, <code>select</code>&#8230;&#8203;)</p></li><li><p><strong>Reflection</strong> for free</p></li><li><p>Information <strong>path</strong> (e.g. <code>["catalog", "authorsById", "alan-moore", "name"]</code>)</p></li></ul></div></section></section>
-<section id="principle_3_do_not_mutate_data"><h2>💡 Principle #3: Do not mutate Data</h2><div class="openblock fragment"><div class="content"><div class="imageblock left w60" style=""><img src="img/structural-sharing.svg" alt="structural sharing" width="100%"></div>
-<div class="paragraph left w40"><p>Update the value associated with<br>
+<div class="ulist fragment"><ul><li><p><strong>Weak dependency</strong> between code and data</p></li><li><p><strong>Loose coupling</strong> between components</p></li><li><p><strong>Flexible</strong> data model</p></li><li><p><strong>Generic</strong> data manipulation functions</p></li></ul></div></div></div></section>
+<section id="data_is_represented_as_data"><h2>🏅 Data is represented as data</h2><div class="paragraph"><p><br>
+<br></p></div>
+<div class="imageblock centered w90" style=""><img src="img/zen4.jpg" alt="zen4" width="100%"></div></section>
+<section id="data_is_represented_as_data_2"><h2>🏅 Data is represented as data</h2><div class="imageblock fragment left w50" style=""><img src="img/library-data.svg" alt="library data" width="100%"></div>
+<div class="ulist fragment left w50"><ul><li><p><strong>Visualize</strong> the whole system data</p></li><li><p><strong>Display</strong> data on console</p></li><li><p><strong>Serialization</strong> for free</p></li><li><p><strong>Generic</strong> data manipulation functions (<code>sortBy</code>, <code>groupBy</code>, <code>select</code>&#8230;&#8203;)</p></li><li><p><strong>Reflection</strong> for free</p></li><li><p>Information <strong>path</strong> (e.g. <code>["catalog", "authorsById", "alan-moore", "name"]</code>)</p></li></ul></div></section>
+<section id="principle_3_do_not_mutate_data"><h2>💡 Principle #3: Do not mutate Data</h2><div class="openblock fragment"><div class="content"><div class="imageblock left w60" style=""><img src="img/JobYouHate.jpg" alt="JobYouHate" width="60%"></div>
+<div class="paragraph left w40"><p><br>
+<br>
+<br></p></div>
+<div class="ulist"><ul><li class="fragment"><p>Values never change!</p></li><li class="fragment"><p>Inherently Thread-safe</p></li><li class="fragment"><p>No side-effects</p></li></ul></div></div></div></section>
+<section id="principle_3_do_not_mutate_data_2"><h2>💡 Principle #3: Do not mutate Data</h2><div class="openblock fragment"><div class="content"><div class="imageblock left w60" style=""><img src="img/yes-but-how.png" alt="yes but how" width="60%"></div>
+<div class="paragraph left w40"><p><br>
+<br>
+<br></p></div>
+<div class="ulist"><ul><li class="fragment"><p>What about performance?</p></li><li class="fragment"><p>Should I clone?</p></li><li class="fragment"><p>Should I copy on write?</p></li><li class="fragment"><p>Should I use special data structures?</p></li></ul></div></div></div></section>
+<section id="principle_3_do_not_mutate_data_3"><h2>💡 Principle #3: Do not mutate Data</h2><div class="openblock fragment"><div class="content"><div class="imageblock left w60" style=""><img src="img/lib-data-high-level.svg" alt="lib data high level" width="70%"></div></div></div>
+<div class="openblock fragment"><div class="content"><div class="paragraph left w40"><p>Update the value associated with<br>
+<code>["catalog", "booksByIsbn", "watchmen"]</code><br>
+to <code>1986</code>.</p></div></div></div></section>
+<section id="principle_3_do_not_mutate_data_4"><h2>💡 Principle #3: Do not mutate Data</h2><div class="imageblock left w60" style=""><img src="img/structural-sharing.svg" alt="structural sharing" width="100%"></div>
+<div class="openblock left w40"><div class="content"><div class="paragraph"><p>Update the value associated with<br>
 <code>["catalog", "booksByIsbn", "watchmen"]</code><br>
 to <code>1986</code>.</p></div>
-<div class="paragraph"><p>Most of the nodes are shared!</p></div></div></div></section>
+<div class="paragraph fragment"><p>💸 Most of the nodes are <strong>shared</strong>!</p></div></div></div></section>
 <section id="immutability_in_practice_native_data_structures"><h2>Immutability in practice (native data structures)</h2><div class="ulist"><ul><li><p>JavaScript</p><div class="ulist"><ul><li><p>Naive structural sharing with: Lodash, Ramda, Immer</p></li><li><p>EcmaScript <a href="https://github.com/tc39/proposal-record-tuple">Proposal</a> for record and tuple</p></li></ul></div></li><li><p>Java</p><div class="ulist"><ul><li><p><code>@value</code> annotation from Project Lombok</p></li><li><p>Records (since Java 14)</p></li></ul></div></li></ul></div></section>
 <section id="immutability_in_practice_persistent_data_structures"><h2>Immutability in practice (persistent data structures)</h2><table class="tableblock frame-all grid-all" style="width:100%"><colgroup><col style="width:50%"><col style="width:50%"></colgroup><thead><tr><th class="tableblock halign-left valign-top">Language</th><th class="tableblock halign-left valign-top">Library</th></tr><tbody><tr><td class="tableblock halign-left valign-top"><p class="tableblock">JavaScript</p></td><td class="tableblock halign-left valign-top"><p class="tableblock">Immutable.js</p></td></tr><tr><td class="tableblock halign-left valign-top"><p class="tableblock">Java</p></td><td class="tableblock halign-left valign-top"><p class="tableblock">Paguro</p></td></tr><tr><td class="tableblock halign-left valign-top"><p class="tableblock">Go</p></td><td class="tableblock halign-left valign-top"><p class="tableblock">Peds</p></td></tr><tr><td class="tableblock halign-left valign-top"><p class="tableblock">Clojure</p></td><td class="tableblock halign-left valign-top"><p class="tableblock">provided by the language</p></td></tr><tr><td class="tableblock halign-left valign-top"><p class="tableblock">C#</p></td><td class="tableblock halign-left valign-top"><p class="tableblock">provided by the language</p></td></tr><tr><td class="tableblock halign-left valign-top"><p class="tableblock">Python</p></td><td class="tableblock halign-left valign-top"><p class="tableblock">Pyrsistent</p></td></tr><tr><td class="tableblock halign-left valign-top"><p class="tableblock">Ruby</p></td><td class="tableblock halign-left valign-top"><p class="tableblock">Hamster</p></td></tr></table></section>
 <section id="what_about_data_validation"><h2>What about data validation?</h2><div class="paragraph"><p><br>
 <br></p></div>
+<div class="openblock left w50"><div class="content"><div class="listingblock fragment"><div class="content"><pre class="highlight"><code data-noescape class="javascript language-javascript">function bookInfo(book) {
+  return book.title +
+    " was published in: "
+    + book.publicationYear;
+}</code></pre></div></div></div></div>
 <div class="openblock left w50"><div class="content"><div class="listingblock fragment"><div class="content"><pre class="highlight"><code data-noescape class="javascript language-javascript">var invalidBook = new Map([
     ["theTitle", "Watchmen"],
     ["publicationYear", 1986]
 ]);</code></pre></div></div>
-<div class="listingblock fragment"><div class="content"><pre class="highlight"><code data-noescape class="javascript language-javascript">bookInfo(invalidBook);</code></pre></div></div></div></div>
-<div class="openblock left w50"><div class="content"><div class="listingblock fragment"><div class="content"><pre class="highlight"><code data-noescape> was published in: 1986</code></pre></div></div></div></div></section>
+<div class="listingblock fragment"><div class="content"><pre class="highlight"><code data-noescape class="javascript language-javascript">bookInfo(invalidBook);</code></pre></div></div>
+<div class="listingblock left w50 fragment"><div class="content"><pre class="highlight"><code data-noescape> was published in: 1986</code></pre></div></div></div></div></section>
 <section id="data_validation_json_schema"><h2>Data validation (JSON Schema)</h2><div class="listingblock fragment centered w50"><div class="title">book-schema.json</div><div class="content"><pre class="highlight"><code data-noescape class="json language-json">{
   "type": "object",
   "required": ["title", "publicationYear"],
@@ -126,20 +157,8 @@ var bookSchema = parseJSONFile("book-schema.json");</code></pre></div></div>
 ]);</code></pre></div></div>
 <div class="listingblock fragment"><div class="content"><pre class="highlight"><code data-noescape class="javascript language-javascript">bookInfo(invalidBook);</code></pre></div></div>
 <div class="listingblock fragment"><div class="content"><pre class="highlight"><code data-noescape>data should have required property 'title'</code></pre></div></div></div></div></section>
-<section id="a_brief_history_of_data_oriented_programming"><h2>⌛ A brief history of Data-Oriented programming</h2><div class="openblock fragment left w80"><div class="content"><div class="paragraph"><p>1936 👉 λ-calculus (Alonzo Church)</p></div>
-<div class="paragraph"><p>1958 👉 LISP (John McCarthy)</p></div>
-<div class="paragraph"><p>1981 👉 Values and Objects in Programming Languages (Bruce MacLennan)</p></div>
-<div class="paragraph"><p>2000 👉 Ideal Hash trees (Phil Bagwell)</p></div>
-<div class="paragraph"><p>2006 👉 Out of the Tar Pit  (Ben Moseley and Peter Marks)</p></div>
-<div class="paragraph"><p>2007 👉 Clojure (Rich Hickey)</p></div>
-<div class="paragraph"><p>2021 👉 Data-Oriented Programming (Yehonathan Sharvit)</p></div></div></div>
-<div class="imageblock left w20" style=""><img src="img/zen.jpeg" alt="zen" width="100%"></div></section>
-<section id="summary"><h2>⏳Summary</h2><div class="paragraph"><p><br>
-<br>
-<br>
-<br></p></div>
-<div class="imageblock left w50" style=""><img src="img/do-principles-journey-v2.svg" alt="do principles journey v2" width="90%"></div>
-<div class="olist arabic left w40 bordered"><ol class="arabic"><li><p><strong>Separate</strong> Code from Data</p></li><li><p><strong>Represent</strong> Data with <strong>generic</strong> data structures</p></li><li><p>Do not <strong>mutate</strong> data</p></li><li><p>Separate data <strong>schema</strong> from data <strong>representation</strong></p></li></ol></div></section>
+<section id="a_brief_history_of_data_oriented_programming"><h2>⌛ A brief history of Data-Oriented programming</h2><div class="imageblock centered w40" style=""><img src="img/dop-timeline.png" alt="dop timeline" width="90%"></div></section>
+<section id="summary"><h2>⏳Summary</h2><div class="imageblock" style=""><img src="img/do-principles-mind-map.png" alt="do principles mind map" width="68%"></div></section>
 <section id="imagine"><h2>🎹Imagine</h2><div class="videoblock"><iframe width="100%" height="750" src="https://www.youtube.com/embed/EDRRbuWuUbQ?rel=0" frameborder="0" allowfullscreen></iframe></div></section>
 <section id="questions"><h2>🙋 Questions</h2><div class="imageblock left w50" style=""><img src="img/dop-book.png" alt="dop book" width="65%"></div>
 <div class="openblock left w50"><div class="content"><div class="paragraph"><p><a href="https://tinyurl.com/dop-clojure" class="bare">https://tinyurl.com/dop-clojure</a></p></div>

@@ -19,7 +19,7 @@ include::slide.attrs[]
 *Data-Oriented programming*
 
 
-_Reducing 🕸 complexity 🕸 of information systems_
+_Reducing 🕸complexity 🕸 of information systems_
 
 {bl}
 {bl}
@@ -33,10 +33,10 @@ Yehonathan Sharvit icon:twitter[]  viebel
 
 --
 * 💻 Developer since 2001 (Clojure since 2012)
-* 🎁️Maintainer of Klipse
 * 📖 Author of Data-Oriented programming
 * 📝 Blogger at https://blog.klipse.tech/[blog.klipse.tech]
 * 🧙 Clojure wizard at Cycognito
+* 🎁️ Maintainer of Klipse
 --
 
 [.left.w40]
@@ -67,8 +67,11 @@ The amount of *brain resources* required to *understand* a system.
 
 {bl}
 [.fragment]
-
+--
 Our goal is to reduce *system* complexity.
+
+"Programs must be written for people to read, and only incidentally for machines to execute" (SICP, 1986)
+--
 
 == 📊 Information systems
 
@@ -82,7 +85,7 @@ Systems that manipulate *information* in various ways.
 Examples of *information systems*:
 
 * *Web services* that fetch data from the database and serves it as JSON
-* *Web workers* that listen to events and enrich them with data from multiple data sources
+* *Web workers* that listen to events and enrich them with data from multiple data sources (Data pipeline, ETL)
 * *Front end applications* that manage an application state
 
 
@@ -90,6 +93,7 @@ Examples of *information systems*:
 == {principle} Principles of Data-Oriented programming
 
 
+[.fragment]
 [.centered.bordered]
 Treat *data* as a *value*
 
@@ -97,22 +101,11 @@ Treat *data* as a *value*
 {bl}
 
 [.fragment]
-[.left.w50.bordered]
-[%step]
+[.centered.bordered]
 . *Separate* code from data
 . *Represent* data with *generic* data structures
 . Do not *mutate* data
 . Separate data *schema* from data *representation*
-
-[.left.wsmall]
-{bl}
-[.fragment]
-[.left.w40.bordered]
-* Language agnostic
-** OO and FP
-** Statically or dynamically typed
-* Applicable in isolation
-* Powerful when combined
 
 
 == 🤔 What makes a software system complex?
@@ -151,7 +144,6 @@ image::principle1-nutshell-v3.svg[width=100%]
 
 == {principle} Principle #1: Separate Code from Data (Data)
 
-[.fragment]
 [.centered]
 image::principle1-nutshell-data-v3.svg[width=100%]
 
@@ -190,13 +182,13 @@ function createBook(title, publicationYear) {
 
 == {principle} Principle #1: Separate Code from Data (Code)
 
-[.fragment]
 [.centered]
 image::principle1-nutshell-code-v3.svg[width=100%]
 
 
-[.left.w50]
 [.fragment]
+[.left.w50]
+--
 .Classes with static methods
 [source,javascript]
 class BookBusinessLogic {
@@ -206,19 +198,30 @@ class BookBusinessLogic {
       + book.publicationYear;
   }
 }
+--
 
-[.left.w50]
 [.fragment]
-.Stateless functions
+[.left.w50]
+--
+.Stateless functions aaaa
 [source,javascript]
 function bookInfo(Book book) {
     return book.title + 
       " was published in: "
       + book.publicationYear;
 }
+--
 
+[.fragment]
+[.left.w90]
+--
+{bl}
+{bl}
 
-=== {benefit}Reduction of System Complexity
+TIP: Functions receive data they manipulate as an *explicit* argument
+--
+
+== {benefit}Reduction of System Complexity
 
 [.fragment]
 --
@@ -242,8 +245,6 @@ image::from-oop-to-dop.png[width=100%]
 
 == {principle}Principle #2: Represent Data with generic data structures
 
-[quote]
-In DOP, we represent a *record* as a *heterogeneous map*
 
 {bl}
 {bl}
@@ -274,7 +275,7 @@ var watchmenBook = {
 --
 
 
-=== {benefit}Reduction of System Complexity even more
+== {benefit}Reduction of System Complexity even more
 
 [.fragment]
 [.left.w40]
@@ -308,12 +309,15 @@ image::code-only.svg[width=100%, height=415px]
 --
 
 
-=== {benefit} Data is represented as data
+== {benefit} Data is represented as data
 
-image::zen4.jpg[width=70%]
+{bl}
+{bl}
+[.centered.w90]
+image::zen4.jpg[width=100%]
 
 
-=== {benefit} Data is represented as data
+== {benefit} Data is represented as data
 
 [.fragment]
 [.left.w50]
@@ -335,15 +339,68 @@ image::library-data.svg[width=100%]
 [.fragment]
 --
 [.left.w60]
-image::structural-sharing.svg[width=100%]
+image::JobYouHate.jpg[width=60%]
 
+[.left.w40]
+{bl}
+{bl}
+{bl}
+[%step]
+- Values never change!
+- Inherently Thread-safe
+- No side-effects
+
+--
+== {principle} Principle #3: Do not mutate Data
+
+[.fragment]
+--
+[.left.w60]
+image::yes-but-how.png[width=60%]
+
+[.left.w40]
+{bl}
+{bl}
+{bl}
+[%step]
+- What about performance?
+- Should I clone?
+- Should I copy on write?
+- Should I use special data structures?
+
+--
+
+
+
+== {principle} Principle #3: Do not mutate Data
+
+[.fragment]
+--
+[.left.w60]
+image::lib-data-high-level.svg[width=70%]
+--
+
+[.fragment]
+--
 [.left.w40]
 Update the value associated with +
 `["catalog", "booksByIsbn", "watchmen"]` +
 to `1986`.
+--
 
+== {principle} Principle #3: Do not mutate Data
 
-Most of the nodes are shared!
+[.left.w60]
+image::structural-sharing.svg[width=100%]
+
+[.left.w40]
+--
+Update the value associated with +
+`["catalog", "booksByIsbn", "watchmen"]` +
+to `1986`.
+
+[.fragment]
+💸 Most of the nodes are *shared*!
 --
 
 == Immutability in practice (native data structures)
@@ -374,6 +431,18 @@ Most of the nodes are shared!
 
 {bl}
 {bl}
+
+[.left.w50]
+--
+[.fragment]
+[source,javascript]
+function bookInfo(book) {
+  return book.title + 
+    " was published in: "
+    + book.publicationYear;
+}
+--
+
 [.left.w50]
 --
 [.fragment]
@@ -386,10 +455,8 @@ var invalidBook = new Map([
 [.fragment]
 [source,javascript]
 bookInfo(invalidBook);
---
 
 [.left.w50]
---
 [.fragment]
 [source]
  was published in: 1986
@@ -458,42 +525,14 @@ data should have required property 'title'
 
 ==  ⌛ A brief history of Data-Oriented programming
 
-[.fragment]
-[.left.w80]
---
-1936 👉 λ-calculus (Alonzo Church)
-
-1958 👉 LISP (John McCarthy)
-
-1981 👉 Values and Objects in Programming Languages (Bruce MacLennan)
-
-2000 👉 Ideal Hash trees (Phil Bagwell)
-
-2006 👉 Out of the Tar Pit  (Ben Moseley and Peter Marks)
-
-2007 👉 Clojure (Rich Hickey)
-
-2021 👉 Data-Oriented Programming (Yehonathan Sharvit)
---
-
-[.left.w20]
-image::zen.jpeg[width=100%]
+[.centered.w40]
+image::dop-timeline.png[width=90%]
 
 
 == ⏳Summary
 
-{bl}
-{bl}
-{bl}
-{bl}
-[.left.w50]
-image::do-principles-journey-v2.svg[width=90%]
+image::do-principles-mind-map.png[width=68%]
 
-[.left.w40.bordered]
-. *Separate* Code from Data
-. *Represent* Data with *generic* data structures
-. Do not *mutate* data
-. Separate data *schema* from data *representation*
 
 
 == 🎹Imagine

@@ -1,0 +1,61 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?><svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" contentScriptType="application/ecmascript" contentStyleType="text/css" height="518px" preserveAspectRatio="none" style="width:538px;height:518px;background:#FFFFFF;" version="1.1" viewBox="0 0 538 518" width="538px" zoomAndPan="magnify"><defs><filter height="300%" id="f1s01biorn3wyj" width="300%" x="-1" y="-1"><feGaussianBlur result="blurOut" stdDeviation="2.0"/><feColorMatrix in="blurOut" result="blurOut2" type="matrix" values="0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 .4 0"/><feOffset dx="4.0" dy="4.0" in="blurOut2" result="blurOut3"/><feBlend in="SourceGraphic" in2="blurOut3" mode="normal"/></filter></defs><g><ellipse cx="343.8991" cy="20.6113" fill="#FFFFFF" filter="url(#f1s01biorn3wyj)" rx="42.8991" ry="14.6113" style="stroke:#0000FF;stroke-width:1.5;"/><text fill="#000000" font-family="sans-serif" font-size="14" lengthAdjust="spacing" textLength="44" x="318.8991" y="24.3588">Library</text><ellipse cx="260.8687" cy="114.18" fill="#FFFFFF" filter="url(#f1s01biorn3wyj)" rx="48.8687" ry="14.68" style="stroke:#0000FF;stroke-width:1.5;"/><text fill="#000000" font-family="sans-serif" font-size="14" lengthAdjust="spacing" textLength="52" x="231.8687" y="117.9275">Catalog</text><ellipse cx="426.8658" cy="113.7732" fill="#FFFFFF" filter="url(#f1s01biorn3wyj)" rx="81.8658" ry="18.7732" style="stroke:#0000FF;stroke-width:1.5;"/><text fill="#000000" font-family="sans-serif" font-size="14" lengthAdjust="spacing" textLength="123" x="364.3805" y="116.9463">UserManagement</text><ellipse cx="426.9706" cy="209.0236" fill="#FFFFFF" filter="url(#f1s01biorn3wyj)" rx="19.9706" ry="14.5236" style="stroke:#0000FF;stroke-width:1.5;"/><text fill="#000000" font-family="sans-serif" font-size="14" lengthAdjust="spacing" textLength="12" x="420.9706" y="211.8703">...</text><ellipse cx="112.113" cy="209.1226" fill="#FFFFFF" filter="url(#f1s01biorn3wyj)" rx="66.113" ry="15.6226" style="stroke:#0000FF;stroke-width:1.5;"/><text fill="#000000" font-family="sans-serif" font-size="14" lengthAdjust="spacing" textLength="82" x="68.113" y="212.8702">authorsById</text><ellipse cx="111.9706" cy="300.0236" fill="#FFFFFF" filter="url(#f1s01biorn3wyj)" rx="19.9706" ry="14.5236" style="stroke:#0000FF;stroke-width:1.5;"/><text fill="#000000" font-family="sans-serif" font-size="14" lengthAdjust="spacing" textLength="12" x="105.9706" y="302.8703">...</text><ellipse cx="282.1011" cy="209.1202" fill="#FFFFFF" filter="url(#f1s01biorn3wyj)" rx="68.6011" ry="16.1202" style="stroke:#0000FF;stroke-width:1.5;"/><text fill="#000000" font-family="sans-serif" font-size="14" lengthAdjust="spacing" textLength="89" x="234.6011" y="212.8678">booksByIsbn</text><ellipse cx="282.2349" cy="299.947" fill="#FFFFFF" filter="url(#f1s01biorn3wyj)" rx="62.7349" ry="14.947" style="stroke:#0000FF;stroke-width:1.5;"/><text fill="#000000" font-family="sans-serif" font-size="14" lengthAdjust="spacing" textLength="72" x="243.2349" y="303.6945">watchmen</text><ellipse cx="80.2198" cy="396.244" fill="#FFFFFF" filter="url(#f1s01biorn3wyj)" rx="74.2198" ry="17.244" style="stroke:#0000FF;stroke-width:1.5;"/><text fill="#000000" font-family="sans-serif" font-size="14" lengthAdjust="spacing" textLength="104" x="25.2198" y="399.9915">title:Watchmen</text><ellipse cx="281.8318" cy="395.8664" fill="#FFFFFF" filter="url(#f1s01biorn3wyj)" rx="92.3318" ry="20.8664" style="stroke:#0000FF;stroke-width:1.5;"/><text fill="#000000" font-family="sans-serif" font-size="14" lengthAdjust="spacing" textLength="147" x="208.3318" y="398.713">publicationYear:1987</text><ellipse cx="468.0731" cy="395.7619" fill="#FFFFFF" filter="url(#f1s01biorn3wyj)" rx="58.5731" ry="14.7619" style="stroke:#0000FF;stroke-width:1.5;"/><text fill="#000000" font-family="sans-serif" font-size="14" lengthAdjust="spacing" textLength="65" x="432.5731" y="399.5095">authorIds</text><ellipse cx="467.9706" cy="491.5236" fill="#FFFFFF" filter="url(#f1s01biorn3wyj)" rx="19.9706" ry="14.5236" style="stroke:#0000FF;stroke-width:1.5;"/><text fill="#000000" font-family="sans-serif" font-size="14" lengthAdjust="spacing" textLength="12" x="461.9706" y="494.3703">...</text><!--MD5=[5e24db372b23b899edd2f6ac7c607304]
+link Library to UserManagement--><path d="M355.89,34.61 C369.31,49.4 391.35,73.7 407.34,91.32 " fill="none" id="Library-to-UserManagement" style="stroke:#0000FF;stroke-width:1.0;"/><polygon fill="#0000FF" points="410.85,95.2,407.7647,85.8469,407.4902,91.4971,401.84,91.2226,410.85,95.2" style="stroke:#0000FF;stroke-width:1.0;"/><!--MD5=[47b7e45a410c271a42b9691346194c7d]
+link UserManagement to users--><path d="M427,133.37 C427,149.54 427,172.98 427,189.26 " fill="none" id="UserManagement-to-users" style="stroke:#0000FF;stroke-width:1.0;"/><polygon fill="#0000FF" points="427,194.49,431,185.49,427,189.49,423,185.49,427,194.49" style="stroke:#0000FF;stroke-width:1.0;"/><!--MD5=[808acc9e62ae45dd75218655b425f6b3]
+link Library to Catalog--><path d="M332.11,34.61 C317.44,50.78 292.47,78.3 276.36,96.06 " fill="none" id="Library-to-Catalog" style="stroke:#0000FF;stroke-width:1.0;"/><polygon fill="#0000FF" points="272.87,99.91,281.8724,95.9153,276.2227,96.2006,275.9374,90.551,272.87,99.91" style="stroke:#0000FF;stroke-width:1.0;"/><!--MD5=[57a7a1351c9310912f7a3ae4926a8fa2]
+link Catalog to authorsById--><path d="M241.21,127.35 C214.91,143.76 168.34,172.83 138.88,191.22 " fill="none" id="Catalog-to-authorsById" style="stroke:#0000FF;stroke-width:1.0;"/><polygon fill="#0000FF" points="134.3,194.08,144.0541,192.7168,138.544,191.4364,139.8243,185.9264,134.3,194.08" style="stroke:#0000FF;stroke-width:1.0;"/><!--MD5=[e8a1c3be51d3b91cfa77df5de88742fa]
+link authorsById to authors--><path d="M112,224.7 C112,239.87 112,263.59 112,280.14 " fill="none" id="authorsById-to-authors" style="stroke:#0000FF;stroke-width:1.0;"/><polygon fill="#0000FF" points="112,285.45,116,276.45,112,280.45,108,276.45,112,285.45" style="stroke:#0000FF;stroke-width:1.0;"/><!--MD5=[42c58503ca11a7c83d699c4c065d5990]
+link Catalog to booksByIsbn--><path d="M264.1,128.72 C267.61,144.29 273.38,169.83 277.42,187.71 " fill="none" id="Catalog-to-booksByIsbn" style="stroke:#0000FF;stroke-width:1.0;"/><polygon fill="#0000FF" points="278.61,192.99,280.5086,183.3259,277.4982,188.1152,272.7089,185.1048,278.61,192.99" style="stroke:#0000FF;stroke-width:1.0;"/><!--MD5=[34ce3ca51ebf68ea3e7c4efa5432f3d8]
+link booksByIsbn to watchmen--><path d="M282,225.1 C282,240.07 282,263.08 282,279.44 " fill="none" id="booksByIsbn-to-watchmen" style="stroke:#0000FF;stroke-width:1.0;"/><polygon fill="#0000FF" points="282,284.71,286,275.71,282,279.71,278,275.71,282,284.71" style="stroke:#0000FF;stroke-width:1.0;"/><!--MD5=[5feb81275e277c2837dda37dca2d9549]
+link watchmen to title--><path d="M254.76,313.68 C218.85,330.39 155.59,359.82 115.84,378.32 " fill="none" id="watchmen-to-title" style="stroke:#0000FF;stroke-width:1.0;"/><polygon fill="#0000FF" points="111.11,380.52,120.9572,380.3371,115.6406,378.4048,117.5728,373.0882,111.11,380.52" style="stroke:#0000FF;stroke-width:1.0;"/><!--MD5=[3f6035026febc5acf31c2b5c5b2eb529]
+link watchmen to publicationYear--><path d="M282,315.28 C282,329.71 282,352.3 282,369.76 " fill="none" id="watchmen-to-publicationYear" style="stroke:#0000FF;stroke-width:1.0;"/><polygon fill="#0000FF" points="282,375,286,366,282,370,278,366,282,375" style="stroke:#0000FF;stroke-width:1.0;"/><!--MD5=[bd218aa3a1263d2db382ade7852766b5]
+link watchmen to authorIds--><path d="M307.47,313.87 C341.56,331.1 401.91,361.6 438.11,379.89 " fill="none" id="watchmen-to-authorIds" style="stroke:#0000FF;stroke-width:1.0;"/><polygon fill="#0000FF" points="442.84,382.28,436.618,374.6454,438.3794,380.0211,433.0037,381.7825,442.84,382.28" style="stroke:#0000FF;stroke-width:1.0;"/><!--MD5=[b514817514a7bc04230202606f883738]
+link authorIds to watchmenAuthors--><path d="M468,411.2 C468,427.31 468,453.66 468,471.53 " fill="none" id="authorIds-to-watchmenAuthors" style="stroke:#0000FF;stroke-width:1.0;"/><polygon fill="#0000FF" points="468,476.78,472,467.78,468,471.78,464,467.78,468,476.78" style="stroke:#0000FF;stroke-width:1.0;"/><!--MD5=[ae24258842c64fbe39e0f86f0f7683cc]
+@startuml
+top to bottom direction
+skinparam packageStyle rectangle
+skinparam usecase {
+  BackgroundColor White
+  BorderColor Blue
+
+  BackgroundColor<< Next >> LightPink
+
+  ArrowColor Blue
+}
+
+
+usecase Library
+usecase Catalog
+usecase UserManagement
+usecase ... as users
+usecase authorsById
+usecase ... as authors
+usecase booksByIsbn
+usecase watchmen
+usecase "title:Watchmen" as title
+usecase "publicationYear:1987" as publicationYear
+usecase authorIds
+usecase ... as watchmenAuthors
+
+
+Library - -> UserManagement
+UserManagement - -> users
+Library - -> Catalog
+Catalog - -> authorsById
+authorsById - -> authors
+Catalog - -> booksByIsbn
+booksByIsbn - -> watchmen
+watchmen - -> title
+watchmen - -> publicationYear
+watchmen - -> authorIds
+authorIds - -> watchmenAuthors
+
+@enduml
+
+PlantUML version 1.2021.16(Wed Dec 08 19:25:22 IST 2021)
+(GPL source distribution)
+Java Runtime: OpenJDK Runtime Environment
+JVM: OpenJDK 64-Bit Server VM
+Default Encoding: UTF-8
+Language: en
+Country: null
+--></g></svg>
