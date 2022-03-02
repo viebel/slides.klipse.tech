@@ -1,7 +1,7 @@
 function hasWordStartingWith(sentence, prefix) {
   var sentenceLowerCase = sentence.toLowerCase();
   var prefixLowerCase = prefix.toLowerCase();
-  var prefixRegExp = new RegExp("\\b" + prefixLowerCase); 
+  var prefixRegExp = new RegExp("\\b" + prefixLowerCase + "\\b"); 
   return sentenceLowerCase.match(prefixRegExp) != null;
 }
 
@@ -48,7 +48,7 @@ function pickBookFields(book, fields) {
 
 function pickFields(books, fields) {
   return _.map(books, function(book) {
-  return pickBookFields(book, fields);
+    return pickBookFields(book, fields);
   });
 }
 
@@ -60,6 +60,5 @@ function formatBooks(books, formattingOptions) {
 function handleSearchQuery(catalog, query, options) {
   var books = searchBooks(catalog.books, query, options.query);
   var enrichedBooks = enrichBooks(catalog.authors, books);
-  var result = formatBooks(enrichedBooks, options.format);
-  return result;
+  return formatBooks(enrichedBooks, options.format);
 }
