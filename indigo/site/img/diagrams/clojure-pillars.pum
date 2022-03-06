@@ -1,0 +1,19 @@
+@startmindmap
+!include SkinParam.iuml
+
+* Clojure
+** Homoiconic
+*** Extensibility
+*** Structural editing
+** Functional
+*** Power of expression
+
+left side
+
+** REPL
+*** Short feedback loop
+*** Code exploration
+** Data oriented
+*** Reduce complexity
+
+@endmindmap

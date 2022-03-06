@@ -1,0 +1,19 @@
+=  Core functions in depth
+include::slide.attrs[]
+
+[state=title]
+== Data collections
+include::{includedir}/intro.adoc[]
+
+[state=title]
+== Scope
+
+Reference:https://www.braveclojure.com/core-functions-in-depth/[Core functions in depth]
+
+Solve the exercises at the end of the chapter
+
+
+== Insights
+
+* 
+

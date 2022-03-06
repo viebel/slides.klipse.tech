@@ -1,0 +1,158 @@
+<!DOCTYPE html><html lang="en"><head><meta charset="utf-8"><title>Clojure course: Dev environmen</title><meta content="yes" name="apple-mobile-web-app-capable"><meta content="black-translucent" name="apple-mobile-web-app-status-bar-style"><meta content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, minimal-ui" name="viewport"><link href="reveal.js/css/reveal.css" rel="stylesheet"><link rel="stylesheet" href="reveal.js/css/theme/simple.css" id="theme"><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.3.0/css/font-awesome.min.css"><link href="reveal.js/lib/css/zenburn.css" rel="stylesheet"><script>var link = document.createElement( 'link' );
+link.rel = 'stylesheet';
+link.type = 'text/css';
+link.href = window.location.search.match( /print-pdf/gi ) ? "reveal.js/css/print/pdf.css" : "reveal.js/css/print/paper.css";
+document.getElementsByTagName( 'head' )[0].appendChild( link );</script><!--[if lt IE 9]><script src="reveal.js/lib/js/html5shiv.js"></script><![endif]--><link rel="shortcut icon" type="image/x-icon" href="img/favicon.png">
+<link href="https://fonts.googleapis.com/css?family=Cormorant+Garamond&display=swap" rel="stylesheet">
+<script>
+ window.klipse_settings = {
+   selector: '.eval-clojure',
+	 selector_eval_js: '.eval-javascript',
+	 selector_eval_html: '.eval-html',
+   re_evaluate_all_snippets_on_change: false, // it makes snippet evaluation too slow
+ };
+</script><link rel="stylesheet" href="slides.css"></head><body><div class="reveal"><div class="slides"><section id="local_development_environment" data-state="title"><h2>Local development environment</h2><div class="openblock centered"><div class="content"><div class="paragraph"><p><br>
+<br>
+<br>
+<br>
+<br></p></div>
+<div class="imageblock left" style=""><img src="img/cycognito.jpg" alt="cycognito" height="300px"></div>
+<div class="paragraph left margin-right"><p><br>
+<br>
+<span class="icon"><i class="fa fa-heart fa-lg"></i></span></p></div>
+<div class="imageblock left" style=""><img src="img/clojure-logo.png" alt="clojure logo" height="300px"></div></div></div></section>
+<section id="use_tools_like_a_professional_clojure_developer"><h2>Use tools like a professional Clojure developer</h2><div class="admonitionblock tip"><table><tr><td class="icon"><i class="fa fa-lightbulb-o" title="Tip"></i></td><td class="content">Professional tools are never easy to use for beginners</td></tr></table></div>
+<div class="imageblock fragment left w60" style=""><img src="img/professional-dj.jpg" alt="professional dj"></div>
+<div class="imageblock fragment left w30" style=""><img src="img/guitarist-fingers.jpg" alt="guitarist fingers"></div></section>
+<section><section id="homoiconicity"><h2>Homoiconicity</h2><div class="admonitionblock tip"><table><tr><td class="icon"><i class="fa fa-lightbulb-o" title="Tip"></i></td><td class="content">The syntax of the code is the same as the syntax of the data.</td></tr></table></div><table class="tableblock frame-none grid-none" style="width:100%"><colgroup><col style="width:50%"><col style="width:50%"></colgroup><tbody><tr><td class="tableblock halign-left valign-top"><div><div class="listingblock"><div class="content"><pre class="highlight"><code data-noescape class="clojure language-clojure">(defn dummy
+  "A dummy function"
+  [n]
+  (let [a (inc n)]
+    a))</code></pre></div></div></div></td><td class="tableblock halign-left valign-top"><div><div class="listingblock"><div class="content"><pre class="highlight"><code data-noescape class="clojure language-clojure">'(a b
+  c
+  [d.a d.b]
+  (e.a [e.b.a (e.b.b.a e.b.b.b)]
+    e.c)</code></pre></div></div></div></td></tr></table></section><section id="structural_editing"><h2>Structural editing</h2><div class="admonitionblock tip"><table><tr><td class="icon"><i class="fa fa-lightbulb-o" title="Tip"></i></td><td class="content">Constraints are here to help you!</td></tr></table></div>
+<div class="openblock fragment"><div class="content"><div class="paragraph"><p>Paredit never lets your code become unbalanced</p></div>
+<div class="paragraph"><p><a href="http://danmidwood.com/content/2014/11/21/animated-paredit.html" target="blank">Animated Paredit</a></p></div></div></div></section><section id="practice_structural_editing"><h2>Practice Structural editing</h2><div class="paragraph"><p><a href="https://docs.google.com/spreadsheets/d/1ziaariJcAj4LpIO10nwb3C--TMkxHiGpl75kGgQou8s/edit#gid=0" target="blank">IntelliJ shortcuts</a></p></div>
+<div class="paragraph"><p><a href="https://drive.google.com/file/d/14t5mdq3oc7hXB66FON4IG3Wnjxb-AqDg/view?usp=sharing" target="blank">IntelliJ settings file</a></p></div>
+<table class="tableblock frame-none grid-none" style="width:100%"><colgroup><col style="width:50%"><col style="width:50%"></colgroup><tbody><tr><td class="tableblock halign-left valign-top"><div><div class="openblock fragment"><div class="content"><div class="paragraph"><p>Wrap expression</p></div>
+<div class="listingblock"><div class="content"><pre class="highlight"><code data-noescape class="clojure language-clojure">(println 1)</code></pre></div></div>
+<div class="paragraph"><p>to</p></div>
+<div class="listingblock"><div class="content"><pre class="highlight"><code data-noescape class="clojure language-clojure">(when a (println 1))</code></pre></div></div></div></div></div></td><td class="tableblock halign-left valign-top"><div><div class="openblock fragment"><div class="content"><div class="paragraph"><p>Slurp forward and Barf backward</p></div>
+<div class="listingblock"><div class="content"><pre class="highlight"><code data-noescape class="clojure language-clojure">sort [1 2 3]</code></pre></div></div>
+<div class="paragraph"><p>to</p></div>
+<div class="listingblock"><div class="content"><pre class="highlight"><code data-noescape class="clojure language-clojure">(sort [1 2 3])</code></pre></div></div></div></div></div></td></tr><tr><td class="tableblock halign-left valign-top"><div><div class="openblock fragment"><div class="content"><div class="paragraph"><p>Splice</p></div>
+<div class="listingblock"><div class="content"><pre class="highlight"><code data-noescape class="clojure language-clojure">  [1 2 3]</code></pre></div></div>
+<div class="paragraph"><p>to</p></div>
+<div class="listingblock"><div class="content"><pre class="highlight"><code data-noescape class="clojure language-clojure">  1 2 3</code></pre></div></div></div></div></div></td><td class="tableblock halign-left valign-top"><div><div class="openblock fragment"><div class="content"><div class="paragraph"><p>Kill backwards</p></div>
+<div class="listingblock"><div class="content"><pre class="highlight"><code data-noescape class="clojure language-clojure">(when a (println 1))</code></pre></div></div>
+<div class="paragraph"><p>to</p></div>
+<div class="listingblock"><div class="content"><pre class="highlight"><code data-noescape class="clojure language-clojure">(println 1)</code></pre></div></div></div></div></div></td></tr></table></section><section id="structural_navigation"><h2>Structural navigation</h2><div class="paragraph"><p>☕The code is a tree.</p></div>
+<div class="admonitionblock tip"><table><tr><td class="icon"><i class="fa fa-lightbulb-o" title="Tip"></i></td><td class="content">Never use arrow keys to navigate in your code</td></tr></table></div>
+<div class="listingblock"><div class="content"><pre class="highlight"><code data-noescape class="clojure language-clojure">'(a b
+  c
+  [d.a d.b]
+  (e.a [e.b.a (e.b.b.a e.b.b.b)]
+    e.c)</code></pre></div></div>
+<div class="paragraph"><p>🏂 To navigate from <code>b</code> to <code>e.a</code>, we move <em>forward</em> twice and <em>forward into sexp</em> once</p></div></section></section>
+<section><section id="the_repl"><h2>The REPL</h2><div class="paragraph"><p>REPL comes from the LISP tradition</p></div><div class="paragraph"><p>REPL is much more than a shell or a browser console</p></div><div class="videoblock"><div class="title">The Remote Agent Experiment: Debugging Code from 60 Million Miles Away</div><iframe width="100%" height="480" src="https://www.youtube.com/embed/_gZK0tW8EhQ?rel=0" frameborder="0" allowfullscreen></iframe></div></section><section id="the_repl_connected_to_the_ide"><h2>The REPL connected to the IDE</h2><div class="olist arabic"><ol class="arabic"><li><p>Evaluate the form that ends at caret</p></li><li><p>Evaluate top form</p></li><li><p>Evaluate the whole buffer</p></li><li><p>Comment block</p></li></ol></div></section><section id="debug_without_a_debugger"><h2>Debug without a debugger</h2><div class="paragraph"><p>spy</p></div></section></section>
+<section id="homeworks"><h2>Homeworks</h2><div class="olist arabic left w60"><ol class="arabic"><li><p>Practice structural editing on your IDE</p></li><li><p>Navigate the code without arrow keys</p></li><li><p>Connect the REPL to your IDE</p></li></ol></div>
+<div class="imageblock left w30" style=""><img src="img/homeworks.png" alt="homeworks"></div></section></div></div><script src="reveal.js/lib/js/head.min.js"></script><script src="reveal.js/js/reveal.js"></script><script>// See https://github.com/hakimel/reveal.js#configuration for a full list of configuration options
+Reveal.initialize({
+  // Display controls in the bottom right corner
+  controls: true,
+  // Display a presentation progress bar
+  progress: true,
+  // Set a per-slide timing for speaker notes, null means none
+  defaultTiming: null,
+  // Display the page number of the current slide
+  slideNumber: true,
+  // Push each slide change to the browser history
+  history: true,
+  // Enable keyboard shortcuts for navigation
+  keyboard: true,
+  // Enable the slide overview mode
+  overview: true,
+  // Vertical centering of slides
+  center: false,
+  // Enables touch navigation on devices with touch input
+  touch: true,
+  // Loop the presentation
+  loop: false,
+  // Change the presentation direction to be RTL
+  rtl: false,
+  // Randomizes the order of slides each time the presentation loads
+  shuffle: false,
+  // Turns fragments on and off globally
+  fragments: true,
+  // Flags if the presentation is running in an embedded mode,
+  // i.e. contained within a limited portion of the screen
+  embedded: false,
+  // Flags if we should show a help overlay when the questionmark
+  // key is pressed
+  help: true,
+  // Flags if speaker notes should be visible to all viewers
+  showNotes: false,
+  // Global override for autolaying embedded media (video/audio/iframe)
+  // - null: Media will only autoplay if data-autoplay is present
+  // - true: All media will autoplay, regardless of individual setting
+  // - false: No media will autoplay, regardless of individual setting
+  autoPlayMedia: null,
+  // Number of milliseconds between automatically proceeding to the
+  // next slide, disabled when set to 0, this value can be overwritten
+  // by using a data-autoslide attribute on your slides
+  autoSlide: 0,
+  // Stop auto-sliding after user input
+  autoSlideStoppable: true,
+  // Enable slide navigation via mouse wheel
+  mouseWheel: false,
+  // Hides the address bar on mobile devices
+  hideAddressBar: true,
+  // Opens links in an iframe preview overlay
+  previewLinks: false,
+  // Theme (e.g., beige, black, league, night, serif, simple, sky, solarized, white)
+  // NOTE setting the theme in the config no longer works in reveal.js 3.x
+  //theme: Reveal.getQueryHash().theme || 'simple',
+  // Transition style (e.g., none, fade, slide, convex, concave, zoom)
+  transition: Reveal.getQueryHash().transition || 'slide',
+  // Transition speed (e.g., default, fast, slow)
+  transitionSpeed: 'default',
+  // Transition style for full page slide backgrounds (e.g., none, fade, slide, convex, concave, zoom)
+  backgroundTransition: 'fade',
+  // Number of slides away from the current that are visible
+  viewDistance: 3,
+  // Parallax background image (e.g., "'https://s3.amazonaws.com/hakim-static/reveal-js/reveal-parallax-1.jpg'")
+  parallaxBackgroundImage: '',
+  // Parallax background size in CSS syntax (e.g., "2100px 900px")
+  parallaxBackgroundSize: '',
+
+  // The "normal" size of the presentation, aspect ratio will be preserved
+  // when the presentation is scaled to fit different resolutions. Can be
+  // specified using percentage units.
+  width: "100%",
+  height: "100%",
+
+  // Factor of the display size that should remain empty around the content
+  margin: 0.1,
+
+  // Bounds for smallest/largest possible scale to apply to content
+  minScale: 1.0,
+  maxScale: 1.0,
+
+  // Optional libraries used to extend on reveal.js
+  dependencies: [
+      { src: 'reveal.js/lib/js/classList.js', condition: function() { return !document.body.classList; } },
+      { src: 'reveal.js/plugin/markdown/marked.js', condition: function() { return !!document.querySelector( '[data-markdown]' ); } },
+      { src: 'reveal.js/plugin/markdown/markdown.js', condition: function() { return !!document.querySelector( '[data-markdown]' ); } },
+      { src: 'reveal.js/plugin/highlight/highlight.js', async: true, callback: function() { hljs.initHighlightingOnLoad(); } },
+      { src: 'reveal.js/plugin/zoom-js/zoom.js', async: true },
+      { src: 'reveal.js/plugin/notes/notes.js', async: true }
+  ]
+});</script><link rel="stylesheet" type="text/css" href="https://storage.googleapis.com/app.klipse.tech/css/codemirror.css">
+<script src="https://storage.googleapis.com/app.klipse.tech/plugin/js/klipse_plugin.js"></script>
+<script>
+ Reveal.addEventListener( 'slidechanged', function() {
+   window.dispatchEvent(new Event('resize'));
+ } );
+</script></body></html>

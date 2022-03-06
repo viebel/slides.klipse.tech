@@ -1,0 +1,140 @@
+= Debug without a debugger
+include::slide.attrs[]
+
+[state=title]
+== Debug without a debugger
+include::{includedir}/intro.adoc[]
+
+++++
+<script>
+window.klipse_settings.re_evaluate_all_snippets_on_change = false;
+</script>
+++++
+
+== Agenda
+
+{bl}
+{bl}
+{bl}
+{bl}
+{bl}
+{bl}
+[.centered]
+TIP: Leverage *homoiconicity* and *immutability* to empower your *developing experience*
+
+== A _buggy_ function
+
+[.fragment]
+--
+[source.eval-clojure,clojure]
+(defn foo [a b]
+  (let [x (/ a b)
+        y (+ a b)]
+    (+ x y)))
+--
+{bl}
+
+[.fragment]
+--
+[source.eval-clojure, clojure]
+(foo 2 3)
+--
+
+== Old well known print
+
+[.fragment]
+--
+[source.eval-clojure,clojure]
+(defn foo [a b]
+  (let [x (/ a b)
+        y (+ a b)]
+    (println "x: " x)
+    (println "y: " y)
+    (+ x y)))
+--
+{bl}
+
+[.fragment]
+--
+[source.eval-clojure, clojure]
+(foo 2 3)
+--
+
+
+== `dbg` macro
+
+[.fragment]
+--
+[source.eval-clojure, clojure]
+(defn foo [a b]
+  (+ (dbg (* a b))
+     (/ (dbg b) 3)))
+--
+
+{bl}
+
+[.fragment]
+--
+[source.eval-clojure, clojure]
+(foo 12 2)
+--
+
+[.left.w50]
+[.fragment]
+{meditation} How is it related to homoiconicity?
+
+[.left.w50]
+[.fragment]
+--
+[source.clojure]
+(defmacro dbg[x]
+  (when *assert*
+    `(let [x# ~x]
+       (println (str '~x ": ") x#)
+       x#)))
+--
+
+== `def` like crazy
+
+[.fragment]
+--
+[source.eval-clojure, clojure]
+(defn foo [a b]
+  (let [x (/ a b)
+        y (+ a b)]
+    (def x x)
+    (def y y)
+    (+ x y)))
+--
+
+{bl}
+
+[.fragment]
+--
+[source.eval-clojure,clojure]
+(foo 2 3)
+--
+
+
+[.fragment]
+--
+[source.eval-clojure,clojure]
+(+ x y)
+--
+
+
+[.fragment]
+{meditation} How is it related to immutability?
+
+== Welcome `scope-capture`
+
+https://github.com/vvvvalvalval/scope-capture
+
+Demo on the IDE
+
+
+== Homeworks
+
+* Use the `dbg` macro
+* Add `sc.api` to your `profile.clj`
+* Play with `sc.api`

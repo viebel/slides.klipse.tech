@@ -1,0 +1,200 @@
+= Just use maps
+include::slide.attrs[]
+
+
+[state=title]
+== Just use maps
+
+include::{includedir}/intro.adoc[]
+
+
+== Topics
+
+
+* The benefits of programming with maps
+* Keywords in maps
+* Accessing values in a map
+* Map as a sequence
+* Mapping over a map
+** Mapping the keys
+** Mapping the values
+* Filtering over a map
+* Immutable maps
+* Mutable maps
+
+== The benefits of programming with maps
+
+* Maps are generic
+* Maps are flexible
+
+
+
+== Keywords in maps
+
+[.fragment]
+--
+Keyword is the most commonly used type for fields
+[source.eval-clojure, clojure]
+(def person
+      {:first-name "Joe"
+         :last-name "Cohen"})
+--
+
+[.fragment]
+--
+Keywords behave like functions
+[source.eval-clojure, clojure]
+(:first-name person)
+--
+
+== Accessing values in a nested map
+
+[.fragment]
+--
+
+[source.eval-clojure, clojure]
+(def config
+  {:server {:port 5432}
+  :db {:collection "sales"}})
+--
+
+
+[.fragment]
+--
+Passing the path
+[source.eval-clojure, clojure]
+(get-in config [:db :collection])
+--
+
+
+
+== Map as a sequence
+
+
+[.fragment]
+--
+In terms of data, a map is a sequence of pairs
+[source.eval-clojure, clojure]
+(seq {:first-name "Joe"
+                  :last-name "Cohen"})
+--
+
+
+[.fragment]
+--
+All the sequence functions work on map
+[source.eval-clojure, clojure]
+(first {:first-name "Joe"
+                  :last-name "Cohen"})
+--
+
+
+[.fragment]
+--
+Map entries look like vectors but they have their own type
+[source.eval-clojure, clojure]
+(type (first {:first-name "Joe"
+                  :last-name "Cohen"}))
+--
+
+
+
+== Mapping over map
+
+[.fragment]
+--
+Mapping the keys
+[source.eval-clojure, clojure]
+(into {} (map (fn [[k v]]
+                [(name k) v])
+              {:first-name "Joe"
+               :last-name "Cooker"}))
+--
+
+
+[.fragment]
+--
+Mapping the values
+[source.eval-clojure, clojure]
+(into {} (map (fn [[k v]]
+                [k (keyword v)])
+              {:first-name "Joe"
+               :last-name "Cooker"}))
+--
+
+
+== Filtering a map
+[.fragment]
+--
+Selecting a subset of keys
+[source.eval-clojure, clojure]
+(select-keys (zipmap [1 2 3 4] ["a" "b" "c" "d"])
+  [1 3])
+--
+
+
+[.fragment]
+--
+Filtering the entries that match a predicate
+[source.eval-clojure, clojure]
+(into {} (filter (fn [[k v]]
+                (even? v))
+              (zipmap (range 10) (range 10))))
+--
+
+
+== Maps are immutable
+
+
+[.fragment]
+--
+Functions that seem to change a map, returns in fact a new version of the map
+[source.eval-clojure, clojure]
+(def new-person (assoc person :first-name "Frank"))
+[person new-person]
+--
+
+[.fragment]
+--
+There is a mutable version of maps
+[source.eval-clojure, clojure]
+(def mutable-person (transient person))
+(assoc! mutable-person :first-name "David")
+(persistent! mutable-person)
+--
+
+
+== Position of the map as an argument
+
+. Functions that treat the map as a sequence receive the map as last argument
+. Functions that treat the map as a concrete collection receive the map as first argument
+
+[.fragment]
+Data manipulation mini pipeline
+--
+[source.eval-clojure, clojure]
+(->> (zipmap [1 2 3 4] ["a" "b" "c" "d"])
+  (filter (fn [[k v]] (even? k)))
+  (map (fn [[k v]] [(inc k) v]))
+  (into {}))
+--
+
+[.fragment]
+--
+Consecutive changes to a map
+[source.eval-clojure, clojure]
+(-> (zipmap [1 2 3 4] ["a" "b" "c" "d"])
+  (assoc 1 "AAA")
+  (assoc 2 "BBB"))
+--
+
+
+
+== Homework
+
+. Write a function `map-vals` that receives a function and a map and return a map where the values are transformed by the function.
+. Write a function `compactize-map` that removes entries with `nil` values from a map
+. Write a function `compactize-map-recursive` that recursively removes entries with `nil` values from a map
+. Write a function `submap?` that checks if m1 is a submap of m2. Map m1 is a submap of m2 if all key/value pairs in m1 exist in m2.
+
+

@@ -1,0 +1,157 @@
+<!DOCTYPE html><html lang="en"><head><meta charset="utf-8"><title>Clojure course: Do things</title><meta content="yes" name="apple-mobile-web-app-capable"><meta content="black-translucent" name="apple-mobile-web-app-status-bar-style"><meta content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, minimal-ui" name="viewport"><link href="reveal.js/css/reveal.css" rel="stylesheet"><link rel="stylesheet" href="reveal.js/css/theme/simple.css" id="theme"><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.3.0/css/font-awesome.min.css"><link href="reveal.js/lib/css/zenburn.css" rel="stylesheet"><script>var link = document.createElement( 'link' );
+link.rel = 'stylesheet';
+link.type = 'text/css';
+link.href = window.location.search.match( /print-pdf/gi ) ? "reveal.js/css/print/pdf.css" : "reveal.js/css/print/paper.css";
+document.getElementsByTagName( 'head' )[0].appendChild( link );</script><!--[if lt IE 9]><script src="reveal.js/lib/js/html5shiv.js"></script><![endif]--><link rel="shortcut icon" type="image/x-icon" href="img/favicon.png">
+<link href="https://fonts.googleapis.com/css?family=Cormorant+Garamond&display=swap" rel="stylesheet">
+<script>
+ window.klipse_settings = {
+   selector: '.eval-clojure',
+	 selector_eval_js: '.eval-javascript',
+	 selector_eval_html: '.eval-html',
+   re_evaluate_all_snippets_on_change: false, // it makes snippet evaluation too slow
+ };
+</script><link rel="stylesheet" href="slides.css"></head><body><div class="reveal"><div class="slides"><section id="scope" data-state="title"><h2>Scope</h2><div class="paragraph"><p>Reference: <a href="https://www.braveclojure.com/do-things/">Do Things: A Clojure Crash Course</a></p></div>
+<div class="paragraph"><p>Solve the exercises at the end of the chapter</p></div></section>
+<section><section id="insights"><h2>Insights</h2></section><section id="avoid_using_def"><h2>Avoid using def</h2><div class="paragraph"><p><code>let</code> is lexically scoped</p></div>
+<div class="paragraph"><p><code>def</code> creates a global variable in the current namespace</p></div></section><section id="uniformity_of_function_calls"><h2>Uniformity of function calls</h2><div class="paragraph"><p>In many languages, we have:</p></div>
+<div class="ulist"><ul><li><p>unary operators</p></li><li><p>binary operators</p></li><li><p>functions</p></li></ul></div>
+<div class="paragraph"><p>In Clojure, we have only Symbolic expressions (Sexp).</p></div>
+<div class="paragraph"><p>It scales well with the number of arguments.</p></div>
+<div class="openblock fragment"><div class="content"><div class="paragraph"><p>Checking whether a number is contained in a range</p></div>
+<div class="listingblock eval-clojure"><div class="content"><pre class="highlight"><code data-noescape class="clojure language-clojure">(let [x 10]
+(&lt; 3 x 5))</code></pre></div></div></div></div></section><section id="everything_is_an_expression"><h2>Everything is an expression</h2><div class="openblock fragment"><div class="content"><div class="paragraph"><p>Storing an <code>if</code> expression in a var</p></div>
+<div class="listingblock eval-clojure"><div class="content"><pre class="highlight"><code data-noescape class="clojure language-clojure">(def my-value (if true 42 56))</code></pre></div></div></div></div>
+<div class="paragraph fragment"><p>In other languages, <code>if</code> is not an expression: it&#8217;s a statement.</p></div></section><section id="metadata_and_docstrings"><h2>Metadata and docstrings</h2><div class="paragraph"><p>The docstring of a function is stored in the metadata of the variable that defines the function.</p></div>
+<table class="tableblock frame-none grid-none" style="width:100%"><colgroup><col style="width:50%"><col style="width:50%"></colgroup><tbody><tr><td class="tableblock halign-left valign-top"><div><div class="openblock fragment"><div class="content"><div class="paragraph"><p>Defining a function with a docstring</p></div>
+<div class="listingblock eval-clojure"><div class="content"><pre class="highlight"><code data-noescape class="clojure language-clojure">(defn foo
+   "A great function"
+   [a b]
+   (+ a b))</code></pre></div></div></div></div></div></td><td class="tableblock halign-left valign-top"><div><div class="openblock fragment"><div class="content"><div class="paragraph"><p>Displaying the metadata</p></div>
+<div class="listingblock eval-clojure"><div class="content"><pre class="highlight"><code data-noescape class="clojure language-clojure">(meta #'foo)</code></pre></div></div></div></div></div></td></tr></table></section><section id="the_body_of_a_function"><h2>The body of a function</h2><div class="paragraph"><p>A function returns the value of the last expression of its body.</p></div>
+<div class="openblock fragment"><div class="content"><div class="paragraph"><p>A silly function with two expressions</p></div>
+<div class="listingblock eval-clojure"><div class="content"><pre class="highlight"><code data-noescape class="clojure language-clojure">(defn fn-two-expressions [a b]
+  (+ a b)
+ (* a b))</code></pre></div></div></div></div>
+<div class="openblock fragment"><div class="content"><div class="paragraph"><p>Calling a function whose body is made of two expressions</p></div>
+<div class="listingblock eval-clojure"><div class="content"><pre class="highlight"><code data-noescape class="clojure language-clojure">(foo 10 3)</code></pre></div></div></div></div>
+<div class="paragraph fragment"><p>☕ Usually, the body of a function is made of a single (nested) expression</p></div></section><section id="do_is_needed_for_side_effects"><h2><code>do</code> is needed for side effects</h2><div class="openblock fragment"><div class="content"><div class="paragraph"><p>two expressions wrapped in a single <code>do</code></p></div>
+<div class="listingblock eval-clojure"><div class="content"><pre class="highlight"><code data-noescape class="clojure language-clojure">(if true
+   (do
+   (println "It's true")
+   52)
+ (do
+ (println "It's false")
+ 44))</code></pre></div></div></div></div></section><section id="keywords_vs_strings"><h2>Keywords vs strings</h2><div class="ulist"><ul><li><p>Keywords have less features than strings</p></li><li><p>Keywords are like enums: an id with a name</p></li><li><p>Comparison of keywords is faster than comparison of strings</p></li><li><p>Common idiom: keywords as keys in map</p></li><li><p>Keyboard naming convention is kebab-case</p></li></ul></div>
+<div class="openblock fragment"><div class="content"><div class="paragraph"><p>A map with keyword keys</p></div>
+<div class="listingblock eval-clojure"><div class="content"><pre class="highlight"><code data-noescape class="clojure language-clojure">(def clojure-inventor {:first-name "Rich"
+  :last-name "Hickey"})</code></pre></div></div></div></div>
+<div class="openblock fragment"><div class="content"><div class="paragraph"><p>Retrieving the value associated to a keyword in a map</p></div>
+<div class="listingblock eval-clojure"><div class="content"><pre class="highlight"><code data-noescape class="clojure language-clojure">(:first-name clojure-inventor)</code></pre></div></div></div></div></section></section>
+<section id="summary_of_the_insights"><h2>Summary of the insights</h2><div class="ulist"><ul><li><p><code>let</code> vs. <code>def</code></p></li><li><p>The benefits of uniform function calls</p></li><li><p><code>do</code> is usually not needed</p></li><li><p>keywords vs strings</p></li><li><p>where is the docstring stored? (metadata)</p></li><li><p>the last expression of the function body</p></li></ul></div></section>
+<section><section id="exercises"><h2>Exercises</h2></section><section id="power_of_expression_with_map"><h2>Power of expression with map</h2><div class="openblock fragment"><div class="content"><div class="paragraph"><p>The data</p></div>
+<div class="listingblock eval-clojure"><div class="content"><pre class="highlight"><code data-noescape class="clojure language-clojure">(def asym-hobbit-body-parts [{:name "head" :size 3} {:name "left-eye" :size 1} {:name "left-ear" :size 1} {:name "mouth" :size 1} {:name "nose" :size 1} {:name "neck" :size 2} {:name "left-shoulder" :size 3} {:name "left-upper-arm" :size 3} {:name "chest" :size 10} {:name "back" :size 10} {:name "left-forearm" :size 3} {:name "abdomen" :size 6} {:name "left-kidney" :size 1} {:name "left-hand" :size 2} {:name "left-knee" :size 2} {:name "left-thigh" :size 4} {:name "left-lower-leg" :size 3} {:name "left-achilles" :size 1} {:name "left-foot" :size 2}])</code></pre></div></div></div></div>
+<div class="openblock fragment"><div class="content"><div class="paragraph"><p>The code</p></div>
+<div class="listingblock eval-clojure"><div class="content"><pre class="highlight"><code data-noescape class="clojure language-clojure">(defn matching-part
+  [part]
+  {:name (clojure.string/replace (:name part) #"^left-" "right-")
+   :size (:size part)})
+(clojure.set/union (map matching-part asym-hobbit-body-parts)
+                   asym-hobbit-body-parts)</code></pre></div></div></div></div></section></section></div></div><script src="reveal.js/lib/js/head.min.js"></script><script src="reveal.js/js/reveal.js"></script><script>// See https://github.com/hakimel/reveal.js#configuration for a full list of configuration options
+Reveal.initialize({
+  // Display controls in the bottom right corner
+  controls: true,
+  // Display a presentation progress bar
+  progress: true,
+  // Set a per-slide timing for speaker notes, null means none
+  defaultTiming: null,
+  // Display the page number of the current slide
+  slideNumber: true,
+  // Push each slide change to the browser history
+  history: true,
+  // Enable keyboard shortcuts for navigation
+  keyboard: true,
+  // Enable the slide overview mode
+  overview: true,
+  // Vertical centering of slides
+  center: false,
+  // Enables touch navigation on devices with touch input
+  touch: true,
+  // Loop the presentation
+  loop: false,
+  // Change the presentation direction to be RTL
+  rtl: false,
+  // Randomizes the order of slides each time the presentation loads
+  shuffle: false,
+  // Turns fragments on and off globally
+  fragments: true,
+  // Flags if the presentation is running in an embedded mode,
+  // i.e. contained within a limited portion of the screen
+  embedded: false,
+  // Flags if we should show a help overlay when the questionmark
+  // key is pressed
+  help: true,
+  // Flags if speaker notes should be visible to all viewers
+  showNotes: false,
+  // Global override for autolaying embedded media (video/audio/iframe)
+  // - null: Media will only autoplay if data-autoplay is present
+  // - true: All media will autoplay, regardless of individual setting
+  // - false: No media will autoplay, regardless of individual setting
+  autoPlayMedia: null,
+  // Number of milliseconds between automatically proceeding to the
+  // next slide, disabled when set to 0, this value can be overwritten
+  // by using a data-autoslide attribute on your slides
+  autoSlide: 0,
+  // Stop auto-sliding after user input
+  autoSlideStoppable: true,
+  // Enable slide navigation via mouse wheel
+  mouseWheel: false,
+  // Hides the address bar on mobile devices
+  hideAddressBar: true,
+  // Opens links in an iframe preview overlay
+  previewLinks: false,
+  // Theme (e.g., beige, black, league, night, serif, simple, sky, solarized, white)
+  // NOTE setting the theme in the config no longer works in reveal.js 3.x
+  //theme: Reveal.getQueryHash().theme || 'simple',
+  // Transition style (e.g., none, fade, slide, convex, concave, zoom)
+  transition: Reveal.getQueryHash().transition || 'slide',
+  // Transition speed (e.g., default, fast, slow)
+  transitionSpeed: 'default',
+  // Transition style for full page slide backgrounds (e.g., none, fade, slide, convex, concave, zoom)
+  backgroundTransition: 'fade',
+  // Number of slides away from the current that are visible
+  viewDistance: 3,
+  // Parallax background image (e.g., "'https://s3.amazonaws.com/hakim-static/reveal-js/reveal-parallax-1.jpg'")
+  parallaxBackgroundImage: '',
+  // Parallax background size in CSS syntax (e.g., "2100px 900px")
+  parallaxBackgroundSize: '',
+
+  // The "normal" size of the presentation, aspect ratio will be preserved
+  // when the presentation is scaled to fit different resolutions. Can be
+  // specified using percentage units.
+  width: "100%",
+  height: "100%",
+
+  // Factor of the display size that should remain empty around the content
+  margin: 0.1,
+
+  // Bounds for smallest/largest possible scale to apply to content
+  minScale: 1.0,
+  maxScale: 1.0,
+
+  // Optional libraries used to extend on reveal.js
+  dependencies: [
+      { src: 'reveal.js/lib/js/classList.js', condition: function() { return !document.body.classList; } },
+      { src: 'reveal.js/plugin/markdown/marked.js', condition: function() { return !!document.querySelector( '[data-markdown]' ); } },
+      { src: 'reveal.js/plugin/markdown/markdown.js', condition: function() { return !!document.querySelector( '[data-markdown]' ); } },
+      { src: 'reveal.js/plugin/highlight/highlight.js', async: true, callback: function() { hljs.initHighlightingOnLoad(); } },
+      { src: 'reveal.js/plugin/zoom-js/zoom.js', async: true },
+      { src: 'reveal.js/plugin/notes/notes.js', async: true }
+  ]
+});</script><link rel="stylesheet" type="text/css" href="https://storage.googleapis.com/app.klipse.tech/css/codemirror.css">
+<script src="https://storage.googleapis.com/app.klipse.tech/plugin/js/klipse_plugin.js"></script>
+<script>
+ Reveal.addEventListener( 'slidechanged', function() {
+   window.dispatchEvent(new Event('resize'));
+ } );
+</script></body></html>

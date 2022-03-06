@@ -1,0 +1,147 @@
+<!DOCTYPE html><html lang="en"><head><meta charset="utf-8"><title>Clojure course: Introduction</title><meta content="yes" name="apple-mobile-web-app-capable"><meta content="black-translucent" name="apple-mobile-web-app-status-bar-style"><meta content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, minimal-ui" name="viewport"><link href="reveal.js/css/reveal.css" rel="stylesheet"><link rel="stylesheet" href="reveal.js/css/theme/simple.css" id="theme"><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.3.0/css/font-awesome.min.css"><link href="reveal.js/lib/css/zenburn.css" rel="stylesheet"><script>var link = document.createElement( 'link' );
+link.rel = 'stylesheet';
+link.type = 'text/css';
+link.href = window.location.search.match( /print-pdf/gi ) ? "reveal.js/css/print/pdf.css" : "reveal.js/css/print/paper.css";
+document.getElementsByTagName( 'head' )[0].appendChild( link );</script><!--[if lt IE 9]><script src="reveal.js/lib/js/html5shiv.js"></script><![endif]--><link rel="shortcut icon" type="image/x-icon" href="img/favicon.png">
+<link href="https://fonts.googleapis.com/css?family=Cormorant+Garamond&display=swap" rel="stylesheet">
+<script>
+ window.klipse_settings = {
+   selector: '.eval-clojure',
+	 selector_eval_js: '.eval-javascript',
+	 selector_eval_html: '.eval-html',
+   re_evaluate_all_snippets_on_change: false, // it makes snippet evaluation too slow
+ };
+</script><link rel="stylesheet" href="slides.css"></head><body><div class="reveal"><div class="slides"><section id="introduction" data-state="title"><h2>Introduction</h2><div class="openblock centered"><div class="content"><div class="paragraph"><p><br>
+<br>
+<br>
+<br>
+<br></p></div>
+<div class="imageblock left" style=""><img src="img/cycognito.jpg" alt="cycognito" height="300px"></div>
+<div class="paragraph left margin-right"><p><br>
+<br>
+<span class="icon"><i class="fa fa-heart fa-lg"></i></span></p></div>
+<div class="imageblock left" style=""><img src="img/clojure-logo.png" alt="clojure logo" height="300px"></div></div></div></section>
+<section id="clojure_pillars"><h2>Clojure pillars</h2><div class="imageblock" style=""><img src="img/diagrams/clojure-pillars.png" alt="clojure pillars"></div></section>
+<section id="homoiconicity"><h2>Homoiconicity</h2><div class="admonitionblock tip"><table><tr><td class="icon"><i class="fa fa-lightbulb-o" title="Tip"></i></td><td class="content">The syntax of the code is the same as the syntax of the data.</td></tr></table></div>
+<table class="tableblock frame-none grid-none" style="width:100%"><colgroup><col style="width:50%"><col style="width:50%"></colgroup><tbody><tr><td class="tableblock halign-left valign-top"><div><div class="listingblock"><div class="content"><pre class="highlight"><code data-noescape class="clojure language-clojure">(+
+   (* 3 4)
+   (* 5 6))</code></pre></div></div></div></td><td class="tableblock halign-left valign-top"><div><div class="listingblock"><div class="content"><pre class="highlight"><code data-noescape class="clojure language-clojure">'(a b
+  c
+  [d.a d.b]
+  (e.a [e.b.a (e.b.b.a e.b.b.b)]
+    e.c)</code></pre></div></div></div></td></tr></table></section>
+<section><section id="functional_programming"><h2>Functional programming</h2><div class="paragraph"><p>A function is an entity that receives multiple <em>things</em> and return a <em>thing</em>.</p></div><div class="paragraph"><p>In <strong>functional programming</strong> the <em>things</em> that functions receive and return are allowed to be <strong>functions</strong>.</p></div><div class="admonitionblock tip"><table><tr><td class="icon"><i class="fa fa-lightbulb-o" title="Tip"></i></td><td class="content">We say that functions are <strong>first class citizens</strong>.</td></tr></table></div><div class="imageblock" style=""><img src="img/first-class.jpg" alt="first class"></div></section><section id="function_syntax"><h2>Function syntax</h2><div class="openblock fragment"><div class="content"><div class="paragraph"><p>We create a function with <code>defn</code></p></div>
+<div class="listingblock eval-clojure"><div class="content"><pre class="highlight"><code data-noescape class="clojure language-clojure">(defn bar
+  "bar is a function with documentation"
+  [a b c]
+  b)</code></pre></div></div></div></div>
+<div class="openblock fragment"><div class="content"><div class="paragraph"><p>We call a function like this</p></div>
+<div class="listingblock eval-clojure"><div class="content"><pre class="highlight"><code data-noescape class="clojure language-clojure">(bar 1 2 3)</code></pre></div></div></div></div></section></section>
+<section id="the_repl"><h2>The REPL</h2><div class="paragraph"><p>Live demo</p></div></section>
+<section id="data_oriented"><h2>Data oriented</h2><div class="paragraph"><p>Instead of representing data with classes, we use maps.</p></div>
+<div class="paragraph"><p>The maps are immutable.</p></div>
+<div class="openblock fragment"><div class="content"><div class="listingblock eval-clojure"><div class="content"><pre class="highlight"><code data-noescape class="clojure language-clojure">(def m {"a" 1})</code></pre></div></div></div></div>
+<br>
+<div class="openblock fragment"><div class="content"><div class="listingblock eval-clojure"><div class="content"><pre class="highlight"><code data-noescape class="clojure language-clojure">(assoc m "b" 2)</code></pre></div></div></div></div>
+<br>
+<div class="openblock fragment"><div class="content"><div class="listingblock eval-clojure"><div class="content"><pre class="highlight"><code data-noescape class="clojure language-clojure">m</code></pre></div></div></div></div></section>
+<section id="online_tools_and_materials"><h2>Online tools and materials</h2><div class="olist arabic left w40"><div class="title">Reference book: <a href="https://www.braveclojure.com/clojure-for-the-brave-and-true/">Clojure for the Brave an True</a></div><ol class="arabic"><li><p><a href="http://app.klipse.tech/?eval_only=1">Klipse</a>: Clojure REPL online</p></li><li><p><a href="https://clojuredocs.org/">ClojureDocs:</a> Documentation with Examples</p></li><li><p><a href="http://clojurescriptkoans.com/">ClojureScript koans</a></p></li><li><p><a href="http://clojurians.net/">Clojurians</a>: Slack Channel</p></li><li><p><a href="https://clojureverse.org/">Clojureverse forum</a></p></li><li><p><a href="https://cursive-ide.com/">Cursive</a>: Clojure IDE based on IntelliJ</p></li></ol></div>
+<div class="imageblock" style=""><img src="img/tools.jpg" alt="tools"></div></section>
+<section id="homeworks"><h2>Homeworks</h2><div class="olist arabic left w60"><ol class="arabic"><li><p>Register to <a href="http://clojurians.net/" target="_blank">Clojurians: Slack Channel</a></p></li><li><p>Post at least 1 question on Clojurians</p></li><li><p>10 minutes of <a href="http://clojurescriptkoans.com/" target="_blank">ClojureScript koans</a> every day</p></li></ol></div></section></div></div><script src="reveal.js/lib/js/head.min.js"></script><script src="reveal.js/js/reveal.js"></script><script>// See https://github.com/hakimel/reveal.js#configuration for a full list of configuration options
+Reveal.initialize({
+  // Display controls in the bottom right corner
+  controls: true,
+  // Display a presentation progress bar
+  progress: true,
+  // Set a per-slide timing for speaker notes, null means none
+  defaultTiming: null,
+  // Display the page number of the current slide
+  slideNumber: true,
+  // Push each slide change to the browser history
+  history: true,
+  // Enable keyboard shortcuts for navigation
+  keyboard: true,
+  // Enable the slide overview mode
+  overview: true,
+  // Vertical centering of slides
+  center: false,
+  // Enables touch navigation on devices with touch input
+  touch: true,
+  // Loop the presentation
+  loop: false,
+  // Change the presentation direction to be RTL
+  rtl: false,
+  // Randomizes the order of slides each time the presentation loads
+  shuffle: false,
+  // Turns fragments on and off globally
+  fragments: true,
+  // Flags if the presentation is running in an embedded mode,
+  // i.e. contained within a limited portion of the screen
+  embedded: false,
+  // Flags if we should show a help overlay when the questionmark
+  // key is pressed
+  help: true,
+  // Flags if speaker notes should be visible to all viewers
+  showNotes: false,
+  // Global override for autolaying embedded media (video/audio/iframe)
+  // - null: Media will only autoplay if data-autoplay is present
+  // - true: All media will autoplay, regardless of individual setting
+  // - false: No media will autoplay, regardless of individual setting
+  autoPlayMedia: null,
+  // Number of milliseconds between automatically proceeding to the
+  // next slide, disabled when set to 0, this value can be overwritten
+  // by using a data-autoslide attribute on your slides
+  autoSlide: 0,
+  // Stop auto-sliding after user input
+  autoSlideStoppable: true,
+  // Enable slide navigation via mouse wheel
+  mouseWheel: false,
+  // Hides the address bar on mobile devices
+  hideAddressBar: true,
+  // Opens links in an iframe preview overlay
+  previewLinks: false,
+  // Theme (e.g., beige, black, league, night, serif, simple, sky, solarized, white)
+  // NOTE setting the theme in the config no longer works in reveal.js 3.x
+  //theme: Reveal.getQueryHash().theme || 'simple',
+  // Transition style (e.g., none, fade, slide, convex, concave, zoom)
+  transition: Reveal.getQueryHash().transition || 'slide',
+  // Transition speed (e.g., default, fast, slow)
+  transitionSpeed: 'default',
+  // Transition style for full page slide backgrounds (e.g., none, fade, slide, convex, concave, zoom)
+  backgroundTransition: 'fade',
+  // Number of slides away from the current that are visible
+  viewDistance: 3,
+  // Parallax background image (e.g., "'https://s3.amazonaws.com/hakim-static/reveal-js/reveal-parallax-1.jpg'")
+  parallaxBackgroundImage: '',
+  // Parallax background size in CSS syntax (e.g., "2100px 900px")
+  parallaxBackgroundSize: '',
+
+  // The "normal" size of the presentation, aspect ratio will be preserved
+  // when the presentation is scaled to fit different resolutions. Can be
+  // specified using percentage units.
+  width: "100%",
+  height: "100%",
+
+  // Factor of the display size that should remain empty around the content
+  margin: 0.1,
+
+  // Bounds for smallest/largest possible scale to apply to content
+  minScale: 1.0,
+  maxScale: 1.0,
+
+  // Optional libraries used to extend on reveal.js
+  dependencies: [
+      { src: 'reveal.js/lib/js/classList.js', condition: function() { return !document.body.classList; } },
+      { src: 'reveal.js/plugin/markdown/marked.js', condition: function() { return !!document.querySelector( '[data-markdown]' ); } },
+      { src: 'reveal.js/plugin/markdown/markdown.js', condition: function() { return !!document.querySelector( '[data-markdown]' ); } },
+      { src: 'reveal.js/plugin/highlight/highlight.js', async: true, callback: function() { hljs.initHighlightingOnLoad(); } },
+      { src: 'reveal.js/plugin/zoom-js/zoom.js', async: true },
+      { src: 'reveal.js/plugin/notes/notes.js', async: true }
+  ]
+});</script><link rel="stylesheet" type="text/css" href="https://storage.googleapis.com/app.klipse.tech/css/codemirror.css">
+<script src="https://storage.googleapis.com/app.klipse.tech/plugin/js/klipse_plugin.js"></script>
+<script>
+ Reveal.addEventListener( 'slidechanged', function() {
+   window.dispatchEvent(new Event('resize'));
+ } );
+</script></body></html>

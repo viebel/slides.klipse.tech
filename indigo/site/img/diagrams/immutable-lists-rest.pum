@@ -1,0 +1,15 @@
+@startuml
+
+(1) -> (2)
+(2) -> (3)
+(3) -> (4)
+(4) -> (5)
+
+note top of 1
+  a
+end note
+
+note top of 2
+  (def b (rest a))
+end note
+@enduml

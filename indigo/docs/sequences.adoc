@@ -1,0 +1,354 @@
+= The sequence abstraction
+include::slide.attrs[]
+
+[state=title]
+== The sequence abstraction
+include::{includedir}/intro.adoc[]
+
+
+== Topics
+
+. Lists
+. Vectors
+. Sequences
+
+== Lists
+
+* The core of LISP: LISP stands for *LISt Processing*.
+* *Logically*, that's the only data structure we need
+* In terms of *performances*, it's not enough
+
+
+image::hello-list.jpg[]
+
+
+=== List creation
+
+
+[.fragment]
+--
+You can mix element of different types inside a list
+[source.eval-clojure, clojure]
+(list 1 2 "hello")
+--
+
+[.fragment]
+--
+You can nest lists inside lists inside lists inside lists...
+[source.eval-clojure, clojure]
+(list 1 2 (list "a" "b") (list 1.2 (list 3.43243 2.5)))
+--
+
+[.fragment]
+--
+There is a syntactic sugar for list creation: the single quote `'`
+[source.eval-clojure, clojure]
+'(1 2 3)
+--
+
+[.fragment]
+--
+And it works fine with nested lists
+[source.eval-clojure, clojure]
+'(1 2 ("a" "b" (1 2 4)))
+--
+
+=== Query on lists
+
+[.fragment]
+--
+Get the first element of a list
+[source.eval-clojure, clojure]
+(first '(1 2 3 4 5))
+--
+[.fragment]
+--
+Check if the list is empty
+[source.eval-clojure, clojure]
+(empty? '(1 2 3 4 5))
+--
+
+
+=== Removing the first element of a list
+[.fragment]
+--
+Create a *new* list without the first element
+[source.eval-clojure, clojure]
+(def a '(1 2 3 4 5))
+(def b (rest a))
+--
+
+[.fragment]
+--
+The new list is changed
+[source.eval-clojure, clojure]
+b
+--
+
+[.fragment]
+--
+The original list is left unchanged
+[source.eval-clojure, clojure]
+a
+--
+
+
+
+
+=== Adding an element to a list
+
+
+[.fragment]
+--
+Create a *new* list with an element prepended
+[source.eval-clojure, clojure]
+(def c '(1 2 3 4 5))
+(def d (cons 0 c))
+--
+
+[.fragment]
+--
+The new list is changed
+[source.eval-clojure, clojure]
+d
+--
+
+[.fragment]
+--
+The original list is left unchanged
+[source.eval-clojure, clojure]
+c
+--
+
+
+=== Efficient immutable lists 
+
+[.fragment]
+--
+The implementation of `rest`
+
+image::diagrams/immutable-lists-rest.png[]
+--
+
+{bl}
+[.fragment]
+--
+The implementation of `cons`
+
+image::diagrams/immutable-list-cons.png[]
+--
+
+== Vectors
+
+*Vectors* are like *lists* but with *fast random access*.
+
+
+
+=== Vector creation
+
+[.fragment]
+--
+Vectors are created using `vector`
+[source.eval-clojure, clojure]
+(vector 1 2 3 4 5)
+--
+
+{bl}
+
+[.fragment]
+--
+Nested vectors can be created using the literal `[]`
+[source.eval-clojure, clojure]
+(def a [1 2 3 4 "aa" [1 2] [1 2 3]])
+a
+--
+
+=== Query on vectors
+
+[.fragment]
+--
+Random access
+[source.eval-clojure, clojure]
+(nth ["a" "b" "c"] 2)
+--
+
+=== Modifying an entry in a vector
+
+[.fragment]
+--
+Create a *new* vector with a modified entry
+[source.eval-clojure, clojure]
+(def v [0 1 2 3 4])
+(def w (assoc v 2 200))
+--
+
+[.fragment]
+--
+The new vector is changed
+[source.eval-clojure, clojure]
+w
+--
+
+[.fragment]
+--
+The original vector is left unchanged
+[source.eval-clojure, clojure]
+v
+--
+
+=== Efficient immutable vectors 
+
+The secrets of persistent data structures https://hypirion.com/musings/understanding-persistent-vector-pt-1[Part 1] and https://hypirion.com/musings/understanding-persistent-vector-pt-2[Part 2].
+
+image::clojure-vectors.png[]
+
+=== Vectors vs lists
+
+[.fragment]
+{meditation} Why do we need lists if vectors has more features?
+
+{bl}
+
+[.fragment]
+* Lists are more efficient in terms of memory
+* For iterations, lists are more efficient in terms of CPU
+* Deep argument: When a list is enough why would we use a vector?
+
+
+== The sequence abstraction
+
+. `first`
+. `rest`
+. `empty?`
+. `cons`
+
+
+That's the foundation of the rich set of Clojure data manipulation functions: `map`, `filter`, `reduce`, `sort` ...
+
+
+=== The sequence abstraction in action
+[.fragment]
+--
+The sequence functions work on any data collection
+[source.eval-clojure, clojure]
+(first [1 2 3 4 5])
+--
+
+[.fragment]
+--
+Be careful: `rest` always returns a sequence!
+[source.eval-clojure, clojure]
+(rest [1 2 3 4 5])
+--
+[.fragment]
+--
+Be careful: `cons` always returns a sequence!
+[source.eval-clojure, clojure]
+(cons 0 [1 2 3 4 5])
+--
+
+
+{bl}
+[.fragment]
+--
+[source.eval-clojure, clojure]
+(empty? [1 2 3 4 5])
+--
+
+
+=== Sequence vs. list
+
+[.fragment]
+--
+Sequences are printed like lists
+[source.eval-clojure, clojure]
+(rest [1 2 3 4 5])
+--
+
+[.fragment]
+--
+A sequence is not the same as a list
+[source.eval-clojure, clojure]
+(= (type (rest [1 2 3 4 5])) (type '(2 3 4 5)))
+--
+
+[.fragment]
+--
+Equality check the values, not the concrete sequence type
+
+[source.eval-clojure, clojure]
+(= (rest [1 2 3 4 5]) '(2 3 4 5))
+--
+[.fragment]
+--
+Equality check the values, not the concrete sequence type
+
+[source.eval-clojure, clojure]
+(= [1 2 3 4 5] '(1 2 3 4 5))
+--
+
+
+
+== Homework
+
+=== Sequences - Practice
+
+> Write a function that receives a sequence and returns its fifth element.
+
+[source.eval-clojure, clojure]
+(defn fifth [lst]
+;; Write your code here
+)
+
+{bl}
+[source.eval-clojure, clojure]
+(assert (= (fifth '(1 2 3 4 5 6 7 8)) 5))
+
+=== Sequences - Practice (2)
+
+> {challenge} Write a function that receives a number `n` and a sequence and returns its nth element. You'll need to use recursion.
+
+[source.eval-clojure, clojure]
+(defn nth-element [lst n])
+
+{bl}
+
+[source.eval-clojure, clojure]
+(assert (= (nth-element '(1 2 3 4 5 6 7 8 9 10 11) 10) 10))
+
+
+=== Sequences - Practice (3)
+
+> {challenge} Write a function called `select-1-5-7` that receives a sequence and returns a sequence with the elements of the original sequence at positions 1, 5 and 7.
+
+You might use either your `nth-element` function or clojure `nth`.
+
+[source.eval-clojure, clojure]
+(defn select-1-5-7 [lst])
+
+{bl}
+
+[source.eval-clojure, clojure]
+(assert (= (select-1-5-7 (range 10)) '(0 4 6)))
+
+
+=== Sequences - Practice (4)
+
+> {challenge} Write a function called `my-map` that receives a function and a sequence and returns a sequence made of the application of the function to the elements of the sequence.
+
+* You are allowed to use recursion.
+* You are not allowed to use functions from `clojure.core` like `map`
+
+[source.eval-clojure, clojure]
+(defn my-map [f s])
+
+{bl}
+
+[source.eval-clojure, clojure]
+(assert (= (my-map inc [1 2 3]) '(2 3 4)))
+
+
+=== Read
+
+* Read more about sequences in https://clojure.org/reference/sequences[Clojure web site]
+* The secrets of persistent data structures https://hypirion.com/musings/understanding-persistent-vector-pt-1[Part 1] and https://hypirion.com/musings/understanding-persistent-vector-pt-2[Part 2].

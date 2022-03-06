@@ -1,0 +1,128 @@
+= Clojure course: Records and Protocols
+include::slide.attrs[]
+
+
+[state=title]
+== Records and Protocols
+
+include::{includedir}/intro.adoc[]
+
+== Materials
+
+* https://clojure.org/about/state[Values and Change: Clojure’s approach to Identity and State]
+* https://clojuredocs.org/clojure.core/defprotocol[defprotocol]
+* https://clojuredocs.org/clojure.core/defrecord[defrecord]
+* https://clojuredocs.org/clojure.core/extend-type[extend-type]
+* https://enterpriseclojure.com/manual.html#_protocols[Enterprise Clojure: Protocols]
+* https://www.braveclojure.com/multimethods-records-protocols/[Clojure for the brave and true: Creating and Extending Abstractions with Multimethods, Protocols, and Records]
+
+== Practice
+
+Create two records `Doctor` and `Mr` that implement three methods:
+
+. `(title this)` - Returns the title of the person (e.g. `"Dr. Jekyll"` or `"Mr Hyde"`)
+. `(greet this greeting)` - Return personal greeting (e.g. `"Hello Dr. Jekyll"`)
+. `(rename this new-name)` - Change the name of a person
+
+
+Guidelines:
+
+* Test your code with the unit tests on next slide
+* Define a protocol for each method
+* Let `Doctor` and `Mr` give different names to their arguments
+* Implement some of the record methods inside the record.
+* Implement some of the record methods outside the record (with `extend-type`).
+* When you test your code, explore the different ways to instantiate a record
+* {challenge} Try to avoid implementing twice the exact same code (e.g. `greet`)
+
+== Practice - Unit tests
+
+[source.eval-clojure, clojure]
+(assert (= (title (Doctor. "Jekyll"))
+           "Dr. Jekyll"))
+(assert (= (title (Mr. "Hyde"))
+           "Mr. Hyde"))
+
+[source.eval-clojure, clojure]
+(assert (= (greet (map->Doctor {:name "Jekyll"}) "Hello")
+           "Hello Dr. Jekyll"))
+(assert (= (greet (map->Mr. {:my-name "Hyde"}) "Hello")
+           "Hello Mr. Hyde"))
+[source.eval-clojure, clojure]
+(assert (= (title (rename (Doctor. "Jekyll") "Manhattan"))
+           "Dr. Manhattan"))
+(assert (= (title (rename (Mr. "Hyde") "T"))
+           "Mr. T"))
+
+== Solution
+
+[source.eval-clojure, clojure]
+--
+(comment
+(defprotocol IWithTitle
+  (title [this]))
+
+(defprotocol IGreet
+  (greet [this greeting]))
+
+(defprotocol IRenamable
+  (rename [this new-name]))
+
+(defn default-greet [person greeting]
+  (str greeting " " (title person)))
+
+
+(defrecord Doctor [name]
+  IWithTitle
+  (title [doctor] (str "Dr. " name))
+  IGreet
+  (greet [doctor greeting] (default-greet doctor greeting))
+  IRenamable
+  (rename [doctor new-name] (assoc doctor :name new-name)))
+
+
+(defrecord Mr [my-name]
+  IWithTitle
+  (title [this] (str "Mr. " my-name))
+  IGreet
+  (greet [doctor greeting] (default-greet doctor greeting)))
+
+(extend-type Mr
+  IRenamable
+  (rename [doctor new-name] (assoc doctor :my-name new-name)))
+  )
+--
+
+== Deep insights
+
+{meditation} No inheritance
+
+{meditation} Defer implementation to a function that could be shared between records
+
+{meditation} Records are immutable.
+
+{meditation} It is better to have small protocols
+
+{meditation} Usually, the name of a protocol starts with a `I`
+
+{meditation} Inside a protocol, the object is named `this` while inside a records it is named specifically.
+
+{meditation} Usually records are defined in separate namespaces
+
+{meditation} When to use records instead of maps?
+
+{meditation} Records can be extended from the outside
+
+{meditation} A protocol is an aggregation of function signatures
+
+{meditation} Various ways to instantiate a record
+
+++++
+<script>
+document.getElementById("solution").classList.add("hidden")
+window.displaySolutions = function() {
+   document.getElementById("solution").classList.remove("hidden")
+}
+
+</script>
+++++

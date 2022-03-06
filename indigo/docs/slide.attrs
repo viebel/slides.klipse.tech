@@ -1,0 +1,20 @@
+:customcss: slides.css
+:revealjs_width: "100%"
+:revealjs_height: "100%"
+:revealjs_theme: simple
+:revealjs_center: false
+:revealjs_minScale: 1.0
+:revealjs_maxScale: 1.0
+:revealjs_history: true
+:revealjs_slideNumber: true
+:revealjs_plugin_zoom: disabled
+:revealjs_fragmentInURL: true
+:docinfo: shared
+:imagesdir: img
+:notitle:
+:icons: font
+:source-highlighter: highlightjs
+:challenge: 🏂
+:meditation: ☕
+:bl: pass:[ +]
+:includedir: includes

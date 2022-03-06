@@ -1,0 +1,234 @@
+pre code.hljs {
+    background-color: white;
+    border: none;
+    display: block;
+    background: white;
+    color: #4d4d4c;
+    padding: 10px;
+
+}
+
+.reveal a {
+  text-decoration: underline;
+}
+
+.highlight {
+    background-color: white;
+    border: none;
+}
+
+.reveal code {
+  background-color: #E1E1E1;
+}
+
+.hidden {
+    visibility: hidden;
+    height:0px;
+}
+
+section > .centered {
+    width: 50%;
+    padding-left: 25%;
+    text-align: center;
+
+}
+.text-centered {
+    text-align: center;
+}
+
+.left {
+    float: left;
+}
+.right {
+    float: right;
+}
+
+.clear {
+    clear:both;
+}
+
+section .p10 {
+    padding-left: 10%;
+}
+
+section .p20 {
+    padding-left: 20%;
+}
+
+section .p25 {
+    padding-left: 25%;
+}
+
+
+
+section .medium-font {
+    font-size: 0.8em;
+}
+
+.w10 {
+  width: 10%;
+}
+
+.w20 {
+  width: 20%;
+}
+
+.w30 {
+    width: 30%;
+}
+
+.w40 {
+    width: 40%;
+}
+
+.w50 {
+    width: 50%;
+}
+
+.w60 {
+    width: 60%;
+}
+
+.w70 {
+    width: 70%;
+}
+
+.w80 {
+  width: 80%;
+}
+
+.w90 {
+  width: 90%;
+}
+
+
+.reveal .margin-left {
+    margin-left: 10px;
+}
+
+.reveal .margin-right {
+    margin-right: 10px;
+}
+
+.reveal .margin-top {
+    margin-top: 10px;
+}
+
+.reveal .margin-bottom {
+    margin-bottom: 10px;
+}
+
+.clear {
+    clear: both;
+}
+
+.livedoc {
+    border: none;
+    width: 100%;
+    height: 600px;
+}
+
+#klipse-color {
+    width: 300px;
+    height: 50px;
+    background-color: red;
+}
+
+
+
+.reveal table th, .reveal table td {
+  padding: 0 0.5em 0 0.5em;
+}
+
+.reveal table {
+  margin: 0 0 0 0;
+}
+
+.reveal table.grid-none td { /* some theme css files override border-bottom without respecting the table attributes */
+  border-bottom: 0;
+}
+
+.reveal h2, th {
+  font-size: 1.5em;
+  color: #66AF40;
+}
+
+.reveal pre {
+  font-size: 0.8em;
+  box-shadow: none;
+  padding: 0.1em;
+  background-color: white;
+}
+
+.reveal .slides > section {
+  font-size: 1.0em;
+  color: #5B80D4;
+  padding: 0 0 0 0;
+  /* allow vertical scrolling in slides */
+  max-height: 100%;
+}
+
+
+.reveal .slides > section:not(.stack) {
+  overflow-y: auto; 
+}
+
+.reveal section img {
+  margin: 0;
+  border: none;
+  box-shadow: none;
+}
+
+.reveal section p, h1, h2, div {
+  text-align: left;
+}
+
+.reveal .slides {
+    /*width: 100% !important;*/
+    margin: 0px 20px 5px 20px;
+}
+
+html.title body {
+  background: linear-gradient(to bottom left, #91B3FB, #92DA55);
+}
+
+.small {
+  font-size: 0.8em !important;
+}
+
+.klipse-snippet {
+  border: solid #92DA55 1px !important;
+}
+
+.klipse-result {
+  border: solid #91B3FB 1px !important;
+}
+
+.reveal code {
+/*  background-color: #F8F8F8;*/
+  font-family: 'FiraCode', monospace !important;
+}
+
+.reveal blockquote {
+    font-style: normal;
+    padding: 10px 10px 10px 10px;
+    font-family: 'Cormorant Garamond', serif;
+    box-shadow: 0px 5px 12px rgb(91, 128, 212);
+}
+
+.reveal blockquote code {
+    font-size: 32px;
+}
+
+.CodeMirror {
+  font-family: 'FiraCode', monospace !important;
+}
+
+.CodeMirror-cursor {
+  border-left: 1px solid black !important;
+}
+
+.CodeMirror-scroll {
+  padding-bottom: 30px !important;
+  margin-bottom: -30px !important;
+}

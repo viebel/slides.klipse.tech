@@ -1,0 +1,124 @@
+= Clojure course: Introduction
+include::slide.attrs[]
+
+
+[state=title]
+== Introduction 
+
+include::{includedir}/intro.adoc[]
+
+== Clojure pillars
+
+image::diagrams/clojure-pillars.png[]
+
+== Homoiconicity
+
+TIP: The syntax of the code is the same as the syntax of the data.
+
+[cols="2*", frame=none, grid=none]
+|===
+a|
+[source,clojure]
+(+
+   (* 3 4)
+   (* 5 6))
+
+a|
+[source,clojure]
+'(a b
+  c
+  [d.a d.b]
+  (e.a
+     [e.b.a (e.b.b.a e.b.b.b)]
+    e.c)
+|===
+
+== Functional programming
+
+A function is an entity that receives multiple _things_ and return a _thing_.
+
+In *functional programming* the _things_ that functions receive and return are allowed to be *functions*.
+
+TIP: We say that functions are *first class citizens*.
+
+image::first-class.jpg[]
+
+=== Function syntax
+
+[.fragment]
+--
+We create a function with `defn`
+
+[source.eval-clojure, clojure]
+(defn bar
+  "bar is a function with documentation"
+  [a b c]
+  b)
+--
+
+[.fragment]
+--
+We call a function like this
+[source.eval-clojure, clojure]
+(bar 1 2 3)
+--
+
+== The REPL
+
+Live demo
+
+== Data oriented
+
+Instead of representing data with classes, we use maps.
+
+The maps are immutable.
+
+[.fragment]
+--
+[source.eval-clojure, clojure]
+(def m {"a" 1})
+--
+
+++++
+<br>
+++++
+
+[.fragment]
+--
+[source.eval-clojure, clojure]
+(assoc m "b" 2)
+--
+
+++++
+<br>
+++++
+
+
+[.fragment]
+--
+[source.eval-clojure, clojure]
+m
+--
+== Online tools and materials
+
+[.left.w40]
+.Reference book: https://www.braveclojure.com/clojure-for-the-brave-and-true/[Clojure for the Brave an True]
+. http://app.klipse.tech/?eval_only=1[Klipse]: Clojure REPL online
+. https://clojuredocs.org/[ClojureDocs:] Documentation with Examples
+. http://clojurescriptkoans.com/[ClojureScript koans]
+. http://clojurians.net/[Clojurians]: Slack Channel
+. https://clojureverse.org/[Clojureverse forum]
+. https://cursive-ide.com/[Cursive]: Clojure IDE based on IntelliJ
+
+image::tools.jpg[]
+
+
+
+== Homeworks
+
+[.left.w60]
+. Register to http://clojurians.net/[Clojurians: Slack Channel, window="_blank"]
+. Post at least 1 question on Clojurians
+. 10 minutes of http://clojurescriptkoans.com/[ClojureScript koans, window="_blank"] every day
+. Read https://www.braveclojure.com/do-things/[Do Things: A Clojure Crash course]
+

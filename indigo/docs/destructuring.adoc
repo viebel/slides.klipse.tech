@@ -1,0 +1,114 @@
+= Destructuring
+include::slide.attrs[]
+
+[state=title]
+== Destructuring
+include::{includedir}/intro.adoc[]
+
+
+== Topics
+
+An elegant syntactic sugar
+
+== Destructuring a sequence
+
+[cols="2*", frame=none, grid=none]
+|===
+a| [.fragment]
+--
+Destructuring the first 2 values
+[source.eval-clojure, clojure]
+(let [[x y] [5 7]]
+  {:x x
+   :y y})
+--
+
+a|[.fragment]
+--
+Skip some items with `_`
+[source.eval-clojure, clojure]
+(let [[x _ _ y] [5 6 8 7]]
+  {:x x
+   :y y})
+--
+a| [.fragment]
+--
+Split a vector into `first` and `rest`
+[source.eval-clojure, clojure]
+(let [[x & more] [1 2 3]]
+  {:x x :more more})
+--
+
+a|[.fragment]
+--
+Keep access to the whole sequence
+[source.eval-clojure, clojure]
+(let [[x & more
+       :as full-list] (range 3)]
+  {:x x
+   :more more
+   :full-list full-list})
+--
+|===
+
+== Destructuring a map
+
+[.fragment]
+--
+Choose local names and provide keys
+[source.eval-clojure, clojure]
+(let [{the-x :x the-y :y} {:x 5 :y 7}]
+  (+ the-x  the-y))
+--
+
+[.fragment]
+--
+Most useful piece of destructuring
+[source.eval-clojure, clojure]
+(let [{:keys [x y]} {:x 5 :y 7}]
+  (+ x y))
+--
+
+[.fragment]
+--
+Keep access to the whole map
+[source.eval-clojure, clojure]
+(let [{:keys [x y] :as p} {:x 5 :y 7}]
+  p)
+--
+
+== Practice
+
+[quote]
+--
+Can you guess how to destructure a map that is inside a vector?
+
+For example `[{:a 1 :b 2}]`?
+--
+
+[.fragment]
+--
+Solution
+[source.eval-clojure, clojure]
+(let [[{:keys [a b]}] [{:a 1 :b 2}]]
+  a)
+--
+
+== Practice
+
+
+[quote]
+--
+Write a function `foo` that receives a map with 3 keys `:a`, `:b` and `:c` and returns the greatest value in the map, where:
+
+. `:a` and `:b` are required
+. `:c` is optional with a default value of 10
+--
+
+
+[.fragment]
+--
+
+[source.eval-clojure, clojure]
+(defn foo [])
+--

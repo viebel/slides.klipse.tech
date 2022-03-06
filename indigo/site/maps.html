@@ -1,0 +1,177 @@
+<!DOCTYPE html><html lang="en"><head><meta charset="utf-8"><title>Just use maps</title><meta content="yes" name="apple-mobile-web-app-capable"><meta content="black-translucent" name="apple-mobile-web-app-status-bar-style"><meta content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, minimal-ui" name="viewport"><link href="reveal.js/css/reveal.css" rel="stylesheet"><link rel="stylesheet" href="reveal.js/css/theme/simple.css" id="theme"><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.3.0/css/font-awesome.min.css"><link href="reveal.js/lib/css/zenburn.css" rel="stylesheet"><script>var link = document.createElement( 'link' );
+link.rel = 'stylesheet';
+link.type = 'text/css';
+link.href = window.location.search.match( /print-pdf/gi ) ? "reveal.js/css/print/pdf.css" : "reveal.js/css/print/paper.css";
+document.getElementsByTagName( 'head' )[0].appendChild( link );</script><!--[if lt IE 9]><script src="reveal.js/lib/js/html5shiv.js"></script><![endif]--><link rel="shortcut icon" type="image/x-icon" href="img/favicon.png">
+<link href="https://fonts.googleapis.com/css?family=Cormorant+Garamond&display=swap" rel="stylesheet">
+<script>
+ window.klipse_settings = {
+   selector: '.eval-clojure',
+	 selector_eval_js: '.eval-javascript',
+	 selector_eval_html: '.eval-html',
+   re_evaluate_all_snippets_on_change: false, // it makes snippet evaluation too slow
+ };
+</script><link rel="stylesheet" href="slides.css"></head><body><div class="reveal"><div class="slides"><section id="just_use_maps" data-state="title"><h2>Just use maps</h2><div class="openblock centered"><div class="content"><div class="paragraph"><p><br>
+<br>
+<br>
+<br>
+<br></p></div>
+<div class="imageblock left" style=""><img src="img/cycognito.jpg" alt="cycognito" height="300px"></div>
+<div class="paragraph left margin-right"><p><br>
+<br>
+<span class="icon"><i class="fa fa-heart fa-lg"></i></span></p></div>
+<div class="imageblock left" style=""><img src="img/clojure-logo.png" alt="clojure logo" height="300px"></div></div></div></section>
+<section id="topics"><h2>Topics</h2><div class="ulist"><ul><li><p>The benefits of programming with maps</p></li><li><p>Keywords in maps</p></li><li><p>Accessing values in a map</p></li><li><p>Map as a sequence</p></li><li><p>Mapping over a map</p><div class="ulist"><ul><li><p>Mapping the keys</p></li><li><p>Mapping the values</p></li></ul></div></li><li><p>Filtering over a map</p></li><li><p>Immutable maps</p></li><li><p>Mutable maps</p></li></ul></div></section>
+<section id="the_benefits_of_programming_with_maps"><h2>The benefits of programming with maps</h2><div class="ulist"><ul><li><p>Maps are generic</p></li><li><p>Maps are flexible</p></li></ul></div></section>
+<section id="keywords_in_maps"><h2>Keywords in maps</h2><div class="openblock fragment"><div class="content"><div class="paragraph"><p>Keyword is the most commonly used type for fields</p></div>
+<div class="listingblock eval-clojure"><div class="content"><pre class="highlight"><code data-noescape class="clojure language-clojure">(def person
+      {:first-name "Joe"
+         :last-name "Cohen"})</code></pre></div></div></div></div>
+<div class="openblock fragment"><div class="content"><div class="paragraph"><p>Keywords behave like functions</p></div>
+<div class="listingblock eval-clojure"><div class="content"><pre class="highlight"><code data-noescape class="clojure language-clojure">(:first-name person)</code></pre></div></div></div></div></section>
+<section id="accessing_values_in_a_nested_map"><h2>Accessing values in a nested map</h2><div class="openblock fragment"><div class="content"><div class="listingblock eval-clojure"><div class="content"><pre class="highlight"><code data-noescape class="clojure language-clojure">(def config
+  {:server {:port 5432}
+  :db {:collection "sales"}})</code></pre></div></div></div></div>
+<div class="openblock fragment"><div class="content"><div class="paragraph"><p>Passing the path</p></div>
+<div class="listingblock eval-clojure"><div class="content"><pre class="highlight"><code data-noescape class="clojure language-clojure">(get-in config [:db :collection])</code></pre></div></div></div></div></section>
+<section id="map_as_a_sequence"><h2>Map as a sequence</h2><div class="openblock fragment"><div class="content"><div class="paragraph"><p>In terms of data, a map is a sequence of pairs</p></div>
+<div class="listingblock eval-clojure"><div class="content"><pre class="highlight"><code data-noescape class="clojure language-clojure">(seq {:first-name "Joe"
+                  :last-name "Cohen"})</code></pre></div></div></div></div>
+<div class="openblock fragment"><div class="content"><div class="paragraph"><p>All the sequence functions work on map</p></div>
+<div class="listingblock eval-clojure"><div class="content"><pre class="highlight"><code data-noescape class="clojure language-clojure">(first {:first-name "Joe"
+                  :last-name "Cohen"})</code></pre></div></div></div></div>
+<div class="openblock fragment"><div class="content"><div class="paragraph"><p>Map entries look like vectors but they have their own type</p></div>
+<div class="listingblock eval-clojure"><div class="content"><pre class="highlight"><code data-noescape class="clojure language-clojure">(type (first {:first-name "Joe"
+                  :last-name "Cohen"}))</code></pre></div></div></div></div></section>
+<section id="mapping_over_map"><h2>Mapping over map</h2><div class="openblock fragment"><div class="content"><div class="paragraph"><p>Mapping the keys</p></div>
+<div class="listingblock eval-clojure"><div class="content"><pre class="highlight"><code data-noescape class="clojure language-clojure">(into {} (map (fn [[k v]]
+                [(name k) v])
+              {:first-name "Joe"
+               :last-name "Cooker"}))</code></pre></div></div></div></div>
+<div class="openblock fragment"><div class="content"><div class="paragraph"><p>Mapping the values</p></div>
+<div class="listingblock eval-clojure"><div class="content"><pre class="highlight"><code data-noescape class="clojure language-clojure">(into {} (map (fn [[k v]]
+                [k (keyword v)])
+              {:first-name "Joe"
+               :last-name "Cooker"}))</code></pre></div></div></div></div></section>
+<section id="filtering_a_map"><h2>Filtering a map</h2><div class="openblock fragment"><div class="content"><div class="paragraph"><p>Selecting a subset of keys</p></div>
+<div class="listingblock eval-clojure"><div class="content"><pre class="highlight"><code data-noescape class="clojure language-clojure">(select-keys (zipmap [1 2 3 4] ["a" "b" "c" "d"])
+  [1 3])</code></pre></div></div></div></div>
+<div class="openblock fragment"><div class="content"><div class="paragraph"><p>Filtering the entries that match a predicate</p></div>
+<div class="listingblock eval-clojure"><div class="content"><pre class="highlight"><code data-noescape class="clojure language-clojure">(into {} (filter (fn [[k v]]
+                (even? v))
+              (zipmap (range 10) (range 10))))</code></pre></div></div></div></div></section>
+<section id="maps_are_immutable"><h2>Maps are immutable</h2><div class="openblock fragment"><div class="content"><div class="paragraph"><p>Functions that seem to change a map, returns in fact a new version of the map</p></div>
+<div class="listingblock eval-clojure"><div class="content"><pre class="highlight"><code data-noescape class="clojure language-clojure">(def new-person (assoc person :first-name "Frank"))
+[person new-person]</code></pre></div></div></div></div>
+<div class="openblock fragment"><div class="content"><div class="paragraph"><p>There is a mutable version of maps</p></div>
+<div class="listingblock eval-clojure"><div class="content"><pre class="highlight"><code data-noescape class="clojure language-clojure">(def mutable-person (transient person))
+(assoc! mutable-person :first-name "David")
+(persistent! mutable-person)</code></pre></div></div></div></div></section>
+<section id="position_of_the_map_as_an_argument"><h2>Position of the map as an argument</h2><div class="olist arabic"><ol class="arabic"><li><p>Functions that treat the map as a sequence receive the map as last argument</p></li><li><p>Functions that treat the map as a concrete collection receive the map as first argument</p></li></ol></div>
+<div class="paragraph fragment"><p>Data manipulation mini pipeline</p></div>
+<div class="openblock"><div class="content"><div class="listingblock eval-clojure"><div class="content"><pre class="highlight"><code data-noescape class="clojure language-clojure">(-&gt;&gt; (zipmap [1 2 3 4] ["a" "b" "c" "d"])
+  (filter (fn [[k v]] (even? k)))
+  (map (fn [[k v]] [(inc k) v]))
+  (into {}))</code></pre></div></div></div></div>
+<div class="openblock fragment"><div class="content"><div class="paragraph"><p>Consecutive changes to a map</p></div>
+<div class="listingblock eval-clojure"><div class="content"><pre class="highlight"><code data-noescape class="clojure language-clojure">(-&gt; (zipmap [1 2 3 4] ["a" "b" "c" "d"])
+  (assoc 1 "AAA")
+  (assoc 2 "BBB"))</code></pre></div></div></div></div></section>
+<section id="homework"><h2>Homework</h2><div class="olist arabic"><ol class="arabic"><li><p>Write a function <code>map-vals</code> that receives a function and a map and return a map where the values are transformed by the function.</p></li><li><p>Write a function <code>compactize-map</code> that removes entries with <code>nil</code> values from a map</p></li><li><p>Write a function <code>compactize-map-recursive</code> that recursively removes entries with <code>nil</code> values from a map</p></li><li><p>Write a function <code>submap?</code> that checks if m1 is a submap of m2. Map m1 is a submap of m2 if all key/value pairs in m1 exist in m2.</p></li></ol></div></section></div></div><script src="reveal.js/lib/js/head.min.js"></script><script src="reveal.js/js/reveal.js"></script><script>// See https://github.com/hakimel/reveal.js#configuration for a full list of configuration options
+Reveal.initialize({
+  // Display controls in the bottom right corner
+  controls: true,
+  // Display a presentation progress bar
+  progress: true,
+  // Set a per-slide timing for speaker notes, null means none
+  defaultTiming: null,
+  // Display the page number of the current slide
+  slideNumber: true,
+  // Push each slide change to the browser history
+  history: true,
+  // Enable keyboard shortcuts for navigation
+  keyboard: true,
+  // Enable the slide overview mode
+  overview: true,
+  // Vertical centering of slides
+  center: false,
+  // Enables touch navigation on devices with touch input
+  touch: true,
+  // Loop the presentation
+  loop: false,
+  // Change the presentation direction to be RTL
+  rtl: false,
+  // Randomizes the order of slides each time the presentation loads
+  shuffle: false,
+  // Turns fragments on and off globally
+  fragments: true,
+  // Flags if the presentation is running in an embedded mode,
+  // i.e. contained within a limited portion of the screen
+  embedded: false,
+  // Flags if we should show a help overlay when the questionmark
+  // key is pressed
+  help: true,
+  // Flags if speaker notes should be visible to all viewers
+  showNotes: false,
+  // Global override for autolaying embedded media (video/audio/iframe)
+  // - null: Media will only autoplay if data-autoplay is present
+  // - true: All media will autoplay, regardless of individual setting
+  // - false: No media will autoplay, regardless of individual setting
+  autoPlayMedia: null,
+  // Number of milliseconds between automatically proceeding to the
+  // next slide, disabled when set to 0, this value can be overwritten
+  // by using a data-autoslide attribute on your slides
+  autoSlide: 0,
+  // Stop auto-sliding after user input
+  autoSlideStoppable: true,
+  // Enable slide navigation via mouse wheel
+  mouseWheel: false,
+  // Hides the address bar on mobile devices
+  hideAddressBar: true,
+  // Opens links in an iframe preview overlay
+  previewLinks: false,
+  // Theme (e.g., beige, black, league, night, serif, simple, sky, solarized, white)
+  // NOTE setting the theme in the config no longer works in reveal.js 3.x
+  //theme: Reveal.getQueryHash().theme || 'simple',
+  // Transition style (e.g., none, fade, slide, convex, concave, zoom)
+  transition: Reveal.getQueryHash().transition || 'slide',
+  // Transition speed (e.g., default, fast, slow)
+  transitionSpeed: 'default',
+  // Transition style for full page slide backgrounds (e.g., none, fade, slide, convex, concave, zoom)
+  backgroundTransition: 'fade',
+  // Number of slides away from the current that are visible
+  viewDistance: 3,
+  // Parallax background image (e.g., "'https://s3.amazonaws.com/hakim-static/reveal-js/reveal-parallax-1.jpg'")
+  parallaxBackgroundImage: '',
+  // Parallax background size in CSS syntax (e.g., "2100px 900px")
+  parallaxBackgroundSize: '',
+
+  // The "normal" size of the presentation, aspect ratio will be preserved
+  // when the presentation is scaled to fit different resolutions. Can be
+  // specified using percentage units.
+  width: "100%",
+  height: "100%",
+
+  // Factor of the display size that should remain empty around the content
+  margin: 0.1,
+
+  // Bounds for smallest/largest possible scale to apply to content
+  minScale: 1.0,
+  maxScale: 1.0,
+
+  // Optional libraries used to extend on reveal.js
+  dependencies: [
+      { src: 'reveal.js/lib/js/classList.js', condition: function() { return !document.body.classList; } },
+      { src: 'reveal.js/plugin/markdown/marked.js', condition: function() { return !!document.querySelector( '[data-markdown]' ); } },
+      { src: 'reveal.js/plugin/markdown/markdown.js', condition: function() { return !!document.querySelector( '[data-markdown]' ); } },
+      { src: 'reveal.js/plugin/highlight/highlight.js', async: true, callback: function() { hljs.initHighlightingOnLoad(); } },
+      { src: 'reveal.js/plugin/zoom-js/zoom.js', async: true },
+      { src: 'reveal.js/plugin/notes/notes.js', async: true }
+  ]
+});</script><link rel="stylesheet" type="text/css" href="https://storage.googleapis.com/app.klipse.tech/css/codemirror.css">
+<script src="https://storage.googleapis.com/app.klipse.tech/plugin/js/klipse_plugin.js"></script>
+<script>
+ Reveal.addEventListener( 'slidechanged', function() {
+   window.dispatchEvent(new Event('resize'));
+ } );
+</script></body></html>

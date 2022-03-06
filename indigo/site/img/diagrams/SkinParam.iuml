@@ -1,0 +1,89 @@
+skinparam object {
+ ArrowColor DarkOliveGreen
+ BackgroundColor White
+ BorderColor CornflowerBlue
+}
+
+skinparam IconPublicColor CornflowerBlue
+skinparam IconPublicBackgroundColor CornflowerBlue
+
+skinparam usecase {
+          BorderColor CornflowerBlue
+}
+
+
+
+<style>
+wbsDiagram {
+  arrow {
+    LineColor Blue
+    LineThickness 3
+  }
+
+  node {
+    LineColor Blue
+    BackgroundColor White
+  }
+
+  element {
+    FontSize 24
+  }
+  .changed {
+    BackgroundColor LightPink
+  }
+
+  .noborder {
+    LineStyle 7
+  }
+
+  .changed_noborder {
+    BackgroundColor LightPink
+    LineStyle 7
+  }
+  .dottedBorder {
+    LineStyle 3
+    LineThickness 1.5
+  }
+}
+
+activityDiagram {
+  node {
+    LineColor Blue
+    BackgroundColor White
+  }
+}
+
+classDiagram {
+  arrow {
+    LineColor DarkOliveGreen
+  }
+  object {
+        BackgroundColor White
+        LineColor CornflowerBlue
+  }
+
+}
+
+
+mindmapDiagram {
+  node {
+    LineColor blue
+    FontSize  24
+  }
+  arrow {
+    LineColor blue
+    LineThickness 3
+  }
+  .orange {
+    BackgroundColor orange
+  }
+  .red {
+    BackgroundColor red
+  }
+
+  .green {
+    BackgroundColor lightgreen
+  }
+
+}
+</style>

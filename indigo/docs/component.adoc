@@ -1,0 +1,36 @@
+= Component
+include::slide.attrs[]
+
+[state=title]
+== Component
+include::{includedir}/intro.adoc[]
+
+
+== Topics
+
+https://github.com/viebel/clojure-web-server[A basic Clojure web server built with component]
+
+. Component REPL
+. start each component separately
+. Pitfall: start doesn't modify the object => it returns a new one
+. Interact with Mongo from the REPL
+. Connect to the system
+.. component.repl
+.. scope.api
+. code auto-reload: vars instead of functions 
+
+== Homework
+=== Read
+
+* https://www.youtube.com/watch?v=13cmHf_kt-Q[A talk by the author of Component]
+. 
+
+=== Practice
+
+The code is here: https://github.com/viebel/clojure-web-server[A basic Clojure web server built with component]
+
+. Run the web server locally
+. Interact with db from the REPL
+. Open a separate PR for:
+.. Add an endpoint that removes a user
+.. Add a https://github.com/http-kit/http-kit[http-kit] server that listens to another port

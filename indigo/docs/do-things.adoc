@@ -1,0 +1,183 @@
+= Clojure course: Do things
+include::slide.attrs[]
+
+
+[state=title]
+== Scope
+
+Reference: https://www.braveclojure.com/do-things/[Do Things: A Clojure Crash Course]
+
+Solve the exercises at the end of the chapter
+
+
+== Insights
+
+=== Avoid using def
+
+`let` is lexically scoped
+
+`def` creates a global variable in the current namespace
+
+=== Uniformity of function calls
+
+In many languages, we have:
+
+- unary operators
+- binary operators
+- functions
+
+In Clojure, we have only Symbolic expressions (Sexp).
+
+It scales well with the number of arguments.
+
+
+[.fragment]
+--
+Checking whether a number is contained in a range
+[source.eval-clojure, clojure]
+(let [x 10]
+(< 3 x 5))
+--
+
+
+=== Everything is an expression
+
+[.fragment]
+--
+Storing an `if` expression in a var
+[source.eval-clojure, clojure]
+(def my-value (if true 42 56))
+--
+
+[.fragment]
+In other languages, `if` is not an expression: it's a statement.
+
+
+=== Metadata and docstrings
+
+The docstring of a function is stored in the metadata of the variable that defines the function.
+[cols="2*", frame=none, grid=none]
+|===
+a| [.fragment]
+--
+Defining a function with a docstring
+
+[source.eval-clojure, clojure]
+(defn foo
+   "A great function"
+   [a b]
+   (+ a b))
+--
+
+a|[.fragment]
+--
+Displaying the metadata
+[source.eval-clojure, clojure]
+(meta #'foo)
+|===
+
+
+=== The body of a function
+
+
+A function returns the value of the last expression of its body.
+
+
+[.fragment]
+--
+A silly function with two expressions
+[source.eval-clojure, clojure]
+(defn fn-two-expressions [a b]
+  (+ a b)
+ (* a b))
+--
+
+[.fragment]
+--
+Calling a function whose body is made of two expressions
+[source.eval-clojure, clojure]
+(foo 10 3)
+--
+
+[.fragment]
+{meditation} Usually, the body of a function is made of a single (nested) expression
+
+=== `do` is needed for side effects
+
+[.fragment]
+--
+two expressions wrapped in a single `do`
+[source.eval-clojure, clojure]
+(if true
+   (do
+   (println "It's true")
+   52)
+ (do
+ (println "It's false")
+ 44))
+--
+
+=== Keywords vs strings
+
+- Keywords have less features than strings
+- Keywords are like enums: an id with a name
+- Comparison of keywords is faster than comparison of strings
+- Common idiom: keywords as keys in map 
+- Keyboard naming convention is kebab-case
+
+[.fragment]
+--
+A map with keyword keys
+[source.eval-clojure, clojure]
+(def clojure-inventor {:first-name "Rich"
+  :last-name "Hickey"})
+--
+
+
+[.fragment]
+--
+Retrieving the value associated to a keyword in a map
+[source.eval-clojure, clojure]
+(:first-name clojure-inventor)
+--
+
+
+
+
+
+== Summary of the insights
+
+- `let` vs. `def`
+- The benefits of uniform function calls
+- `do` is usually not needed 
+- keywords vs strings
+- where is the docstring stored? (metadata)
+- the last expression of the function body
+
+
+== Exercises
+
+=== Power of expression with map
+
+[.fragment]
+--
+The data
+[source.eval-clojure, clojure]
+(def asym-hobbit-body-parts [{:name "head" :size 3} {:name "left-eye" :size 1} {:name "left-ear" :size 1} {:name "mouth" :size 1} {:name "nose" :size 1} {:name "neck" :size 2} {:name "left-shoulder" :size 3} {:name "left-upper-arm" :size 3} {:name "chest" :size 10} {:name "back" :size 10} {:name "left-forearm" :size 3} {:name "abdomen" :size 6} {:name "left-kidney" :size 1} {:name "left-hand" :size 2} {:name "left-knee" :size 2} {:name "left-thigh" :size 4} {:name "left-lower-leg" :size 3} {:name "left-achilles" :size 1} {:name "left-foot" :size 2}])
+--
+
+[.fragment]
+--
+The code
+[source.eval-clojure, clojure]
+----
+(defn matching-part
+  [part]
+  {:name (clojure.string/replace (:name part) #"^left-" "right-")
+   :size (:size part)})
+(clojure.set/union (map matching-part asym-hobbit-body-parts)
+                   asym-hobbit-body-parts)
+----
+--
+
+

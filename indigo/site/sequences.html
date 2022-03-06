@@ -1,0 +1,196 @@
+<!DOCTYPE html><html lang="en"><head><meta charset="utf-8"><title>The sequence abstraction</title><meta content="yes" name="apple-mobile-web-app-capable"><meta content="black-translucent" name="apple-mobile-web-app-status-bar-style"><meta content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, minimal-ui" name="viewport"><link href="reveal.js/css/reveal.css" rel="stylesheet"><link rel="stylesheet" href="reveal.js/css/theme/simple.css" id="theme"><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.3.0/css/font-awesome.min.css"><link href="reveal.js/lib/css/zenburn.css" rel="stylesheet"><script>var link = document.createElement( 'link' );
+link.rel = 'stylesheet';
+link.type = 'text/css';
+link.href = window.location.search.match( /print-pdf/gi ) ? "reveal.js/css/print/pdf.css" : "reveal.js/css/print/paper.css";
+document.getElementsByTagName( 'head' )[0].appendChild( link );</script><!--[if lt IE 9]><script src="reveal.js/lib/js/html5shiv.js"></script><![endif]--><link rel="shortcut icon" type="image/x-icon" href="img/favicon.png">
+<link href="https://fonts.googleapis.com/css?family=Cormorant+Garamond&display=swap" rel="stylesheet">
+<script>
+ window.klipse_settings = {
+   selector: '.eval-clojure',
+	 selector_eval_js: '.eval-javascript',
+	 selector_eval_html: '.eval-html',
+   re_evaluate_all_snippets_on_change: false, // it makes snippet evaluation too slow
+ };
+</script><link rel="stylesheet" href="slides.css"></head><body><div class="reveal"><div class="slides"><section id="the_sequence_abstraction" data-state="title"><h2>The sequence abstraction</h2><div class="openblock centered"><div class="content"><div class="paragraph"><p><br>
+<br>
+<br>
+<br>
+<br></p></div>
+<div class="imageblock left" style=""><img src="img/cycognito.jpg" alt="cycognito" height="300px"></div>
+<div class="paragraph left margin-right"><p><br>
+<br>
+<span class="icon"><i class="fa fa-heart fa-lg"></i></span></p></div>
+<div class="imageblock left" style=""><img src="img/clojure-logo.png" alt="clojure logo" height="300px"></div></div></div></section>
+<section id="topics"><h2>Topics</h2><div class="olist arabic"><ol class="arabic"><li><p>Lists</p></li><li><p>Vectors</p></li><li><p>Sequences</p></li></ol></div></section>
+<section><section id="lists"><h2>Lists</h2><div class="ulist"><ul><li><p>The core of LISP: LISP stands for <strong>LISt Processing</strong>.</p></li><li><p><strong>Logically</strong>, that&#8217;s the only data structure we need</p></li><li><p>In terms of <strong>performances</strong>, it&#8217;s not enough</p></li></ul></div><div class="imageblock" style=""><img src="img/hello-list.jpg" alt="hello list"></div></section><section id="list_creation"><h2>List creation</h2><div class="openblock fragment"><div class="content"><div class="paragraph"><p>You can mix element of different types inside a list</p></div>
+<div class="listingblock eval-clojure"><div class="content"><pre class="highlight"><code data-noescape class="clojure language-clojure">(list 1 2 "hello")</code></pre></div></div></div></div>
+<div class="openblock fragment"><div class="content"><div class="paragraph"><p>You can nest lists inside lists inside lists inside lists&#8230;&#8203;</p></div>
+<div class="listingblock eval-clojure"><div class="content"><pre class="highlight"><code data-noescape class="clojure language-clojure">(list 1 2 (list "a" "b") (list 1.2 (list 3.43243 2.5)))</code></pre></div></div></div></div>
+<div class="openblock fragment"><div class="content"><div class="paragraph"><p>There is a syntactic sugar for list creation: the single quote <code>'</code></p></div>
+<div class="listingblock eval-clojure"><div class="content"><pre class="highlight"><code data-noescape class="clojure language-clojure">'(1 2 3)</code></pre></div></div></div></div>
+<div class="openblock fragment"><div class="content"><div class="paragraph"><p>And it works fine with nested lists</p></div>
+<div class="listingblock eval-clojure"><div class="content"><pre class="highlight"><code data-noescape class="clojure language-clojure">'(1 2 ("a" "b" (1 2 4)))</code></pre></div></div></div></div></section><section id="query_on_lists"><h2>Query on lists</h2><div class="openblock fragment"><div class="content"><div class="paragraph"><p>Get the first element of a list</p></div>
+<div class="listingblock eval-clojure"><div class="content"><pre class="highlight"><code data-noescape class="clojure language-clojure">(first '(1 2 3 4 5))</code></pre></div></div></div></div>
+<div class="openblock fragment"><div class="content"><div class="paragraph"><p>Check if the list is empty</p></div>
+<div class="listingblock eval-clojure"><div class="content"><pre class="highlight"><code data-noescape class="clojure language-clojure">(empty? '(1 2 3 4 5))</code></pre></div></div></div></div></section><section id="removing_the_first_element_of_a_list"><h2>Removing the first element of a list</h2><div class="openblock fragment"><div class="content"><div class="paragraph"><p>Create a <strong>new</strong> list without the first element</p></div>
+<div class="listingblock eval-clojure"><div class="content"><pre class="highlight"><code data-noescape class="clojure language-clojure">(def a '(1 2 3 4 5))
+(def b (rest a))</code></pre></div></div></div></div>
+<div class="openblock fragment"><div class="content"><div class="paragraph"><p>The new list is changed</p></div>
+<div class="listingblock eval-clojure"><div class="content"><pre class="highlight"><code data-noescape class="clojure language-clojure">b</code></pre></div></div></div></div>
+<div class="openblock fragment"><div class="content"><div class="paragraph"><p>The original list is left unchanged</p></div>
+<div class="listingblock eval-clojure"><div class="content"><pre class="highlight"><code data-noescape class="clojure language-clojure">a</code></pre></div></div></div></div></section><section id="adding_an_element_to_a_list"><h2>Adding an element to a list</h2><div class="openblock fragment"><div class="content"><div class="paragraph"><p>Create a <strong>new</strong> list with an element prepended</p></div>
+<div class="listingblock eval-clojure"><div class="content"><pre class="highlight"><code data-noescape class="clojure language-clojure">(def c '(1 2 3 4 5))
+(def d (cons 0 c))</code></pre></div></div></div></div>
+<div class="openblock fragment"><div class="content"><div class="paragraph"><p>The new list is changed</p></div>
+<div class="listingblock eval-clojure"><div class="content"><pre class="highlight"><code data-noescape class="clojure language-clojure">d</code></pre></div></div></div></div>
+<div class="openblock fragment"><div class="content"><div class="paragraph"><p>The original list is left unchanged</p></div>
+<div class="listingblock eval-clojure"><div class="content"><pre class="highlight"><code data-noescape class="clojure language-clojure">c</code></pre></div></div></div></div></section><section id="efficient_immutable_lists"><h2>Efficient immutable lists</h2><div class="openblock fragment"><div class="content"><div class="paragraph"><p>The implementation of <code>rest</code></p></div>
+<div class="imageblock" style=""><img src="img/diagrams/immutable-lists-rest.png" alt="immutable lists rest"></div></div></div>
+<div class="paragraph"><p><br></p></div>
+<div class="openblock fragment"><div class="content"><div class="paragraph"><p>The implementation of <code>cons</code></p></div>
+<div class="imageblock" style=""><img src="img/diagrams/immutable-list-cons.png" alt="immutable list cons"></div></div></div></section></section>
+<section><section id="vectors"><h2>Vectors</h2><div class="paragraph"><p><strong>Vectors</strong> are like <strong>lists</strong> but with <strong>fast random access</strong>.</p></div></section><section id="vector_creation"><h2>Vector creation</h2><div class="openblock fragment"><div class="content"><div class="paragraph"><p>Vectors are created using <code>vector</code></p></div>
+<div class="listingblock eval-clojure"><div class="content"><pre class="highlight"><code data-noescape class="clojure language-clojure">(vector 1 2 3 4 5)</code></pre></div></div></div></div>
+<div class="paragraph"><p><br></p></div>
+<div class="openblock fragment"><div class="content"><div class="paragraph"><p>Nested vectors can be created using the literal <code>[]</code></p></div>
+<div class="listingblock eval-clojure"><div class="content"><pre class="highlight"><code data-noescape class="clojure language-clojure">(def a [1 2 3 4 "aa" [1 2] [1 2 3]])
+a</code></pre></div></div></div></div></section><section id="query_on_vectors"><h2>Query on vectors</h2><div class="openblock fragment"><div class="content"><div class="paragraph"><p>Random access</p></div>
+<div class="listingblock eval-clojure"><div class="content"><pre class="highlight"><code data-noescape class="clojure language-clojure">(nth ["a" "b" "c"] 2)</code></pre></div></div></div></div></section><section id="modifying_an_entry_in_a_vector"><h2>Modifying an entry in a vector</h2><div class="openblock fragment"><div class="content"><div class="paragraph"><p>Create a <strong>new</strong> vector with a modified entry</p></div>
+<div class="listingblock eval-clojure"><div class="content"><pre class="highlight"><code data-noescape class="clojure language-clojure">(def v [0 1 2 3 4])
+(def w (assoc v 2 200))</code></pre></div></div></div></div>
+<div class="openblock fragment"><div class="content"><div class="paragraph"><p>The new vector is changed</p></div>
+<div class="listingblock eval-clojure"><div class="content"><pre class="highlight"><code data-noescape class="clojure language-clojure">w</code></pre></div></div></div></div>
+<div class="openblock fragment"><div class="content"><div class="paragraph"><p>The original vector is left unchanged</p></div>
+<div class="listingblock eval-clojure"><div class="content"><pre class="highlight"><code data-noescape class="clojure language-clojure">v</code></pre></div></div></div></div></section><section id="efficient_immutable_vectors"><h2>Efficient immutable vectors</h2><div class="paragraph"><p>The secrets of persistent data structures <a href="https://hypirion.com/musings/understanding-persistent-vector-pt-1">Part 1</a> and <a href="https://hypirion.com/musings/understanding-persistent-vector-pt-2">Part 2</a>.</p></div>
+<div class="imageblock" style=""><img src="img/clojure-vectors.png" alt="clojure vectors"></div></section><section id="vectors_vs_lists"><h2>Vectors vs lists</h2><div class="paragraph fragment"><p>☕ Why do we need lists if vectors has more features?</p></div>
+<div class="paragraph"><p><br></p></div>
+<div class="ulist fragment"><ul><li><p>Lists are more efficient in terms of memory</p></li><li><p>For iterations, lists are more efficient in terms of CPU</p></li><li><p>Deep argument: When a list is enough why would we use a vector?</p></li></ul></div></section></section>
+<section><section id="the_sequence_abstraction_2"><h2>The sequence abstraction</h2><div class="olist arabic"><ol class="arabic"><li><p><code>first</code></p></li><li><p><code>rest</code></p></li><li><p><code>empty?</code></p></li><li><p><code>cons</code></p></li></ol></div><div class="paragraph"><p>That&#8217;s the foundation of the rich set of Clojure data manipulation functions: <code>map</code>, <code>filter</code>, <code>reduce</code>, <code>sort</code> &#8230;&#8203;</p></div></section><section id="the_sequence_abstraction_in_action"><h2>The sequence abstraction in action</h2><div class="openblock fragment"><div class="content"><div class="paragraph"><p>The sequence functions work on any data collection</p></div>
+<div class="listingblock eval-clojure"><div class="content"><pre class="highlight"><code data-noescape class="clojure language-clojure">(first [1 2 3 4 5])</code></pre></div></div></div></div>
+<div class="openblock fragment"><div class="content"><div class="paragraph"><p>Be careful: <code>rest</code> always returns a sequence!</p></div>
+<div class="listingblock eval-clojure"><div class="content"><pre class="highlight"><code data-noescape class="clojure language-clojure">(rest [1 2 3 4 5])</code></pre></div></div></div></div>
+<div class="openblock fragment"><div class="content"><div class="paragraph"><p>Be careful: <code>cons</code> always returns a sequence!</p></div>
+<div class="listingblock eval-clojure"><div class="content"><pre class="highlight"><code data-noescape class="clojure language-clojure">(cons 0 [1 2 3 4 5])</code></pre></div></div></div></div>
+<div class="paragraph"><p><br></p></div>
+<div class="openblock fragment"><div class="content"><div class="listingblock eval-clojure"><div class="content"><pre class="highlight"><code data-noescape class="clojure language-clojure">(empty? [1 2 3 4 5])</code></pre></div></div></div></div></section><section id="sequence_vs_list"><h2>Sequence vs. list</h2><div class="openblock fragment"><div class="content"><div class="paragraph"><p>Sequences are printed like lists</p></div>
+<div class="listingblock eval-clojure"><div class="content"><pre class="highlight"><code data-noescape class="clojure language-clojure">(rest [1 2 3 4 5])</code></pre></div></div></div></div>
+<div class="openblock fragment"><div class="content"><div class="paragraph"><p>A sequence is not the same as a list</p></div>
+<div class="listingblock eval-clojure"><div class="content"><pre class="highlight"><code data-noescape class="clojure language-clojure">(= (type (rest [1 2 3 4 5])) (type '(2 3 4 5)))</code></pre></div></div></div></div>
+<div class="openblock fragment"><div class="content"><div class="paragraph"><p>Equality check the values, not the concrete sequence type</p></div>
+<div class="listingblock eval-clojure"><div class="content"><pre class="highlight"><code data-noescape class="clojure language-clojure">(= (rest [1 2 3 4 5]) '(2 3 4 5))</code></pre></div></div></div></div>
+<div class="openblock fragment"><div class="content"><div class="paragraph"><p>Equality check the values, not the concrete sequence type</p></div>
+<div class="listingblock eval-clojure"><div class="content"><pre class="highlight"><code data-noescape class="clojure language-clojure">(= [1 2 3 4 5] '(1 2 3 4 5))</code></pre></div></div></div></div></section></section>
+<section><section id="homework"><h2>Homework</h2></section><section id="sequences_practice"><h2>Sequences - Practice</h2><div class="quoteblock"><blockquote><div class="paragraph"><p>Write a function that receives a sequence and returns its fifth element.</p></div></blockquote></div>
+<div class="listingblock eval-clojure"><div class="content"><pre class="highlight"><code data-noescape class="clojure language-clojure">(defn fifth [lst]
+;; Write your code here
+)</code></pre></div></div>
+<div class="paragraph"><p><br></p></div>
+<div class="listingblock eval-clojure"><div class="content"><pre class="highlight"><code data-noescape class="clojure language-clojure">(assert (= (fifth '(1 2 3 4 5 6 7 8)) 5))</code></pre></div></div></section><section id="sequences_practice_2"><h2>Sequences - Practice (2)</h2><div class="quoteblock"><blockquote><div class="paragraph"><p>🏂 Write a function that receives a number <code>n</code> and a sequence and returns its nth element. You&#8217;ll need to use recursion.</p></div></blockquote></div>
+<div class="listingblock eval-clojure"><div class="content"><pre class="highlight"><code data-noescape class="clojure language-clojure">(defn nth-element [lst n])</code></pre></div></div>
+<div class="paragraph"><p><br></p></div>
+<div class="listingblock eval-clojure"><div class="content"><pre class="highlight"><code data-noescape class="clojure language-clojure">(assert (= (nth-element '(1 2 3 4 5 6 7 8 9 10 11) 10) 10))</code></pre></div></div></section><section id="sequences_practice_3"><h2>Sequences - Practice (3)</h2><div class="quoteblock"><blockquote><div class="paragraph"><p>🏂 Write a function called <code>select-1-5-7</code> that receives a sequence and returns a sequence with the elements of the original sequence at positions 1, 5 and 7.</p></div></blockquote></div>
+<div class="paragraph"><p>You might use either your <code>nth-element</code> function or clojure <code>nth</code>.</p></div>
+<div class="listingblock eval-clojure"><div class="content"><pre class="highlight"><code data-noescape class="clojure language-clojure">(defn select-1-5-7 [lst])</code></pre></div></div>
+<div class="paragraph"><p><br></p></div>
+<div class="listingblock eval-clojure"><div class="content"><pre class="highlight"><code data-noescape class="clojure language-clojure">(assert (= (select-1-5-7 (range 10)) '(0 4 6)))</code></pre></div></div></section><section id="sequences_practice_4"><h2>Sequences - Practice (4)</h2><div class="quoteblock"><blockquote><div class="paragraph"><p>🏂 Write a function called <code>my-map</code> that receives a function and a sequence and returns a sequence made of the application of the function to the elements of the sequence.</p></div></blockquote></div>
+<div class="ulist"><ul><li><p>You are allowed to use recursion.</p></li><li><p>You are not allowed to use functions from <code>clojure.core</code> like <code>map</code></p></li></ul></div>
+<div class="listingblock eval-clojure"><div class="content"><pre class="highlight"><code data-noescape class="clojure language-clojure">(defn my-map [f s])</code></pre></div></div>
+<div class="paragraph"><p><br></p></div>
+<div class="listingblock eval-clojure"><div class="content"><pre class="highlight"><code data-noescape class="clojure language-clojure">(assert (= (my-map inc [1 2 3]) '(2 3 4)))</code></pre></div></div></section><section id="read"><h2>Read</h2><div class="ulist"><ul><li><p>Read more about sequences in <a href="https://clojure.org/reference/sequences">Clojure web site</a></p></li><li><p>The secrets of persistent data structures <a href="https://hypirion.com/musings/understanding-persistent-vector-pt-1">Part 1</a> and <a href="https://hypirion.com/musings/understanding-persistent-vector-pt-2">Part 2</a>.</p></li></ul></div></section></section></div></div><script src="reveal.js/lib/js/head.min.js"></script><script src="reveal.js/js/reveal.js"></script><script>// See https://github.com/hakimel/reveal.js#configuration for a full list of configuration options
+Reveal.initialize({
+  // Display controls in the bottom right corner
+  controls: true,
+  // Display a presentation progress bar
+  progress: true,
+  // Set a per-slide timing for speaker notes, null means none
+  defaultTiming: null,
+  // Display the page number of the current slide
+  slideNumber: true,
+  // Push each slide change to the browser history
+  history: true,
+  // Enable keyboard shortcuts for navigation
+  keyboard: true,
+  // Enable the slide overview mode
+  overview: true,
+  // Vertical centering of slides
+  center: false,
+  // Enables touch navigation on devices with touch input
+  touch: true,
+  // Loop the presentation
+  loop: false,
+  // Change the presentation direction to be RTL
+  rtl: false,
+  // Randomizes the order of slides each time the presentation loads
+  shuffle: false,
+  // Turns fragments on and off globally
+  fragments: true,
+  // Flags if the presentation is running in an embedded mode,
+  // i.e. contained within a limited portion of the screen
+  embedded: false,
+  // Flags if we should show a help overlay when the questionmark
+  // key is pressed
+  help: true,
+  // Flags if speaker notes should be visible to all viewers
+  showNotes: false,
+  // Global override for autolaying embedded media (video/audio/iframe)
+  // - null: Media will only autoplay if data-autoplay is present
+  // - true: All media will autoplay, regardless of individual setting
+  // - false: No media will autoplay, regardless of individual setting
+  autoPlayMedia: null,
+  // Number of milliseconds between automatically proceeding to the
+  // next slide, disabled when set to 0, this value can be overwritten
+  // by using a data-autoslide attribute on your slides
+  autoSlide: 0,
+  // Stop auto-sliding after user input
+  autoSlideStoppable: true,
+  // Enable slide navigation via mouse wheel
+  mouseWheel: false,
+  // Hides the address bar on mobile devices
+  hideAddressBar: true,
+  // Opens links in an iframe preview overlay
+  previewLinks: false,
+  // Theme (e.g., beige, black, league, night, serif, simple, sky, solarized, white)
+  // NOTE setting the theme in the config no longer works in reveal.js 3.x
+  //theme: Reveal.getQueryHash().theme || 'simple',
+  // Transition style (e.g., none, fade, slide, convex, concave, zoom)
+  transition: Reveal.getQueryHash().transition || 'slide',
+  // Transition speed (e.g., default, fast, slow)
+  transitionSpeed: 'default',
+  // Transition style for full page slide backgrounds (e.g., none, fade, slide, convex, concave, zoom)
+  backgroundTransition: 'fade',
+  // Number of slides away from the current that are visible
+  viewDistance: 3,
+  // Parallax background image (e.g., "'https://s3.amazonaws.com/hakim-static/reveal-js/reveal-parallax-1.jpg'")
+  parallaxBackgroundImage: '',
+  // Parallax background size in CSS syntax (e.g., "2100px 900px")
+  parallaxBackgroundSize: '',
+
+  // The "normal" size of the presentation, aspect ratio will be preserved
+  // when the presentation is scaled to fit different resolutions. Can be
+  // specified using percentage units.
+  width: "100%",
+  height: "100%",
+
+  // Factor of the display size that should remain empty around the content
+  margin: 0.1,
+
+  // Bounds for smallest/largest possible scale to apply to content
+  minScale: 1.0,
+  maxScale: 1.0,
+
+  // Optional libraries used to extend on reveal.js
+  dependencies: [
+      { src: 'reveal.js/lib/js/classList.js', condition: function() { return !document.body.classList; } },
+      { src: 'reveal.js/plugin/markdown/marked.js', condition: function() { return !!document.querySelector( '[data-markdown]' ); } },
+      { src: 'reveal.js/plugin/markdown/markdown.js', condition: function() { return !!document.querySelector( '[data-markdown]' ); } },
+      { src: 'reveal.js/plugin/highlight/highlight.js', async: true, callback: function() { hljs.initHighlightingOnLoad(); } },
+      { src: 'reveal.js/plugin/zoom-js/zoom.js', async: true },
+      { src: 'reveal.js/plugin/notes/notes.js', async: true }
+  ]
+});</script><link rel="stylesheet" type="text/css" href="https://storage.googleapis.com/app.klipse.tech/css/codemirror.css">
+<script src="https://storage.googleapis.com/app.klipse.tech/plugin/js/klipse_plugin.js"></script>
+<script>
+ Reveal.addEventListener( 'slidechanged', function() {
+   window.dispatchEvent(new Event('resize'));
+ } );
+</script></body></html>

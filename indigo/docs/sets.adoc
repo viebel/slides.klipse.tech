@@ -1,0 +1,79 @@
+= Clojure course: Sets
+include::slide.attrs[]
+
+[state=title]
+== Sets
+include::{includedir}/intro.adoc[]
+
+
+== Sets
+
+{meditation} When is a set a better fit than a list or a vector?
+
+
+== Sets - creation
+
+[.fragment]
+--
+To create a set from a sequence, you use `set`:
+[source.eval-clojure, clojure]
+(set '(1 "hello" [1 2]))
+--
+
+[.fragment]
+--
+In a set, there are no duplicates
+[source.eval-clojure, clojure]
+(set [1 1 "hello" "hello" [1 2] '(1 2)])
+
+{meditation} Why `[1 2]` and `(1 2)` are considered as duplicates?
+--
+
+[.fragment]
+--
+You can also create a set with the set literal `#{}`
+But then, duplicates are forbidden!
+[source.eval-clojure, clojure]
+#{1 2 3 1}
+--
+
+== Sets - functions
+
+[.fragment]
+--
+It's efficient to check if an element belongs to a set
+[source.eval-clojure, clojure]
+(contains? #{1 2 3} 2)
+--
+
+
+[.fragment]
+--
+Checking belonging is the most natural operation on a set. Set behaves as a function
+[source.eval-clojure, clojure]
+(#{1 2 3} 2)
+--
+
+
+== Making a sequence concrete
+
+[.fragment]
+--
+`(into #{})` converts a sequence into a set
+[source.eval-clojure, clojure]
+(into #{} (range 5))
+--
+
+[.fragment]
+--
+`(into [])` converts a sequence into a vector
+[source.eval-clojure, clojure]
+(into [] (range 5))
+--
+
+[.fragment]
+--
+`(into ())` converts a sequence into a list
+[source.eval-clojure, clojure]
+(into [] (range 5))
+--

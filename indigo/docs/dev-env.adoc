@@ -1,0 +1,163 @@
+= Clojure course: Dev environmen
+include::slide.attrs[]
+:link-intellij-shortcuts: https://docs.google.com/spreadsheets/d/1ziaariJcAj4LpIO10nwb3C--TMkxHiGpl75kGgQou8s/edit#gid=0
+
+[state=title]
+== Local development environment
+include::{includedir}/intro.adoc[]
+
+== Use tools like a professional Clojure developer
+
+TIP: Professional tools are never easy to use for beginners
+
+[.fragment]
+[.left.w60]
+image::professional-dj.jpg[]
+
+[.fragment]
+[.left.w30]
+image::guitarist-fingers.jpg[]
+
+== Homoiconicity
+
+TIP: The syntax of the code is the same as the syntax of the data.
+
+[cols="2*", frame=none, grid=none]
+|===
+a|
+[source,clojure]
+(defn dummy
+  "A dummy function"
+  [n]
+  (let [a (inc n)]
+    a))
+
+a|
+[source,clojure]
+'(a b
+  c
+  [d.a d.b]
+  (e.a [e.b.a (e.b.b.a e.b.b.b)]
+    e.c)
+|===
+
+===  Structural editing
+
+TIP: Constraints are here to help you!
+
+[.fragment]
+--
+Paredit never lets your code become unbalanced
+
+http://danmidwood.com/content/2014/11/21/animated-paredit.html[Animated Paredit, window="blank"]
+--
+
+=== Practice Structural editing
+
+link:++https://docs.google.com/spreadsheets/d/1ziaariJcAj4LpIO10nwb3C--TMkxHiGpl75kGgQou8s/edit#gid=0++[IntelliJ shortcuts, window="blank"]
+
+link:++https://drive.google.com/file/d/14t5mdq3oc7hXB66FON4IG3Wnjxb-AqDg/view?usp=sharing++[IntelliJ settings file, window="blank"]
+
+[cols="2*", frame=none, grid=none]
+|===
+a|[.fragment]
+--
+Wrap expression
+[source,clojure]
+(println 1)
+
+to
+
+[source,clojure]
+(when a (println 1))
+--
+
+a|[.fragment]
+--
+Slurp forward and Barf backward
+[source,clojure]
+sort [1 2 3]
+
+to
+
+[source,clojure]
+(sort [1 2 3])
+--
+
+a|[.fragment]
+--
+Splice
+[source,clojure]
+  [1 2 3]
+
+to
+
+[source,clojure]
+  1 2 3
+--
+
+a|[.fragment]
+--
+Kill backwards
+[source,clojure]
+(when a (println 1))
+
+to
+
+[source,clojure]
+(println 1)
+--
+|===
+
+
+
+
+
+
+
+===  Structural navigation
+
+{meditation}The code is a tree.
+
+TIP: Never use arrow keys to navigate in your code
+
+[source,clojure]
+'(a b
+  c
+  [d.a d.b]
+  (e.a [e.b.a (e.b.b.a e.b.b.b)]
+    e.c)
+
+{challenge} To navigate from `b` to `e.a`, we move _forward_ twice and _forward into sexp_ once
+
+== The REPL
+
+REPL comes from the LISP tradition
+
+REPL is much more than a shell or a browser console
+
+.The Remote Agent Experiment: Debugging Code from 60 Million Miles Away
+video::_gZK0tW8EhQ[youtube, height=480]
+
+
+=== The REPL connected to the IDE
+
+. Evaluate the form that ends at caret
+. Evaluate top form
+. Evaluate the whole buffer
+. Comment block
+
+=== Debug without a debugger
+
+spy
+
+== Homeworks
+
+[.left.w60]
+. Practice structural editing on your IDE
+. Navigate the code without arrow keys
+. Connect the REPL to your IDE
+
+
+[.left.w30]
+image::homeworks.png[]

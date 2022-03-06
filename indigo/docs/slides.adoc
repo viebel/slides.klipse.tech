@@ -1,0 +1,98 @@
+= asciidoctor-revealJS-klipse example slides
+:copyright: Timothy Pratley
+:license: Eclipse Public License http://www.eclipse.org/legal/epl-v10.html
+include::slide.attrs[]
+
+
+[state=title]
+== Interactive slides with Klipse example
+
+Welcome!
+
+Press "?" for help.
+
+Press the "right arrow" key to move to the next slide.
+
+[NOTE.speaker]
+This text will only show in the speaker view mode.
+
+
+== ClojureScript
+
+[source.eval-clojure, clojure]
+(+ 1 2)
+
+TIP: Try changing the numbers in the top box.
+The answer in the bottom box is evaluated immediately.
+
+=== Clojurescript (cont.)
+
+[source.eval-clojure, clojure]
+(map inc [1 2 3])
+
+== JavaScript
+
+[source.eval-javascript, javascript]
+1 + 2
+
+NOTE: Multiple languages are supported by Klipse
+
+
+== HTML
+
+[source.eval-html, html]
+<svg>
+  <circle fill="blue"
+          r="20" cx="50" cy="50" />
+  <circle fill="green"
+          r="20" cx="200" cy="50" />
+</svg>
+
+TIP: Try changing one of the colors
+
+
+== What is Klipse?
+
+An interactive client-side code evaluator.
+
+Turns `<pre><code> ... </code></pre>` snippets into a live editor,
+with beautiful syntax highlighting.
+
+Supports many languages.
+
+Perfect for blogs... and slides!
+
+See the https://github.com/viebel/klipse[Klipse github repo, role="external", window="_blank"].
+
+
+== What is AsciiDoctor?
+
+A powerful toolchain for publishing.
+
+Better than markdown:
+
+* Target multiple formats (html/pdf/book/slides)
+* Tables, figures, tip/warn/note, table of contents
+
+See https://asciidoctor.org/[Asciidoctor, role="external", window="_blank"] for more information.
+
+
+== What is RevealJS?
+
+A modern HTML slide presentation framework.
+
+Features include:
+
+* Speaker notes and full screen
+* Transitions
+* And much more
+
+Read more on the https://revealjs.com/[RevealJS website, role="external", window="_blank"].
+
+== Putting it all together...
+
+This presentation is a template project for creating your own presentation.
+
+Get the source:
+
+https://github.com/timothypratley/asciidoctor-revealjs-klipse[asciidoctor-revealjs-klipse github repository, role="external", window="_blank"].

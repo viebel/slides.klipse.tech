@@ -1,0 +1,16 @@
+@startuml
+
+(0) -> (1)
+(1) -> (2)
+(2) -> (3)
+(3) -> (4)
+(4) -> (5)
+
+note top of 1
+  c
+end note
+
+note top of 0
+  (def d (cons 0 c))
+end note
+@enduml
