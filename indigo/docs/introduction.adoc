@@ -30,7 +30,7 @@ a|
   [d.a d.b]
   (e.a
      [e.b.a (e.b.b.a e.b.b.b)]
-    e.c)
+    e.c))
 |===
 
 == Functional programming
@@ -114,11 +114,17 @@ image::tools.jpg[]
 
 
 
-== Homeworks
+== Homework
 
 [.left.w60]
 . Register to http://clojurians.net/[Clojurians: Slack Channel, window="_blank"]
 . Post at least 1 question on Clojurians
 . 10 minutes of http://clojurescriptkoans.com/[ClojureScript koans, window="_blank"] every day
-. Read https://www.braveclojure.com/do-things/[Do Things: A Clojure Crash course]
+. Solve this exercise
+
+=== Hello World
+
+. Write a function ~hello-world~ that receives a name and prints "Hello <name>!" to the console.
+. Write a function ~hello-worlds~ that receives multiple names and prints "Hello <name>!" to the console for each name
+. Write tests for both functions
 

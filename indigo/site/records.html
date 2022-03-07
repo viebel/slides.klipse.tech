@@ -32,8 +32,10 @@ document.getElementsByTagName( 'head' )[0].appendChild( link );</script><!--[if 
            "Mr. Hyde"))</code></pre></div></div>
 <div class="listingblock eval-clojure"><div class="content"><pre class="highlight"><code data-noescape class="clojure language-clojure">(assert (= (greet (map-&gt;Doctor {:name "Jekyll"}) "Hello")
            "Hello Dr. Jekyll"))
-(assert (= (greet (map-&gt;Mr. {:my-name "Hyde"}) "Hello")))</code></pre></div></div>
-<div class="listingblock eval-clojure"><div class="content"><pre class="highlight"><code data-noescape class="clojure language-clojure">(assert (= (title (rename (Doctor. "Jekyll") "Manhattan"))
+(assert (= (greet (map-&gt;Mr. {:my-name "Hyde"}) "Hello")
+           "Hello Mr. Hyde"))
+[source.eval-clojure, clojure]
+(assert (= (title (rename (Doctor. "Jekyll") "Manhattan"))
            "Dr. Manhattan"))
 (assert (= (title (rename (Mr. "Hyde") "T"))
            "Mr. T"))</code></pre></div></div></section>

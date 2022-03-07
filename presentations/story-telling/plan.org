@@ -1,0 +1,57 @@
+* Goal
+- Motivate people to refactor into code with small functions
+
+* Insights
+- Structured code is easier to maintain
+- Guidelines to refactor into code with small functions
+- It plays well with Data-Oriented Programming
+
+
+
+* Ideas 
+- The structure of an organisation shapes its work
+- First code (according to your writing style), then refactor so that it is readable for anybody
+- Minimize the required context required to understnad code (no short var names)
+- Programming as a communication task
+- Structured communication (Wikipedia...)
+- Controlled (movie) vs. Free (game, book) content consumption
+- Optimize for exploration
+
+* Script
+
+When I was a kid, I hated to read books. I couldn't read more than a few lines without feeling bored.
+Do you remember those "Chose your own adventure books"? 
+
+Quand j'etais enfant, je detestais lire. Je ne pouvais pas lire plus de quelques lignes sans qu'un sentiment d'ennui me fasse bailler et refermer le livre. Pourtant j'adorais ecouter les histoires que mon pere me racontait en voiture en chemin vers l'ecole dans la froideur des matinees parisiennes. 
+
+Pendant de longues annees, je me suis demande quelle etait la raison de ce decalage. 
+
+
+Aujourd'hui, je suis la pour vous reveler ce secret. Mais vous voud demander surement quel est le rapport entre mon incapacite a lire des livres et la programmation?
+
+
+Et bien figurez-vous que lorsque je lis du code, j'eprouve le meme genre de difficultes que j'eprouvais, enfant quand j'essayais de lire des livres. Je m'ennuie devant ces lignes de codes qui n'en finissent pas. Pourtant j'aime la programmation! Encore une fois ce mysterieux decalage.
+
+
+Il y a quelques annees, je me suis interesse au theories de Tony Buzan sur le mind mapping. Cela gravite autour de trois axes: la memoire, l'attention et la structure. Ainsi que les capacites limitees de notre cerveau. Ce que l'on appelle l'empan. 
+
+Qu'est-ce que l'empan? L'empan est une unite de mesure antique. Nombres des outils de notre vie quotidienne sont adaptees a l'empan. Les poeles de cuisson...
+
+
+Et bien figurez-vous que notre memoire aussi a un empan. Nous allons jouer a un jeu si vous le voulez bien afin de decouvrir ensemble quel est l'empan de notre memoire. Je vais vous donner une liste de nombres que vous allez essayez de memoriser.
+
+
+Au niveau de l'attention, c'est pareil. Notre cerveau a une capacite d'attention limitee: environ 20 minutes. Connaissez-vous la methode Pomodoro? 
+
+En general, les presentations durent 30 minutes afin de garder l'attention de l'audience. 
+
+
+Enfin la structure. Jeff Bezos et ses fameuses pizzas.
+
+
+Je resume: notre cerveau a une capacite limitee de memoire, attention et structure.
+
+Comme l'a dit SICP, la programmation est avant tout un moyen d'exprimer des idees. C'est donc notre devoir de prendre en compte les empans de notre cerveau quand on ecrit du code afin de permettre a nos collegues d'explorer notre code de facon efficace.
+
+
+
