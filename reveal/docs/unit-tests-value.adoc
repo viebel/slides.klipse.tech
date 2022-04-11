@@ -173,7 +173,7 @@ On the other hand inner functions API might change, then it involves updating th
 --
 Each time a child needs to get in the shower, they complain.
 
-But once they are in the shower, they doen't want to get out.
+But once they are in the shower, they don't want to get out.
 --
 
 [.left.w40]
