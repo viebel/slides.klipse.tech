@@ -118,7 +118,7 @@ caseInsensitiveMatch("hello", "Halo") === false
 [.fragment]
 --
 [source.eval-javascript, javascript]
-caseInsensitiveMatch("hello", "h.lo") === false
+caseInsensitiveMatch("hello", "h.llo") === false
 
 
 Oops...
