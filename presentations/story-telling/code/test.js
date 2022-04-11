@@ -19,7 +19,7 @@ var catalog = {
   }
 }
 
-
+// express in SQL
 var options = {
   query: { wholeWord: true},
   format: {

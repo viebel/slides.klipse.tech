@@ -1,57 +1,185 @@
+* Title
+The secret art of storytelling in programming
+Plan: https://docs.google.com/document/d/1VEXbTb3IpmX_JNRgRbk-WnFoykv6BtpianvCkOFSE8A/edit
+Abstract: https://docs.google.com/document/d/1z1kVRoi_40cJ7q2EUvsvXzrzpk--qkN420mrOFbxLUc/edit# 
+
 * Goal
-- Motivate people to refactor into code with small functions
+- Motivate people to refactor into structured code with small functions
 
 * Insights
 - Structured code is easier to maintain
 - Guidelines to refactor into code with small functions
 - It plays well with Data-Oriented Programming
-
-
+- SLAP Principle
 
 * Ideas 
 - The structure of an organisation shapes its work
 - First code (according to your writing style), then refactor so that it is readable for anybody
-- Minimize the required context required to understnad code (no short var names)
+- Minimize the required context required to understand code (no short var names)
 - Programming as a communication task
 - Structured communication (Wikipedia...)
 - Controlled (movie) vs. Free (game, book) content consumption
 - Optimize for exploration
+- Do not interrupt my train of thought 
+- In Wikipedia articles, concepts are mentioned, while the definition of the concept is somewhere else. As a reader I can choose if I want to deep dive or to skip. It's not only about "concept reuse". It's about ease of reading.
+- Let the code explain itself > Let the function name explain itself.
+- Reading Code from Top to Bottom: The Stepdown Rule (Clean code)
+- Functions should do one thing
+
+
+- Prendre  une page des miserables et mettre en hyperlink les descriptions
 
 * Script
+** Introduce the topic with curiosity
 
-When I was a kid, I hated to read books. I couldn't read more than a few lines without feeling bored.
-Do you remember those "Chose your own adventure books"? 
+Laissez-moi vous presenter Michael. Michael est un developeur JavaScript qui vient d'etre embauche chez Klafim, une startup super cool dans le domaine des livres en ligne a Tel-Aviv. Son premier jour commence tres bien. Michael decouvre la cafeteria avec ses 3 machines a cafe et ses 5 robinets de biere. Il fait un tour dans la salle de gym. Il participe a un cours de Yoga. Ses collegues l'emmennent dejeuner dans un restaurant tres fancy a deux pas du bureau. Quand Michael est de retour au bureau, son boss lui donne sa premiere mission: corriger un bug dans l'implementation de la recherche de livres. Et oui, chez Klafin on est super cool: chaque nouveau developeur doit deployer du code en production des son premier jour. 
 
-Quand j'etais enfant, je detestais lire. Je ne pouvais pas lire plus de quelques lignes sans qu'un sentiment d'ennui me fasse bailler et refermer le livre. Pourtant j'adorais ecouter les histoires que mon pere me racontait en voiture en chemin vers l'ecole dans la froideur des matinees parisiennes. 
-
-Pendant de longues annees, je me suis demande quelle etait la raison de ce decalage. 
+Tout excite, Michael se met au travail derriere ses 3 ecrans 45 pouces, aux commandes de son laptop Macbook Air Pro dernier cri. Tout se passe a merveille jusqu'au moment ou Michael decouvre le code de la fonction qu'il doit corriger. 
 
 
-Aujourd'hui, je suis la pour vous reveler ce secret. Mais vous voud demander surement quel est le rapport entre mon incapacite a lire des livres et la programmation?
+Et la, l'euphorie chute d'un coup pour laisser place a l'ennui. Michael est un bon developeur JavaScript, il maitrise toutes les finesses du language, les differences subtiles entre ~null~ et ~undefined~, les bizarerries de ~this~ ainsi que les nuances entre double equal et triple equal. Pourtant devant ca, il se retrouve demuni. N'ayant pas le choix, il se met a lire le code de la fonction. Et des la troisieme ligne, un baillement irrepressible nait en lui. Puis un autre, jusqu'a ce qu'il s'endorme sur son bureau. 
+
+Quand son boss vient le reveiller, Michael s'excuse et pretend qu'il s'est endormi car le lunch etait trop lourd. Son boss le regarde avec un sourire bienveillant et lui dit qu'il n'est pas venu pour le reprimander mais pour lui proposer d'aller faire une sieste dans une des salles de repos au 17eme etage. 
+
+Apres sa sieste, Michael se remet au travail mais l'ennui le prend de nouveau. A la fin de la journee, il rentre chez lui en velo et en pedalant dans les rues de Tel-Aviv, il songe serieusement a changer de job.
+
+** Introduce yourself
+
+Mon nom est Yehonathan. 
+Je suis ne a Paris. Quand j'etais enfant, je detestais lire. Je ne pouvais pas lire plus de quelques pages d'un livre sans qu'un sentiment d'ennui me fasse bailler et refermer le livre. Pourtant, j'adorais ecouter les histoires que mon pere me racontait en voiture en chemin vers l'ecole dans la froideur des matinees parisiennes. 
+
+Ma mere devenait folle devant mon incapacite a lire des livres. Elle avait tres peur pour ma scolarite. Vous savez, en France, la lecture a l'epoque, c'etait tres important. Elle m'achetait toute sorte de livres mais rien n'y faisait. 
+
+Cela a dure jusqu'a l'age de 15 ans. Que s'est-il passe a 15 ans? Et bien j'ai reussi a finir un livre pour la premiere fois de ma vie! Mais ce n'etait pas un livre comme les autres. C'etait un livre dont vous etes le hero. Vous savez ces livres d'aventure dans lesquels a la fin de chaque page le lecteur doit faire un choix. Comme par exemple choisir entre ouvrir une porte secrete ou bien retourner sur ses pas. Ma mere etait aux anges, pensant avoir trouve un remede pour mon aversion envers les livres. Mais sa joie fut de courte duree. Car, mis a part ce livre, je n'ai reussi a lire aucun autre livre.
+
+** Build it to the point
+
+Pendant des annees, je me suis demande quelle etait la raison de ce decalage entre mon plaisir a ecouter des histoires et mon ennui face a la lecture. En mon for interieur je m'appelait un TLDR; guy. J'avais l'intime conviction que cela etait lie a la longeur des pages des pages d'un livre. 
+
+Aujourd'hui, je suis la pour vous reveler le secret de ce decalage et vous expliquer comment je pense que cela peut nous aider a eviter de faire souffrir des gars comme Michael.
+
+Apres mon bac en France, je suis venu vivre en Israel ou j'ai fait des etudes d'ingenieur au Technion de Haifa. Encore aujourd'hui, je me demande comment j'ai fait pour obtenir mon diplome sans parvenir a lire des livres. 
+
+Depuis, je travaille en tant que developeur dans toute sorte de boites. Depuis l'age de 21 ans, quand je lis du code, j'eprouve le meme genre de difficultes que j'eprouvais, enfant, quand j'essayais de lire des livres. Je m'ennuie devant ces lignes de codes qui n'en finissent pas. Et pourtant j'aime la programmation! Encore une fois ce mysterieux decalage.
 
 
-Et bien figurez-vous que lorsque je lis du code, j'eprouve le meme genre de difficultes que j'eprouvais, enfant quand j'essayais de lire des livres. Je m'ennuie devant ces lignes de codes qui n'en finissent pas. Pourtant j'aime la programmation! Encore une fois ce mysterieux decalage.
+Il y a 10 ans, je me suis interesse aux theories de Tony Buzan sur le mind mapping et la memoire et cela m'a apporte quelques elementes de reponse.
 
+Cela gravite autour de trois axes: la memoire, l'attention et la structure. Ainsi que les capacites limitees de notre cerveau. Ce que l'on appelle l'empan.
 
-Il y a quelques annees, je me suis interesse au theories de Tony Buzan sur le mind mapping. Cela gravite autour de trois axes: la memoire, l'attention et la structure. Ainsi que les capacites limitees de notre cerveau. Ce que l'on appelle l'empan. 
+Qu'est-ce que l'empan? L'empan est une unite de mesure antique. Environ  8 inches ce qui fait a peu pres 20 cm.
 
-Qu'est-ce que l'empan? L'empan est une unite de mesure antique. Nombres des outils de notre vie quotidienne sont adaptees a l'empan. Les poeles de cuisson...
-
+Nombres des outils de notre vie quotidienne sont adaptees a l'empan. Les poeles de cuisson, les couverts, les poignees de porte...
 
 Et bien figurez-vous que notre memoire aussi a un empan. Nous allons jouer a un jeu si vous le voulez bien afin de decouvrir ensemble quel est l'empan de notre memoire. Je vais vous donner une liste de nombres que vous allez essayez de memoriser.
 
 
-Au niveau de l'attention, c'est pareil. Notre cerveau a une capacite d'attention limitee: environ 20 minutes. Connaissez-vous la methode Pomodoro? 
+Ensuite la structure. Jeff Bezos et ses fameuses pizzas. Ce n'est pas qu'une question de nombre de membres dans une equipe. C'est egalement une question de niveau de responsabilite. Un PDG dirige une equipe de VPs. Un VP dirige une equipe de group leaders. Un group leaders dirige une equipe de team leaders. Un team leader dirige une equipe de developeurs. Ce serait etrange d'avoir dans une meme equipe un VP et un developeur. N'est-ce pas?
 
-En general, les presentations durent 30 minutes afin de garder l'attention de l'audience. 
+Au niveau de l'attention, c'est pareil. Notre cerveau a une capacite d'attention limitee: environ 25 minutes. Il y un graphe que Tony Buzan aime beaucoup. 
+Je pense qu'il exagere un peu quand il dit que c'est le graphe le plus important du monde. Mais bon, c'est quand meme un graph interesant.
 
-
-Enfin la structure. Jeff Bezos et ses fameuses pizzas.
-
-
-Je resume: notre cerveau a une capacite limitee de memoire, attention et structure.
-
-Comme l'a dit SICP, la programmation est avant tout un moyen d'exprimer des idees. C'est donc notre devoir de prendre en compte les empans de notre cerveau quand on ecrit du code afin de permettre a nos collegues d'explorer notre code de facon efficace.
+Connaissez-vous la methode Pomodoro? Au lieu d'essayer de rester concentre pendant 4 heures sur une tache qui demande de la concentration. On reste concentrer pendant 8 cycles de 30 minutes. Chaque cycle se compose de 25 minutes d'attention et 5 minutes de pause. Apres chaque session, c'est comme si on faisait un reboot de notre capacite d'attention.  
 
 
+En general, les presentations durent 30 minutes afin de ne pas perdre l'attention de l'audience. 
+D'ailleurs, cela fait environ 15 minutes que je vous parle et vous devez surement commencer a vous ennuyer. Afin de faire un reboot de votr attention, je vais vous raconter un blague. C'est un vieux truc que nombre de presentateurs utilisent. Vous etes prets?
 
+Voila, c'est fait, je vous ai sortie de la zone HUH, simplement en vous faisant croire que j'allais vous raconter une blague. Votre attention est rebootee, nous pouvons continuer.
+
+
+Je resume: notre cerveau a une capacite limitee de memoire, d'attention et de structure. Les livres que j'essayais de lire quand j'etais enfant ne respectaient pas les empans de mon cerveau. A chaque page, je perdais le fil. Et c'est exactement la meme chose pour Michael.
+
+Comme l'a dit SICP, la programmation est avant tout un moyen d'exprimer des idees. C'est donc notre devoir de prendre en compte les empans de notre cerveau quand on ecrit du code afin de permettre a nos collegues d'explorer notre code de facon efficace. Et surtout d'arreter de faire souffrir des gars comme Michael a travers le monde...
+
+** Dive Deep
+
+Revenons sur le code qui a fait souffrir Michael. Il s'agit d'une recherche de livres dans une bibliotheque en ligne. Pour simplifier, disons que notre catalogue est fait de livres. Chaque livre a un titre, un ID d'auteur unique et une annee de publication. Nous avons egalement un base de donnees qui nous permet d'obtenir le nom d'un auteur en fonction de son ID. 
+
+Supposons maintenant que nous voulons permettre a nos utilisateurs de rechercher les livres dont le titre contient une mot. Le resultat doit contenir le titre du livre et le nom de son auteur. 
+
+
+Laissez-moi d'abord vous montrer a nouveau la version ennuyeuse du code.
+
+
+Etes-vous d'accord avec moi que ce morceau de code est ennuyeux? 
+
+Voyons ensemble pourquoi:
+- La fonction est longue: une trentaine de ligne de code. Cela depasse mon empan d'attention. 
+- Les commentaires perturbent le flux de ma pensee.
+- On melange des concepts de haut niveau (map, filter, sort) avec des concepts de bas niveau (conditional branching, string manipulation, regular expression).
+
+
+D'autre part, il est tres difficile d'explorer ce code. Quand Michael a du essayer comprendre comment le sort fonctionne, afin d'ajouter sa fonctionalite (supporter "descending" order). Voici ce qu'il a fait:
+
+- Je survole les 18 premieres lignes puis j'arrive sur ~sortBy~. Je me dis que c'est surement la que je dois focusser mon attention. 
+- Mais jusqu'a quelle ligne? Je continue a lire encore quelques lignes puis je vois que l'on passe a la selection des fields. 
+- Pour comprendre la ligne 18 de la fonction, je suis oblige de lire les 17 lignes qui precedent! Ma capacite d'exploration est donc compromise.
+- Il n'est pas facile de savoir quel est le contexte qui influence le comportement des lignes de code qui gerent le triage des livres.
+- Ni le contexte d'entree, ni le contexte de sortie, d'ailleurs.
+
+
+
+
+Etes-vous convaincus que ce code est ennuyeux?
+
+
+Voyons maintenant ensemble comment rendre ce code amusant avec un coup de baguette magique.
+
+
+Pourquoi je trouve ce code plus amusant?
+
+- Les fonctions sont courtes. Elle respectent mon empan.
+- Chaque fonction manipule des concepts de meme niveau.
+- Je peux facilement explorer le code.
+- Quand je veux approfondir ma comprehension d'une fonction, le contexte est clair et restreint.
+- La lecture du code coule. 
+- Je n'ai pas besoin de commentaires pour comprendre ce que fait le code. Chaque parcelle de code a un nom qui a du sens.
+
+
+Et maintenant je vais vous reveler le secret de mon tour de magie. Pour ce tour, il ne vous faut pas une baguette magique, mais un balai magique. Etes-vous pret?
+
+Le secret du tour en quelque mots: cacher la poussiere sous le tapis. 
+
+Commencons par la fonction d'entree. Vous vous souvenez: cette fonction ennuyeuse d'une trentaine de lignes et pleine de poussiere: des fonctions generiques de manipulation de donnees, des regular expressions, des conversions de strings..
+
+Et bien voici comment nous allons nous y prendre pour l'arranger. On va mettre toute la poussiere sous le tapis. Ou plus exactement sous 3 tapis auxquels nous allons donner des noms chics, que n'importe qui peut comprendre: ~searchBook~, ~enrichBooks~ et ~presentBooks~.
+
+La fonction d'entree est maintenant propre. Etes-vous d'accord avec moi qu'il ne faut pas etre sorti de Saint-Cyr pour comprendre la signification de ces fonctions. Quand je dis signification, je parle de ce que la fonction fait et non pas de la facon dont elle est implementee. Le "quoi" de la fonction, pas le "comment".
+
+Les 3 fonctions utilisees par la fonction d'entree ne sont pas encore propres. C'est pourquoi j'appelle cela balayer la poussiere sous le tapis. Maintentant, libre a moi de decider si je veux nettoyer une autre fonction. Mais au moins, ma fonction d'entree est propre. 
+
+
+** Present the cherry on the top
+
+Qu'en est-il des performances?
+
+
+Comment vais-je tester ma nouvelle fonctionalite? 
+
+Et bien je dois creer des nouveaux test cases pour la fonction ~handleSearchQuery~. Ce qui est embettant car je dois creer un catalog et toutes les options. Je dois me trimballer les ~authors~ ainsi que les ~query~ options. Alors que je ne veux tester que le triage! Donc je vais surement n'ajouter que un ou deux test cases.
+
+
+
+** Zoom out
+
+Refactoring guidelines
+
+- SLAP 
+- Short functions
+- Try to avoid variable assignments
+- Easier with FP
+- Eeasuest with DOP
+
+** Close the circle
+
+I got so addicted to this storytelling way of writing code that today, when I need to fix a code, I first refactor it and only then I fix it.
+
+Enumeration of the mind spans: attention, memory, structure.
+
+I envision a day where books are written with skippable descriptions. No more kids yawning while reading books.
+
+
+* Materials
+
+- https://laconfianceenvous.coach/2019/08/24/lempan-du-cerveau/
