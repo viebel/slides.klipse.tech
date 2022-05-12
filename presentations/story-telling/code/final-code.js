@@ -33,7 +33,7 @@ function setAuthorName(authors, book) {
     return _.set(book, "author", authorName(authors, book.authorID));
 }
 
-function enrichBooks(authors, books) {
+function enrichBooks(books, authors) {
   return _.map(books, function(book) {
     return setAuthorName(authors, book);
   });
@@ -70,9 +70,14 @@ function selectBooksFields(books, fields) {
   });
 }
 
+function formatBooks(books, formattingOptions) {
+  var sortedBooks = sortBooks(books, options.format.sort);
+  return selectBooksFields(sortedBooks, options.format.fields);
+}
+
 function handleSearchQuery(catalog, query, options) {
   var books = searchBooks(catalog.books, query, options.query);
-  var enrichedBooks = enrichBooks(catalog.authors, books);
+  var enrichedBooks = enrichBooks(books, catalog.authors);
   var sortedBooks = sortBooks(enrichedBooks, options.format.sort);
   return selectBooksFields(sortedBooks, options.format.fields);
 }

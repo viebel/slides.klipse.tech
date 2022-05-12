@@ -19,9 +19,8 @@ var catalog = {
   }
 }
 
-// express in SQL
 var options = {
-  query: { wholeWord: true},
+  query: { wholeWord: false},
   format: {
     fields: ["title", "author"],
     sort: {fields: ["publicationYear"], order: "desc"}}

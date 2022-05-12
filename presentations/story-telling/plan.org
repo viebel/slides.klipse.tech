@@ -32,38 +32,48 @@ Abstract: https://docs.google.com/document/d/1z1kVRoi_40cJ7q2EUvsvXzrzpk--qkN420
 * Script
 ** Introduce the topic with curiosity
 
-Laissez-moi vous presenter Michael. Michael est un developeur JavaScript qui vient d'etre embauche chez Klafim, une startup super cool dans le domaine des livres en ligne a Tel-Aviv. Son premier jour commence tres bien. Michael decouvre la cafeteria avec ses 3 machines a cafe et ses 5 robinets de biere. Il fait un tour dans la salle de gym. Il participe a un cours de Yoga. Ses collegues l'emmennent dejeuner dans un restaurant tres fancy a deux pas du bureau. Quand Michael est de retour au bureau, son boss lui donne sa premiere mission: corriger un bug dans l'implementation de la recherche de livres. Et oui, chez Klafin on est super cool: chaque nouveau developeur doit deployer du code en production des son premier jour. 
+Let me introduce you to Dave. Dave is a full-stack JavaScript developer who works at Klafim, a Tel-Aviv company that develops an online book search service. Dave is a good JavaScript developer, he masters all the subtleties of the language, like the differences between ~null~ and ~undefined~, the quirks of ~this~ as well as the nuances between double equal and triple equal. Dave really loves programming. He follows tech gurus on Twitter, he reads HackerNews every morning and he regularly attends tech conferences. In short, Dave is passionate about programming, like you and me.
 
-Tout excite, Michael se met au travail derriere ses 3 ecrans 45 pouces, aux commandes de son laptop Macbook Air Pro dernier cri. Tout se passe a merveille jusqu'au moment ou Michael decouvre le code de la fonction qu'il doit corriger. 
+Yet, Dave does not enjoy his work at Klafim. Why? Because, on a daily basis he has to work on code that looks like this!
+
+Long and boring code. Code full of comments and low-level details. This kind of code makes Dave want to hang its author. Except that sometimes, the author of the code is none other than Dave himself!
 
 
-Et la, l'euphorie chute d'un coup pour laisser place a l'ennui. Michael est un bon developeur JavaScript, il maitrise toutes les finesses du language, les differences subtiles entre ~null~ et ~undefined~, les bizarerries de ~this~ ainsi que les nuances entre double equal et triple equal. Pourtant devant ca, il se retrouve demuni. N'ayant pas le choix, il se met a lire le code de la fonction. Et des la troisieme ligne, un baillement irrepressible nait en lui. Puis un autre, jusqu'a ce qu'il s'endorme sur son bureau. 
+How many of you know developers like Dave? 
+...
+How many of you yourselves are Dave?
+...
+...
+...
 
-Quand son boss vient le reveiller, Michael s'excuse et pretend qu'il s'est endormi car le lunch etait trop lourd. Son boss le regarde avec un sourire bienveillant et lui dit qu'il n'est pas venu pour le reprimander mais pour lui proposer d'aller faire une sieste dans une des salles de repos au 17eme etage. 
-
-Apres sa sieste, Michael se remet au travail mais l'ennui le prend de nouveau. A la fin de la journee, il rentre chez lui en velo et en pedalant dans les rues de Tel-Aviv, il songe serieusement a changer de job.
+I used to be a Dave.
+...
+Until, a couple of year ago, I got tired of suffering from this gap between my passion for programming and my boredom at work!
 
 ** Introduce yourself
 
-Mon nom est Yehonathan. 
-Je suis ne a Paris. Quand j'etais enfant, je detestais lire. Je ne pouvais pas lire plus de quelques pages d'un livre sans qu'un sentiment d'ennui me fasse bailler et refermer le livre. Pourtant, j'adorais ecouter les histoires que mon pere me racontait en voiture en chemin vers l'ecole dans la froideur des matinees parisiennes. 
+My name is Yehonathan. I was born in Paris, around 40 years ago. When I was a child, I hated reading. I couldn't read more than a few pages of a book without having this feeling of boredom causing me to yawn and close the book. However, I loved stories. I loved listening to the stories my father told me in the car on the way to school in the cold Parisian mornings.
 
-Ma mere devenait folle devant mon incapacite a lire des livres. Elle avait tres peur pour ma scolarite. Vous savez, en France, la lecture a l'epoque, c'etait tres important. Elle m'achetait toute sorte de livres mais rien n'y faisait. 
+My mother was going crazy over my inability to read books. She was worried about my schooling. You know, in France, in the 90's, reading books was really a big deal. My mother bought me all kinds of books but nothing helped.
 
-Cela a dure jusqu'a l'age de 15 ans. Que s'est-il passe a 15 ans? Et bien j'ai reussi a finir un livre pour la premiere fois de ma vie! Mais ce n'etait pas un livre comme les autres. C'etait un livre dont vous etes le hero. Vous savez ces livres d'aventure dans lesquels a la fin de chaque page le lecteur doit faire un choix. Comme par exemple choisir entre ouvrir une porte secrete ou bien retourner sur ses pas. Ma mere etait aux anges, pensant avoir trouve un remede pour mon aversion envers les livres. Mais sa joie fut de courte duree. Car, mis a part ce livre, je n'ai reussi a lire aucun autre livre.
+Until the age of 15. What happened when I was 15? Well, I finished my first book. I managed to finish a book for the first time in my life!
+But it was not a book like the others. It was a "choose your own adventure" book. You know, those interactive adventure books in which at the end of each page the reader has to make a choice. Like for example choosing between opening a secret door or stepping back. When I told my mother I finished a book, she was over the moon, thinking she had finally found a cure for my aversion to books. But her joy was short-lived. Indeed, apart from this book, I have not managed to read any other book. Unfortunately, my experience with the "choose your own adventure" book was not a transformative experience.
 
 ** Build it to the point
 
-Pendant des annees, je me suis demande quelle etait la raison de ce decalage entre mon plaisir a ecouter des histoires et mon ennui face a la lecture. En mon for interieur je m'appelait un TLDR; guy. J'avais l'intime conviction que cela etait lie a la longeur des pages des pages d'un livre. 
+After completing my high school in France, I came to live in Israel where I studied engineering at the Technion in Haifa. For more than 20 years, I have worked as a developer in all kinds of companies with all kinds of programming languages: C++, Java, JavaScript, Ruby, Python and Clojure. And no matter what the programming language is, whenever I read long code, I experience the same kind of struggle I had as a child when I tried to read books. The same kind of struggle that Dave experiences at Klafim. I am bored in front of these endless lines of code. And yet, I love programming! I love programming... Once again this mysterious gap.
 
-Aujourd'hui, je suis la pour vous reveler le secret de ce decalage et vous expliquer comment je pense que cela peut nous aider a eviter de faire souffrir des gars comme Michael.
+Maybe you don't experience the same difficulties as me, reading books? Well I envy you! But let me tell you about the next step of my journey as a developer. Because I'm quite sure the struggle I'm going to tell you about will sound familiar to all of you. Indeed, I am going to talk about contracts.
 
-Apres mon bac en France, je suis venu vivre en Israel ou j'ai fait des etudes d'ingenieur au Technion de Haifa. Encore aujourd'hui, je me demande comment j'ai fait pour obtenir mon diplome sans parvenir a lire des livres. 
+You see, 5 years ago, I became an independent consultant. And part of my job is to sign contracts with my clients. Contracts like this one!
 
-Depuis, je travaille en tant que developeur dans toute sorte de boites. Depuis l'age de 21 ans, quand je lis du code, j'eprouve le meme genre de difficultes que j'eprouvais, enfant, quand j'essayais de lire des livres. Je m'ennuie devant ces lignes de codes qui n'en finissent pas. Et pourtant j'aime la programmation! Encore une fois ce mysterieux decalage.
+For me, reading a contract is a nightmare. Literally, a nightmare! So many irrelevant details that I have to get through. But I have no choice but reading the entire contract in order to make sure that I have not missed an important piece of information concerning the fee or the conditions of liability! And that bores me even more than reading code. Not you?
 
+Today, I'm here to share with you the secret behind these three kinds of struggle: struggle with books, with code and with contracts.   
 
-Il y a 10 ans, je me suis interesse aux theories de Tony Buzan sur le mind mapping et la memoire et cela m'a apporte quelques elementes de reponse.
+I truly believe it's our responsiblity as a community of developers to stop causing suffering to guys like Dave. How? By writing code in shuch a way that it is fun to read.
+
+** Insights
 
 Cela gravite autour de trois axes: la memoire, l'attention et la structure. Ainsi que les capacites limitees de notre cerveau. Ce que l'on appelle l'empan.
 
@@ -88,13 +98,13 @@ D'ailleurs, cela fait environ 15 minutes que je vous parle et vous devez suremen
 Voila, c'est fait, je vous ai sortie de la zone HUH, simplement en vous faisant croire que j'allais vous raconter une blague. Votre attention est rebootee, nous pouvons continuer.
 
 
-Je resume: notre cerveau a une capacite limitee de memoire, d'attention et de structure. Les livres que j'essayais de lire quand j'etais enfant ne respectaient pas les empans de mon cerveau. A chaque page, je perdais le fil. Et c'est exactement la meme chose pour Michael.
+Je resume: notre cerveau a une capacite limitee de memoire, d'attention et de structure. Les livres que j'essayais de lire quand j'etais enfant ne respectaient pas les empans de mon cerveau. A chaque page, je perdais le fil. Et c'est exactement la meme chose pour Dave.
 
-Comme l'a dit SICP, la programmation est avant tout un moyen d'exprimer des idees. C'est donc notre devoir de prendre en compte les empans de notre cerveau quand on ecrit du code afin de permettre a nos collegues d'explorer notre code de facon efficace. Et surtout d'arreter de faire souffrir des gars comme Michael a travers le monde...
+Comme l'a dit SICP, la programmation est avant tout un moyen d'exprimer des idees. C'est donc notre devoir de prendre en compte les empans de notre cerveau quand on ecrit du code afin de permettre a nos collegues d'explorer notre code de facon efficace. Et surtout d'arreter de faire souffrir des gars comme Dave a travers le monde...
 
 ** Dive Deep
 
-Revenons sur le code qui a fait souffrir Michael. Il s'agit d'une recherche de livres dans une bibliotheque en ligne. Pour simplifier, disons que notre catalogue est fait de livres. Chaque livre a un titre, un ID d'auteur unique et une annee de publication. Nous avons egalement un base de donnees qui nous permet d'obtenir le nom d'un auteur en fonction de son ID. 
+Revenons sur le code qui a fait souffrir Dave. Il s'agit d'une recherche de livres dans une bibliotheque en ligne. Pour simplifier, disons que notre catalogue est fait de livres. Chaque livre a un titre, un ID d'auteur unique et une annee de publication. Nous avons egalement un base de donnees qui nous permet d'obtenir le nom d'un auteur en fonction de son ID. 
 
 Supposons maintenant que nous voulons permettre a nos utilisateurs de rechercher les livres dont le titre contient une mot. Le resultat doit contenir le titre du livre et le nom de son auteur. 
 
@@ -110,7 +120,7 @@ Voyons ensemble pourquoi:
 - On melange des concepts de haut niveau (map, filter, sort) avec des concepts de bas niveau (conditional branching, string manipulation, regular expression).
 
 
-D'autre part, il est tres difficile d'explorer ce code. Quand Michael a du essayer comprendre comment le sort fonctionne, afin d'ajouter sa fonctionalite (supporter "descending" order). Voici ce qu'il a fait:
+D'autre part, il est tres difficile d'explorer ce code. Quand Dave a du essayer comprendre comment le sort fonctionne, afin d'ajouter sa fonctionalite (supporter "descending" order). Voici ce qu'il a fait:
 
 - Je survole les 18 premieres lignes puis j'arrive sur ~sortBy~. Je me dis que c'est surement la que je dois focusser mon attention. 
 - Mais jusqu'a quelle ligne? Je continue a lire encore quelques lignes puis je vois que l'on passe a la selection des fields. 
