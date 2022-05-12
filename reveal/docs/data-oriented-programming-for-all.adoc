@@ -203,7 +203,7 @@ class BookBusinessLogic {
 [.fragment]
 [.left.w50]
 --
-.Stateless functions aaaa
+.Stateless functions 
 [source,javascript]
 function bookInfo(Book book) {
     return book.title + 
@@ -464,7 +464,6 @@ bookInfo(invalidBook);
 
 == Data validation (JSON Schema)
 
-.book-schema.json
 [.fragment]
 [.centered.w50]
 [source,json]
@@ -474,16 +473,17 @@ bookInfo(invalidBook);
   "required": ["title", "publicationYear"], 
   "properties": {
     "title": {"type": "string"},
-    "publicationYear": {"type": "integer"}
+    "publicationYear": {
+      "type": "integer",
+      "minimum": -500,
+      "maximum": 2022
+    }
   }
 }
 --
 
 [.left.w50]
 --
-[.fragment]
-Ajv JSON schema validator in JavaScript
-
 [.fragment]
 [source,javascript]
 var ajv = new Ajv({allErrors: true}); 
@@ -497,8 +497,7 @@ function bookInfo(book) {
       ajv.errorsText(ajv.errors);
   }
   return book.title + 
-    " was published in: "
-    + book.publicationYear;
+    " was published in: " + book.publicationYear;
 }
 --
 
@@ -509,10 +508,8 @@ function bookInfo(book) {
 
 [.fragment]
 [source,javascript]
-var invalidBook = new Map([
-    ["theTitle", "Watchmen"],
-    ["publicationYear", 1986]
-]);
+var invalidBook = JSON.parse(
+  '{"theTitle":"Watchmen","publicationYear":1986}');
 
 [.fragment]
 [source,javascript]

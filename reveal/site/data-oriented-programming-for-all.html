@@ -63,7 +63,7 @@ document.getElementsByTagName( 'head' )[0].appendChild( link );</script><!--[if 
       + book.publicationYear;
   }
 }</code></pre></div></div></div></div>
-<div class="openblock fragment left w50"><div class="content"><div class="listingblock"><div class="title">Stateless functions aaaa</div><div class="content"><pre class="highlight"><code data-noescape class="javascript language-javascript">function bookInfo(Book book) {
+<div class="openblock fragment left w50"><div class="content"><div class="listingblock"><div class="title">Stateless functions</div><div class="content"><pre class="highlight"><code data-noescape class="javascript language-javascript">function bookInfo(Book book) {
     return book.title +
       " was published in: "
       + book.publicationYear;
@@ -129,16 +129,19 @@ to <code>1986</code>.</p></div>
 ]);</code></pre></div></div>
 <div class="listingblock fragment"><div class="content"><pre class="highlight"><code data-noescape class="javascript language-javascript">bookInfo(invalidBook);</code></pre></div></div>
 <div class="listingblock left w50 fragment"><div class="content"><pre class="highlight"><code data-noescape> was published in: 1986</code></pre></div></div></div></div></section>
-<section id="data_validation_json_schema"><h2>Data validation (JSON Schema)</h2><div class="listingblock fragment centered w50"><div class="title">book-schema.json</div><div class="content"><pre class="highlight"><code data-noescape class="json language-json">{
+<section id="data_validation_json_schema"><h2>Data validation (JSON Schema)</h2><div class="listingblock fragment centered w50"><div class="content"><pre class="highlight"><code data-noescape class="json language-json">{
   "type": "object",
   "required": ["title", "publicationYear"],
   "properties": {
     "title": {"type": "string"},
-    "publicationYear": {"type": "integer"}
+    "publicationYear": {
+      "type": "integer",
+      "minimum": -500,
+      "maximum": 2022
+    }
   }
 }</code></pre></div></div>
-<div class="openblock left w50"><div class="content"><div class="paragraph fragment"><p>Ajv JSON schema validator in JavaScript</p></div>
-<div class="listingblock fragment"><div class="content"><pre class="highlight"><code data-noescape class="javascript language-javascript">var ajv = new Ajv({allErrors: true});
+<div class="openblock left w50"><div class="content"><div class="listingblock fragment"><div class="content"><pre class="highlight"><code data-noescape class="javascript language-javascript">var ajv = new Ajv({allErrors: true});
 var bookSchema = parseJSONFile("book-schema.json");</code></pre></div></div>
 <div class="listingblock fragment"><div class="content"><pre class="highlight"><code data-noescape class="javascript language-javascript">function bookInfo(book) {
   if(!ajv.validate(bookSchema, book)) {
@@ -146,15 +149,12 @@ var bookSchema = parseJSONFile("book-schema.json");</code></pre></div></div>
       ajv.errorsText(ajv.errors);
   }
   return book.title +
-    " was published in: "
-    + book.publicationYear;
+    " was published in: " + book.publicationYear;
 }</code></pre></div></div></div></div>
 <div class="openblock left w50"><div class="content"><div class="paragraph"><p><br>
 <br></p></div>
-<div class="listingblock fragment"><div class="content"><pre class="highlight"><code data-noescape class="javascript language-javascript">var invalidBook = new Map([
-    ["theTitle", "Watchmen"],
-    ["publicationYear", 1986]
-]);</code></pre></div></div>
+<div class="listingblock fragment"><div class="content"><pre class="highlight"><code data-noescape class="javascript language-javascript">var invalidBook = JSON.parse(
+  '{"theTitle":"Watchmen","publicationYear":1986}');</code></pre></div></div>
 <div class="listingblock fragment"><div class="content"><pre class="highlight"><code data-noescape class="javascript language-javascript">bookInfo(invalidBook);</code></pre></div></div>
 <div class="listingblock fragment"><div class="content"><pre class="highlight"><code data-noescape>data should have required property 'title'</code></pre></div></div></div></div></section>
 <section id="a_brief_history_of_data_oriented_programming"><h2>⌛ A brief history of Data-Oriented programming</h2><div class="imageblock centered w40" style=""><img src="img/dop-timeline.png" alt="dop timeline" width="90%"></div></section>
