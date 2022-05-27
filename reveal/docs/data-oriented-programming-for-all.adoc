@@ -384,7 +384,7 @@ image::lib-data-high-level.svg[width=70%]
 --
 [.left.w40]
 Update the value associated with +
-`["catalog", "booksByIsbn", "watchmen"]` +
+`["catalog", "booksByIsbn", "watchmen", "publicationYear"]` +
 to `1986`.
 --
 
@@ -396,11 +396,15 @@ image::structural-sharing.svg[width=100%]
 [.left.w40]
 --
 Update the value associated with +
-`["catalog", "booksByIsbn", "watchmen"]` +
+`["catalog", "booksByIsbn", "watchmen", "publicationYear"]` +
 to `1986`.
 
 [.fragment]
 💸 Most of the nodes are *shared*!
+
+[.fragment]
+{meditation}When data is *immutable*, it is *safe* to share it!
+
 --
 
 == Immutability in practice (native data structures)
@@ -475,7 +479,7 @@ bookInfo(invalidBook);
     "title": {"type": "string"},
     "publicationYear": {
       "type": "integer",
-      "minimum": -500,
+      "minimum": 1455,
       "maximum": 2022
     }
   }
@@ -486,7 +490,7 @@ bookInfo(invalidBook);
 --
 [.fragment]
 [source,javascript]
-var ajv = new Ajv({allErrors: true}); 
+var ajv = new Ajv(); 
 var bookSchema = parseJSONFile("book-schema.json");
 
 [.fragment]
@@ -503,9 +507,6 @@ function bookInfo(book) {
 
 [.left.w50]
 --
-{bl}
-{bl}
-
 [.fragment]
 [source,javascript]
 var invalidBook = JSON.parse(
@@ -517,8 +518,22 @@ bookInfo(invalidBook);
 
 [.fragment]
 [source]
+bookInfo called with invalid args: 
 data should have required property 'title'
 --
+
+== JSON Schema validation libraries
+
+|===
+| Language   | Library         | URL
+
+| JavaScript | Ajv             | https://github.com/ajv-validator/ajv
+| Java       | Snow            | https://github.com/ssilverman/snowy-json
+| C#         | JSON.net Schema | https://www.newtonsoft.com/jsonschema
+| Python     | jschon          | https://github.com/marksparkza/jschon
+| Ruby       | JSONSchemer     | https://github.com/davishmcclurg/json_schemer
+|===
+
 
 ==  ⌛ A brief history of Data-Oriented programming
 
