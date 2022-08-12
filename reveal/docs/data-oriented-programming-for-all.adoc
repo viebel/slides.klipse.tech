@@ -425,7 +425,7 @@ to `1986`.
 | Java       | Paguro
 | Go         | Peds 
 | Clojure    | provided by the language
-| C#         | provided by the language
+| C#         | FSharpx.Collections
 | Python     | Pyrsistent
 | Ruby       | Hamster
 |===
