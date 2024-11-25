@@ -2,8 +2,10 @@ GEM
   remote: https://rubygems.org/
   specs:
     asciidoctor (1.5.5)
-    haml (4.0.7)
+    haml (5.0.0)
+      temple (>= 0.8.0)
       tilt
+    temple (0.8.2)
     thread_safe (0.3.6)
     tilt (2.0.7)
 
